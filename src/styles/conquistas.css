@@ -1,0 +1,247 @@
+/* WAYCARE — Conquistas CSS
+   Estilos exclusivos da página de conquistas */
+
+/* Link de voltar */
+.conquistas-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.conquistas-voltar:hover {
+  color: var(--color-text-primary);
+}
+
+/* Título da página */
+.conquistas-titulo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: #fff8ec;
+  color: var(--color-hc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.conquistas-titulo {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Card de resumo */
+.conquistas-resumo {
+  padding: var(--space-6) var(--space-8);
+}
+
+.conquistas-resumo-titulo {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.conquistas-resumo-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.conquistas-progress-bar {
+  height: 12px;
+}
+
+.conquistas-progress-fill {
+  background-color: var(--color-hc);
+}
+
+.conquistas-resumo-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: var(--radius-md);
+  background-color: #fff8ec;
+  color: var(--color-hc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+/* Cards de conquista */
+.conquista-card {
+  transition: all var(--transition-normal);
+}
+
+.conquista-card:hover {
+  transform: scale(1.01);
+  box-shadow: var(--shadow-md);
+}
+
+.conquista-card--bloqueada {
+  opacity: 0.75;
+}
+
+.conquista-card--bloqueada:hover {
+  transform: none;
+  box-shadow: var(--shadow-sm);
+}
+
+/* Ícone da conquista */
+.conquista-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 28px;
+  flex-shrink: 0;
+}
+
+.conquista-icon--orange { background-color: #fff3e0; color: #e65100; }
+.conquista-icon--purple { background-color: #ede7f6; color: #5e35b1; }
+.conquista-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
+.conquista-icon--green  { background-color: #e8f5f0; color: #1c9770; }
+.conquista-icon--locked     { background-color: var(--color-bg); color: var(--color-text-muted); }
+.conquista-icon--locked-red { background-color: #ffebee; color: #e57373; }
+
+/* Ícone da conquista no fundo + cadeado por cima */
+.conquista-icon--stack {
+  position: relative;
+}
+
+.conquista-icon-bg {
+  font-size: 32px;
+  opacity: 0.2;
+}
+
+.conquista-icon-lock {
+  position: absolute;
+  font-size: 16px;
+  bottom: 8px;
+  right: 8px;
+  opacity: 0.7;
+}
+
+/* Textos dos cards */
+.conquista-nome {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.conquista-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.conquista-progresso-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+/* Percentuais */
+.conquista-pct {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+}
+
+.conquista-pct--done     { color: var(--color-hc); }
+.conquista-pct--progress { color: var(--color-primary); }
+
+/* Barra de progresso concluída — amarela */
+.conquista-fill--done { background-color: var(--color-hc); }
+
+/* Status de desbloqueio */
+.conquista-status {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+.conquista-status--done   { color: var(--color-primary); }
+.conquista-status--locked { color: var(--color-text-muted); }
+
+/* Card de como desbloquear */
+.conquistas-dica {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  background-color: var(--color-primary-light);
+  border: 1px solid rgba(28, 151, 112, 0.2);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+}
+
+.conquistas-dica-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: #fff8ec;
+  color: var(--color-hc);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.conquistas-dica-titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+  margin: 0;
+}
+
+.conquistas-dica-lista {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.conquistas-dica-lista li {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.conquistas-dica-lista li i {
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  flex-shrink: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .conquistas-resumo {
+    padding: var(--space-5);
+  }
+
+  .conquista-icon {
+    width: 56px;
+    height: 56px;
+    font-size: 22px;
+  }
+
+  .conquistas-resumo-icon {
+    display: none;
+  }
+}
