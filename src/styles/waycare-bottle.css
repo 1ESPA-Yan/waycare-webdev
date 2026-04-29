@@ -1,0 +1,692 @@
+/* WAYCARE — WayCare Bottle CSS
+   Estilos exclusivos da página da garrafa IoT */
+
+/* Link de voltar */
+.bottle-voltar {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+
+.bottle-voltar:hover {
+  color: var(--color-text-primary);
+  border-color: var(--color-text-muted);
+}
+
+/* Header */
+.bottle-topbar {
+  align-items: flex-start;
+}
+
+.bottle-page-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.bottle-conectada-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+}
+
+.bottle-status-info {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Widget sidebar — estilos movidos para global.css */
+
+/* Cards de resumo */
+.bottle-resumo-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5);
+}
+
+.bottle-resumo-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  flex-shrink: 0;
+}
+
+.bottle-resumo-icon--blue    { background-color: #e3f2fd; color: #1565c0; }
+.bottle-resumo-icon--green   { background-color: #e8f5f0; color: var(--color-primary); }
+.bottle-resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary); }
+.bottle-resumo-icon--hc      { background-color: #fff8ec; color: var(--color-hc); }
+
+.bottle-resumo-valor {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  line-height: 1.2;
+  display: block;
+}
+
+.bottle-resumo-valor--hc { color: var(--color-hc); }
+
+.bottle-resumo-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: block;
+}
+
+/* Painel dark principal */
+.bottle-painel {
+  background-color: #033054;
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  color: var(--color-white);
+}
+
+.bottle-painel-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-md);
+  background-color: rgba(33, 150, 243, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-info);
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.bottle-painel-titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+.bottle-painel-subtitulo {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Badge LIVE */
+.bottle-live-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background-color: rgba(33, 150, 243, 0.15);
+  color: var(--color-info);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.06em;
+}
+
+/* Ponto LIVE piscando — animação virá no React */
+.bottle-live-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--color-accent-1);
+}
+
+.bottle-conectada-dark {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  background-color: rgba(28, 151, 112, 0.2);
+  color: var(--color-accent-1);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 4px var(--space-3);
+  border-radius: var(--radius-sm);
+  border: 1px solid rgba(122, 209, 128, 0.2);
+}
+
+/* Label de seção dentro do painel */
+.bottle-secao-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.08em;
+}
+
+/* Ilustração da garrafa — estática (animação no React) */
+.bottle-visual-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: var(--space-4) 0;
+}
+
+.bottle-visual {
+  width: 80px;
+  height: 160px;
+  position: relative;
+  margin-bottom: var(--space-3);
+}
+
+.bottle-visual-body {
+  width: 100%;
+  height: 100%;
+  border: 2px solid rgba(122, 209, 195, 0.4);
+  border-radius: 12px 12px 8px 8px;
+  overflow: hidden;
+  position: relative;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.bottle-visual-water {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, rgba(74, 174, 232, 0.6) 0%, rgba(74, 174, 232, 0.9) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: height 0.4s ease;
+}
+
+.bottle-visual-pct {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+.bottle-visual-ml {
+  font-size: var(--font-size-md);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+.bottle-visual-desc {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Como funciona */
+.bottle-como-funciona {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: var(--space-3) var(--space-4);
+  margin-top: var(--space-4);
+}
+
+.bottle-como-titulo {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.08em;
+  display: block;
+  margin-bottom: var(--space-2);
+}
+
+.bottle-como-desc {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.6);
+  line-height: var(--line-height-loose);
+  margin: 0;
+}
+
+.bottle-como-desc strong {
+  color: var(--color-info);
+}
+
+/* Meta diária */
+.bottle-meta-valor {
+  display: flex;
+  align-items: baseline;
+  gap: var(--space-2);
+  margin: var(--space-3) 0;
+}
+
+.bottle-meta-ml {
+  font-size: 48px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1;
+}
+
+.bottle-meta-total {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bottle-meta-bar {
+  height: 10px;
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.bottle-meta-fill {
+  background-color: var(--color-error);
+}
+
+.bottle-meta-faltam {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.bottle-meta-pct {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-error);
+}
+
+/* Mini stats */
+.bottle-mini-stat {
+  background-color: rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-md);
+  padding: var(--space-3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.bottle-mini-icon {
+  color: var(--color-info);
+  font-size: 14px;
+}
+
+.bottle-mini-icon--hc { color: var(--color-hc); }
+
+.bottle-mini-valor {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+.bottle-mini-label {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.4);
+}
+
+/* Histórico de leituras */
+.bottle-leitura-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-xs);
+  padding: var(--space-1) 0;
+}
+
+.bottle-leitura-hora  { color: rgba(255, 255, 255, 0.4); min-width: 36px; }
+.bottle-leitura-de    { color: rgba(255, 255, 255, 0.7); }
+.bottle-leitura-seta  { color: rgba(255, 255, 255, 0.3); font-size: 10px; }
+.bottle-leitura-para  { color: rgba(255, 255, 255, 0.7); }
+.bottle-leitura-diff  { color: var(--color-info); font-weight: var(--font-weight-bold); flex: 1; }
+.bottle-leitura-hc    {
+  color: var(--color-hc);
+  font-weight: var(--font-weight-bold);
+  font-size: var(--font-size-xs);
+}
+
+/* Botões de simular gole */
+.bottle-gole-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  background-color: #1a3a5c;
+  color: var(--color-white);
+  border: 1px solid rgba(33, 150, 243, 0.2);
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  min-height: auto;
+  transition: all var(--transition-fast);
+}
+
+.bottle-gole-btn:hover {
+  background-color: #234e7a;
+  border-color: var(--color-info);
+  color: var(--color-white);
+}
+
+.bottle-gole-btn--medio  { background-color: #1a4a6c; }
+.bottle-gole-btn--grande { background-color: #1a5a7c; }
+
+.bottle-gole-desc {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+  font-weight: var(--font-weight-regular);
+}
+
+.bottle-simular-aviso {
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.3);
+  margin-top: var(--space-3);
+  margin-bottom: 0;
+}
+
+/* Histórico semanal card */
+.bottle-historico-card {
+  padding: var(--space-6);
+}
+
+.bottle-historico-icon {
+  color: var(--color-info);
+  font-size: 18px;
+}
+
+.bottle-historico-titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.bottle-legenda {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.bottle-legenda-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.bottle-legenda-dot--primary { background-color: var(--color-info); }
+.bottle-legenda-dot--muted   { background-color: var(--color-border); }
+
+/* Gráfico estático placeholder */
+.bottle-chart-placeholder {
+  height: 160px;
+  position: relative;
+  padding-bottom: var(--space-6);
+}
+
+.bottle-chart-grid {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-bottom: var(--space-6);
+}
+
+.bottle-chart-line {
+  width: 100%;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+.bottle-chart-pontos {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  display: flex;
+  align-items: flex-end;
+  gap: 0;
+}
+
+.bottle-chart-col {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  justify-content: flex-end;
+  position: relative;
+}
+
+/* Linha pontilhada vertical entre os dias */
+.bottle-chart-col::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: var(--space-6);
+  left: 50%;
+  width: 1px;
+  border-left: 1.5px dashed var(--color-border);
+  transform: translateX(-50%);
+  z-index: 0;
+}
+
+.bottle-chart-barra {
+  width: 100%;
+  background-color: transparent;
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.bottle-chart-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--color-info);
+  border: 2px solid var(--color-white);
+  box-shadow: var(--shadow-sm);
+  display: block;
+  margin-top: -6px;
+  position: relative;
+  z-index: 1;
+}
+
+.bottle-chart-dia {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-2);
+}
+
+.bottle-chart-dia--today {
+  color: var(--color-info);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Coluna direita */
+.bottle-col-titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.bottle-col-titulo-icon {
+  font-size: 16px;
+  color: var(--color-text-muted);
+}
+
+.bottle-col-titulo-icon--green  { color: var(--color-primary); }
+.bottle-col-titulo-icon--yellow { color: var(--color-hc); }
+
+/* Linhas de informação do dispositivo */
+.bottle-info-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+}
+
+.bottle-info-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+/* Cores dos ícones de informações do dispositivo */
+.bottle-info-icon--blue-light { color: #29b6f6; }
+.bottle-info-icon--gray       { color: var(--color-text-muted); }
+.bottle-info-icon--purple     { color: #5e35b1; }
+.bottle-info-icon--green-light{ color: #66bb6a; }
+.bottle-info-icon--green      { color: var(--color-primary); }
+
+.bottle-info-valor {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.bottle-info-divider {
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+/* Botão sincronizar */
+.bottle-sync-btn {
+  background-color: var(--color-bg);
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md) !important;
+  width: 100%;
+  font-size: var(--font-size-sm);
+  transition: all var(--transition-fast);
+}
+
+.bottle-sync-btn:hover {
+  background-color: var(--color-border);
+  color: var(--color-text-primary);
+}
+
+/* Meta de hidratação — card de progresso */
+.bottle-meta-card {
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+}
+
+.bottle-meta-card-label {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.bottle-meta-card-valor {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary);
+}
+
+.bottle-meta-card-consumido {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+}
+
+.bottle-meta-card-pct {
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Opções de meta */
+.bottle-meta-opcao {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.bottle-meta-opcao:hover {
+  border-color: var(--color-primary);
+}
+
+.bottle-meta-opcao--ativa {
+  border-color: var(--color-primary);
+  background-color: var(--color-primary-light);
+}
+
+.bottle-meta-opcao-nome {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+}
+
+.bottle-meta-opcao--ativa .bottle-meta-opcao-nome {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+}
+
+.bottle-meta-opcao-ml {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+}
+
+.bottle-meta-opcao--ativa .bottle-meta-opcao-ml {
+  color: var(--color-primary);
+  font-weight: var(--font-weight-bold);
+}
+
+/* Dicas */
+.bottle-dica-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+
+.bottle-dica-icon--yellow { background-color: #fff8ec; color: var(--color-hc); }
+.bottle-dica-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
+.bottle-dica-icon--green  { background-color: #e8f5f0; color: var(--color-primary); }
+
+.bottle-dica-texto {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  line-height: var(--line-height-base);
+}
+
+/* Responsividade */
+@media (max-width: 1200px) {
+  .bottle-meta-ml {
+    font-size: 36px;
+  }
+}
+
+@media (max-width: 768px) {
+  .bottle-topbar {
+    flex-direction: column;
+    gap: var(--space-3);
+  }
+
+  .bottle-painel {
+    padding: var(--space-4);
+  }
+
+  .bottle-gole-btn {
+    flex: 1;
+  }
+}
