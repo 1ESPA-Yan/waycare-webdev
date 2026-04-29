@@ -1,0 +1,553 @@
+/* WAYCARE — Auth CSS
+   Estilos para login.html e cadastro.html */
+
+/* Layout tela dividida */
+.auth-body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: var(--color-white);
+}
+
+.auth-layout {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* Painel esquerdo — Verde */
+.auth-hero {
+  width: 56%;
+  min-height: 100vh;
+  background: linear-gradient(145deg, #1c9770 0%, #157a59 60%, #0f6347 100%);
+  display: flex;
+  flex-direction: column;
+  padding: var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Círculos decorativos de fundo */
+.auth-hero-circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  pointer-events: none;
+}
+
+.auth-hero-circle--1 {
+  width: 400px;
+  height: 400px;
+  top: -100px;
+  right: -100px;
+}
+
+.auth-hero-circle--2 {
+  width: 300px;
+  height: 300px;
+  bottom: -80px;
+  left: -60px;
+}
+
+/* Logo */
+.auth-hero-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  position: relative;
+  z-index: 1;
+  filter: brightness(0) invert(1);
+}
+
+.auth-logo-icon {
+  width: 44px;
+  height: 44px;
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-white);
+  font-size: 20px;
+}
+
+.auth-logo-name {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+}
+
+/* Conteúdo central */
+.auth-hero-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+  padding: var(--space-8) 0;
+}
+
+.auth-hero-title {
+  font-size: 42px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1.15;
+  margin-bottom: var(--space-5);
+}
+
+.auth-hero-subtitle {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.8);
+  line-height: var(--line-height-loose);
+  margin-bottom: var(--space-8);
+}
+
+/* Lista de features */
+.auth-hero-features {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.auth-hero-features li {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  color: var(--color-white);
+  font-size: var(--font-size-base);
+}
+
+.auth-feature-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: var(--radius-md);
+  background-color: rgba(255, 255, 255, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  color: var(--color-white);
+}
+
+/* Passos do cadastro no painel esquerdo */
+.auth-steps li {
+  opacity: 0.45;
+  transition: opacity var(--transition-normal);
+}
+
+.auth-step-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.auth-steps li small {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.08em;
+  opacity: 0.7;
+}
+
+.auth-steps li span {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  line-height: 1.4;
+}
+
+.auth-step-item.active {
+  opacity: 1;
+}
+
+.auth-step-item.active .auth-feature-icon {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Painel direito — Formulário */
+.auth-form-panel {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--space-8) var(--space-12);
+  background-color: var(--color-white);
+}
+
+.auth-form-wrapper {
+  width: 100%;
+  max-width: 380px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Cabeçalho do formulário */
+.auth-form-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.auth-form-title {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.auth-form-subtitle {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Barra de progresso (3 segmentos) */
+.auth-progress {
+  display: flex;
+  gap: var(--space-2);
+}
+
+.auth-progress-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  transition: background-color var(--transition-normal);
+}
+
+.auth-progress-bar.active {
+  background-color: var(--color-primary);
+}
+
+/* Formulário */
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Input com ícone à esquerda */
+.input-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.input-icon {
+  position: absolute;
+  left: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 14px;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.input-with-icon {
+  padding-left: calc(var(--space-4) + 20px + var(--space-2));
+}
+
+.input-with-icon-right {
+  padding-right: calc(var(--space-4) + 20px + var(--space-2));
+}
+
+/* Botão de mostrar e esconder senha */
+.input-toggle-password {
+  position: absolute;
+  right: var(--space-4);
+  color: var(--color-text-muted);
+  font-size: 14px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: color var(--transition-fast);
+}
+
+.input-toggle-password:hover {
+  color: var(--color-text-primary);
+}
+
+/* Label + link "Esqueci a senha" na mesma linha */
+.input-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+/* Botão de submit */
+.auth-submit-btn {
+  margin-top: var(--space-2);
+}
+
+/* Linha de botão com voltar + continuar */
+.auth-btn-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.auth-back-btn {
+  width: 48px;
+  height: 48px;
+  min-width: 48px;
+  padding: 0;
+  border-radius: var(--radius-full);
+  flex-shrink: 0;
+}
+
+.auth-submit-flex {
+  flex: 1;
+}
+
+/* Divisor "ou" */
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background-color: var(--color-border);
+}
+
+/* Link de navegação (cadastro/login) */
+.auth-footer-text {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  text-align: center;
+}
+
+.auth-footer-text p {
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  margin: 0;
+}
+
+.auth-link {
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.auth-link:hover {
+  color: var(--color-primary-dark);
+  text-decoration: underline;
+}
+
+.auth-link-bold {
+  font-weight: var(--font-weight-bold);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* Termos no rodapé */
+.auth-terms {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  line-height: var(--line-height-loose);
+  margin: 0;
+}
+
+/* Multi-step — exibição dos passos */
+.cadastro-step {
+  display: none;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.cadastro-step.active {
+  display: flex;
+}
+
+/* Indicador de força da senha */
+.password-strength {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+  margin-top: var(--space-2);
+}
+
+.password-strength-bars {
+  display: flex;
+  gap: var(--space-1);
+  flex: 1;
+}
+
+.strength-bar {
+  flex: 1;
+  height: 4px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-border);
+  transition: background-color var(--transition-normal);
+}
+
+.strength-bar.weak   { background-color: var(--color-error); }
+.strength-bar.medium { background-color: var(--color-warning); }
+.strength-bar.strong { background-color: var(--color-primary); }
+
+.password-strength-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-muted);
+  min-width: 36px;
+  text-align: right;
+}
+
+/* Critérios da senha */
+.password-criteria {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-4);
+  margin-top: var(--space-2);
+}
+
+.criteria-item {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  transition: color var(--transition-fast);
+}
+
+.criteria-item.valid {
+  color: var(--color-primary);
+}
+
+/* Mensagem de confirmação de senha */
+.password-match-msg {
+  font-size: var(--font-size-xs);
+  margin-top: var(--space-1);
+  display: block;
+}
+
+.match-ok    { color: var(--color-primary); }
+.match-error { color: var(--color-error); }
+
+/* Passo 3 (Resumo e LGPD) */
+.cadastro-resumo {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  border: 1px solid var(--color-border);
+}
+
+.cadastro-resumo-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin-bottom: var(--space-4);
+}
+
+.resumo-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--space-2) 0;
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-sm);
+}
+
+.resumo-row:last-child {
+  border-bottom: none;
+}
+
+.resumo-label {
+  color: var(--color-text-muted);
+}
+
+.resumo-value {
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+/* LGPD */
+.cadastro-lgpd {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  padding: var(--space-4) var(--space-5);
+  border: 1px solid rgba(28, 151, 112, 0.2);
+}
+
+.lgpd-icon {
+  color: var(--color-primary);
+  font-size: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.cadastro-lgpd strong {
+  display: block;
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+
+.cadastro-lgpd p {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+  line-height: var(--line-height-loose);
+  margin: 0;
+}
+
+/* Responsividade */
+@media (max-width: 900px) {
+  .auth-hero {
+    width: 45%;
+  }
+
+  .auth-hero-title {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 768px) {
+  .auth-layout {
+    flex-direction: column;
+  }
+
+  .auth-hero {
+    width: 100%;
+    min-height: auto;
+    padding: var(--space-6);
+  }
+
+  .auth-hero-content {
+    padding: var(--space-6) 0;
+  }
+
+  .auth-hero-title {
+    font-size: 28px;
+  }
+
+  .auth-hero-features {
+    display: none;
+  }
+
+  .auth-form-panel {
+    padding: var(--space-6) var(--space-4);
+    align-items: flex-start;
+  }
+
+  .auth-form-wrapper {
+    max-width: 100%;
+  }
+}
