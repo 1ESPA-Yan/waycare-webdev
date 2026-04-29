@@ -89,7 +89,7 @@
   pointer-events: none;
 }
 
-.trilhas-search-input {
+.input-field.trilhas-search-input {
   padding-left: calc(var(--space-4) + 20px + var(--space-2));
 }
 
