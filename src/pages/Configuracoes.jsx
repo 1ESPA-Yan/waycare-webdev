@@ -43,7 +43,7 @@ function Configuracoes() {
             </div>
           </header>
 
-          <section id="page-content">
+          <section id="page-content" className="page-transition">
 
             {/* Título da página */}
             <div className="d-flex align-items-center gap-3 mb-5">

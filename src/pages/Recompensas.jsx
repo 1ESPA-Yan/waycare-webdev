@@ -111,7 +111,7 @@ function Recompensas() {
             </div>
           </header>
 
-          <section id="page-content">
+          <section id="page-content" className="page-transition">
 
             <div className="d-flex align-items-center gap-3 mb-4">
               <div className="recompensas-titulo-icon">

@@ -760,6 +760,23 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 ::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-text-muted); }
 
+/* TRANSIÇÃO DE PÁGINA */
+
+@keyframes fadeInPage {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-transition {
+  animation: fadeInPage 0.25s ease forwards;
+}
+
 /* RESPONSIVIDADE */
 
 /* Botão hamburguer — só aparece no mobile */

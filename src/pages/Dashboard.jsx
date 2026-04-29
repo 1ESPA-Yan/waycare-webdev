@@ -51,7 +51,7 @@ function Dashboard() {
             </div>
           </header>
 
-          <section id="page-content">
+          <section id="page-content" className="page-transition">
 
             {/* Trilha de hoje */}
             <div className="trilha-card dashboard-section">
