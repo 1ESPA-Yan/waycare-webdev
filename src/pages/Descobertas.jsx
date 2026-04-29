@@ -28,10 +28,6 @@ function Descobertas() {
 
           {/* Topbar */}
           <header className="topbar">
-            <Link to="/" className="descobertas-voltar">
-              <i className="fa-solid fa-arrow-left"></i>
-              Voltar
-            </Link>
             <div className="topbar-actions">
               <div className="hc-chip">
                 <span className="fa-solid fa-coins"></span>

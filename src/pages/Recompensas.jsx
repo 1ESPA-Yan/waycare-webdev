@@ -103,10 +103,6 @@ function Recompensas() {
         <main className="main-content" id="main-content">
 
           <header className="topbar">
-            <Link to="/" className="recompensas-voltar">
-              <i className="fa-solid fa-arrow-left"></i>
-              Voltar
-            </Link>
             <div className="hc-chip hc-chip--destaque">
               <span className="fa-solid fa-coins"></span>
               Seu saldo: <strong>{totalHC} HC</strong>

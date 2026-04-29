@@ -29,10 +29,6 @@ function Configuracoes() {
 
           {/* Topbar */}
           <header className="topbar">
-            <Link to="/perfil" className="config-voltar">
-              <i className="fa-solid fa-arrow-left"></i>
-              Voltar
-            </Link>
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
