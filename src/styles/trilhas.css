@@ -366,6 +366,62 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Filtragem — animação e estados vazios */
+
+@keyframes trilhaFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.trilha-filter-item {
+  animation: trilhaFadeIn 0.22s ease both;
+}
+
+/* Estado vazio por seção */
+.trilha-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-8) var(--space-4);
+  border: 1.5px dashed var(--color-border);
+  border-radius: var(--radius-lg);
+  color: var(--color-text-muted);
+  background-color: var(--color-bg);
+}
+
+.trilha-empty-icon {
+  font-size: 28px;
+  opacity: 0.4;
+}
+
+.trilha-empty-text {
+  font-size: var(--font-size-sm);
+  margin: 0;
+  text-align: center;
+}
+
+/* Estado vazio global */
+.trilha-empty-global {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.trilha-empty-global .trilha-empty-icon {
+  font-size: 40px;
+  opacity: 0.35;
+}
+
+.trilha-empty-global .trilha-empty-text {
+  font-size: var(--font-size-base);
+  max-width: 360px;
+}
+
 /* Responsividade */
 
 @media (max-width: 768px) {
