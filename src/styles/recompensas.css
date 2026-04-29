@@ -1,0 +1,174 @@
+/* WAYCARE — Recompensas CSS
+   Estilos exclusivos da página de recompensas */
+
+/* Link de voltar */
+.recompensas-voltar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--transition-fast);
+}
+
+.recompensas-voltar:hover {
+  color: var(--color-text-primary);
+}
+
+/* HC com destaque */
+.hc-chip--destaque {
+  font-size: var(--font-size-sm);
+  padding: var(--space-2) var(--space-4);
+  gap: var(--space-2);
+}
+
+/* Título da página */
+.recompensas-titulo-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.recompensas-titulo {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Filtros de categoria */
+.recompensa-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-2) var(--space-5);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.recompensa-tag:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+.recompensa-tag.active {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border-color: var(--color-primary);
+}
+
+/* Cards de recompensa */
+.recompensa-card {
+  padding: 0;
+  overflow: hidden;
+  transition: all var(--transition-normal);
+}
+
+.recompensa-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Área do ícone */
+.recompensa-thumb {
+  position: relative;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+}
+
+.recompensa-thumb--green  { background-color: #d6f0e8; color: var(--color-primary); }
+.recompensa-thumb--blue   { background-color: #daeeff; color: #1565c0; }
+.recompensa-thumb--orange { background-color: #fff3e0; color: #e65100; }
+.recompensa-thumb--pink   { background-color: #fce4ec; color: #e91e63; }
+.recompensa-thumb--red    { background-color: #fde8e8; color: #e53935; }
+.recompensa-thumb--teal   { background-color: #e0f7f4; color: #00897b; }
+
+/* Badge "POPULAR" */
+.recompensa-popular-badge {
+  position: absolute;
+  top: var(--space-3);
+  right: var(--space-3);
+  background-color: var(--color-warning);
+  color: var(--color-white);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  padding: 3px var(--space-3);
+  border-radius: var(--radius-full);
+  letter-spacing: 0.04em;
+}
+
+/* Informações da recompensa */
+.recompensa-info {
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.recompensa-nome {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.recompensa-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Custo em HC */
+.recompensa-hc {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  width: 100%;
+  justify-content: center;
+}
+
+/* Botão resgatar */
+.recompensa-btn {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md) !important;
+  width: 100%;
+  font-weight: var(--font-weight-medium);
+}
+
+.recompensa-btn:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-sm);
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .recompensa-thumb {
+    height: 140px;
+    font-size: 48px;
+  }
+}
