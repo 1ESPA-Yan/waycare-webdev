@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useApp } from '../context/AppContext'
 import '../styles/recompensas.css'
 
 const RECOMPENSAS = [
@@ -77,6 +78,7 @@ const FILTROS = [
 function Recompensas() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
+  const { totalHC } = useApp()
 
   const recompensasFiltradas = useMemo(() => {
     if (filtroAtivo === 'todos') return RECOMPENSAS
@@ -107,7 +109,7 @@ function Recompensas() {
             </Link>
             <div className="hc-chip hc-chip--destaque">
               <span className="fa-solid fa-coins"></span>
-              Seu saldo: <strong>1300 HC</strong>
+              Seu saldo: <strong>{totalHC} HC</strong>
             </div>
           </header>
 

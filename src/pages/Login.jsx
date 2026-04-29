@@ -12,7 +12,7 @@ function Login() {
   // Submit do formulário — redireciona para o dashboard
   const handleSubmit = (e) => {
     e.preventDefault()
-    navigate('/')
+    navigate('/dashboard')
   }
 
   return (

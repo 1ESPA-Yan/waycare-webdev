@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useApp } from '../context/AppContext'
 import '../styles/configuracoes.css'
 
 function Configuracoes() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate = useNavigate()
+  const { totalHC } = useApp()
 
   return (
     <>
@@ -34,7 +36,7 @@ function Configuracoes() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
-                1300 HC
+                {totalHC} HC
               </div>
               <button className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>

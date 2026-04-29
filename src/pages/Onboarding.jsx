@@ -235,7 +235,7 @@ function Onboarding() {
                 <button
                   className="btn onboarding-btn-primary"
                   disabled={!todosAceitos}
-                  onClick={() => navigate('/')}
+                  onClick={() => navigate('/dashboard')}
                 >
                   Aceitar e Continuar
                   <i className="fa-solid fa-arrow-right"></i>

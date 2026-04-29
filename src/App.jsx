@@ -1,4 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { AppProvider } from './context/AppContext'
 
 // Páginas
 import Login from './pages/Login'
@@ -11,31 +12,33 @@ import Descobertas from './pages/Descobertas'
 import Recompensas from './pages/Recompensas'
 import Perfil from './pages/Perfil'
 import Configuracoes from './pages/Configuracoes'
-import WaycareBotlle from './pages/WaycareBottle'
+import WaycareBottle from './pages/WaycareBottle'
 
 // Estilos globais
 import './styles/global.css'
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Auth */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/cadastro" element={<Cadastro />} />
-        <Route path="/onboarding" element={<Onboarding />} />
+    <AppProvider>
+      <BrowserRouter>
+        <Routes>
+          {/* Auth */}
+          <Route path="/" element={<Login />} />
+          <Route path="/cadastro" element={<Cadastro />} />
+          <Route path="/onboarding" element={<Onboarding />} />
 
-        {/* App */}
-        <Route path="/" element={<Dashboard />} />
-        <Route path="/trilhas" element={<Trilhas />} />
-        <Route path="/conquistas" element={<Conquistas />} />
-        <Route path="/descobertas" element={<Descobertas />} />
-        <Route path="/recompensas" element={<Recompensas />} />
-        <Route path="/perfil" element={<Perfil />} />
-        <Route path="/configuracoes" element={<Configuracoes />} />
-        <Route path="/waycare-bottle" element={<WaycareBotlle />} />
-      </Routes>
-    </BrowserRouter>
+          {/* App */}
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/trilhas" element={<Trilhas />} />
+          <Route path="/conquistas" element={<Conquistas />} />
+          <Route path="/descobertas" element={<Descobertas />} />
+          <Route path="/recompensas" element={<Recompensas />} />
+          <Route path="/perfil" element={<Perfil />} />
+          <Route path="/configuracoes" element={<Configuracoes />} />
+          <Route path="/waycare-bottle" element={<WaycareBottle />} />
+        </Routes>
+      </BrowserRouter>
+    </AppProvider>
   )
 }
 

@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useApp } from '../context/AppContext'
 import '../styles/trilhas.css'
 
 // Dados das trilhas com categorias para filtragem
@@ -314,6 +315,7 @@ function Trilhas() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [busca, setBusca] = useState('')
+  const { totalHC } = useApp()
 
   // Aplica busca + filtro de categoria em todas as listas
   const aplicarFiltros = (lista) => {
@@ -363,7 +365,7 @@ function Trilhas() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <span className="fa-solid fa-coins"></span>
-                1300 HC
+                {totalHC} HC
               </div>
               <button className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>

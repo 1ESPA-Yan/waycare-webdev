@@ -1,10 +1,12 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
+import { useApp } from '../context/AppContext'
 import '../styles/perfil.css'
 
 function Perfil() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const { totalHC } = useApp()
 
   return (
     <>
@@ -33,7 +35,7 @@ function Perfil() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <span className="fa-solid fa-coins"></span>
-                1300 HC
+                {totalHC} HC
               </div>
               <button className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
