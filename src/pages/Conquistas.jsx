@@ -88,7 +88,7 @@ function Conquistas() {
                         <span className="conquista-pct conquista-pct--done">100%</span>
                       </div>
                       <div className="progress-bar">
-                        <div className="progress-fill conquista-fill--done" style={{ width: '100%' }}></div>
+                        <div className="progress-fill conquista-fill--hc" style={{ width: '100%' }}></div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
                         <span className="mission-hc"><span className="fa-solid fa-coins"></span> 100 HC</span>
@@ -119,7 +119,7 @@ function Conquistas() {
                         <span className="conquista-pct conquista-pct--done">100%</span>
                       </div>
                       <div className="progress-bar">
-                        <div className="progress-fill conquista-fill--done" style={{ width: '100%' }}></div>
+                        <div className="progress-fill conquista-fill--hc" style={{ width: '100%' }}></div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
                         <span className="mission-hc"><span className="fa-solid fa-coins"></span> 150 HC</span>
@@ -150,7 +150,7 @@ function Conquistas() {
                         <span className="conquista-pct conquista-pct--done">100%</span>
                       </div>
                       <div className="progress-bar">
-                        <div className="progress-fill conquista-fill--done" style={{ width: '100%' }}></div>
+                        <div className="progress-fill conquista-fill--hc" style={{ width: '100%' }}></div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
                         <span className="mission-hc"><span className="fa-solid fa-coins"></span> 200 HC</span>
@@ -182,7 +182,7 @@ function Conquistas() {
                         <span className="conquista-pct conquista-pct--progress">67%</span>
                       </div>
                       <div className="progress-bar">
-                        <div className="progress-fill" style={{ width: '67%' }}></div>
+                        <div className="progress-fill conquista-fill--hc" style={{ width: '67%' }}></div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
                         <span className="mission-hc"><span className="fa-solid fa-coins"></span> 500 HC</span>
@@ -214,7 +214,7 @@ function Conquistas() {
                         <span className="conquista-pct conquista-pct--progress">40%</span>
                       </div>
                       <div className="progress-bar">
-                        <div className="progress-fill" style={{ width: '40%' }}></div>
+                        <div className="progress-fill conquista-fill--hc" style={{ width: '40%' }}></div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
                         <span className="mission-hc"><span className="fa-solid fa-coins"></span> 300 HC</span>
@@ -246,7 +246,7 @@ function Conquistas() {
                         <span className="conquista-pct conquista-pct--progress">33%</span>
                       </div>
                       <div className="progress-bar">
-                        <div className="progress-fill" style={{ width: '33%' }}></div>
+                        <div className="progress-fill conquista-fill--hc" style={{ width: '33%' }}></div>
                       </div>
                       <div className="d-flex align-items-center justify-content-between">
                         <span className="mission-hc"><span className="fa-solid fa-coins"></span> 1000 HC</span>
