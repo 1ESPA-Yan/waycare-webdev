@@ -165,7 +165,40 @@
   box-shadow: var(--shadow-sm);
 }
 
+/* Filtragem — animação e estado vazio */
+
+@keyframes recompensaFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.recompensa-filter-item {
+  animation: recompensaFadeIn 0.22s ease both;
+}
+
+.recompensa-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-12) var(--space-4);
+  text-align: center;
+  color: var(--color-text-muted);
+}
+
+.recompensa-empty-icon {
+  font-size: 40px;
+  opacity: 0.35;
+}
+
+.recompensa-empty-text {
+  font-size: var(--font-size-base);
+  max-width: 360px;
+  margin: 0;
+}
+
 /* Responsividade */
+
 @media (max-width: 768px) {
   .recompensa-thumb {
     height: 140px;
