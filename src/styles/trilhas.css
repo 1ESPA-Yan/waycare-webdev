@@ -422,6 +422,242 @@
   max-width: 360px;
 }
 
+/* Painel de Missões (expansível) */
+
+/* Card expandido — layout horizontal */
+.trilha-card-expandida {
+  flex-direction: row !important;
+  align-items: stretch;
+  gap: 0 !important;
+}
+
+/* Conteúdo do card quando expandido — coluna da esquerda */
+.trilha-card-conteudo--expandida {
+  flex-direction: column !important;
+  flex: 1;
+  min-width: 0;
+  padding-right: var(--space-6);
+  border-right: 1px solid var(--color-border);
+}
+
+/* Ícone de expandir */
+.trilha-expand-icon {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background-color: var(--color-bg);
+  border: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+  transition: all var(--transition-fast);
+}
+
+.trilha-card:hover .trilha-expand-icon {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+  color: var(--color-primary);
+}
+
+/* Painel lateral de missões */
+.trilha-painel-missoes {
+  width: 320px;
+  min-width: 280px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  animation: fadeInPage 0.2s ease forwards;
+}
+
+/* Header do painel */
+.trilha-painel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-4) var(--space-5);
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--space-3);
+  margin-left: var(--space-6);
+}
+
+.trilha-painel-header--purple { background-color: #ede7f6; }
+.trilha-painel-header--blue   { background-color: #e3f2fd; }
+.trilha-painel-header--teal   { background-color: #e0f7f4; }
+.trilha-painel-header--orange { background-color: #fff3e0; }
+.trilha-painel-header--red    { background-color: #ffebee; }
+
+.trilha-painel-titulo {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.trilha-painel-total {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Lista de missões */
+.trilha-missoes-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-left: var(--space-6);
+  overflow-y: auto;
+  max-height: 400px;
+}
+
+/* Item de missão */
+.trilha-missao-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-border);
+  background-color: var(--color-surface);
+  transition: all var(--transition-fast);
+}
+
+.trilha-missao-item--concluida {
+  background-color: #f0faf5;
+  border-color: rgba(28, 151, 112, 0.2);
+}
+
+.trilha-missao-item--atual {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.trilha-missao-item--disponivel {
+  background-color: var(--color-primary-light);
+  border-color: var(--color-primary);
+}
+
+.trilha-missao-item--bloqueada {
+  opacity: 0.55;
+}
+
+/* Ícone de status da missão */
+.trilha-missao-icone {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  flex-shrink: 0;
+}
+
+.trilha-missao-icone--concluida {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.trilha-missao-icone--atual {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.trilha-missao-icone--disponivel {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.trilha-missao-icone--bloqueada {
+  background-color: var(--color-border);
+  color: var(--color-text-muted);
+}
+
+/* Info da missão */
+.trilha-missao-info {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.trilha-missao-num {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.trilha-missao-nome {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.trilha-missao-item--bloqueada .trilha-missao-nome {
+  color: var(--color-text-muted);
+}
+
+/* HC da missão */
+.trilha-missao-hc {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  flex-shrink: 0;
+}
+
+.trilha-missao-hc--concluida  { color: var(--color-primary); }
+.trilha-missao-hc--atual      { color: var(--color-primary); }
+.trilha-missao-hc--disponivel { color: var(--color-primary); }
+.trilha-missao-hc--bloqueada  { color: var(--color-text-muted); }
+
+/* Col expandida para ocupar a linha inteira */
+.trilha-expandida-col {
+  width: 100% !important;
+  flex: 0 0 100% !important;
+  max-width: 100% !important;
+}
+
+/* Animação de entrada do painel de missões */
+@keyframes painelSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.trilha-painel-missoes {
+  animation: painelSlideIn 0.25s ease forwards;
+}
+
+/* Animação de entrada de cada item da lista — efeito cascata */
+.trilha-missao-item {
+  opacity: 0;
+  animation: fadeInPage 0.2s ease forwards;
+}
+
+.trilha-missao-item:nth-child(1)  { animation-delay: 0.05s; }
+.trilha-missao-item:nth-child(2)  { animation-delay: 0.10s; }
+.trilha-missao-item:nth-child(3)  { animation-delay: 0.15s; }
+.trilha-missao-item:nth-child(4)  { animation-delay: 0.20s; }
+.trilha-missao-item:nth-child(5)  { animation-delay: 0.25s; }
+.trilha-missao-item:nth-child(6)  { animation-delay: 0.30s; }
+.trilha-missao-item:nth-child(7)  { animation-delay: 0.35s; }
+.trilha-missao-item:nth-child(8)  { animation-delay: 0.40s; }
+.trilha-missao-item:nth-child(9)  { animation-delay: 0.45s; }
+.trilha-missao-item:nth-child(10) { animation-delay: 0.50s; }
+
 /* Responsividade */
 
 @media (max-width: 768px) {
@@ -448,5 +684,30 @@
 
   .resumo-valor {
     font-size: var(--font-size-sm);
+  }
+}
+
+/* Responsividade do card de trilha expandido */
+
+@media (max-width: 768px) {
+  .trilha-card-expandida {
+    flex-direction: column !important;
+  }
+
+  .trilha-card-conteudo--expandida {
+    padding-right: 0;
+    border-right: none;
+    border-bottom: 1px solid var(--color-border);
+    padding-bottom: var(--space-4);
+  }
+
+  .trilha-painel-missoes {
+    width: 100%;
+    padding-top: var(--space-4);
+  }
+
+  .trilha-painel-header,
+  .trilha-missoes-lista {
+    margin-left: 0;
   }
 }
