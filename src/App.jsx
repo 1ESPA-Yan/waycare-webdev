@@ -14,9 +14,10 @@ import Perfil from './pages/Perfil'
 import Configuracoes from './pages/Configuracoes'
 import WaycareBottle from './pages/WaycareBottle'
 import Carteira from './pages/Carteira'
+import NotFound from './pages/Notfound'
 
-// Estilos globais
 import './styles/global.css'
+import './styles/notfound.css'
 
 function App() {
   return (
@@ -38,6 +39,7 @@ function App() {
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/waycare-bottle" element={<WaycareBottle />} />
           <Route path="/carteira" element={<Carteira />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>
