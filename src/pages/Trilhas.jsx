@@ -140,6 +140,7 @@ const VARIANTE_STYLES = {
     pct: 'trilha-pct--purple', fill: 'trilha-fill--purple',
     btn: 'trilha-btn-continuar', tagBadge: 'badge-purple',
     painelHeader: 'trilha-painel-header--purple',
+    border: 'trilha-card--purple-expanded',
   },
   blue: {
     card: 'trilha-card--blue', thumb: 'trilha-thumb--blue',
@@ -147,21 +148,25 @@ const VARIANTE_STYLES = {
     pct: 'trilha-pct--blue', fill: 'trilha-fill--blue',
     btn: 'trilha-btn-continuar trilha-btn-continuar--blue', tagBadge: 'badge-info',
     painelHeader: 'trilha-painel-header--blue',
+    border: 'trilha-card--blue-expanded',
   },
   teal: {
     card: 'trilha-card-recomendada', thumb: 'trilha-thumb--green',
     btn: 'trilha-btn-iniciar trilha-btn-iniciar--teal', tagBadge: 'badge-teal',
     painelHeader: 'trilha-painel-header--teal',
+    border: 'trilha-card-recomendada-teal',
   },
   orange: {
     card: 'trilha-card-recomendada', thumb: 'trilha-thumb--orange',
     btn: 'trilha-btn-iniciar trilha-btn-iniciar--orange', tagBadge: 'badge-warning',
     painelHeader: 'trilha-painel-header--orange',
+    border: 'trilha-card-recomendada-orange',
   },
   checkup: {
     card: 'trilha-card-checkup', thumb: 'trilha-thumb--red',
     btn: 'trilha-btn-iniciar trilha-btn-iniciar--checkup', tagBadge: 'badge-error',
     painelHeader: 'trilha-painel-header--red',
+    border: 'trilha-card-checkup',
   },
 }
 
@@ -228,7 +233,7 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle }) {
   return (
     <div className={`col-12 trilha-filter-item ${expandida ? 'trilha-expandida-col' : 'col-lg-6'}`}>
       <div
-        className={`card trilha-card ${s.card} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
+        className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >
@@ -298,7 +303,7 @@ function TrilhaDisponivel({ trilha, expandida, onToggle }) {
   return (
     <div className={`col-12 trilha-filter-item ${expandida ? 'trilha-expandida-col' : 'col-lg-6'}`}>
       <div
-        className={`card trilha-card ${s.card} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
+        className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >

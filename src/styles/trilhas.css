@@ -347,7 +347,7 @@
 /* Card check-up */
 .trilha-card-checkup {
   background: var(--color-surface);
-  border-color: #f5c6c6;
+  border-color: #f5c6c6 !important;
 }
 
 .trilha-card-checkup:hover {
@@ -430,6 +430,11 @@
   align-items: stretch;
   gap: 0 !important;
 }
+
+.trilha-card--purple-expanded       { border-color: #5e35b1 !important; }
+.trilha-card--blue-expanded         { border-color: #4aaee8 !important; }
+.trilha-card-recomendada-teal       { border-color: #00897b !important; }
+.trilha-card-recomendada-orange     { border-color: #e65100 !important; }
 
 /* Conteúdo do card quando expandido — coluna da esquerda */
 .trilha-card-conteudo--expandida {
