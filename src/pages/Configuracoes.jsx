@@ -29,6 +29,12 @@ function Configuracoes() {
 
           {/* Topbar */}
           <header className="topbar">
+            <div className="d-flex align-items-center gap-3">
+              <div className="config-titulo-icon">
+                <i className="fa-solid fa-gear"></i>
+              </div>
+              <h1 className="config-titulo">Configurações</h1>
+            </div>
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
@@ -45,14 +51,6 @@ function Configuracoes() {
           </header>
 
           <section id="page-content" className="page-transition">
-
-            {/* Título da página */}
-            <div className="d-flex align-items-center gap-3 mb-5">
-              <div className="config-titulo-icon">
-                <i className="fa-solid fa-gear"></i>
-              </div>
-              <h1 className="config-titulo">Configurações</h1>
-            </div>
 
             {/* Informações da Conta */}
             <div className="card config-section mb-4">

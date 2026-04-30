@@ -28,6 +28,12 @@ function Conquistas() {
 
           {/* Topbar */}
           <header className="topbar">
+            <div className="d-flex align-items-center gap-3">
+              <div className="conquistas-titulo-icon">
+                <i className="fa-solid fa-trophy"></i>
+              </div>
+              <h1 className="conquistas-titulo">Conquistas</h1>
+            </div>
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
@@ -44,14 +50,6 @@ function Conquistas() {
           </header>
 
           <section id="page-content" className="page-transition">
-
-            {/* Título da página */}
-            <div className="d-flex align-items-center gap-3 mb-5">
-              <div className="conquistas-titulo-icon">
-                <i className="fa-solid fa-trophy"></i>
-              </div>
-              <h1 className="conquistas-titulo">Conquistas</h1>
-            </div>
 
             {/* Card de resumo geral */}
             <div className="card conquistas-resumo mb-5">

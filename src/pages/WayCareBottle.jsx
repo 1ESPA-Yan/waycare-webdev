@@ -68,9 +68,6 @@ function WaycareBottle() {
 
           <header className="topbar bottle-topbar">
             <div className="d-flex align-items-start gap-3">
-              <Link to="/" className="bottle-voltar">
-                <i className="fa-solid fa-arrow-left"></i>
-              </Link>
               <div className="d-flex flex-column gap-1">
                 <div className="d-flex align-items-center gap-3">
                   <h1 className="bottle-page-title">WayCare Bottle</h1>

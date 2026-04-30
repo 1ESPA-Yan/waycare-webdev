@@ -68,11 +68,11 @@ const RECOMPENSAS = [
 ]
 
 const FILTROS = [
-  { key: 'todos',        label: 'Todos' },
-  { key: 'saude',        label: 'Saúde & Bem-estar' },
+  { key: 'todos', label: 'Todos' },
+  { key: 'saude', label: 'Saúde & Bem-estar' },
   { key: 'experiencias', label: 'Experiências' },
-  { key: 'produtos',     label: 'Produtos' },
-  { key: 'descontos',    label: 'Descontos Care Plus' },
+  { key: 'produtos', label: 'Produtos' },
+  { key: 'descontos', label: 'Descontos Care Plus' },
 ]
 
 function Recompensas() {
@@ -102,21 +102,30 @@ function Recompensas() {
 
         <main className="main-content" id="main-content">
 
+          {/* Topbar */}
           <header className="topbar">
-            <div className="hc-chip hc-chip--destaque">
-              <span className="fa-solid fa-coins"></span>
-              Seu saldo: <strong>{totalHC} HC</strong>
-            </div>
-          </header>
-
-          <section id="page-content" className="page-transition">
-
-            <div className="d-flex align-items-center gap-3 mb-4">
+            <div className="d-flex align-items-center gap-3">
               <div className="recompensas-titulo-icon">
                 <i className="fa-solid fa-gift"></i>
               </div>
               <h1 className="recompensas-titulo">Catálogo de Recompensas</h1>
             </div>
+            <div className="topbar-actions">
+              <div className="hc-chip hc-chip--destaque">
+                <span className="fa-solid fa-coins"></span>
+                Seu saldo: <strong>{totalHC} HC</strong>
+              </div>
+              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
+                <i className="fa-solid fa-wallet"></i>
+              </Link>
+              <button className="notif-btn" aria-label="Notificações">
+                <i className="fa-solid fa-bell"></i>
+                <span className="notif-dot"></span>
+              </button>
+            </div>
+          </header>
+
+          <section id="page-content" className="page-transition">
 
             {/* Filtros de categoria */}
             <div className="d-flex gap-2 flex-wrap mb-5">

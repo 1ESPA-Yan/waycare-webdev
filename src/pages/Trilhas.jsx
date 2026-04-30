@@ -359,7 +359,7 @@ function Trilhas() {
               <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
               <p className="trilhas-page-subtitle">
                 Recomendado para você: <i className="fa-solid fa-bolt trilhas-subtitle-icon"></i>
-                <span className="trilhas-subtitle-texto">Movimento & Nutrição</span>
+                <span className="trilhas-subtitle-texto"> Movimento & Nutrição</span>
               </p>
             </div>
             <div className="topbar-actions">
@@ -369,7 +369,7 @@ function Trilhas() {
               </div>
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>
-              </Link>
+              </Link>                                         
               <button className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
                 <span className="notif-dot"></span>

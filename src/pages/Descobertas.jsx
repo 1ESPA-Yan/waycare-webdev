@@ -28,6 +28,17 @@ function Descobertas() {
 
           {/* Topbar */}
           <header className="topbar">
+            <div className="d-flex align-items-center gap-3">
+              <div className="descobertas-titulo-icon">
+                <i className="fa-solid fa-lightbulb"></i>
+              </div>
+              <div>
+                <h1 className="descobertas-titulo">Descobertas</h1>
+                <p className="descobertas-subtitulo">
+                  Insights personalizados sobre seus hábitos de saúde baseados nos seus dados
+                </p>
+              </div>
+            </div>
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
@@ -44,17 +55,6 @@ function Descobertas() {
           </header>
 
           <section id="page-content" className="page-transition">
-
-            {/* Título da página */}
-            <div className="d-flex align-items-center gap-3 mb-2">
-              <div className="descobertas-titulo-icon">
-                <i className="fa-solid fa-lightbulb"></i>
-              </div>
-              <h1 className="descobertas-titulo">Descobertas</h1>
-            </div>
-            <p className="descobertas-subtitulo mb-5">
-              Insights personalizados sobre seus hábitos de saúde baseados nos seus dados
-            </p>
 
             {/* Cards de descoberta */}
             <div className="d-flex flex-column gap-4">

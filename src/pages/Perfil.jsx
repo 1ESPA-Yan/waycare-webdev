@@ -28,6 +28,12 @@ function Perfil() {
 
           {/* Topbar */}
           <header className="topbar">
+            <div className="d-flex align-items-center gap-3">
+              <div className="perfil-titulo-icon">
+                <i className="fa-solid fa-user"></i>
+              </div>
+              <h1 className="perfil-titulo">Meu Perfil</h1>
+            </div>
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
@@ -44,14 +50,6 @@ function Perfil() {
           </header>
 
           <section id="page-content" className="page-transition">
-
-            {/* Título da página */}
-            <div className="d-flex align-items-center gap-3 mb-5">
-              <div className="perfil-titulo-icon">
-                <i className="fa-solid fa-trophy"></i>
-              </div>
-              <h1 className="perfil-titulo">Meu Perfil</h1>
-            </div>
 
             <div className="row g-4">
 

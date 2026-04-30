@@ -94,6 +94,10 @@
   box-shadow: var(--shadow-sm);
 }
 
+.conquista-card > .d-flex {
+  width: 100%;
+}
+
 /* Ícone da conquista */
 .conquista-icon {
   width: 72px;
