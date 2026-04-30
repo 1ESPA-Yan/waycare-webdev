@@ -420,7 +420,7 @@ function Trilhas() {
                     <i className="fa-solid fa-coins"></i>
                   </div>
                   <div className="resumo-card-body">
-                    <span className="resumo-valor resumo-valor--hc">1300</span>
+                    <span className="resumo-valor resumo-valor--hc">{totalHC}</span>
                     <span className="resumo-label">Health Coins</span>
                   </div>
                 </div>
