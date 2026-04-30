@@ -14,6 +14,7 @@ import Perfil from './pages/Perfil'
 import Configuracoes from './pages/Configuracoes'
 import WaycareBottle from './pages/WaycareBottle'
 import Carteira from './pages/Carteira'
+import Notificacoes from './pages/Notificacoes'
 import NotFound from './pages/Notfound'
 
 import './styles/global.css'
@@ -39,6 +40,7 @@ function App() {
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/waycare-bottle" element={<WaycareBottle />} />
           <Route path="/carteira" element={<Carteira />} />
+          <Route path="/notificacoes" element={<Notificacoes />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

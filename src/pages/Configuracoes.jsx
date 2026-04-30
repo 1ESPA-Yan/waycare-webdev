@@ -43,10 +43,10 @@ function Configuracoes() {
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>
               </Link>
-              <button className="notif-btn" aria-label="Notificações">
+              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
                 <span className="notif-dot"></span>
-              </button>
+              </Link>
             </div>
           </header>
 
