@@ -1,0 +1,351 @@
+/* WAYCARE — Carteira CSS
+   Estilos específicos da página de carteira */
+
+/* Cabeçalho */
+.carteira-header {
+  margin-bottom: var(--space-6);
+}
+
+.carteira-header-titulo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+}
+
+.carteira-header-icon {
+  font-size: var(--font-size-md);
+  color: var(--color-primary);
+}
+
+.carteira-titulo {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Card de saldo */
+.carteira-saldo-card {
+  background: linear-gradient(145deg, #1c9770 0%, #157a59 60%, #0f6347 100%);
+  border-radius: var(--radius-xl);
+  padding: var(--space-10) var(--space-8);
+  text-align: center;
+  margin-bottom: var(--space-6);
+  position: relative;
+  overflow: hidden;
+}
+
+.carteira-saldo-card::before {
+  content: '';
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.05);
+  top: -100px;
+  right: -80px;
+  pointer-events: none;
+}
+
+.carteira-saldo-card::after {
+  content: '';
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.04);
+  bottom: -60px;
+  left: -40px;
+  pointer-events: none;
+}
+
+.carteira-saldo-label {
+  font-size: var(--font-size-sm);
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: var(--space-3);
+}
+
+.carteira-saldo-valor {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  margin-bottom: var(--space-2);
+}
+
+.carteira-saldo-icon {
+  font-size: 40px;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.carteira-saldo-numero {
+  font-size: 64px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  line-height: 1;
+}
+
+.carteira-saldo-subtexto {
+  font-size: var(--font-size-base);
+  color: rgba(255, 255, 255, 0.75);
+  margin: 0;
+}
+
+/* Grid de duas colunas */
+.carteira-grid {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: var(--space-6);
+  align-items: start;
+}
+
+.carteira-col-esquerda,
+.carteira-col-direita {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+/* Cabeçalho dos cards internos */
+.carteira-card-header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-5);
+}
+
+.carteira-card-header-icon {
+  font-size: var(--font-size-base);
+  color: var(--color-primary);
+}
+
+.carteira-card-header-icon--warning {
+  color: var(--color-warning);
+}
+
+.carteira-card-titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+/* Gráfico */
+.carteira-card-grafico {
+  padding: var(--space-6);
+}
+
+.grafico-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.grafico-svg {
+  width: 100%;
+  height: 160px;
+  display: block;
+}
+
+.grafico-labels {
+  display: flex;
+  justify-content: space-between;
+}
+
+.grafico-label {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+}
+
+/* Histórico */
+.carteira-card-historico {
+  padding: var(--space-6);
+}
+
+.historico-lista {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.historico-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.historico-item:last-child {
+  border-bottom: none;
+}
+
+.historico-icone {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  flex-shrink: 0;
+}
+
+.historico-icone--blue   { background-color: #e3f2fd; color: #1565c0; }
+.historico-icone--teal   { background-color: #e0f7f4; color: #00897b; }
+.historico-icone--purple { background-color: #ede7f6; color: #5e35b1; }
+.historico-icone--orange { background-color: #fff3e0; color: #e65100; }
+.historico-icone--indigo { background-color: #e8eaf6; color: #3949ab; }
+.historico-icone--cyan   { background-color: #e0f7fa; color: #0097a7; }
+.historico-icone--red    { background-color: #ffebee; color: var(--color-error); }
+
+.historico-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.historico-nome {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+}
+
+.historico-tempo {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.historico-hc {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-hc);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  white-space: nowrap;
+}
+
+/* Conquistas em destaque */
+.carteira-card-conquistas {
+  padding: var(--space-6);
+}
+
+.conquistas-lista {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.conquista-card {
+  background-color: var(--color-bg);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-2);
+  transition: box-shadow var(--transition-fast);
+}
+
+.conquista-card:hover {
+  box-shadow: var(--shadow-sm);
+}
+
+.conquista-icone {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  margin-bottom: var(--space-1);
+}
+
+.conquista-icone--orange { background-color: #fff3e0; color: #e65100; }
+.conquista-icone--indigo { background-color: #e8eaf6; color: #3949ab; }
+.conquista-icone--cyan   { background-color: #e0f7fa; color: #0097a7; }
+
+.conquista-nome {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.conquista-tempo {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Card promo */
+.carteira-card-promo {
+  background-color: var(--color-primary-light);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: var(--space-4);
+  border: 1px solid rgba(28, 151, 112, 0.15);
+}
+
+.promo-icone {
+  width: 52px;
+  height: 52px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  color: var(--color-primary);
+  box-shadow: var(--shadow-sm);
+}
+
+.promo-texto {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  margin: 0;
+  line-height: var(--line-height-base);
+}
+
+.promo-btn {
+  width: 100%;
+  font-size: var(--font-size-sm);
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .carteira-grid {
+    grid-template-columns: 1fr 300px;
+  }
+}
+
+@media (max-width: 768px) {
+  .carteira-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .carteira-saldo-numero {
+    font-size: 48px;
+  }
+
+  .carteira-saldo-icon {
+    font-size: 32px;
+  }
+}
+
+@media (max-width: 480px) {
+  .carteira-saldo-numero {
+    font-size: 36px;
+  }
+}

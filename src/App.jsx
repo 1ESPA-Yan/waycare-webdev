@@ -13,6 +13,7 @@ import Recompensas from './pages/Recompensas'
 import Perfil from './pages/Perfil'
 import Configuracoes from './pages/Configuracoes'
 import WaycareBottle from './pages/WaycareBottle'
+import Carteira from './pages/Carteira'
 
 // Estilos globais
 import './styles/global.css'
@@ -36,6 +37,7 @@ function App() {
           <Route path="/perfil" element={<Perfil />} />
           <Route path="/configuracoes" element={<Configuracoes />} />
           <Route path="/waycare-bottle" element={<WaycareBottle />} />
+          <Route path="/carteira" element={<Carteira />} />
         </Routes>
       </BrowserRouter>
     </AppProvider>
