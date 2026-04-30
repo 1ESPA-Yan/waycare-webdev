@@ -7,7 +7,7 @@ import '../styles/configuracoes.css'
 function Configuracoes() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate = useNavigate()
-  const { totalHC } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario } = useApp()
 
   return (
     <>

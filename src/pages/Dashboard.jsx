@@ -7,7 +7,7 @@ import '../styles/dashboard.css'
 function Dashboard() {
   // Controla se a sidebar está aberta no mobile
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC } = useApp()
+  const { totalHC, nomeUsuario } = useApp()
 
   return (
     <>

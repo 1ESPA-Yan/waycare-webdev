@@ -6,7 +6,7 @@ import '../styles/perfil.css'
 
 function Perfil() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario } = useApp()
 
   return (
     <>

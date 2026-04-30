@@ -3,7 +3,7 @@ import { useApp } from '../context/AppContext'
 
 function Sidebar() {
   const location = useLocation()
-  const { mlConsumido, metaDiaria } = useApp()
+  const { mlConsumido, metaDiaria, nomeUsuario } = useApp()
   const pctWidget = Math.round((mlConsumido / metaDiaria) * 100)
   const navClass = (path) =>
     location.pathname === path ? 'nav-item active' : 'nav-item'
