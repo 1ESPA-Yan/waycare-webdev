@@ -145,7 +145,7 @@
 
 /* Cards de trilha */
 .trilha-card {
-  background: linear-gradient(160deg, #ffffff 0%, #d6f0e8 100%);
+  background: var(--color-surface);
   transition: all var(--transition-normal);
 }
 
@@ -156,7 +156,7 @@
 }
 
 .trilha-card--blue {
-  background: linear-gradient(160deg, #ffffff 0%, #c8e6f7 100%);
+  background: var(--color-surface);
   border-color: #a8d4f5;
 }
 
@@ -327,9 +327,9 @@
   cursor: not-allowed;
 }
 
-/* Card recomendada */
+/* Card recomendada — fundo branco puro, sem gradiente */
 .trilha-card-recomendada {
-  background: linear-gradient(160deg, #ffffff 0%, #d6f0e8 100%);
+  background: var(--color-surface);
 }
 
 .trilha-recomendada-label {
@@ -346,7 +346,7 @@
 
 /* Card check-up */
 .trilha-card-checkup {
-  background: linear-gradient(160deg, #ffffff 0%, #fad0d0 100%);
+  background: var(--color-surface);
   border-color: #f5c6c6;
 }
 
@@ -356,7 +356,7 @@
 
 /* Card bloqueada */
 .trilha-card-bloqueada {
-  background: linear-gradient(160deg, #ffffff 0%, #e2e2e2 100%);
+  background: var(--color-surface);
   opacity: 0.7;
 }
 
@@ -469,7 +469,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  animation: fadeInPage 0.2s ease forwards;
+  animation: painelSlideIn 1.5s ease forwards;
 }
 
 /* Header do painel */
@@ -522,6 +522,8 @@
   border: 1px solid var(--color-border);
   background-color: var(--color-surface);
   transition: all var(--transition-fast);
+  opacity: 0;
+  animation: fadeInPage 0.2s ease forwards;
 }
 
 .trilha-missao-item--concluida {
@@ -543,6 +545,18 @@
   opacity: 0.55;
 }
 
+/* Animação cascata dos itens de missão */
+.trilha-missao-item:nth-child(1)  { animation-delay: 0.05s; }
+.trilha-missao-item:nth-child(2)  { animation-delay: 0.10s; }
+.trilha-missao-item:nth-child(3)  { animation-delay: 0.15s; }
+.trilha-missao-item:nth-child(4)  { animation-delay: 0.20s; }
+.trilha-missao-item:nth-child(5)  { animation-delay: 0.25s; }
+.trilha-missao-item:nth-child(6)  { animation-delay: 0.30s; }
+.trilha-missao-item:nth-child(7)  { animation-delay: 0.35s; }
+.trilha-missao-item:nth-child(8)  { animation-delay: 0.40s; }
+.trilha-missao-item:nth-child(9)  { animation-delay: 0.45s; }
+.trilha-missao-item:nth-child(10) { animation-delay: 0.50s; }
+
 /* Ícone de status da missão */
 .trilha-missao-icone {
   width: 28px;
@@ -555,25 +569,10 @@
   flex-shrink: 0;
 }
 
-.trilha-missao-icone--concluida {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-
-.trilha-missao-icone--atual {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-
-.trilha-missao-icone--disponivel {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-}
-
-.trilha-missao-icone--bloqueada {
-  background-color: var(--color-border);
-  color: var(--color-text-muted);
-}
+.trilha-missao-icone--concluida  { background-color: var(--color-primary); color: var(--color-white); }
+.trilha-missao-icone--atual      { background-color: var(--color-primary); color: var(--color-white); }
+.trilha-missao-icone--disponivel { background-color: var(--color-primary); color: var(--color-white); }
+.trilha-missao-icone--bloqueada  { background-color: var(--color-border);  color: var(--color-text-muted); }
 
 /* Info da missão */
 .trilha-missao-info {
@@ -625,38 +624,11 @@
   max-width: 100% !important;
 }
 
-/* Animação de entrada do painel de missões */
+/* Animação de entrada do painel */
 @keyframes painelSlideIn {
-  from {
-    opacity: 0;
-    transform: translateX(16px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
 }
-
-.trilha-painel-missoes {
-  animation: painelSlideIn 0.25s ease forwards;
-}
-
-/* Animação de entrada de cada item da lista — efeito cascata */
-.trilha-missao-item {
-  opacity: 0;
-  animation: fadeInPage 0.2s ease forwards;
-}
-
-.trilha-missao-item:nth-child(1)  { animation-delay: 0.05s; }
-.trilha-missao-item:nth-child(2)  { animation-delay: 0.10s; }
-.trilha-missao-item:nth-child(3)  { animation-delay: 0.15s; }
-.trilha-missao-item:nth-child(4)  { animation-delay: 0.20s; }
-.trilha-missao-item:nth-child(5)  { animation-delay: 0.25s; }
-.trilha-missao-item:nth-child(6)  { animation-delay: 0.30s; }
-.trilha-missao-item:nth-child(7)  { animation-delay: 0.35s; }
-.trilha-missao-item:nth-child(8)  { animation-delay: 0.40s; }
-.trilha-missao-item:nth-child(9)  { animation-delay: 0.45s; }
-.trilha-missao-item:nth-child(10) { animation-delay: 0.50s; }
 
 /* Responsividade */
 
@@ -674,22 +646,7 @@
   .trilha-btn-bloqueada {
     font-size: var(--font-size-sm);
   }
-}
 
-@media (max-width: 480px) {
-  .trilha-tag {
-    font-size: var(--font-size-xs);
-    padding: var(--space-1) var(--space-3);
-  }
-
-  .resumo-valor {
-    font-size: var(--font-size-sm);
-  }
-}
-
-/* Responsividade do card de trilha expandido */
-
-@media (max-width: 768px) {
   .trilha-card-expandida {
     flex-direction: column !important;
   }
@@ -709,5 +666,16 @@
   .trilha-painel-header,
   .trilha-missoes-lista {
     margin-left: 0;
+  }
+}
+
+@media (max-width: 480px) {
+  .trilha-tag {
+    font-size: var(--font-size-xs);
+    padding: var(--space-1) var(--space-3);
+  }
+
+  .resumo-valor {
+    font-size: var(--font-size-sm);
   }
 }
