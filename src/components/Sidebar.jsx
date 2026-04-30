@@ -41,9 +41,9 @@ function Sidebar() {
         <span className="bottle-widget-pct">{pctWidget}% da meta</span>
       </Link>
       <div className="sidebar-user">
-        <div className="avatar" aria-hidden="true">J</div>
+        <div className="avatar" aria-hidden="true">{nomeUsuario.charAt(0).toUpperCase()}</div>
         <div className="sidebar-user-info">
-          <span className="sidebar-user-name">João</span>
+          <span className="sidebar-user-name">{nomeUsuario}</span>
           <span className="sidebar-user-level">Nível 5</span>
         </div>
         <Link to="/" className="sidebar-logout" aria-label="Sair">

@@ -1,17 +1,22 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 import '../styles/auth.css'
 
 function Login() {
-  // Controla se a senha está visível ou não
   const [senhaVisivel, setSenhaVisivel] = useState(false)
-
-  // useNavigate permite redirecionar para outra página via código
+  const [email, setEmail] = useState('')
   const navigate = useNavigate()
+  const { salvarUsuario } = useApp()
 
   // Submit do formulário — redireciona para o dashboard
   const handleSubmit = (e) => {
     e.preventDefault()
+    if (!email.trim()) return
+
+    // Pega o nome a partir do que veio antes do @
+    const nome = email.split('@')[0]
+    salvarUsuario(nome, email)
     navigate('/dashboard')
   }
 
@@ -92,6 +97,8 @@ function Login() {
                   placeholder="seu@email.com.br"
                   autoComplete="email"
                   required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
             </div>

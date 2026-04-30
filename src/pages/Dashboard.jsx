@@ -32,7 +32,7 @@ function Dashboard() {
           {/* Topbar */}
           <header className="topbar dashboard-topbar">
             <div className="topbar-greeting">
-              <h1 className="greeting-title">Olá, João! 👋</h1>
+              <h1 className="greeting-title">Olá, {nomeUsuario}! 👋</h1>
               <div className="d-flex align-items-center gap-3">
                 <span className="humor-badge">
                   <i className="fa-solid fa-bolt"></i>

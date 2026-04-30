@@ -59,7 +59,7 @@ function Configuracoes() {
               <div className="config-row">
                 <div className="config-row-info">
                   <span className="config-row-label">Nome</span>
-                  <span className="config-row-valor">João Victor</span>
+                  <span className="config-row-valor">{nomeUsuario}</span>
                 </div>
                 <a href="#" className="config-row-action">Editar</a>
               </div>
@@ -69,7 +69,7 @@ function Configuracoes() {
               <div className="config-row">
                 <div className="config-row-info">
                   <span className="config-row-label">E-mail</span>
-                  <span className="config-row-valor">joao.victor@email.com</span>
+                  <span className="config-row-valor">{emailUsuario}</span>
                 </div>
                 <a href="#" className="config-row-action">Editar</a>
               </div>

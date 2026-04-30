@@ -1,9 +1,11 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { useApp } from '../context/AppContext'
 import '../styles/auth.css'
 
 function Cadastro() {
   const navigate = useNavigate()
+  const { salvarUsuario } = useApp()
 
   // Controla em qual passo o usuário está (1, 2 ou 3)
   const [passo, setPasso] = useState(1)
@@ -40,8 +42,12 @@ function Cadastro() {
   // Avança para o passo seguinte com validação
   const avancar = () => {
     if (passo === 1) {
-      if (!nome.trim() || !email.trim()) {
-        alert('Por favor, preencha todos os campos.')
+      if (!nome.trim()) {
+        alert('Por favor, preencha seu nome.')
+        return
+      }
+      if (!email.trim()) {
+        alert('Por favor, preencha seu e-mail.')
         return
       }
     }
@@ -58,8 +64,9 @@ function Cadastro() {
     setPasso(passo + 1)
   }
 
-  // Criar conta — redireciona para onboarding
+  // Salva usuário no contexto e localStorage e redireciona
   const criarConta = () => {
+    salvarUsuario(nome, email)
     navigate('/onboarding')
   }
 
@@ -194,7 +201,6 @@ function Cadastro() {
           {/* PASSO 2 — Acesso seguro */}
           {passo === 2 && (
             <div className="cadastro-step active">
-
               <div className="input-group">
                 <label className="input-label" htmlFor="cadastro-senha">Senha</label>
                 <div className="input-icon-wrapper">
@@ -217,7 +223,7 @@ function Cadastro() {
                   </button>
                 </div>
 
-                {/* Indicador de força */}
+                {/* Indicador de força da senha */}
                 <div className="password-strength">
                   <div className="password-strength-bars">
                     <div className={`strength-bar ${pontos >= 1 ? forcaClasses[pontos] : ''}`}></div>
@@ -276,18 +282,10 @@ function Cadastro() {
               </div>
 
               <div className="auth-btn-row">
-                <button
-                  type="button"
-                  className="btn btn-ghost auth-back-btn"
-                  onClick={() => setPasso(1)}
-                >
+                <button type="button" className="btn btn-ghost auth-back-btn" onClick={() => setPasso(1)}>
                   <i className="fa-solid fa-arrow-left"></i>
                 </button>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-lg auth-submit-btn auth-submit-flex"
-                  onClick={avancar}
-                >
+                <button type="button" className="btn btn-primary btn-lg auth-submit-btn auth-submit-flex" onClick={avancar}>
                   Continuar
                   <i className="fa-solid fa-arrow-right"></i>
                 </button>
@@ -348,11 +346,7 @@ function Cadastro() {
               </label>
 
               <div className="auth-btn-row">
-                <button
-                  type="button"
-                  className="btn btn-ghost auth-back-btn"
-                  onClick={() => setPasso(2)}
-                >
+                <button type="button" className="btn btn-ghost auth-back-btn" onClick={() => setPasso(2)}>
                   <i className="fa-solid fa-arrow-left"></i>
                 </button>
                 <button

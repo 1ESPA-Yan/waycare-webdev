@@ -62,7 +62,7 @@ function Perfil() {
                     <div className="avatar avatar-lg perfil-avatar">J</div>
                     <div className="d-flex flex-column gap-2 flex-grow-1">
                       <div className="d-flex align-items-center gap-2">
-                        <h2 className="perfil-nome">João Victor</h2>
+                        <h2 className="perfil-nome">{nomeUsuario}</h2>
                         <button className="perfil-edit-btn" aria-label="Editar perfil">
                           <i className="fa-regular fa-pen-to-square"></i>
                         </button>
@@ -70,7 +70,7 @@ function Perfil() {
                       <div className="d-flex align-items-center gap-3 flex-wrap">
                         <span className="perfil-meta">
                           <i className="fa-regular fa-envelope"></i>
-                          joao.victor@email.com
+                          {emailUsuario}
                         </span>
                         <span className="perfil-meta">
                           <i className="fa-regular fa-calendar"></i>
