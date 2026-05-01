@@ -34,6 +34,7 @@ O projeto foi desenvolvido em duas entregas principais:
 
 - 🔐 **Autenticação** — Login e Cadastro com validação de campos, indicador de força de senha e fluxo multi-step
 - 🏠 **Dashboard** — Visão geral das missões do dia, trilha ativa, descobertas e banner de recompensas
+- 😊 **Seleção de Humor** — página dedicada para escolher o humor do dia manualmente, com personalização dinâmica da badge no Dashboard e recomendações de trilhas adaptadas
 - 🛤️ **Trilhas de Bem-estar** — Cards expansíveis com painel de missões por trilha, filtros por categoria e busca em tempo real
 - 🏆 **Conquistas** — Progresso visual de conquistas desbloqueadas e bloqueadas
 - 💡 **Descobertas** — Insights personalizados gerados com base nos hábitos do usuário
@@ -52,6 +53,7 @@ O projeto foi desenvolvido em duas entregas principais:
 - **Transições suaves** entre páginas com animação CSS
 - **Responsividade** completa para Desktop, Tablet e Mobile
 - **Sidebar dinâmica** com item ativo detectado por rota e widget da garrafa atualizado em tempo real
+- **Badge de humor dinâmica** — cor e ícone da badge mudam conforme o humor selecionado, integrado ao Context API
 
 ---
 
@@ -88,6 +90,7 @@ waycare-react/
 │   │   ├── Cadastro.jsx
 │   │   ├── Onboarding.jsx
 │   │   ├── Dashboard.jsx
+│   │   ├── SelecionarHumor.jsx
 │   │   ├── Trilhas.jsx
 │   │   ├── Conquistas.jsx
 │   │   ├── Descobertas.jsx
@@ -102,6 +105,7 @@ waycare-react/
 │   │   ├── global.css             # Design System principal
 │   │   ├── auth.css
 │   │   ├── dashboard.css
+│   │   ├── selecionarHumor.css
 │   │   ├── trilhas.css
 │   │   ├── conquistas.css
 │   │   ├── descobertas.css
@@ -191,6 +195,7 @@ Acesse **http://localhost:5173** no navegador. A aplicação abrirá na página 
 | `/cadastro` | Cadastro | Criação de conta (3 passos) |
 | `/onboarding` | Onboarding | Boas-vindas e aceite de termos |
 | `/dashboard` | Dashboard | Página inicial do app |
+| `/humor` | Seleção de Humor Manual | Escolha do humor do dia |
 | `/trilhas` | Trilhas | Trilhas de bem-estar com missões |
 | `/conquistas` | Conquistas | Conquistas do usuário |
 | `/descobertas` | Descobertas | Insights personalizados |
