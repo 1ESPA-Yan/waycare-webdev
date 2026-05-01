@@ -15,10 +15,10 @@ import Configuracoes from './pages/Configuracoes'
 import WaycareBottle from './pages/WaycareBottle'
 import Carteira from './pages/Carteira'
 import Notificacoes from './pages/Notificacoes'
+import SelecionarHumor from './pages/SelecionarHumor'
 import NotFound from './pages/Notfound'
 
 import './styles/global.css'
-import './styles/notfound.css'
 
 function App() {
   return (
@@ -32,6 +32,7 @@ function App() {
 
           {/* App */}
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/humor" element={<SelecionarHumor />} />
           <Route path="/trilhas" element={<Trilhas />} />
           <Route path="/conquistas" element={<Conquistas />} />
           <Route path="/descobertas" element={<Descobertas />} />

@@ -426,7 +426,7 @@ function Trilhas() {
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [busca, setBusca] = useState('')
   const [trilhaExpandida, setTrilhaExpandida] = useState(null)
-  const { totalHC } = useApp()
+  const { totalHC, humor, HUMOR_CONFIG } = useApp()
 
   const toggleExpandir = (id) => {
     setTrilhaExpandida(prev => prev === id ? null : id)
@@ -468,8 +468,8 @@ function Trilhas() {
             <div>
               <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
               <p className="trilhas-page-subtitle">
-                Recomendado para você: <i className="fa-solid fa-bolt trilhas-subtitle-icon"></i>
-                <span className="trilhas-subtitle-texto"> Movimento & Nutrição</span>
+                Recomendado para você: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
+                <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
               </p>
             </div>
             <div className="topbar-actions">

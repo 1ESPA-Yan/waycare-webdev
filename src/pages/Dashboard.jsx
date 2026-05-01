@@ -7,7 +7,8 @@ import '../styles/dashboard.css'
 function Dashboard() {
   // Controla se a sidebar está aberta no mobile
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC, nomeUsuario } = useApp()
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG } = useApp()
+  const humorAtual = HUMOR_CONFIG[humor]
 
   return (
     <>
@@ -34,11 +35,11 @@ function Dashboard() {
             <div className="topbar-greeting">
               <h1 className="greeting-title">Olá, {nomeUsuario}! 👋</h1>
               <div className="d-flex align-items-center gap-3">
-                <span className="humor-badge">
-                  <i className="fa-solid fa-bolt"></i>
-                  Energético
+                <span className="humor-badge" style={{backgroundColor: humorAtual.badgeBg, color: humorAtual.badgeColor, borderColor: humorAtual.badgeBorder,}}>
+                  <i className={`fa-solid ${humorAtual.icon}`}></i>
+                  {humorAtual.label}
                 </span>
-                <button className="humor-change-btn">mudar humor</button>
+                <Link to="/humor" className="humor-change-btn">mudar humor</Link>
               </div>
             </div>
             <div className="topbar-actions">
