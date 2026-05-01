@@ -20,9 +20,7 @@ function Descobertas() {
       </button>
 
       <div className="app-layout">
-        <div className={sidebarOpen ? 'open' : ''}>
-          <Sidebar />
-        </div>
+        <Sidebar isOpen={sidebarOpen} />
 
         <main className="main-content" id="main-content">
 

@@ -24,9 +24,7 @@ function Dashboard() {
       <div className="app-layout">
 
         {/* Sidebar — recebe a classe 'open' quando sidebarOpen for true */}
-        <div className={sidebarOpen ? 'open' : ''}>
-          <Sidebar />
-        </div>
+        <Sidebar isOpen={sidebarOpen} />
 
         <main className="main-content" id="main-content">
 

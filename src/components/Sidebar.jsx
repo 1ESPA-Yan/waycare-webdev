@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 
-function Sidebar() {
+function Sidebar({ isOpen }) {
   const location = useLocation()
   const { mlConsumido, metaDiaria, nomeUsuario } = useApp()
   const pctWidget = Math.round((mlConsumido / metaDiaria) * 100)
@@ -9,7 +9,7 @@ function Sidebar() {
     location.pathname === path ? 'nav-item active' : 'nav-item'
 
   return (
-    <aside className="sidebar" id="sidebar" role="navigation" aria-label="Menu principal">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar" role="navigation" aria-label="Menu principal">
       <div className="sidebar-logo">
         <img src="/images/LogoWayCare.png" alt="WayCare" height="28" />
         WayCare

@@ -59,10 +59,8 @@ function WaycareBottle() {
         <i className="fa-solid fa-bars"></i>
       </button>
 
-      <div className="app-layout">
-        <div className={sidebarOpen ? 'open' : ''}>
-          <Sidebar />
-        </div>
+      <div >
+        <Sidebar isOpen={sidebarOpen} />
 
         <main className="main-content" id="main-content">
 
