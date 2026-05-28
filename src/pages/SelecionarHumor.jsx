@@ -58,7 +58,7 @@ function SelecionarHumor() {
       {/* Topbar minimalista */}
       <header className="humor-topbar">
         <div className="humor-logo">
-          <img src="/images/LogoWayCare.png" alt="WayCare" height="28" />
+          <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
           <span className="humor-logo-nome">WayCare</span>
         </div>
         <div className="hc-chip">

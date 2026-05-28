@@ -14,7 +14,7 @@ function NotFound() {
 
       {/* Logo */}
       <div className="nf-logo">
-        <img src="/images/LogoWayCare.png" alt="WayCare" height="28" />
+        <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
         <span>WayCare</span>
       </div>
 

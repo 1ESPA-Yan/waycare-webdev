@@ -28,7 +28,7 @@ function Login() {
 
         {/* Logo */}
         <div className="auth-hero-logo">
-          <img src="/images/LogoWayCare.png" alt="WayCare" height="36" />
+          <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
           <span className="auth-logo-name">WayCare</span>
         </div>
 

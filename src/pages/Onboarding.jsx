@@ -22,7 +22,7 @@ function Onboarding() {
       {/* Cabeçalho */}
       <header className="onboarding-header">
         <div className="onboarding-logo">
-          <img src="/images/LogoWayCare.png" alt="WayCare" height="36" />
+          <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
           <span className="onboarding-logo-name">WayCare</span>
         </div>
 
