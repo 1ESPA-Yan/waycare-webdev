@@ -1,0 +1,62 @@
+[
+  {
+    "id": "consulta-nutricional",
+    "nome": "Consulta Nutricional",
+    "desc": "1 sessão com nutricionista Care Plus",
+    "hc": 500,
+    "categoria": "saude",
+    "thumb": "recompensa-thumb--green",
+    "icone": "fa-apple-whole",
+    "popular": true
+  },
+  {
+    "id": "kit-hidratacao",
+    "nome": "Kit de Hidratação",
+    "desc": "Garrafa térmica + squeeze personalizados",
+    "hc": 300,
+    "categoria": "produtos",
+    "thumb": "recompensa-thumb--blue",
+    "icone": "fa-droplet",
+    "popular": false
+  },
+  {
+    "id": "desconto-academia",
+    "nome": "Desconto Academia",
+    "desc": "20% off em academias parceiras por 3 meses",
+    "hc": 800,
+    "categoria": "descontos",
+    "thumb": "recompensa-thumb--orange",
+    "icone": "fa-dumbbell",
+    "popular": false
+  },
+  {
+    "id": "massagem-relaxante",
+    "nome": "Massagem Relaxante",
+    "desc": "1 hora de massagem terapêutica",
+    "hc": 1000,
+    "categoria": "experiencias",
+    "thumb": "recompensa-thumb--pink",
+    "icone": "fa-heart",
+    "popular": false
+  },
+  {
+    "id": "checkup-gratuito",
+    "nome": "Check-up Gratuito",
+    "desc": "Consulta anual sem custo adicional",
+    "hc": 200,
+    "categoria": "descontos",
+    "thumb": "recompensa-thumb--red",
+    "icone": "fa-heart-pulse",
+    "popular": true
+  },
+  {
+    "id": "aula-yoga",
+    "nome": "Aula de Yoga",
+    "desc": "1 aula experimental online ou presencial",
+    "hc": 150,
+    "categoria": "experiencias",
+    "thumb": "recompensa-thumb--teal",
+    "icone": "fa-brain",
+    "popular": false
+  }
+]
