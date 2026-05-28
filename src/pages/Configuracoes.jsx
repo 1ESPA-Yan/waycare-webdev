@@ -89,7 +89,7 @@ function Configuracoes() {
                 <div className="config-item-icon config-item-icon--green">
                   <i className="fa-solid fa-bell"></i>
                 </div>
-                <div className="d-flex flex-column gap-1 flex-grow-1">
+                <div className="d-flex flex-column gap-1 grow">
                   <span className="config-item-titulo">Notificações</span>
                   <span className="config-item-desc">Gerencie suas preferências de notificação</span>
                 </div>
@@ -103,7 +103,7 @@ function Configuracoes() {
                 <div className="config-item-icon config-item-icon--blue">
                   <i className="fa-solid fa-shield-halved"></i>
                 </div>
-                <div className="d-flex flex-column gap-1 flex-grow-1">
+                <div className="d-flex flex-column gap-1 grow">
                   <span className="config-item-titulo">Privacidade e Dados</span>
                   <span className="config-item-desc">Controle seus dados e privacidade</span>
                 </div>
@@ -117,7 +117,7 @@ function Configuracoes() {
                 <div className="config-item-icon config-item-icon--orange">
                   <i className="fa-solid fa-palette"></i>
                 </div>
-                <div className="d-flex flex-column gap-1 flex-grow-1">
+                <div className="d-flex flex-column gap-1 grow">
                   <span className="config-item-titulo">Aparência</span>
                   <span className="config-item-desc">Personalize cores e tema</span>
                 </div>
@@ -131,7 +131,7 @@ function Configuracoes() {
 
               {/* Sair da Conta */}
               <div className="config-perigo-item config-perigo-item--warning">
-                <div className="d-flex align-items-center gap-3 flex-grow-1">
+                <div className="d-flex align-items-center gap-3 grow">
                   <i className="fa-solid fa-arrow-right-from-bracket config-perigo-icon config-perigo-icon--warning"></i>
                   <div className="d-flex flex-column gap-1">
                     <span className="config-perigo-titulo">Sair da Conta</span>
@@ -145,7 +145,7 @@ function Configuracoes() {
 
               {/* Excluir Conta */}
               <div className="config-perigo-item config-perigo-item--error mt-3">
-                <div className="d-flex align-items-center gap-3 flex-grow-1">
+                <div className="d-flex align-items-center gap-3 grow">
                   <i className="fa-solid fa-shield-halved config-perigo-icon config-perigo-icon--error"></i>
                   <div className="d-flex flex-column gap-1">
                     <span className="config-perigo-titulo">Excluir Conta</span>

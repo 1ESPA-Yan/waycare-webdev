@@ -52,7 +52,7 @@ function Conquistas() {
             {/* Card de resumo geral */}
             <div className="card conquistas-resumo mb-5">
               <div className="d-flex align-items-center justify-content-between gap-4">
-                <div className="d-flex flex-column gap-2 flex-grow-1">
+                <div className="d-flex flex-column gap-2 grow">
                   <h2 className="conquistas-resumo-titulo">3 de 6 Conquistados</h2>
                   <p className="conquistas-resumo-desc">Continue completando missões para desbloquear mais!</p>
                   <div className="progress-bar conquistas-progress-bar">
@@ -75,7 +75,7 @@ function Conquistas() {
                     <div className="conquista-icon conquista-icon--orange">
                       <i className="fa-solid fa-fire"></i>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div>
                         <h3 className="conquista-nome">Semana Ativa</h3>
                         <p className="conquista-desc">Complete 7 dias consecutivos</p>
@@ -106,7 +106,7 @@ function Conquistas() {
                     <div className="conquista-icon conquista-icon--purple">
                       <i className="fa-solid fa-moon"></i>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div>
                         <h3 className="conquista-nome">Mestre do Sono</h3>
                         <p className="conquista-desc">Durma 7h+ por 10 dias</p>
@@ -137,7 +137,7 @@ function Conquistas() {
                     <div className="conquista-icon conquista-icon--blue">
                       <i className="fa-solid fa-droplet"></i>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div>
                         <h3 className="conquista-nome">Hidratação em Dia</h3>
                         <p className="conquista-desc">Beba 2L de água por 30 dias</p>
@@ -169,7 +169,7 @@ function Conquistas() {
                       <i className="fa-solid fa-shoe-prints conquista-icon-bg"></i>
                       <i className="fa-solid fa-lock conquista-icon-lock"></i>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div>
                         <h3 className="conquista-nome text-muted">Maratonista</h3>
                         <p className="conquista-desc">Caminhe 100km no total</p>
@@ -201,7 +201,7 @@ function Conquistas() {
                       <i className="fa-solid fa-brain conquista-icon-bg"></i>
                       <i className="fa-solid fa-lock conquista-icon-lock"></i>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div>
                         <h3 className="conquista-nome text-muted">Zen Master</h3>
                         <p className="conquista-desc">Medite por 30 dias seguidos</p>
@@ -233,7 +233,7 @@ function Conquistas() {
                       <i className="fa-solid fa-heart-pulse conquista-icon-bg"></i>
                       <i className="fa-solid fa-lock conquista-icon-lock"></i>
                     </div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div>
                         <h3 className="conquista-nome text-muted">Preventivo</h3>
                         <p className="conquista-desc">Realize check-ups anuais por 3 anos</p>

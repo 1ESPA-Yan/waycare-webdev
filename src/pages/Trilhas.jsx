@@ -529,7 +529,7 @@ function Trilhas() {
 
             {/* Busca e filtros */}
             <div className="d-flex align-items-center gap-3 mb-5 flex-wrap">
-              <div className="trilhas-search flex-grow-1">
+              <div className="trilhas-search grow">
                 <i className="fa-solid fa-magnifying-glass trilhas-search-icon"></i>
                 <input
                   type="search"

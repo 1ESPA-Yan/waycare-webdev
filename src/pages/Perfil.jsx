@@ -58,7 +58,7 @@ function Perfil() {
                 <div className="card perfil-card-principal">
                   <div className="d-flex align-items-start gap-4 mb-4">
                     <div className="avatar avatar-lg perfil-avatar">J</div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
+                    <div className="d-flex flex-column gap-2 grow">
                       <div className="d-flex align-items-center gap-2">
                         <h2 className="perfil-nome">{nomeUsuario}</h2>
                         <button className="perfil-edit-btn" aria-label="Editar perfil">
