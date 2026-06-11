@@ -2,25 +2,30 @@
    Estilos específicos da página de carteira */
 
 /* Cabeçalho */
-.carteira-header {
-  margin-bottom: var(--space-6);
-}
-
-.carteira-header-titulo {
+.carteira-titulo-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-}
-
-.carteira-header-icon {
-  font-size: var(--font-size-md);
-  color: var(--color-primary);
+  justify-content: center;
+  font-size: var(--font-size-base);
 }
 
 .carteira-titulo {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
+  margin: 0;
+  line-height: 1.2;
+}
+
+.carteira-subtitulo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
   margin: 0;
 }
 

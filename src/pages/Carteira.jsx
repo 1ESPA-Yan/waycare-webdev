@@ -47,7 +47,7 @@ function Carteira() {
   const [historico, setHistorico] = useState([])
   const [grafico, setGrafico] = useState([])
   const [destaques, setDestaques] = useState([])
-  const { totalHC } = useApp()
+  const { totalHC, naoLidas } = useApp()
 
   useEffect(() => {
     fetch('/data/carteira.json')
@@ -81,11 +81,21 @@ function Carteira() {
 
         <main className="main-content" id="main-content">
 
-          {/* Cabeçalho */}
-          <header className="carteira-header">
-            <div className="carteira-header-titulo">
-              <i className="fa-solid fa-wallet carteira-header-icon"></i>
-              <h1 className="carteira-titulo">Minha Carteira</h1>
+          <header className="topbar">
+            <div className="d-flex align-items-center gap-3">
+              <div className="carteira-titulo-icon">
+                <i className="fa-solid fa-wallet"></i>
+              </div>
+              <div>
+                <h1 className="carteira-titulo">Minha Carteira</h1>
+                <p className="carteira-subtitulo">Seu extrato de Health Coins</p>
+              </div>
+            </div>
+            <div className="topbar-actions">
+              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
+                <i className="fa-solid fa-bell"></i>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
+              </Link>
             </div>
           </header>
 
