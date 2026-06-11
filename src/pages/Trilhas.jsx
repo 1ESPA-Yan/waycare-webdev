@@ -107,7 +107,7 @@ function PainelMissoes({ trilha, variante, missoesPorTrilha }) {
 function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
   const s = VARIANTE_STYLES[trilha.variante]
   return (
-    <div className={`col-12 trilha-filter-item ${expandida ? 'trilha-expandida-col' : 'col-lg-6'}`}>
+    <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
       <div
         className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
@@ -176,7 +176,7 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
 function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
   const s = VARIANTE_STYLES[trilha.variante]
   return (
-    <div className={`col-12 trilha-filter-item ${expandida ? 'trilha-expandida-col' : 'col-lg-6'}`}>
+    <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
       <div
         className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
@@ -233,7 +233,7 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
 // Card bloqueado
 function TrilhaBloqueada({ trilha }) {
   return (
-    <div className="col-12 col-lg-6 trilha-filter-item">
+    <div className="trilha-filter-item">
       <div className="card trilha-card trilha-card-bloqueada d-flex flex-column gap-3">
         <div className="d-flex align-items-start gap-3">
           <div className="trilha-thumb trilha-thumb--locked">
@@ -375,8 +375,8 @@ function Trilhas() {
           <section id="page-content" className="page-transition">
 
             {/* Cards de resumo */}
-            <div className="row g-3 mb-4">
-              <div className="col-6 col-lg-3">
+            <div className="trilhas-resumo-grid mb-4">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--primary"><i className="fa-solid fa-bullseye"></i></div>
                   <div className="resumo-card-body">
@@ -385,7 +385,7 @@ function Trilhas() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--success"><i className="fa-solid fa-circle-check"></i></div>
                   <div className="resumo-card-body">
@@ -394,7 +394,7 @@ function Trilhas() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--warning"><i className="fa-solid fa-fire"></i></div>
                   <div className="resumo-card-body">
@@ -403,7 +403,7 @@ function Trilhas() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
                   <div className="resumo-card-body">
@@ -478,7 +478,7 @@ function Trilhas() {
                   <span className="badge badge-primary">{andamento.length} ativas</span>
                 </div>
                 {andamento.length > 0 ? (
-                  <div className="row g-4">
+                  <div className="trilhas-cards-grid">
                     {andamento.map(t => (
                       <TrilhaEmAndamento
                         key={t.id}
@@ -502,7 +502,7 @@ function Trilhas() {
                   <span className="badge badge-warning">{disponiveis.length} disponíveis</span>
                 </div>
                 {disponiveis.length > 0 ? (
-                  <div className="row g-4">
+                  <div className="trilhas-cards-grid">
                     {disponiveis.map(t => (
                       <TrilhaDisponivel
                         key={t.id}
@@ -526,7 +526,7 @@ function Trilhas() {
                   <span className="text-sm text-muted">Complete outras trilhas para desbloquear</span>
                 </div>
                 {bloqueadas.length > 0 ? (
-                  <div className="row g-4">
+                  <div className="trilhas-cards-grid">
                     {bloqueadas.map(t => <TrilhaBloqueada key={t.id} trilha={t} />)}
                   </div>
                 ) : <SecaoVazia label={FILTRO_LABEL[filtroAtivo]} />}
