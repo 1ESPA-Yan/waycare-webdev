@@ -42,6 +42,7 @@ function WaycareBottle() {
     simularGole,
     encherGarrafa,
     totalHC,
+    naoLidas,
   } = useApp()
 
   // Ponto LIVE piscando
@@ -91,7 +92,7 @@ function WaycareBottle() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>

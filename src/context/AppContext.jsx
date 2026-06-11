@@ -54,6 +54,17 @@ export function AppProvider({ children }) {
   useEffect(() => { localStorage.setItem('wc_ml_consumido', mlConsumido) }, [mlConsumido])
   useEffect(() => { localStorage.setItem('wc_meta_diaria', metaDiaria)  }, [metaDiaria])
 
+  // NOTIFICAÇÕES — contador de não lidas
+  const [naoLidas, setNaoLidasState] = useState(
+    () => Number(localStorage.getItem('wc_nao_lidas') ?? 2)
+  )
+
+  const setNaoLidas = (count) => {
+    const v = Math.max(0, count)
+    setNaoLidasState(v)
+    localStorage.setItem('wc_nao_lidas', v)
+  }
+
   // HEALTH COINS
   const [totalHC, setTotalHC] = useState(
     () => Number(localStorage.getItem('wc_hc')) || 1300
@@ -145,6 +156,10 @@ export function AppProvider({ children }) {
     humor,
     setHumor,
     HUMOR_CONFIG,
+
+    // Notificações
+    naoLidas,
+    setNaoLidas,
   }
 
   return (

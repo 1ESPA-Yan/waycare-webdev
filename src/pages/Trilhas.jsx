@@ -290,7 +290,7 @@ function Trilhas() {
   const [trilhasData, setTrilhasData]     = useState({ emAndamento: [], disponiveis: [], bloqueadas: [] })
   const [missoesPorTrilha, setMissoesPorTrilha] = useState({})
   const [carregando, setCarregando]       = useState(true)
-  const { totalHC, humor, HUMOR_CONFIG }  = useApp()
+  const { totalHC, humor, HUMOR_CONFIG, naoLidas }  = useApp()
 
   // Busca trilhas e missões dos JSONs locais
   useEffect(() => {
@@ -367,7 +367,7 @@ function Trilhas() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>

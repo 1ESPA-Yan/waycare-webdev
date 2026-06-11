@@ -102,7 +102,7 @@ function Dashboard() {
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
-  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, mlConsumido } = useApp()
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, mlConsumido, naoLidas } = useApp()
   const humorAtual = HUMOR_CONFIG[humor]
 
   const categorias = useMemo(() => {
@@ -167,7 +167,7 @@ function Dashboard() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>

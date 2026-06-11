@@ -17,7 +17,7 @@ function Recompensas() {
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [recompensas, setRecompensas] = useState([])
   const [carregando, setCarregando] = useState(true)
-  const { totalHC } = useApp()
+  const { totalHC, naoLidas } = useApp()
   const navigate = useNavigate()
 
   const handleResgatar = (r) => {
@@ -81,7 +81,7 @@ function Recompensas() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>

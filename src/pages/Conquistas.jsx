@@ -65,7 +65,7 @@ function Conquistas() {
   const [conquistas, setConquistas] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
-  const { totalHC } = useApp()
+  const { totalHC, naoLidas } = useApp()
 
   useEffect(() => {
     fetch('/data/conquistas.json')
@@ -115,7 +115,7 @@ function Conquistas() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>
