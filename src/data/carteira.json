@@ -1,0 +1,26 @@
+{
+  "historico": [
+    { "id": 1, "icone": "fa-person-walking", "cor": "blue",   "titulo": "Caminhar 5.000 passos",      "tempo": "Hoje, 14:30",       "hc": "+50 HC" },
+    { "id": 2, "icone": "fa-brain",          "cor": "teal",   "titulo": "Meditação 5 minutos",         "tempo": "Hoje, 08:15",       "hc": "+30 HC" },
+    { "id": 3, "icone": "fa-child-reaching", "cor": "purple", "titulo": "Alongamento matinal",         "tempo": "Ontem, 07:00",      "hc": "+20 HC" },
+    { "id": 4, "icone": "fa-fire",           "cor": "orange", "titulo": "Streak de 7 dias",            "tempo": "Ontem",             "hc": "+100 HC" },
+    { "id": 5, "icone": "fa-moon",           "cor": "indigo", "titulo": "Dormir 7h",                   "tempo": "Há 2 dias, 23:00",  "hc": "+40 HC" },
+    { "id": 6, "icone": "fa-person-walking", "cor": "blue",   "titulo": "Caminhar 5.000 passos",      "tempo": "Há 2 dias, 16:20",  "hc": "+50 HC" },
+    { "id": 7, "icone": "fa-droplet",        "cor": "cyan",   "titulo": "Beber 2L de água",            "tempo": "Há 3 dias, 20:00",  "hc": "+30 HC" },
+    { "id": 8, "icone": "fa-heart-pulse",    "cor": "red",    "titulo": "Check-up anual realizado",    "tempo": "Há 5 dias",         "hc": "+500 HC" }
+  ],
+  "grafico": [
+    { "dia": "Seg", "valor": 80 },
+    { "dia": "Ter", "valor": 130 },
+    { "dia": "Qua", "valor": 60 },
+    { "dia": "Qui", "valor": 200 },
+    { "dia": "Sex", "valor": 150 },
+    { "dia": "Sáb", "valor": 250 },
+    { "dia": "Dom", "valor": 180 }
+  ],
+  "destaques": [
+    { "id": 1, "icone": "fa-fire",    "cor": "orange", "titulo": "Semana Ativa",      "tempo": "Conquistado há 2 dias" },
+    { "id": 2, "icone": "fa-moon",    "cor": "indigo",  "titulo": "Mestre do Sono",   "tempo": "Conquistado há 5 dias" },
+    { "id": 3, "icone": "fa-droplet", "cor": "cyan",   "titulo": "Hidratação em Dia", "tempo": "Conquistado há 1 semana" }
+  ]
+}
