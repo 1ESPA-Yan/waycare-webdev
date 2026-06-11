@@ -178,13 +178,20 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   padding: 0 var(--space-4);
 }
 
-.flex        { display: flex; }
-.flex-col    { flex-direction: column; }
-.items-center{ align-items: center; }
-.items-start { align-items: flex-start; }
-.justify-center  { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-end     { justify-content: flex-end; }
+/* Flex */
+.flex, .d-flex          { display: flex; }
+.flex-col, .flex-column { flex-direction: column; }
+.flex-wrap              { flex-wrap: wrap; }
+.items-center,  .align-items-center  { align-items: center; }
+.items-start,   .align-items-start   { align-items: flex-start; }
+.items-end,     .align-items-end     { align-items: flex-end; }
+.justify-center,  .justify-content-center  { justify-content: center; }
+.justify-between, .justify-content-between { justify-content: space-between; }
+.justify-end,     .justify-content-end     { justify-content: flex-end; }
+.grow { flex: 1 1 0%; }
+.ms-auto { margin-left: auto; }
+
+/* Gap */
 .gap-1 { gap: var(--space-1); }
 .gap-2 { gap: var(--space-2); }
 .gap-3 { gap: var(--space-3); }
@@ -192,11 +199,26 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 .gap-6 { gap: var(--space-6); }
 .gap-8 { gap: var(--space-8); }
 
+/* Grid */
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
 
+/* Dimensões */
 .w-full  { width: 100%; }
 .h-full  { height: 100%; }
+
+/* Margens */
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-6); }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-6); }
+.py-5 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
 
 /* COMPONENTES REUTILIZÁVEIS */
 
