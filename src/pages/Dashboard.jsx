@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
@@ -100,8 +100,20 @@ function Dashboard() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [missoes, setMissoes] = useState([])
   const [carregando, setCarregando] = useState(true)
+  const [filtroAtivo, setFiltroAtivo] = useState('todos')
+  const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
   const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, mlConsumido } = useApp()
   const humorAtual = HUMOR_CONFIG[humor]
+
+  const categorias = useMemo(() => {
+    const unicas = [...new Set(missoes.map(m => m.categoria))]
+    return [{ key: 'todos', label: 'Todas' }, ...unicas.map(c => ({ key: c, label: c }))]
+  }, [missoes])
+
+  const missoesFiltradas = useMemo(() =>
+    filtroAtivo === 'todos' ? missoes : missoes.filter(m => m.categoria === filtroAtivo),
+    [missoes, filtroAtivo]
+  )
 
   useEffect(() => {
     fetch('/data/missoes-dashboard.json')
@@ -193,10 +205,29 @@ function Dashboard() {
             <div className="dashboard-section">
               <div className="d-flex align-items-center justify-content-between mb-4">
                 <h2 className="section-title">Missões Disponíveis</h2>
-                <button className="filter-btn">
-                  Filtrar <i className="fa-solid fa-chevron-down"></i>
+                <button
+                  className={`filter-btn${filtrosVisiveis ? ' active' : ''}`}
+                  onClick={() => setFiltrosVisiveis(v => !v)}
+                  aria-expanded={filtrosVisiveis}
+                >
+                  Filtrar <i className={`fa-solid fa-chevron-down filter-btn-chevron${filtrosVisiveis ? ' rotated' : ''}`}></i>
                 </button>
               </div>
+
+              {filtrosVisiveis && (
+                <div className="d-flex gap-2 flex-wrap mb-4">
+                  {categorias.map(f => (
+                    <button
+                      key={f.key}
+                      className={`mission-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
+                      onClick={() => setFiltroAtivo(f.key)}
+                      aria-pressed={filtroAtivo === f.key}
+                    >
+                      {f.label}
+                    </button>
+                  ))}
+                </div>
+              )}
 
               {carregando ? (
                 <div className="missions-grid">
@@ -206,7 +237,7 @@ function Dashboard() {
                 </div>
               ) : (
                 <div className="missions-grid">
-                  {missoes.map(missao => (
+                  {missoesFiltradas.map(missao => (
                     <CardMissao key={missao.id} missao={missao} mlConsumido={mlConsumido} />
                   ))}
                 </div>

@@ -1,8 +1,15 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/descobertas.css'
+
+const FILTROS = [
+  { key: 'todos',  label: 'Todos' },
+  { key: 'Alto',   label: 'Alto Impacto' },
+  { key: 'Médio',  label: 'Médio Impacto' },
+  { key: 'Baixo',  label: 'Baixo Impacto' },
+]
 
 function CardDescoberta({ d }) {
   return (
@@ -40,6 +47,7 @@ function Descobertas() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [descobertas, setDescoberta] = useState([])
   const [carregando, setCarregando] = useState(true)
+  const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const { totalHC } = useApp()
 
   useEffect(() => {
@@ -52,6 +60,11 @@ function Descobertas() {
         })
       })
   }, [])
+
+  const filtradas = useMemo(() =>
+    filtroAtivo === 'todos' ? descobertas : descobertas.filter(d => d.impacto === filtroAtivo),
+    [descobertas, filtroAtivo]
+  )
 
   return (
     <>
@@ -97,15 +110,30 @@ function Descobertas() {
 
           <section id="page-content" className="page-transition">
 
+            <div className="d-flex gap-2 flex-wrap mb-4">
+              {FILTROS.map(f => (
+                <button
+                  key={f.key}
+                  className={`descoberta-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
+                  onClick={() => setFiltroAtivo(f.key)}
+                  aria-pressed={filtroAtivo === f.key}
+                >
+                  {f.label}
+                </button>
+              ))}
+            </div>
+
             {carregando ? (
               <div className="d-flex flex-column gap-4">
                 {[1, 2, 3].map(i => (
                   <div key={i} className="card" style={{ minHeight: '140px', opacity: 0.35 }}></div>
                 ))}
               </div>
+            ) : filtradas.length === 0 ? (
+              <p className="text-muted text-center py-5">Nenhuma descoberta para este filtro.</p>
             ) : (
               <div className="d-flex flex-column gap-4">
-                {descobertas.map(d => <CardDescoberta key={d.id} d={d} />)}
+                {filtradas.map(d => <CardDescoberta key={d.id} d={d} />)}
               </div>
             )}
 
