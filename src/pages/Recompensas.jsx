@@ -1,5 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/recompensas.css'
@@ -18,6 +18,13 @@ function Recompensas() {
   const [recompensas, setRecompensas] = useState([])
   const [carregando, setCarregando] = useState(true)
   const { totalHC } = useApp()
+  const navigate = useNavigate()
+
+  const handleResgatar = (r) => {
+    navigate('/resgate/confirmar', {
+      state: { recompensa: { nome: r.nome, preco: r.hc, icone: r.icone } },
+    })
+  }
 
   // Consumo do JSON local — para simular a chamada de API
   useEffect(() => {
@@ -126,6 +133,7 @@ function Recompensas() {
                           className="btn recompensa-btn"
                           disabled={totalHC < r.hc}
                           title={totalHC < r.hc ? 'HC insuficiente' : 'Resgatar'}
+                          onClick={() => handleResgatar(r)}
                         >
                           {totalHC >= r.hc ? 'Resgatar Agora' : 'HC insuficiente'}
                         </button>

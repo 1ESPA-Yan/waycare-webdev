@@ -1,0 +1,82 @@
+[
+  {
+    "id": 1,
+    "titulo": "Caminhar 5.000 passos",
+    "descricao": "Movimente-se ao longo do dia",
+    "categoria": "Movimento",
+    "categoriaBadge": "badge-info",
+    "icone": "fa-shoe-prints",
+    "emojiCor": "blue",
+    "tempo": "30-40 min",
+    "hc": 50,
+    "status": "disponivel",
+    "tipo": "normal"
+  },
+  {
+    "id": 2,
+    "titulo": "Beber 2L de água",
+    "descricao": "Hidratação monitorada pelo WayCare Bottle",
+    "categoria": "Hidratação",
+    "categoriaBadge": "badge-info",
+    "icone": "fa-droplet",
+    "emojiCor": "blue",
+    "tempo": "Durante o dia",
+    "hc": 30,
+    "status": "em-progresso",
+    "tipo": "bottle",
+    "progressoMl": 450,
+    "metaMl": 2000
+  },
+  {
+    "id": 3,
+    "titulo": "Dormir 7h esta noite",
+    "descricao": "Prepare-se para uma boa noite de sono",
+    "categoria": "Sono",
+    "categoriaBadge": "badge-purple",
+    "icone": "fa-moon",
+    "emojiCor": "purple",
+    "tempo": "Noite",
+    "hc": 40,
+    "status": "disponivel",
+    "tipo": "normal"
+  },
+  {
+    "id": 4,
+    "titulo": "5 minutos de meditação",
+    "descricao": "Acalme sua mente com meditação guiada",
+    "categoria": "Mindfulness",
+    "categoriaBadge": "badge-teal",
+    "icone": "fa-brain",
+    "emojiCor": "teal",
+    "tempo": "5 min",
+    "hc": 30,
+    "status": "disponivel",
+    "tipo": "normal"
+  },
+  {
+    "id": 5,
+    "titulo": "Check-up anual",
+    "descricao": "Agende sua consulta preventiva",
+    "categoria": "Check-up",
+    "categoriaBadge": "badge-error",
+    "icone": "fa-heart-pulse",
+    "emojiCor": "red",
+    "tempo": "1 hora",
+    "hc": 500,
+    "status": "disponivel",
+    "tipo": "normal"
+  },
+  {
+    "id": 6,
+    "titulo": "Alongamento matinal",
+    "descricao": "Desperte o corpo com alongamentos leves",
+    "categoria": "Movimento",
+    "categoriaBadge": "badge-info",
+    "icone": "fa-person-running",
+    "emojiCor": "blue",
+    "tempo": "10 min",
+    "hc": 20,
+    "status": "concluida",
+    "tipo": "normal"
+  }
+]

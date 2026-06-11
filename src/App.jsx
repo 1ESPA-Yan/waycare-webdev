@@ -16,6 +16,10 @@ import WaycareBottle from './pages/WaycareBottle'
 import Carteira from './pages/Carteira'
 import Notificacoes from './pages/Notificacoes'
 import SelecionarHumor from './pages/SelecionarHumor'
+import DetalhesMissao from './pages/DetalhesMissao'
+import MissaoCompleta from './pages/MissaoCompleta'
+import ConfirmarResgate from './pages/ConfirmarResgate'
+import SucessoResgate from './pages/SucessoResgate'
 import NotFound from './pages/Notfound'
 
 import './styles/global.css'
@@ -42,6 +46,10 @@ function App() {
           <Route path="/waycare-bottle" element={<WaycareBottle />} />
           <Route path="/carteira" element={<Carteira />} />
           <Route path="/notificacoes" element={<Notificacoes />} />
+          <Route path="/missao/completa" element={<MissaoCompleta />} />
+          <Route path="/missao/:id" element={<DetalhesMissao />} />
+          <Route path="/resgate/confirmar" element={<ConfirmarResgate />} />
+          <Route path="/resgate/sucesso" element={<SucessoResgate />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

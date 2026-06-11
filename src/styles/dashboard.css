@@ -366,11 +366,22 @@
   cursor: default;
 }
 
+/* Grid de missões — CSS Grid nativo */
+.missions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .dashboard-topbar {
     flex-direction: column;
     gap: var(--space-3);
+  }
+
+  .missions-grid {
+    grid-template-columns: 1fr;
   }
 
   .trilha-card-title {
