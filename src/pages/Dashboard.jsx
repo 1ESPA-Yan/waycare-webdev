@@ -162,12 +162,14 @@ function Dashboard() {
 
           <section id="page-content" className="page-transition">
 
-            {/* Trilha de hoje */}
+            {/* Trilha de hoje — baseada no humor selecionado */}
             <div className="trilha-card dashboard-section">
               <div className="d-flex align-items-start justify-content-between gap-3 mb-3">
                 <div className="d-flex align-items-center gap-2">
-                  <div className="trilha-hoje-icon"><i className="fa-solid fa-moon"></i></div>
-                  <h2 className="trilha-card-title">Sua Trilha de Hoje: Sono Profundo</h2>
+                  <div className="trilha-hoje-icon" style={{ color: humorAtual.badgeColor, backgroundColor: humorAtual.badgeBg }}>
+                    <i className={`fa-solid ${humorAtual.icon}`}></i>
+                  </div>
+                  <h2 className="trilha-card-title">Sua Trilha de Hoje: {humorAtual.trilha}</h2>
                 </div>
                 <Link to="/trilhas" className="trilha-link">Ver trilha completa →</Link>
               </div>
