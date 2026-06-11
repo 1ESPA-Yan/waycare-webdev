@@ -80,7 +80,7 @@
   --transition-slow: 0.4s ease;
 
   /* Layout */
-  --sidebar-width: 220px;
+  --sidebar-width: 280px;
   --topbar-height: 64px;
   --content-max: 1200px;
 }
@@ -808,7 +808,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 }
 
 @media (max-width: 1024px) {
-  :root { --sidebar-width: 200px; }
+  :root { --sidebar-width: 240px; }
   .main-content { padding: var(--space-6); }
 }
 
