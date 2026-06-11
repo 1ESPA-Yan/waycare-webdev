@@ -114,9 +114,9 @@ function Recompensas() {
 
             {/* Grid de recompensas */}
             {!carregando && recompensasFiltradas.length > 0 && (
-              <div className="row g-4">
+              <div className="recompensas-grid">
                 {recompensasFiltradas.map(r => (
-                  <div key={r.id} className="col-12 col-md-6 col-lg-4 recompensa-filter-item">
+                  <div key={r.id} className="recompensa-filter-item">
                     <div className="card recompensa-card">
                       <div className={`recompensa-thumb ${r.thumb}`}>
                         <i className={`fa-solid ${r.icone}`}></i>

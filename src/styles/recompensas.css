@@ -70,6 +70,21 @@
   border-color: var(--color-primary);
 }
 
+/* Grid de recompensas — CSS Grid nativo, 3 colunas */
+.recompensas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .recompensas-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .recompensas-grid { grid-template-columns: 1fr; }
+}
+
 /* Cards de recompensa */
 .recompensa-card {
   padding: 0;
