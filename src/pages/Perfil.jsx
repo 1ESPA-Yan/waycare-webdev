@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
@@ -6,7 +6,19 @@ import '../styles/perfil.css'
 
 function Perfil() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [totalConquistas, setTotalConquistas] = useState(0)
   const { totalHC, nomeUsuario, emailUsuario } = useApp()
+
+  useEffect(() => {
+    fetch('/data/conquistas.json')
+      .then(res => res.json())
+      .then(data => setTotalConquistas(data.filter(c => c.desbloqueada).length))
+      .catch(() => {
+        import('../data/conquistas.json').then(mod =>
+          setTotalConquistas(mod.default.filter(c => c.desbloqueada).length)
+        )
+      })
+  }, [])
 
   return (
     <>
@@ -128,7 +140,7 @@ function Perfil() {
                       </div>
                       <div className="d-flex flex-column gap-1">
                         <span className="perfil-stat-label">Total de Coins Ganhos</span>
-                        <span className="perfil-stat-valor">3.450</span>
+                        <span className="perfil-stat-valor">{totalHC.toLocaleString('pt-BR')}</span>
                       </div>
                     </div>
                   </div>
@@ -139,7 +151,7 @@ function Perfil() {
                       </div>
                       <div className="d-flex flex-column gap-1">
                         <span className="perfil-stat-label">Conquistas</span>
-                        <span className="perfil-stat-valor">12</span>
+                        <span className="perfil-stat-valor">{totalConquistas}</span>
                       </div>
                     </div>
                   </div>
