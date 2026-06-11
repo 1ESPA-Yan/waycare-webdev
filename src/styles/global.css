@@ -598,7 +598,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, #27c48a 0%, #0f6347 100%);
   color: var(--color-white);
   display: flex;
   align-items: center;
@@ -606,6 +606,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm);
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(28, 151, 112, 0.35);
 }
 
 .avatar-lg {
@@ -671,8 +672,9 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 
 .nav-item.active {
   color: var(--color-primary);
-  background-color: var(--color-primary-light);
-  border-left-color: var(--color-primary);
+  background: linear-gradient(90deg, #d4efe5 0%, rgba(232, 245, 241, 0) 100%);
+  border-left: 4px solid var(--color-primary);
+  font-weight: var(--font-weight-bold);
 }
 
 /* ÍCONES */

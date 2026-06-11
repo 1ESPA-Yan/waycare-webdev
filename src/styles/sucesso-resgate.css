@@ -2,7 +2,7 @@
 
 .sucesso-page {
   min-height: 100vh;
-  background-color: var(--color-bg);
+  background: linear-gradient(180deg, #e0f5ec 0%, var(--color-bg) 38%);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -20,11 +20,15 @@
   width: 120px;
   height: 120px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, #27c48a 0%, #0f6347 100%);
   display: flex;
   align-items: center;
   justify-content: center;
   margin: 0 auto var(--space-8);
+  box-shadow:
+    0 0 0 12px rgba(28, 151, 112, 0.10),
+    0 0 0 24px rgba(28, 151, 112, 0.05),
+    0 8px 24px rgba(28, 151, 112, 0.30);
 }
 
 .sucesso-check-icon {

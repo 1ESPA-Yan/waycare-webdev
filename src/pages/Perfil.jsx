@@ -1,8 +1,14 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'motion/react'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/perfil.css'
+
+const cardVariants = {
+  hidden:  { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+}
 
 function Perfil() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -88,13 +94,21 @@ function Perfil() {
 
           <section id="page-content" className="page-transition">
 
-            <div className="perfil-layout">
+            <motion.div
+              className="perfil-layout"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+            >
 
               {/* Coluna esquerda */}
-              <div className="d-flex flex-column gap-4">
+              <motion.div
+                className="d-flex flex-column gap-4"
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }}
+              >
 
                 {/* Card principal do perfil */}
-                <div className="card perfil-card-principal">
+                <motion.div variants={cardVariants} className="card perfil-card-principal">
 
                   <div className="d-flex align-items-start gap-4">
                     <div className="avatar avatar-lg perfil-avatar">{letraAvatar}</div>
@@ -203,10 +217,10 @@ function Perfil() {
                       </div>
                     </div>
                   )}
-                </div>
+                </motion.div>
 
                 {/* Grid de estatísticas */}
-                <div className="perfil-stats-grid">
+                <motion.div variants={cardVariants} className="perfil-stats-grid">
                   <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--blue">
@@ -251,10 +265,10 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
 
                 {/* Conquistas recentes */}
-                <div className="card">
+                <motion.div variants={cardVariants} className="card">
                   <div className="d-flex align-items-center gap-2 mb-4">
                     <div className="perfil-stat-icon perfil-stat-icon--trophy">
                       <i className="fa-solid fa-trophy"></i>
@@ -315,11 +329,15 @@ function Perfil() {
                   <Link to="/conquistas" className="btn perfil-btn-conquistas">
                     Ver Todas as Conquistas
                   </Link>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* Coluna direita — atalhos */}
-              <div className="d-flex flex-column gap-4">
+              <motion.div
+                className="d-flex flex-column gap-4"
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } } }}
+              >
+                <motion.div variants={cardVariants}>
                 <Link to="/configuracoes" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--gray">
                     <i className="fa-solid fa-gear"></i>
@@ -329,7 +347,9 @@ function Perfil() {
                     <span className="perfil-atalho-desc">Ajuste suas preferências</span>
                   </div>
                 </Link>
+                </motion.div>
 
+                <motion.div variants={cardVariants}>
                 <Link to="/recompensas" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--green">
                     <i className="fa-solid fa-gift"></i>
@@ -339,7 +359,9 @@ function Perfil() {
                     <span className="perfil-atalho-desc">Vouchers resgatados</span>
                   </div>
                 </Link>
+                </motion.div>
 
+                <motion.div variants={cardVariants}>
                 <Link to="/descobertas" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--yellow">
                     <i className="fa-solid fa-lightbulb"></i>
@@ -349,9 +371,10 @@ function Perfil() {
                     <span className="perfil-atalho-desc">Insights sobre sua saúde</span>
                   </div>
                 </Link>
-              </div>
+                </motion.div>
+              </motion.div>
 
-            </div>
+            </motion.div>
           </section>
         </main>
       </div>
