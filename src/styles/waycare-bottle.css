@@ -1,6 +1,45 @@
 /* WAYCARE — WayCare Bottle CSS
    Estilos exclusivos da página da garrafa IoT */
 
+/* Grid de resumo — 4 colunas */
+.bottle-resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+/* Layout principal — painel escuro (7) + coluna direita (5) */
+.bottle-layout {
+  display: grid;
+  grid-template-columns: 7fr 5fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Grid interno do painel — garrafa (5) + meta (7) */
+.bottle-painel-grid {
+  display: grid;
+  grid-template-columns: 5fr 7fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Mini estatísticas — 3 colunas iguais */
+.bottle-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-2);
+}
+
+@media (max-width: 1100px) {
+  .bottle-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .bottle-resumo-grid { grid-template-columns: repeat(2, 1fr); }
+  .bottle-painel-grid { grid-template-columns: 1fr; }
+}
+
 /* Link de voltar */
 .bottle-voltar {
   width: 36px;

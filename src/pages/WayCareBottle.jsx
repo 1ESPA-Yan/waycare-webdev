@@ -99,8 +99,8 @@ function WaycareBottle() {
           <section id="page-content" className="page-transition">
 
             {/* Cards de resumo */}
-            <div className="row g-3 mb-4">
-              <div className="col-6 col-lg-3">
+            <div className="bottle-resumo-grid mb-4">
+              <div>
                 <div className="card bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--blue"><i className="fa-solid fa-droplet"></i></div>
                   <div className="d-flex flex-column gap-1">
@@ -109,7 +109,7 @@ function WaycareBottle() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--green"><i className="fa-solid fa-arrow-trend-up"></i></div>
                   <div className="d-flex flex-column gap-1">
@@ -118,7 +118,7 @@ function WaycareBottle() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--primary"><i className="fa-regular fa-circle-check"></i></div>
                   <div className="d-flex flex-column gap-1">
@@ -127,7 +127,7 @@ function WaycareBottle() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
                   <div className="d-flex flex-column gap-1">
@@ -138,10 +138,10 @@ function WaycareBottle() {
               </div>
             </div>
 
-            <div className="row g-4">
+            <div className="bottle-layout">
 
               {/* Painel principal dark */}
-              <div className="col-12 col-xl-7">
+              <div>
                 <div className="bottle-painel">
 
                   <div className="d-flex align-items-center justify-content-between mb-4">
@@ -163,10 +163,10 @@ function WaycareBottle() {
                     </div>
                   </div>
 
-                  <div className="row g-4 mb-4">
+                  <div className="bottle-painel-grid mb-4">
 
                     {/* Garrafa SVG animada */}
-                    <div className="col-12 col-md-5">
+                    <div>
                       <span className="bottle-secao-label">GARRAFA FÍSICA</span>
                       <GarrafaAnimada pct={pctGarrafa} ml={mlGarrafa} />
                       <div className="bottle-como-funciona">
@@ -179,7 +179,7 @@ function WaycareBottle() {
                     </div>
 
                     {/* Meta diária */}
-                    <div className="col-12 col-md-7">
+                    <div>
                       <span className="bottle-secao-label">META DIÁRIA</span>
                       <div className="bottle-meta-valor">
                         <span className="bottle-meta-ml">{mlConsumido}</span>
@@ -198,22 +198,22 @@ function WaycareBottle() {
                         <span className="bottle-meta-pct" style={{ color: corMeta }}>{pctMeta}%</span>
                       </div>
 
-                      <div className="row g-2 mb-4">
-                        <div className="col-4">
+                      <div className="bottle-mini-grid mb-4">
+                        <div>
                           <div className="bottle-mini-stat">
                             <i className="fa-solid fa-droplet bottle-mini-icon"></i>
                             <span className="bottle-mini-valor">{leituras.length}</span>
                             <span className="bottle-mini-label">Goles</span>
                           </div>
                         </div>
-                        <div className="col-4">
+                        <div>
                           <div className="bottle-mini-stat">
                             <i className="fa-solid fa-coins bottle-mini-icon bottle-mini-icon--hc"></i>
                             <span className="bottle-mini-valor">+{hcGarrafa}</span>
                             <span className="bottle-mini-label">HC ganhos</span>
                           </div>
                         </div>
-                        <div className="col-4">
+                        <div>
                           <div className="bottle-mini-stat">
                             <i className="fa-regular fa-clock bottle-mini-icon"></i>
                             <span className="bottle-mini-valor">{leituras[0]?.hora || '--:--'}</span>
@@ -311,7 +311,7 @@ function WaycareBottle() {
               </div>
 
               {/* Coluna direita */}
-              <div className="col-12 col-xl-5 d-flex flex-column gap-4">
+              <div className="d-flex flex-column gap-4">
 
                 <div className="card">
                   <h3 className="bottle-col-titulo mb-4">
