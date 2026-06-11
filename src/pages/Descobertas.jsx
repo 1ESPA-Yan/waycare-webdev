@@ -126,7 +126,17 @@ function Descobertas() {
             {carregando ? (
               <div className="d-flex flex-column gap-4">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="card" style={{ minHeight: '140px', opacity: 0.35 }}></div>
+                  <div key={i} className="card descoberta-card">
+                    <div className="d-flex align-items-start gap-4 mb-3">
+                      <div className="skeleton" style={{ width: 48, height: 48, borderRadius: '50%', flexShrink: 0 }}></div>
+                      <div className="d-flex flex-column gap-2 grow">
+                        <div className="skeleton" style={{ height: 14, width: '50%' }}></div>
+                        <div className="skeleton" style={{ height: 11, width: '35%' }}></div>
+                      </div>
+                    </div>
+                    <div className="skeleton" style={{ height: 40, marginBottom: 8 }}></div>
+                    <div className="skeleton" style={{ height: 12, width: '70%' }}></div>
+                  </div>
                 ))}
               </div>
             ) : filtradas.length === 0 ? (

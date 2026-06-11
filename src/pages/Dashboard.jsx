@@ -233,7 +233,17 @@ function Dashboard() {
               {carregando ? (
                 <div className="missions-grid">
                   {[1, 2, 3, 4].map(i => (
-                    <div key={i} className="card-mission" style={{ minHeight: '160px', opacity: 0.4 }}></div>
+                    <div key={i} className="card-mission" style={{ padding: 'var(--space-5)' }}>
+                      <div className="d-flex align-items-start gap-3 mb-3">
+                        <div className="skeleton" style={{ width: 44, height: 44, borderRadius: '50%', flexShrink: 0 }}></div>
+                        <div className="d-flex flex-column gap-2 grow">
+                          <div className="skeleton" style={{ height: 14, width: '65%' }}></div>
+                          <div className="skeleton" style={{ height: 11, width: '85%' }}></div>
+                        </div>
+                      </div>
+                      <div className="skeleton" style={{ height: 12, width: '50%', marginBottom: 12 }}></div>
+                      <div className="skeleton" style={{ height: 40, borderRadius: 8 }}></div>
+                    </div>
                   ))}
                 </div>
               ) : (

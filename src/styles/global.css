@@ -385,11 +385,18 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   overflow: hidden;
 }
 
+@keyframes fillBar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
 .progress-fill {
   height: 100%;
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   transition: width var(--transition-slow);
+  transform-origin: left center;
+  animation: fillBar 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .progress-fill.warning { background-color: var(--color-warning); }
@@ -406,6 +413,14 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   font-size: var(--font-size-sm);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-full);
+  border: 1px solid rgba(245, 166, 35, 0.28);
+  box-shadow: 0 1px 4px rgba(245, 166, 35, 0.12);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.hc-chip:hover {
+  box-shadow: 0 0 10px rgba(245, 166, 35, 0.32), 0 0 0 2px rgba(245, 166, 35, 0.18);
+  transform: translateY(-1px);
 }
 
 /* Health Coins em cards de missão, trilhas e conquistas */
@@ -792,6 +807,24 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 @keyframes notifPulse {
   0%, 100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.5); }
   50%       { transform: scale(1.2); box-shadow: 0 0 0 4px rgba(229, 57, 53, 0); }
+}
+
+/* Skeleton shimmer loader */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 25%,
+    #ebebeb 50%,
+    var(--color-border) 75%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--radius-sm);
 }
 
 /* Alerta - Card de Descoberta */
