@@ -1,0 +1,67 @@
+[
+  {
+    "id": 1,
+    "nome": "Padrão de Sono",
+    "categoria": "Sono",
+    "categoriaBadge": "badge-purple",
+    "impacto": "Alto",
+    "impactoBadge": "descoberta-badge--alto",
+    "data": "Hoje",
+    "icone": "fa-moon",
+    "cor": "purple",
+    "insight": "Você dorme melhor nos dias que caminha à tarde",
+    "dado": "Completou 5 caminhadas → Dormiu 7h+ em 4 noites"
+  },
+  {
+    "id": 2,
+    "nome": "Hidratação e Energia",
+    "categoria": "Nutrição",
+    "categoriaBadge": "badge-warning",
+    "impacto": "Médio",
+    "impactoBadge": "descoberta-badge--medio",
+    "data": "Ontem",
+    "icone": "fa-droplet",
+    "cor": "blue",
+    "insight": "Seu humor melhora quando você bebe água pela manhã",
+    "dado": "8 dias com água matinal → Humor \"energético\" em 7 dias"
+  },
+  {
+    "id": 3,
+    "nome": "Estresse e Meditação",
+    "categoria": "Mindfulness",
+    "categoriaBadge": "badge-teal",
+    "impacto": "Alto",
+    "impactoBadge": "descoberta-badge--alto",
+    "data": "Há 2 dias",
+    "icone": "fa-brain",
+    "cor": "teal",
+    "insight": "Meditação reduz seu estresse em 40%",
+    "dado": "10 sessões de meditação → Humor estressado caiu de 50% para 30%"
+  },
+  {
+    "id": 4,
+    "nome": "Movimento e Produtividade",
+    "categoria": "Movimento",
+    "categoriaBadge": "badge-info",
+    "impacto": "Médio",
+    "impactoBadge": "descoberta-badge--medio",
+    "data": "Há 3 dias",
+    "icone": "fa-person-running",
+    "cor": "green",
+    "insight": "Você completa mais missões nos dias que caminha",
+    "dado": "Dias com 5k passos → 85% de missões completadas"
+  },
+  {
+    "id": 5,
+    "nome": "Alimentação Balanceada",
+    "categoria": "Nutrição",
+    "categoriaBadge": "badge-warning",
+    "impacto": "Baixo",
+    "impactoBadge": "descoberta-badge--baixo",
+    "data": "Há 5 dias",
+    "icone": "fa-apple-whole",
+    "cor": "orange",
+    "insight": "Refeições regulares melhoram sua consistência",
+    "dado": "7 dias com 3 refeições → Streak de 7 dias mantido"
+  }
+]
