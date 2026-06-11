@@ -4,33 +4,10 @@ import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
 import '../styles/detalhes-missao.css'
 
-const DICAS = {
-  1: [
-    { icone: 'fa-utensils',     titulo: 'Ande no almoço',    descricao: 'Caminhe 15 min',       cor: '#FF9800' },
-    { icone: 'fa-stairs',       titulo: 'Use escadas',        descricao: 'Evite o elevador',     cor: '#2196F3' },
-    { icone: 'fa-paw',          titulo: 'Passeie com pet',    descricao: 'Duplo benefício',      cor: '#F44336' },
-  ],
-  3: [
-    { icone: 'fa-moon',         titulo: 'Desligue as telas',  descricao: '1h antes de dormir',   cor: '#7986CB' },
-    { icone: 'fa-mug-hot',      titulo: 'Chá de camomila',    descricao: 'Relaxamento natural',  cor: '#8D6E63' },
-    { icone: 'fa-temperature-low', titulo: 'Ambiente fresco', descricao: '18–20°C ideal',        cor: '#42A5F5' },
-  ],
-  4: [
-    { icone: 'fa-wind',         titulo: 'Respiração 4-7-8',   descricao: 'Acalme a mente',       cor: '#7AD1C3' },
-    { icone: 'fa-headphones',   titulo: 'Sons da natureza',   descricao: 'Foco mais fácil',      cor: '#9C27B0' },
-    { icone: 'fa-chair',        titulo: 'Postura confortável', descricao: 'Coluna reta',          cor: '#4CAF50' },
-  ],
-  5: [
-    { icone: 'fa-calendar-check', titulo: 'Agende online',    descricao: 'Acesso pelo app',      cor: '#1C9770' },
-    { icone: 'fa-clipboard-list', titulo: 'Leve seus exames', descricao: 'Histórico atualizado', cor: '#2196F3' },
-    { icone: 'fa-bell',          titulo: 'Crie um lembrete',  descricao: 'Não esqueça',          cor: '#FF9800' },
-  ],
-}
-
 const DICAS_DEFAULT = [
-  { icone: 'fa-star', titulo: 'Mantenha o foco', descricao: 'Você consegue!',       cor: '#1C9770' },
-  { icone: 'fa-clock', titulo: 'Reserve um tempo', descricao: 'Na sua rotina',      cor: '#2196F3' },
-  { icone: 'fa-trophy', titulo: 'Comemore',       descricao: 'Cada passo importa',  cor: '#FFC107' },
+  { icone: 'fa-star',   titulo: 'Mantenha o foco',   descricao: 'Você consegue!',      cor: '#1C9770' },
+  { icone: 'fa-clock',  titulo: 'Reserve um tempo',  descricao: 'Na sua rotina',       cor: '#2196F3' },
+  { icone: 'fa-trophy', titulo: 'Comemore',           descricao: 'Cada passo importa', cor: '#FFC107' },
 ]
 
 function DetalhesMissao() {
@@ -81,7 +58,7 @@ function DetalhesMissao() {
     )
   }
 
-  const dicas = DICAS[missao.id] || DICAS_DEFAULT
+  const dicas = missao.dicas?.length ? missao.dicas : DICAS_DEFAULT
   const progresso = missao.tipo === 'bottle' ? Math.round((mlConsumido / missao.metaMl) * 100) : null
 
   return (
@@ -123,7 +100,7 @@ function DetalhesMissao() {
             </span>
           </div>
 
-          <p className="detalhes-descricao">{missao.descricao}</p>
+          <p className="detalhes-descricao">{missao.descricaoLonga || missao.descricao}</p>
 
           {/* Progresso (só para bottle ou missions em andamento) */}
           {missao.tipo === 'bottle' && (
