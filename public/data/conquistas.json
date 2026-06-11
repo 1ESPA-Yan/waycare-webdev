@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "nome": "Semana Ativa",
+    "desc": "Complete 7 dias consecutivos",
+    "icone": "fa-fire",
+    "cor": "orange",
+    "progresso": 7,
+    "total": 7,
+    "hc": 100,
+    "desbloqueada": true,
+    "dataDesbloqueio": "Desbloqueado há 2 dias"
+  },
+  {
+    "id": 2,
+    "nome": "Mestre do Sono",
+    "desc": "Durma 7h+ por 10 dias",
+    "icone": "fa-moon",
+    "cor": "purple",
+    "progresso": 10,
+    "total": 10,
+    "hc": 150,
+    "desbloqueada": true,
+    "dataDesbloqueio": "Desbloqueado há 5 dias"
+  },
+  {
+    "id": 3,
+    "nome": "Hidratação em Dia",
+    "desc": "Beba 2L de água por 30 dias",
+    "icone": "fa-droplet",
+    "cor": "blue",
+    "progresso": 30,
+    "total": 30,
+    "hc": 200,
+    "desbloqueada": true,
+    "dataDesbloqueio": "Desbloqueado há 1 semana"
+  },
+  {
+    "id": 4,
+    "nome": "Maratonista",
+    "desc": "Caminhe 100km no total",
+    "icone": "fa-shoe-prints",
+    "cor": "locked",
+    "progresso": 67,
+    "total": 100,
+    "hc": 500,
+    "desbloqueada": false,
+    "dataDesbloqueio": null
+  },
+  {
+    "id": 5,
+    "nome": "Zen Master",
+    "desc": "Medite por 30 dias seguidos",
+    "icone": "fa-brain",
+    "cor": "locked",
+    "progresso": 12,
+    "total": 30,
+    "hc": 300,
+    "desbloqueada": false,
+    "dataDesbloqueio": null
+  },
+  {
+    "id": 6,
+    "nome": "Preventivo",
+    "desc": "Realize check-ups anuais por 3 anos",
+    "icone": "fa-heart-pulse",
+    "cor": "locked-red",
+    "progresso": 1,
+    "total": 3,
+    "hc": 1000,
+    "desbloqueada": false,
+    "dataDesbloqueio": null
+  }
+]

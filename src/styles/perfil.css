@@ -37,6 +37,38 @@
   margin: 0;
 }
 
+/* Layout de duas colunas — CSS Grid (8/4) */
+.perfil-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  gap: var(--space-4);
+  align-items: start;
+}
+
+/* Grid de estatísticas — 2 colunas */
+.perfil-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+}
+
+/* Grid de conquistas recentes — 2 colunas */
+.perfil-conquistas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-3);
+  margin-bottom: var(--space-4);
+}
+
+@media (max-width: 960px) {
+  .perfil-layout { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .perfil-stats-grid { grid-template-columns: 1fr; }
+  .perfil-conquistas-grid { grid-template-columns: 1fr; }
+}
+
 /* Card principal */
 .perfil-card-principal {
   padding: var(--space-6);

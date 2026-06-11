@@ -49,10 +49,10 @@ function Perfil() {
 
           <section id="page-content" className="page-transition">
 
-            <div className="row g-4">
+            <div className="perfil-layout">
 
               {/* Coluna esquerda */}
-              <div className="col-12 col-lg-8 d-flex flex-column gap-4">
+              <div className="d-flex flex-column gap-4">
 
                 {/* Card principal do perfil */}
                 <div className="card perfil-card-principal">
@@ -98,8 +98,8 @@ function Perfil() {
                 </div>
 
                 {/* Grid de estatísticas */}
-                <div className="row g-3">
-                  <div className="col-6">
+                <div className="perfil-stats-grid">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--blue">
                         <i className="fa-solid fa-bullseye"></i>
@@ -110,7 +110,7 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--orange">
                         <i className="fa-solid fa-fire"></i>
@@ -121,7 +121,7 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--hc">
                         <i className="fa-solid fa-coins"></i>
@@ -132,7 +132,7 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--trophy">
                         <i className="fa-solid fa-trophy"></i>
@@ -154,9 +154,9 @@ function Perfil() {
                     <h3 className="perfil-secao-titulo">Conquistas Recentes</h3>
                   </div>
 
-                  <div className="row g-3 mb-4">
+                  <div className="perfil-conquistas-grid">
                     {/* Semana Ativa — desbloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--orange">
                           <i className="fa-solid fa-fire"></i>
@@ -169,7 +169,7 @@ function Perfil() {
                     </div>
 
                     {/* Mestre do Sono — desbloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--purple">
                           <i className="fa-solid fa-moon"></i>
@@ -182,7 +182,7 @@ function Perfil() {
                     </div>
 
                     {/* Hidratação em Dia — desbloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--blue">
                           <i className="fa-solid fa-droplet"></i>
@@ -195,7 +195,7 @@ function Perfil() {
                     </div>
 
                     {/* Maratonista — bloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item">
                         <div className="perfil-conquista-icon perfil-conquista-icon--locked">
                           <i className="fa-solid fa-person-running"></i>
@@ -215,7 +215,7 @@ function Perfil() {
               </div>
 
               {/* Coluna direita — atalhos */}
-              <div className="col-12 col-lg-4 d-flex flex-column gap-4">
+              <div className="d-flex flex-column gap-4">
                 <Link to="/configuracoes" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--gray">
                     <i className="fa-solid fa-gear"></i>

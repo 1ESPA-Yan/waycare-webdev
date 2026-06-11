@@ -37,6 +37,17 @@
   margin: 0;
 }
 
+/* Grid de conquistas — CSS Grid nativo, 2 colunas */
+.conquistas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .conquistas-grid { grid-template-columns: 1fr; }
+}
+
 /* Card de resumo */
 .conquistas-resumo {
   padding: var(--space-6) var(--space-8);
