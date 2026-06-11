@@ -42,9 +42,9 @@ const HUMORES = [
 ]
 
 function SelecionarHumor() {
-  const [humorSelecionado, setHumorSelecionado] = useState(null)
   const navigate = useNavigate()
-  const { totalHC, setHumor } = useApp()
+  const { totalHC, humor, setHumor } = useApp()
+  const [humorSelecionado, setHumorSelecionado] = useState(humor)
 
   const handleContinuar = () => {
     if (!humorSelecionado) return
@@ -61,9 +61,14 @@ function SelecionarHumor() {
           <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
           <span className="humor-logo-nome">WayCare</span>
         </div>
-        <div className="hc-chip">
-          <i className="fa-solid fa-coins"></i>
-          {totalHC} HC
+        <div className="d-flex align-items-center gap-3">
+          <div className="hc-chip">
+            <i className="fa-solid fa-coins"></i>
+            {totalHC} HC
+          </div>
+          <button className="humor-btn-voltar" onClick={() => navigate('/dashboard')} aria-label="Voltar">
+            <i className="fa-solid fa-xmark"></i>
+          </button>
         </div>
       </header>
 

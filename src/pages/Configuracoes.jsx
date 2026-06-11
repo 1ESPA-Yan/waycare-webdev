@@ -4,14 +4,75 @@ import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/configuracoes.css'
 
+function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
+  const [editando, setEditando] = useState(false)
+  const [rascunho, setRascunho] = useState(String(valor))
+  const [salvo, setSalvo] = useState(false)
+
+  const handleSalvar = () => {
+    const v = tipo === 'number' ? Number(rascunho) : rascunho.trim()
+    if (!v) return
+    onSalvar(v)
+    setEditando(false)
+    setSalvo(true)
+    setTimeout(() => setSalvo(false), 2000)
+  }
+
+  const handleCancelar = () => {
+    setRascunho(String(valor))
+    setEditando(false)
+  }
+
+  if (editando) {
+    return (
+      <div className="config-row config-row--editing">
+        <div className="config-row-info grow">
+          <span className="config-row-label">{label}</span>
+          <div className="config-edit-wrap">
+            <input
+              className="config-edit-input"
+              type={tipo}
+              value={rascunho}
+              onChange={e => setRascunho(e.target.value)}
+              onKeyDown={e => { if (e.key === 'Enter') handleSalvar(); if (e.key === 'Escape') handleCancelar() }}
+              autoFocus
+              min={tipo === 'number' ? 500 : undefined}
+              max={tipo === 'number' ? 5000 : undefined}
+            />
+            {unidade && <span className="config-edit-unidade">{unidade}</span>}
+          </div>
+        </div>
+        <div className="d-flex gap-2">
+          <button className="config-row-action config-row-action--save" onClick={handleSalvar}>Salvar</button>
+          <button className="config-row-action config-row-action--cancel" onClick={handleCancelar}>Cancelar</button>
+        </div>
+      </div>
+    )
+  }
+
+  return (
+    <div className="config-row">
+      <div className="config-row-info">
+        <span className="config-row-label">{label}</span>
+        <span className="config-row-valor">
+          {valor}{unidade ? ` ${unidade}` : ''}
+          {salvo && <span className="config-salvo-badge"><i className="fa-solid fa-check"></i> Salvo</span>}
+        </span>
+      </div>
+      <button className="config-row-action" onClick={() => { setRascunho(String(valor)); setEditando(true) }}>
+        Editar
+      </button>
+    </div>
+  )
+}
+
 function Configuracoes() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const navigate = useNavigate()
-  const { totalHC, nomeUsuario, emailUsuario } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria } = useApp()
 
   return (
     <>
-      {/* Botão hamburguer — só aparece no mobile */}
       <button
         className="sidebar-toggle"
         aria-label="Abrir menu"
@@ -25,13 +86,15 @@ function Configuracoes() {
 
         <main className="main-content" id="main-content">
 
-          {/* Topbar */}
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="config-titulo-icon">
                 <i className="fa-solid fa-gear"></i>
               </div>
-              <h1 className="config-titulo">Configurações</h1>
+              <div>
+                <h1 className="config-titulo">Configurações</h1>
+                <p className="config-subtitulo">Personalize sua experiência WayCare</p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip">
@@ -54,23 +117,20 @@ function Configuracoes() {
             <div className="card config-section mb-4">
               <h2 className="config-section-titulo mb-4">Informações da Conta</h2>
 
-              <div className="config-row">
-                <div className="config-row-info">
-                  <span className="config-row-label">Nome</span>
-                  <span className="config-row-valor">{nomeUsuario}</span>
-                </div>
-                <a href="#" className="config-row-action">Editar</a>
-              </div>
+              <CampoEditavel
+                label="Nome"
+                valor={nomeUsuario}
+                onSalvar={nome => salvarUsuario(nome, emailUsuario)}
+              />
 
               <div className="config-divider"></div>
 
-              <div className="config-row">
-                <div className="config-row-info">
-                  <span className="config-row-label">E-mail</span>
-                  <span className="config-row-valor">{emailUsuario}</span>
-                </div>
-                <a href="#" className="config-row-action">Editar</a>
-              </div>
+              <CampoEditavel
+                label="E-mail"
+                valor={emailUsuario}
+                tipo="email"
+                onSalvar={email => salvarUsuario(nomeUsuario, email)}
+              />
 
               <div className="config-divider"></div>
 
@@ -79,7 +139,30 @@ function Configuracoes() {
                   <span className="config-row-label">Senha</span>
                   <span className="config-row-valor config-senha">••••••••</span>
                 </div>
-                <a href="#" className="config-row-action">Alterar</a>
+                <button className="config-row-action">Alterar</button>
+              </div>
+            </div>
+
+            {/* Saúde & Metas */}
+            <div className="card config-section mb-4">
+              <h2 className="config-section-titulo mb-4">Saúde & Metas</h2>
+
+              <CampoEditavel
+                label="Meta diária de hidratação"
+                valor={metaDiaria}
+                tipo="number"
+                unidade="ml"
+                onSalvar={v => setMetaDiaria(Number(v))}
+              />
+
+              <div className="config-divider"></div>
+
+              <div className="config-row">
+                <div className="config-row-info">
+                  <span className="config-row-label">Humor atual</span>
+                  <span className="config-row-valor">Atualizado diariamente</span>
+                </div>
+                <Link to="/humor" className="config-row-action">Mudar →</Link>
               </div>
             </div>
 
@@ -93,7 +176,7 @@ function Configuracoes() {
                   <span className="config-item-titulo">Notificações</span>
                   <span className="config-item-desc">Gerencie suas preferências de notificação</span>
                 </div>
-                <a href="#" className="config-row-action config-row-action--arrow">Configurar →</a>
+                <Link to="/notificacoes" className="config-row-action config-row-action--arrow">Configurar →</Link>
               </div>
             </div>
 
@@ -129,7 +212,6 @@ function Configuracoes() {
             <div className="card config-section mb-4">
               <h2 className="config-section-titulo mb-4">Zona de Perigo</h2>
 
-              {/* Sair da Conta */}
               <div className="config-perigo-item config-perigo-item--warning">
                 <div className="d-flex align-items-center gap-3 grow">
                   <i className="fa-solid fa-arrow-right-from-bracket config-perigo-icon config-perigo-icon--warning"></i>
@@ -138,12 +220,11 @@ function Configuracoes() {
                     <span className="config-perigo-desc">Você pode voltar a qualquer momento</span>
                   </div>
                 </div>
-                <Link to="/login" className="config-perigo-action config-perigo-action--warning">
+                <Link to="/" className="config-perigo-action config-perigo-action--warning">
                   Sair →
                 </Link>
               </div>
 
-              {/* Excluir Conta */}
               <div className="config-perigo-item config-perigo-item--error mt-3">
                 <div className="d-flex align-items-center gap-3 grow">
                   <i className="fa-solid fa-shield-halved config-perigo-icon config-perigo-icon--error"></i>
