@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'motion/react'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/conquistas.css'
@@ -173,9 +174,25 @@ function Conquistas() {
             ) : filtradas.length === 0 ? (
               <p className="text-muted text-center py-5">Nenhuma conquista para este filtro.</p>
             ) : (
-              <div className="conquistas-grid">
-                {filtradas.map(c => <CardConquista key={c.id} c={c} />)}
-              </div>
+              <motion.div
+                className="conquistas-grid"
+                key={filtroAtivo}
+                initial="hidden"
+                animate="visible"
+                variants={{ visible: { transition: { staggerChildren: 0.08 } } }}
+              >
+                {filtradas.map(c => (
+                  <motion.div
+                    key={c.id}
+                    variants={{
+                      hidden:  { opacity: 0, scale: 0.95, y: 12 },
+                      visible: { opacity: 1, scale: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+                    }}
+                  >
+                    <CardConquista c={c} />
+                  </motion.div>
+                ))}
+              </motion.div>
             )}
 
             {/* Dica */}

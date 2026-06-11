@@ -1,5 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'motion/react'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/dashboard.css'
@@ -236,11 +237,25 @@ function Dashboard() {
                   ))}
                 </div>
               ) : (
-                <div className="missions-grid">
+                <motion.div
+                  className="missions-grid"
+                  key={filtroAtivo}
+                  initial="hidden"
+                  animate="visible"
+                  variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
+                >
                   {missoesFiltradas.map(missao => (
-                    <CardMissao key={missao.id} missao={missao} mlConsumido={mlConsumido} />
+                    <motion.div
+                      key={missao.id}
+                      variants={{
+                        hidden:  { opacity: 0, y: 18 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: 'easeOut' } },
+                      }}
+                    >
+                      <CardMissao missao={missao} mlConsumido={mlConsumido} />
+                    </motion.div>
                   ))}
-                </div>
+                </motion.div>
               )}
             </div>
 

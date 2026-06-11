@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { AnimatePresence, motion } from 'motion/react'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/notificacoes.css'
@@ -135,43 +136,50 @@ function Notificacoes() {
             {/* Lista */}
             {filtradas.length > 0 ? (
               <div className="notif-lista">
-                {filtradas.map(n => (
-                  <div
-                    key={n.id}
-                    className={`notif-item${n.lida ? '' : ' notif-item--nao-lida'}`}
-                  >
-                    {!n.lida && <span className="notif-item-dot"></span>}
-                    <div className={`notif-item-icone notif-item-icone--${n.cor}`}>
-                      <i className={`fa-solid ${n.icone}`}></i>
-                    </div>
-                    <div className="notif-item-corpo">
-                      <div className="notif-item-cabecalho">
-                        <span className="notif-item-titulo">{n.titulo}</span>
-                        <span className="notif-item-tempo">{n.tempo}</span>
+                <AnimatePresence initial={false}>
+                  {filtradas.map(n => (
+                    <motion.div
+                      key={n.id}
+                      layout
+                      initial={{ opacity: 0, y: -12 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, x: 40, transition: { duration: 0.18 } }}
+                      transition={{ duration: 0.22, ease: 'easeOut' }}
+                      className={`notif-item${n.lida ? '' : ' notif-item--nao-lida'}`}
+                    >
+                      {!n.lida && <span className="notif-item-dot"></span>}
+                      <div className={`notif-item-icone notif-item-icone--${n.cor}`}>
+                        <i className={`fa-solid ${n.icone}`}></i>
                       </div>
-                      <p className="notif-item-desc">{n.descricao}</p>
-                      <div className="notif-item-acoes">
-                        <button className="notif-btn-detalhes">Ver detalhes</button>
-                        {!n.lida && (
+                      <div className="notif-item-corpo">
+                        <div className="notif-item-cabecalho">
+                          <span className="notif-item-titulo">{n.titulo}</span>
+                          <span className="notif-item-tempo">{n.tempo}</span>
+                        </div>
+                        <p className="notif-item-desc">{n.descricao}</p>
+                        <div className="notif-item-acoes">
+                          <button className="notif-btn-detalhes">Ver detalhes</button>
+                          {!n.lida && (
+                            <button
+                              className="notif-btn-icone"
+                              aria-label="Marcar como lida"
+                              onClick={() => marcarLida(n.id)}
+                            >
+                              <i className="fa-solid fa-check"></i>
+                            </button>
+                          )}
                           <button
-                            className="notif-btn-icone"
-                            aria-label="Marcar como lida"
-                            onClick={() => marcarLida(n.id)}
+                            className="notif-btn-icone notif-btn-icone--remover"
+                            aria-label="Remover"
+                            onClick={() => remover(n.id)}
                           >
-                            <i className="fa-solid fa-check"></i>
+                            <i className="fa-solid fa-xmark"></i>
                           </button>
-                        )}
-                        <button
-                          className="notif-btn-icone notif-btn-icone--remover"
-                          aria-label="Remover"
-                          onClick={() => remover(n.id)}
-                        >
-                          <i className="fa-solid fa-xmark"></i>
-                        </button>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
               </div>
             ) : (
               <div className="notif-empty">

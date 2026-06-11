@@ -786,6 +786,12 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   top: 6px;
   right: 6px;
   padding: 0;
+  animation: notifPulse 2s ease-in-out infinite;
+}
+
+@keyframes notifPulse {
+  0%, 100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.5); }
+  50%       { transform: scale(1.2); box-shadow: 0 0 0 4px rgba(229, 57, 53, 0); }
 }
 
 /* Alerta - Card de Descoberta */
@@ -813,7 +819,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 @keyframes fadeInPage {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -821,8 +827,30 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   }
 }
 
+
 .page-transition {
-  animation: fadeInPage 0.25s ease forwards;
+  animation: fadeInPage 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Micro-interação de pressão em todos os filtros/tags */
+.mission-filter-tag:active,
+.notif-tag:active,
+.trilha-tag:active,
+.recompensa-tag:active,
+.conquista-filter-tag:active,
+.descoberta-filter-tag:active,
+.filter-btn:active,
+.humor-card:active {
+  transform: scale(0.94) !important;
+}
+
+/* Melhora o hover dos cards com transição suave */
+.card {
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-1px);
 }
 
 /* RESPONSIVIDADE */
