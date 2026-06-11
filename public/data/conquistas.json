@@ -2,7 +2,7 @@
   {
     "id": 1,
     "nome": "Semana Ativa",
-    "desc": "Complete 7 dias consecutivos",
+    "desc": "Complete missões por 7 dias consecutivos",
     "icone": "fa-fire",
     "cor": "orange",
     "progresso": 7,
@@ -14,7 +14,7 @@
   {
     "id": 2,
     "nome": "Mestre do Sono",
-    "desc": "Durma 7h+ por 10 dias",
+    "desc": "Durma 7h+ por 10 dias seguidos",
     "icone": "fa-moon",
     "cor": "purple",
     "progresso": 10,
@@ -37,9 +37,33 @@
   },
   {
     "id": 4,
+    "nome": "Primeiro Passo",
+    "desc": "Conclua sua primeira missão no app",
+    "icone": "fa-shoe-prints",
+    "cor": "green",
+    "progresso": 1,
+    "total": 1,
+    "hc": 50,
+    "desbloqueada": true,
+    "dataDesbloqueio": "Desbloqueado há 3 semanas"
+  },
+  {
+    "id": 5,
+    "nome": "Explorador",
+    "desc": "Visite todas as seções do app",
+    "icone": "fa-compass",
+    "cor": "teal",
+    "progresso": 8,
+    "total": 8,
+    "hc": 80,
+    "desbloqueada": true,
+    "dataDesbloqueio": "Desbloqueado há 2 semanas"
+  },
+  {
+    "id": 6,
     "nome": "Maratonista",
     "desc": "Caminhe 100km no total",
-    "icone": "fa-shoe-prints",
+    "icone": "fa-person-running",
     "cor": "locked",
     "progresso": 67,
     "total": 100,
@@ -48,7 +72,7 @@
     "dataDesbloqueio": null
   },
   {
-    "id": 5,
+    "id": 7,
     "nome": "Zen Master",
     "desc": "Medite por 30 dias seguidos",
     "icone": "fa-brain",
@@ -60,7 +84,31 @@
     "dataDesbloqueio": null
   },
   {
-    "id": 6,
+    "id": 8,
+    "nome": "Centenário",
+    "desc": "Complete 100 missões no total",
+    "icone": "fa-trophy",
+    "cor": "locked",
+    "progresso": 48,
+    "total": 100,
+    "hc": 750,
+    "desbloqueada": false,
+    "dataDesbloqueio": null
+  },
+  {
+    "id": 9,
+    "nome": "Streak Lendário",
+    "desc": "Mantenha 30 dias consecutivos",
+    "icone": "fa-bolt",
+    "cor": "locked",
+    "progresso": 5,
+    "total": 30,
+    "hc": 400,
+    "desbloqueada": false,
+    "dataDesbloqueio": null
+  },
+  {
+    "id": 10,
     "nome": "Preventivo",
     "desc": "Realize check-ups anuais por 3 anos",
     "icone": "fa-heart-pulse",

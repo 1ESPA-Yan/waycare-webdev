@@ -1,8 +1,14 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/conquistas.css'
+
+const FILTROS = [
+  { key: 'todas',         label: 'Todas' },
+  { key: 'desbloqueadas', label: 'Desbloqueadas' },
+  { key: 'bloqueadas',    label: 'Bloqueadas' },
+]
 
 function CardConquista({ c }) {
   const pct = Math.round((c.progresso / c.total) * 100)
@@ -58,6 +64,7 @@ function Conquistas() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [conquistas, setConquistas] = useState([])
   const [carregando, setCarregando] = useState(true)
+  const [filtroAtivo, setFiltroAtivo] = useState('todas')
   const { totalHC } = useApp()
 
   useEffect(() => {
@@ -71,7 +78,13 @@ function Conquistas() {
       })
   }, [])
 
-  const desbloqueadas = conquistas.filter(c => c.desbloqueada).length
+  const desbloqueadas = useMemo(() => conquistas.filter(c => c.desbloqueada).length, [conquistas])
+
+  const filtradas = useMemo(() => {
+    if (filtroAtivo === 'desbloqueadas') return conquistas.filter(c => c.desbloqueada)
+    if (filtroAtivo === 'bloqueadas')    return conquistas.filter(c => !c.desbloqueada)
+    return conquistas
+  }, [conquistas, filtroAtivo])
 
   return (
     <>
@@ -87,7 +100,10 @@ function Conquistas() {
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="conquistas-titulo-icon"><i className="fa-solid fa-trophy"></i></div>
-              <h1 className="conquistas-titulo">Conquistas</h1>
+              <div>
+                <h1 className="conquistas-titulo">Conquistas</h1>
+                <p className="conquistas-subtitulo">Desbloqueie medalhas completando missões</p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip">
@@ -127,16 +143,38 @@ function Conquistas() {
               </div>
             </div>
 
-            {/* Grid de conquistas — CSS Grid */}
+            {/* Filtros */}
+            <div className="d-flex gap-2 flex-wrap mb-4">
+              {FILTROS.map(f => (
+                <button
+                  key={f.key}
+                  className={`conquista-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
+                  onClick={() => setFiltroAtivo(f.key)}
+                  aria-pressed={filtroAtivo === f.key}
+                >
+                  {f.label}
+                  {f.key === 'desbloqueadas' && !carregando && (
+                    <span className="conquista-filter-count">{desbloqueadas}</span>
+                  )}
+                  {f.key === 'bloqueadas' && !carregando && (
+                    <span className="conquista-filter-count">{conquistas.length - desbloqueadas}</span>
+                  )}
+                </button>
+              ))}
+            </div>
+
+            {/* Grid de conquistas */}
             {carregando ? (
               <div className="conquistas-grid">
                 {[1, 2, 3, 4].map(i => (
                   <div key={i} className="card" style={{ minHeight: '120px', opacity: 0.35 }}></div>
                 ))}
               </div>
+            ) : filtradas.length === 0 ? (
+              <p className="text-muted text-center py-5">Nenhuma conquista para este filtro.</p>
             ) : (
               <div className="conquistas-grid">
-                {conquistas.map(c => <CardConquista key={c.id} c={c} />)}
+                {filtradas.map(c => <CardConquista key={c.id} c={c} />)}
               </div>
             )}
 
