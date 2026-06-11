@@ -1,91 +1,9 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/notificacoes.css'
 
-const NOTIFICACOES_INICIAIS = [
-    {
-        id: 1,
-        tipo: 'missao',
-        icone: 'fa-bullseye',
-        cor: 'green',
-        titulo: 'Nova missão disponível!',
-        descricao: 'Check-up anual está disponível. Ganhe 500 HC!',
-        tempo: 'Há 5 minutos',
-        lida: false,
-    },
-    {
-        id: 2,
-        tipo: 'conquista',
-        icone: 'fa-trophy',
-        cor: 'warning',
-        titulo: 'Conquista desbloqueada!',
-        descricao: 'Você ganhou o badge "Semana Ativa"',
-        tempo: 'Há 1 hora',
-        lida: false,
-    },
-    {
-        id: 3,
-        tipo: 'recompensa',
-        icone: 'fa-gift',
-        cor: 'orange',
-        titulo: 'Recompensa disponível',
-        descricao: 'Seu voucher de consulta nutricional está pronto!',
-        tempo: 'Há 2 horas',
-        lida: true,
-    },
-    {
-        id: 4,
-        tipo: 'descoberta',
-        icone: 'fa-lightbulb',
-        cor: 'yellow',
-        titulo: 'Nova descoberta',
-        descricao: 'Você dorme melhor nos dias que caminha à tarde',
-        tempo: 'Ontem',
-        lida: true,
-    },
-    {
-        id: 5,
-        tipo: 'hc',
-        icone: 'fa-coins',
-        cor: 'hc',
-        titulo: 'Health Coins recebidos',
-        descricao: 'Você ganhou 50 HC por completar uma missão',
-        tempo: 'Há 2 dias',
-        lida: true,
-    },
-    {
-        id: 6,
-        tipo: 'missao',
-        icone: 'fa-bullseye',
-        cor: 'green',
-        titulo: 'Missão concluída!',
-        descricao: 'Parabéns! Você completou "Caminhar 5.000 passos"',
-        tempo: 'Há 3 dias',
-        lida: true,
-    },
-    {
-        id: 7,
-        tipo: 'conquista',
-        icone: 'fa-trophy',
-        cor: 'warning',
-        titulo: 'Conquista desbloqueada!',
-        descricao: 'Você ganhou o badge "Mestre do Sono"',
-        tempo: 'Há 5 dias',
-        lida: true,
-    },
-    {
-        id: 8,
-        tipo: 'recompensa',
-        icone: 'fa-gift',
-        cor: 'orange',
-        titulo: 'Lembrete de recompensa',
-        descricao: 'Você tem HCs suficientes para resgatar uma Aula de Yoga!',
-        tempo: 'Há 1 semana',
-        lida: true,
-    },
-]
 
 const FILTROS = [
     { key: 'todas', label: 'Todas' },
@@ -98,9 +16,18 @@ const FILTROS = [
 
 function Notificacoes() {
     const [sidebarOpen, setSidebarOpen] = useState(false)
-    const [notificacoes, setNotificacoes] = useState(NOTIFICACOES_INICIAIS)
+    const [notificacoes, setNotificacoes] = useState([])
     const [filtroAtivo, setFiltroAtivo] = useState('todas')
     const { totalHC } = useApp()
+
+    useEffect(() => {
+        fetch('/data/notificacoes.json')
+            .then(res => res.json())
+            .then(data => setNotificacoes(data))
+            .catch(() => {
+                import('../data/notificacoes.json').then(mod => setNotificacoes(mod.default))
+            })
+    }, [])
 
     const naoLidas = notificacoes.filter(n => !n.lida).length
 
@@ -164,8 +91,8 @@ function Notificacoes() {
 
                     <section id="page-content">
                         {/* Filtros */}
-                        <div className="flex items-center justify-between w-full mt-5 mb-4">
-                            <div className="flex gap-2 flex-wrap">
+                        <div className="d-flex align-items-center justify-content-between w-full mt-5 mb-4">
+                            <div className="d-flex gap-2 flex-wrap">
                                 {FILTROS.map(f => (
                                     <button
                                         key={f.key}
@@ -180,7 +107,7 @@ function Notificacoes() {
 
                             {naoLidas > 0 && (
                                 <button
-                                    className="notif-page-marcar-todas flex items-center gap-2"
+                                    className="notif-page-marcar-todas d-flex align-items-center gap-2"
                                     onClick={marcarTodasLidas}
                                 >
                                     <i className="fa-solid fa-check-double"></i>
