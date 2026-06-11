@@ -12,6 +12,15 @@ export function AppProvider({ children }) {
     localStorage.getItem('wc_email') || ''
   )
 
+  const [bioUsuario, setBioUsuarioState] = useState(
+    localStorage.getItem('wc_bio') || ''
+  )
+
+  const setBioUsuario = (bio) => {
+    setBioUsuarioState(bio)
+    localStorage.setItem('wc_bio', bio)
+  }
+
   // Salva nome e email no estado e no localStorage
   const salvarUsuario = (nome, email = '') => {
     const primeiroNome = nome.trim().split(' ')[0]
@@ -132,6 +141,8 @@ export function AppProvider({ children }) {
     // Usuário
     nomeUsuario,
     emailUsuario,
+    bioUsuario,
+    setBioUsuario,
     salvarUsuario,
 
     // Garrafa

@@ -7,7 +7,13 @@ import '../styles/perfil.css'
 function Perfil() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [totalConquistas, setTotalConquistas] = useState(0)
-  const { totalHC, nomeUsuario, emailUsuario, naoLidas } = useApp()
+  const [editando, setEditando] = useState(false)
+  const [salvo, setSalvo] = useState(false)
+  const [rascunhoNome, setRascunhoNome] = useState('')
+  const [rascunhoEmail, setRascunhoEmail] = useState('')
+  const [rascunhoBio, setRascunhoBio] = useState('')
+
+  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, naoLidas } = useApp()
 
   useEffect(() => {
     fetch('/data/conquistas.json')
@@ -20,9 +26,28 @@ function Perfil() {
       })
   }, [])
 
+  const iniciarEdicao = () => {
+    setRascunhoNome(nomeUsuario)
+    setRascunhoEmail(emailUsuario)
+    setRascunhoBio(bioUsuario || '')
+    setEditando(true)
+  }
+
+  const cancelar = () => setEditando(false)
+
+  const salvar = () => {
+    if (!rascunhoNome.trim()) return
+    salvarUsuario(rascunhoNome.trim(), rascunhoEmail.trim())
+    setBioUsuario(rascunhoBio.trim())
+    setEditando(false)
+    setSalvo(true)
+    setTimeout(() => setSalvo(false), 2500)
+  }
+
+  const letraAvatar = nomeUsuario?.[0]?.toUpperCase() || 'U'
+
   return (
     <>
-      {/* Botão hamburguer — só aparece no mobile */}
       <button
         className="sidebar-toggle"
         aria-label="Abrir menu"
@@ -36,13 +61,15 @@ function Perfil() {
 
         <main className="main-content" id="main-content">
 
-          {/* Topbar */}
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="perfil-titulo-icon">
                 <i className="fa-solid fa-user"></i>
               </div>
-              <h1 className="perfil-titulo">Meu Perfil</h1>
+              <div>
+                <h1 className="perfil-titulo">Meu Perfil</h1>
+                <p className="perfil-subtitulo">Gerencie suas informações pessoais</p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip">
@@ -68,45 +95,114 @@ function Perfil() {
 
                 {/* Card principal do perfil */}
                 <div className="card perfil-card-principal">
-                  <div className="d-flex align-items-start gap-4 mb-4">
-                    <div className="avatar avatar-lg perfil-avatar">J</div>
+
+                  <div className="d-flex align-items-start gap-4">
+                    <div className="avatar avatar-lg perfil-avatar">{letraAvatar}</div>
+
                     <div className="d-flex flex-column gap-2 grow">
-                      <div className="d-flex align-items-center gap-2">
-                        <h2 className="perfil-nome">{nomeUsuario}</h2>
-                        <button className="perfil-edit-btn" aria-label="Editar perfil">
-                          <i className="fa-regular fa-pen-to-square"></i>
-                        </button>
-                      </div>
-                      <div className="d-flex align-items-center gap-3 flex-wrap">
-                        <span className="perfil-meta">
-                          <i className="fa-regular fa-envelope"></i>
-                          {emailUsuario}
-                        </span>
-                        <span className="perfil-meta">
-                          <i className="fa-regular fa-calendar"></i>
-                          Membro desde Mai 2024
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2 flex-wrap">
-                        <span className="perfil-stat-chip perfil-stat-chip--green">
-                          Nível<strong>5</strong>
-                        </span>
-                        <span className="perfil-stat-chip perfil-stat-chip--gray">
-                          XP<strong>2.450</strong>
-                        </span>
-                        <span className="perfil-stat-chip perfil-stat-chip--hc">
-                          Próximo nível<strong>550 XP</strong>
-                        </span>
-                      </div>
+                      {editando ? (
+                        <div className="perfil-edit-form">
+                          <div className="perfil-edit-field">
+                            <label className="perfil-edit-label">Nome</label>
+                            <input
+                              className="perfil-edit-input"
+                              type="text"
+                              value={rascunhoNome}
+                              onChange={e => setRascunhoNome(e.target.value)}
+                              onKeyDown={e => { if (e.key === 'Enter') salvar(); if (e.key === 'Escape') cancelar() }}
+                              autoFocus
+                              maxLength={40}
+                            />
+                          </div>
+                          <div className="perfil-edit-field">
+                            <label className="perfil-edit-label">E-mail</label>
+                            <input
+                              className="perfil-edit-input"
+                              type="email"
+                              value={rascunhoEmail}
+                              onChange={e => setRascunhoEmail(e.target.value)}
+                              onKeyDown={e => { if (e.key === 'Enter') salvar(); if (e.key === 'Escape') cancelar() }}
+                              placeholder="seu@email.com"
+                            />
+                          </div>
+                          <div className="perfil-edit-field">
+                            <label className="perfil-edit-label">
+                              Bio
+                              <span className="perfil-edit-hint"> {rascunhoBio.length}/80</span>
+                            </label>
+                            <textarea
+                              className="perfil-edit-input perfil-edit-textarea"
+                              value={rascunhoBio}
+                              onChange={e => setRascunhoBio(e.target.value.slice(0, 80))}
+                              onKeyDown={e => { if (e.key === 'Escape') cancelar() }}
+                              placeholder="Uma frase sobre você..."
+                              rows={2}
+                            />
+                          </div>
+                          <div className="perfil-edit-actions">
+                            <button
+                              className="perfil-edit-btn-salvar"
+                              onClick={salvar}
+                              disabled={!rascunhoNome.trim()}
+                            >
+                              <i className="fa-solid fa-check"></i> Salvar
+                            </button>
+                            <button className="perfil-edit-btn-cancelar" onClick={cancelar}>
+                              <i className="fa-solid fa-xmark"></i> Cancelar
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="d-flex align-items-center gap-2">
+                            <h2 className="perfil-nome">{nomeUsuario}</h2>
+                            {salvo && <span className="perfil-salvo-badge">Salvo!</span>}
+                            <button
+                              className="perfil-edit-btn ms-auto"
+                              aria-label="Editar perfil"
+                              onClick={iniciarEdicao}
+                            >
+                              <i className="fa-regular fa-pen-to-square"></i>
+                            </button>
+                          </div>
+                          {bioUsuario && <p className="perfil-bio">{bioUsuario}</p>}
+                          <div className="d-flex align-items-center gap-3 flex-wrap">
+                            <span className="perfil-meta">
+                              <i className="fa-regular fa-envelope"></i>
+                              {emailUsuario || 'Sem email'}
+                            </span>
+                            <span className="perfil-meta">
+                              <i className="fa-regular fa-calendar"></i>
+                              Membro desde Mai 2024
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 flex-wrap">
+                            <span className="perfil-stat-chip perfil-stat-chip--green">
+                              Nível<strong>5</strong>
+                            </span>
+                            <span className="perfil-stat-chip perfil-stat-chip--gray">
+                              XP<strong>2.450</strong>
+                            </span>
+                            <span className="perfil-stat-chip perfil-stat-chip--hc">
+                              Próximo nível<strong>550 XP</strong>
+                            </span>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="text-sm text-secondary">Progresso para Nível 6</span>
-                    <span className="text-sm font-bold trilha-pct">82%</span>
-                  </div>
-                  <div className="progress-bar perfil-progress-bar">
-                    <div className="progress-fill" style={{ width: '82%' }}></div>
-                  </div>
+
+                  {!editando && (
+                    <div className="mt-4">
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="text-sm text-secondary">Progresso para Nível 6</span>
+                        <span className="text-sm font-bold trilha-pct">82%</span>
+                      </div>
+                      <div className="progress-bar perfil-progress-bar">
+                        <div className="progress-fill" style={{ width: '82%' }}></div>
+                      </div>
+                    </div>
+                  )}
                 </div>
 
                 {/* Grid de estatísticas */}
@@ -167,7 +263,6 @@ function Perfil() {
                   </div>
 
                   <div className="perfil-conquistas-grid">
-                    {/* Semana Ativa — desbloqueada */}
                     <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--orange">
@@ -180,7 +275,6 @@ function Perfil() {
                       </div>
                     </div>
 
-                    {/* Mestre do Sono — desbloqueada */}
                     <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--purple">
@@ -193,7 +287,6 @@ function Perfil() {
                       </div>
                     </div>
 
-                    {/* Hidratação em Dia — desbloqueada */}
                     <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--blue">
@@ -206,7 +299,6 @@ function Perfil() {
                       </div>
                     </div>
 
-                    {/* Maratonista — bloqueada */}
                     <div>
                       <div className="perfil-conquista-item">
                         <div className="perfil-conquista-icon perfil-conquista-icon--locked">

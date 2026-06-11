@@ -35,6 +35,13 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin: 0;
+  line-height: 1.2;
+}
+
+.perfil-subtitulo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
 /* Layout de duas colunas — CSS Grid (8/4) */
@@ -100,6 +107,136 @@
 
 .perfil-edit-btn:hover {
   color: var(--color-primary);
+}
+
+/* Bio exibida abaixo do nome */
+.perfil-bio {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-style: italic;
+}
+
+/* Badge "Salvo!" */
+.perfil-salvo-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-sm);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  animation: perfilSalvoFade 2.5s forwards;
+}
+
+@keyframes perfilSalvoFade {
+  0%   { opacity: 0; transform: translateY(-4px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  75%  { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* Formulário de edição inline */
+.perfil-edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.perfil-edit-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+
+.perfil-edit-label {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.perfil-edit-hint {
+  font-weight: var(--font-weight-regular, 400);
+  color: var(--color-text-muted);
+  text-transform: none;
+  letter-spacing: 0;
+}
+
+.perfil-edit-input {
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-primary);
+  background-color: var(--color-white);
+  transition: border-color var(--transition-fast);
+  outline: none;
+  font-family: inherit;
+  resize: none;
+}
+
+.perfil-edit-input:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(28, 151, 112, 0.12);
+}
+
+.perfil-edit-textarea {
+  min-height: 54px;
+  line-height: var(--line-height-base);
+}
+
+.perfil-edit-actions {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.perfil-edit-btn-salvar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary);
+  color: var(--color-white);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.perfil-edit-btn-salvar:hover {
+  background-color: var(--color-primary-dark, #157a59);
+}
+
+.perfil-edit-btn-salvar:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.perfil-edit-btn-cancelar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: transparent;
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  border: 1.5px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.perfil-edit-btn-cancelar:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text-primary);
 }
 
 .perfil-meta {
