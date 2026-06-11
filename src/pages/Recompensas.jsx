@@ -69,7 +69,10 @@ function Recompensas() {
               <div className="recompensas-titulo-icon">
                 <i className="fa-solid fa-gift"></i>
               </div>
-              <h1 className="recompensas-titulo">Catálogo de Recompensas</h1>
+              <div>
+                <h1 className="recompensas-titulo">Catálogo de Recompensas</h1>
+                <p className="recompensas-subtitulo">Troque seus Health Coins por prêmios</p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip hc-chip--destaque">

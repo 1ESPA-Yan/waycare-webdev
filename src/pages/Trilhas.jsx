@@ -350,12 +350,17 @@ function Trilhas() {
 
           {/* Topbar */}
           <header className="topbar">
-            <div>
-              <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
-              <p className="trilhas-page-subtitle">
-                Recomendado para você: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
-                <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
-              </p>
+            <div className="d-flex align-items-center gap-3">
+              <div className="trilhas-titulo-icon">
+                <i className="fa-solid fa-route"></i>
+              </div>
+              <div>
+                <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
+                <p className="trilhas-page-subtitle">
+                  Recomendado: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
+                  <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
+                </p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip">
