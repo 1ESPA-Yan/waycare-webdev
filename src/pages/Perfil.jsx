@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import Sidebar from '../components/Sidebar'
+import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
 import '../styles/perfil.css'
 
@@ -265,6 +266,11 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
+                </motion.div>
+
+                {/* Meta de hidratação personalizada (conectada ao backend) */}
+                <motion.div variants={cardVariants}>
+                  <PerfilMetaHidratacao />
                 </motion.div>
 
                 {/* Conquistas recentes */}

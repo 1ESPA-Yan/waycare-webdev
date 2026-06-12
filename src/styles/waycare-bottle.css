@@ -708,6 +708,224 @@
   line-height: var(--line-height-base);
 }
 
+/* Badge "offline/demo" no header e no painel */
+.bottle-conectada-badge--off {
+  background-color: #fdecea;
+  color: var(--color-error);
+}
+
+.bottle-live-badge--off {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Avisos de conexão / dispositivo */
+.bottle-aviso {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
+.bottle-aviso--info {
+  background-color: #e3f2fd;
+  color: #1565c0;
+  border: 1px solid #bbdefb;
+}
+
+.bottle-aviso--offline {
+  background-color: #fdecea;
+  color: var(--color-error);
+  border: 1px solid #f5c6c0;
+}
+
+.bottle-aviso--garrafa {
+  background-color: #fff8ec;
+  color: #b76e00;
+  border: 1px solid #ffe0a0;
+}
+
+/* Fatias da meta (0–4) dentro do painel dark */
+.bottle-fatias {
+  display: flex;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+}
+
+.bottle-fatia {
+  flex: 1;
+  height: 8px;
+  border-radius: var(--radius-full);
+  background-color: rgba(255, 255, 255, 0.1);
+  transition: background-color 0.4s ease, box-shadow 0.4s ease;
+}
+
+.bottle-fatia--on {
+  background-color: var(--color-info);
+  box-shadow: 0 0 8px rgba(33, 150, 243, 0.6);
+}
+
+.bottle-fatias-label {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/* Indicador do LED do dispositivo */
+.bottle-led {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-4);
+  padding: 6px var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+}
+
+.bottle-led-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.bottle-led--verde {
+  background-color: rgba(28, 151, 112, 0.18);
+  color: var(--color-accent-1);
+}
+.bottle-led--verde .bottle-led-dot { background-color: var(--color-accent-1); }
+
+.bottle-led--vermelho {
+  background-color: rgba(231, 76, 60, 0.16);
+  color: #ff6b5e;
+}
+.bottle-led--vermelho .bottle-led-dot {
+  background-color: #ff6b5e;
+  animation: bottleLedPulseRed 1.6s ease-in-out infinite;
+}
+
+.bottle-led--pulsando {
+  background-color: rgba(28, 151, 112, 0.22);
+  color: var(--color-accent-1);
+}
+.bottle-led--pulsando .bottle-led-dot {
+  background-color: var(--color-accent-1);
+  animation: bottleLedPulse 1s ease-in-out infinite;
+}
+
+@keyframes bottleLedPulse {
+  0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(122, 209, 128, 0.6); }
+  50%      { transform: scale(1.25); box-shadow: 0 0 0 6px rgba(122, 209, 128, 0); }
+}
+
+@keyframes bottleLedPulseRed {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0.35; }
+}
+
+/* Banner de celebração ao bater a meta */
+.bottle-celebracao {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background: linear-gradient(90deg, rgba(28, 151, 112, 0.25), rgba(33, 150, 243, 0.15));
+  border: 1px solid rgba(122, 209, 128, 0.3);
+  color: var(--color-accent-1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  animation: bottleCelebra 0.5s ease-out;
+}
+
+.bottle-celebracao i { color: var(--color-hc); }
+
+@keyframes bottleCelebra {
+  0%   { opacity: 0; transform: translateY(8px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* Botão de tara */
+.bottle-tara-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  background-color: var(--color-info);
+  color: var(--color-white);
+  border: none;
+  border-radius: var(--radius-md) !important;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  transition: background-color var(--transition-fast);
+}
+
+.bottle-tara-btn:hover { background-color: #1565c0; color: var(--color-white); }
+.bottle-tara-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.bottle-tara-msg {
+  font-size: var(--font-size-sm);
+  color: var(--color-accent-1);
+  font-weight: var(--font-weight-medium);
+}
+
+/* Gráfico real (SVG) */
+.bottle-grafico-svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.bottle-grafico-horas {
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--space-2);
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+}
+
+.bottle-grafico-vazio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  color: var(--color-text-muted);
+  font-size: var(--font-size-sm);
+  text-align: center;
+}
+
+.bottle-grafico-vazio i { font-size: 24px; opacity: 0.5; }
+
+/* Link "personalizar minha meta" */
+.bottle-meta-link {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  text-decoration: none;
+  transition: background-color var(--transition-fast);
+}
+
+.bottle-meta-link:hover { background-color: #c5e8dc; }
+.bottle-meta-link-seta { margin-left: auto; }
+
+.bottle-meta-link-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: var(--space-2) 0 0;
+}
+
 /* Responsividade */
 @media (max-width: 1200px) {
   .bottle-meta-ml {

@@ -1,7 +1,7 @@
 // Componente da garrafa SVG animada
 // Recebe pct (0-100) e ml para exibir o nível da água
 
-function GarrafaAnimada({ pct, ml }) {
+function GarrafaAnimada({ pct, ml, descricao = 'na garrafa agora' }) {
   // Cor da água muda conforme o nível
   const corAgua = pct >= 60
     ? 'rgba(74, 174, 232, 0.85)'
@@ -123,7 +123,7 @@ function GarrafaAnimada({ pct, ml }) {
 
       {/* ML abaixo da garrafa */}
       <span className="bottle-visual-ml">{ml} ml</span>
-      <span className="bottle-visual-desc">na garrafa agora</span>
+      <span className="bottle-visual-desc">{descricao}</span>
     </div>
   )
 }
