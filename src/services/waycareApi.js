@@ -13,7 +13,7 @@
 //  https sem problema; o que o navegador bloqueia é o contrário.
 // ============================================================================
 
-const BASE_URL = import.meta.env.VITE_API_URL || "https://waycare-fiap.duckdns.org";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 // Estado atual da hidratação (polling a cada ~3s)
 export async function getStatus() {

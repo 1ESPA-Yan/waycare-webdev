@@ -13,7 +13,7 @@ const DICAS_DEFAULT = [
 function DetalhesMissao() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { adicionarHC, mlConsumido } = useApp()
+  const { adicionarHC, consumidoHoje: mlConsumido } = useApp()
   const [missao, setMissao] = useState(null)
   const [carregando, setCarregando] = useState(true)
 

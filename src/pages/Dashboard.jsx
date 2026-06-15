@@ -103,7 +103,7 @@ function Dashboard() {
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
-  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, mlConsumido, naoLidas } = useApp()
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, naoLidas } = useApp()
   const humorAtual = HUMOR_CONFIG[humor]
 
   const categorias = useMemo(() => {
