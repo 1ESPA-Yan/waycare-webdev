@@ -1,0 +1,104 @@
+{
+  "emAndamento": [
+    {
+      "id": "sono-profundo",
+      "nome": "Sono Profundo",
+      "status": "Em andamento",
+      "dificuldade": "Fácil",
+      "nivel": 1,
+      "participantes": "1.240",
+      "descricao": "Melhore a qualidade do seu sono com hábitos noturnos saudáveis e rotinas de relaxamento comprovadas.",
+      "tags": ["Relaxamento", "Rotina", "Descanso"],
+      "dias": 7,
+      "missoes": 5,
+      "hc": 350,
+      "progresso": 60,
+      "categoria": "sono",
+      "variante": "purple",
+      "icone": "fa-moon"
+    },
+    {
+      "id": "movimento-diario",
+      "nome": "Movimento Diário",
+      "status": "Em andamento",
+      "dificuldade": "Médio",
+      "nivel": 2,
+      "participantes": "890",
+      "descricao": "Incorpore atividade física leve à sua rotina diária sem precisar ir à academia.",
+      "tags": ["Passos", "Cardio", "Energia"],
+      "dias": 14,
+      "missoes": 8,
+      "hc": 620,
+      "progresso": 25,
+      "categoria": "movimento",
+      "variante": "blue",
+      "icone": "fa-person-running"
+    }
+  ],
+  "disponiveis": [
+    {
+      "id": "mente-tranquila",
+      "nome": "Mente Tranquila",
+      "dificuldade": "Fácil",
+      "nivel": 1,
+      "participantes": "2.100",
+      "descricao": "Reduza o estresse e a ansiedade com técnicas de mindfulness e respiração consciente.",
+      "tags": ["Respiração", "Foco", "Ansiedade"],
+      "dias": 10,
+      "missoes": 6,
+      "hc": 420,
+      "categoria": "mindfulness",
+      "variante": "teal",
+      "icone": "fa-brain",
+      "recomendada": true
+    },
+    {
+      "id": "alimentacao-consciente",
+      "nome": "Alimentação Consciente",
+      "dificuldade": "Difícil",
+      "nivel": 3,
+      "participantes": "660",
+      "descricao": "Desenvolva uma relação saudável com a comida e melhore seus hábitos alimentares.",
+      "tags": ["Hidratação", "Proteína", "Vitaminas"],
+      "dias": 21,
+      "missoes": 10,
+      "hc": 900,
+      "categoria": "nutricao",
+      "variante": "orange",
+      "icone": "fa-bowl-food",
+      "recomendada": true
+    },
+    {
+      "id": "checkup-preventivo",
+      "nome": "Check-up Preventivo",
+      "dificuldade": "Médio",
+      "nivel": 2,
+      "participantes": "440",
+      "descricao": "Cuide da sua saúde com consultas regulares e exames preventivos essenciais.",
+      "tags": ["Consulta", "Exames", "Prevenção"],
+      "dias": 30,
+      "missoes": 4,
+      "hc": 1200,
+      "categoria": "saude",
+      "variante": "checkup",
+      "icone": "fa-clipboard-list",
+      "recomendada": false
+    }
+  ],
+  "bloqueadas": [
+    {
+      "id": "cardio-intenso",
+      "nome": "Cardio Intenso",
+      "dificuldade": "Difícil",
+      "nivel": 4,
+      "participantes": "280",
+      "descricao": "Eleve seu condicionamento físico com atividades cardiovasculares progressivas.",
+      "tags": ["Resistência", "Força", "Velocidade"],
+      "dias": 21,
+      "missoes": 12,
+      "hc": 1100,
+      "categoria": "movimento",
+      "icone": "fa-person-biking"
+    }
+  ]
+}

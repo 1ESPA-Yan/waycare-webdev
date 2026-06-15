@@ -37,6 +37,67 @@
   margin: 0;
 }
 
+.conquistas-subtitulo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Tags de filtro */
+.conquista-filter-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-1) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.conquista-filter-tag:hover {
+  border-color: var(--color-hc);
+  color: var(--color-hc);
+}
+
+.conquista-filter-tag.active {
+  background-color: var(--color-hc);
+  color: var(--color-white);
+  border-color: var(--color-hc);
+}
+
+.conquista-filter-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.conquista-filter-tag.active .conquista-filter-count {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
+/* Grid de conquistas — CSS Grid nativo, 2 colunas */
+.conquistas-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .conquistas-grid { grid-template-columns: 1fr; }
+}
+
 /* Card de resumo */
 .conquistas-resumo {
   padding: var(--space-6) var(--space-8);
@@ -114,6 +175,7 @@
 .conquista-icon--purple { background-color: #ede7f6; color: #5e35b1; }
 .conquista-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
 .conquista-icon--green  { background-color: #e8f5f0; color: #1c9770; }
+.conquista-icon--teal   { background-color: #e0f7f4; color: #00897b; }
 .conquista-icon--locked     { background-color: var(--color-bg); color: var(--color-text-muted); }
 .conquista-icon--locked-red { background-color: #ffebee; color: #e57373; }
 

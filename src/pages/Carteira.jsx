@@ -1,35 +1,8 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/carteira.css'
-
-const historicoGanhos = [
-  { id: 1, icone: 'fa-person-walking', cor: 'blue',   titulo: 'Caminhar 5.000 passos', tempo: 'Hoje, 14:30',        hc: '+50 HC' },
-  { id: 2, icone: 'fa-brain',          cor: 'teal',   titulo: 'Meditação 5 minutos',   tempo: 'Hoje, 08:15',        hc: '+30 HC' },
-  { id: 3, icone: 'fa-child-reaching', cor: 'purple', titulo: 'Alongamento matinal',   tempo: 'Ontem, 07:00',       hc: '+20 HC' },
-  { id: 4, icone: 'fa-fire',           cor: 'orange', titulo: 'Streak de 7 dias',       tempo: 'Ontem',              hc: '+100 HC' },
-  { id: 5, icone: 'fa-moon',           cor: 'indigo', titulo: 'Dormir 7h',              tempo: 'Há 2 dias, 23:00',   hc: '+40 HC' },
-  { id: 6, icone: 'fa-person-walking', cor: 'blue',   titulo: 'Caminhar 5.000 passos', tempo: 'Há 2 dias, 16:20',   hc: '+50 HC' },
-  { id: 7, icone: 'fa-droplet',        cor: 'cyan',   titulo: 'Beber 2L de água',       tempo: 'Há 3 dias, 20:00',   hc: '+30 HC' },
-  { id: 8, icone: 'fa-heart-pulse',    cor: 'red',    titulo: 'Check-up anual realizado', tempo: 'Há 5 dias',        hc: '+500 HC' },
-]
-
-const conquistasDestaque = [
-  { id: 1, icone: 'fa-fire',   cor: 'orange', titulo: 'Semana Ativa',      tempo: 'Conquistado há 2 dias' },
-  { id: 2, icone: 'fa-moon',   cor: 'indigo', titulo: 'Mestre do Sono',    tempo: 'Conquistado há 5 dias' },
-  { id: 3, icone: 'fa-droplet', cor: 'cyan',  titulo: 'Hidratação em Dia', tempo: 'Conquistado há 1 semana' },
-]
-
-const dadosGrafico = [
-  { dia: 'Seg', valor: 80 },
-  { dia: 'Ter', valor: 130 },
-  { dia: 'Qua', valor: 60 },
-  { dia: 'Qui', valor: 200 },
-  { dia: 'Sex', valor: 150 },
-  { dia: 'Sáb', valor: 250 },
-  { dia: 'Dom', valor: 180 },
-]
 
 function GraficoLinha({ dados }) {
   const maxValor = Math.max(...dados.map(d => d.valor))
@@ -71,7 +44,27 @@ function GraficoLinha({ dados }) {
 
 function Carteira() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC } = useApp()
+  const [historico, setHistorico] = useState([])
+  const [grafico, setGrafico] = useState([])
+  const [destaques, setDestaques] = useState([])
+  const { totalHC, naoLidas } = useApp()
+
+  useEffect(() => {
+    fetch('/data/carteira.json')
+      .then(res => res.json())
+      .then(data => {
+        setHistorico(data.historico)
+        setGrafico(data.grafico)
+        setDestaques(data.destaques)
+      })
+      .catch(() => {
+        import('../data/carteira.json').then(mod => {
+          setHistorico(mod.default.historico)
+          setGrafico(mod.default.grafico)
+          setDestaques(mod.default.destaques)
+        })
+      })
+  }, [])
 
   return (
     <>
@@ -88,11 +81,21 @@ function Carteira() {
 
         <main className="main-content" id="main-content">
 
-          {/* Cabeçalho */}
-          <header className="carteira-header">
-            <div className="carteira-header-titulo">
-              <i className="fa-solid fa-wallet carteira-header-icon"></i>
-              <h1 className="carteira-titulo">Minha Carteira</h1>
+          <header className="topbar">
+            <div className="d-flex align-items-center gap-3">
+              <div className="carteira-titulo-icon">
+                <i className="fa-solid fa-wallet"></i>
+              </div>
+              <div>
+                <h1 className="carteira-titulo">Minha Carteira</h1>
+                <p className="carteira-subtitulo">Seu extrato de Health Coins</p>
+              </div>
+            </div>
+            <div className="topbar-actions">
+              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
+                <i className="fa-solid fa-bell"></i>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
+              </Link>
             </div>
           </header>
 
@@ -118,7 +121,7 @@ function Carteira() {
                   <i className="fa-solid fa-chart-line carteira-card-header-icon"></i>
                   <h2 className="carteira-card-titulo">Evolução dos últimos 7 dias</h2>
                 </div>
-                <GraficoLinha dados={dadosGrafico} />
+                <GraficoLinha dados={grafico} />
               </div>
 
               {/* Histórico */}
@@ -128,7 +131,7 @@ function Carteira() {
                   <h2 className="carteira-card-titulo">Histórico de Ganhos</h2>
                 </div>
                 <ul className="historico-lista">
-                  {historicoGanhos.map(item => (
+                  {historico.map(item => (
                     <li key={item.id} className="historico-item">
                       <div className={`historico-icone historico-icone--${item.cor}`}>
                         <i className={`fa-solid ${item.icone}`}></i>
@@ -157,7 +160,7 @@ function Carteira() {
                   <h2 className="carteira-card-titulo">Conquistas em Destaque</h2>
                 </div>
                 <div className="conquistas-lista">
-                  {conquistasDestaque.map(c => (
+                  {destaques.map(c => (
                     <div key={c.id} className="conquista-card">
                       <div className={`conquista-icone conquista-icone--${c.cor}`}>
                         <i className={`fa-solid ${c.icone}`}></i>

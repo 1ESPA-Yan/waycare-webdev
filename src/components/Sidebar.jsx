@@ -11,7 +11,7 @@ function Sidebar({ isOpen }) {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar" role="navigation" aria-label="Menu principal">
       <div className="sidebar-logo">
-        <img src="/images/LogoWayCare.png" alt="WayCare" height="28" />
+        <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
         WayCare
       </div>
       <nav className="sidebar-nav">

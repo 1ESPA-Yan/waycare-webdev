@@ -1,71 +1,8 @@
-import { useState, useMemo } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useMemo, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/recompensas.css'
-
-const RECOMPENSAS = [
-  {
-    id: 'consulta-nutricional',
-    nome: 'Consulta Nutricional',
-    desc: '1 sessão com nutricionista Care Plus',
-    hc: 500,
-    categoria: 'saude',
-    thumb: 'recompensa-thumb--green',
-    icone: 'fa-apple-whole',
-    popular: true,
-  },
-  {
-    id: 'kit-hidratacao',
-    nome: 'Kit de Hidratação',
-    desc: 'Garrafa térmica + squeeze personalizados',
-    hc: 300,
-    categoria: 'produtos',
-    thumb: 'recompensa-thumb--blue',
-    icone: 'fa-droplet',
-    popular: false,
-  },
-  {
-    id: 'desconto-academia',
-    nome: 'Desconto Academia',
-    desc: '20% off em academias parceiras por 3 meses',
-    hc: 800,
-    categoria: 'descontos',
-    thumb: 'recompensa-thumb--orange',
-    icone: 'fa-dumbbell',
-    popular: false,
-  },
-  {
-    id: 'massagem-relaxante',
-    nome: 'Massagem Relaxante',
-    desc: '1 hora de massagem terapêutica',
-    hc: 1000,
-    categoria: 'experiencias',
-    thumb: 'recompensa-thumb--pink',
-    icone: 'fa-heart',
-    popular: false,
-  },
-  {
-    id: 'checkup-gratuito',
-    nome: 'Check-up Gratuito',
-    desc: 'Consulta anual sem custo adicional',
-    hc: 200,
-    categoria: 'descontos',
-    thumb: 'recompensa-thumb--red',
-    icone: 'fa-heart-pulse',
-    popular: true,
-  },
-  {
-    id: 'aula-yoga',
-    nome: 'Aula de Yoga',
-    desc: '1 aula experimental online ou presencial',
-    hc: 150,
-    categoria: 'experiencias',
-    thumb: 'recompensa-thumb--teal',
-    icone: 'fa-brain',
-    popular: false,
-  },
-]
 
 const FILTROS = [
   { key: 'todos', label: 'Todos' },
@@ -78,12 +15,38 @@ const FILTROS = [
 function Recompensas() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
-  const { totalHC } = useApp()
+  const [recompensas, setRecompensas] = useState([])
+  const [carregando, setCarregando] = useState(true)
+  const { totalHC, naoLidas } = useApp()
+  const navigate = useNavigate()
+
+  const handleResgatar = (r) => {
+    navigate('/resgate/confirmar', {
+      state: { recompensa: { nome: r.nome, preco: r.hc, icone: r.icone } },
+    })
+  }
+
+  // Consumo do JSON local — para simular a chamada de API
+  useEffect(() => {
+    fetch('/data/recompensas.json')
+      .then(res => res.json())
+      .then(data => {
+        setRecompensas(data)
+        setCarregando(false)
+      })
+      .catch(() => {
+        // faz a importação direto se o fetch falhar
+        import('../data/recompensas.json').then(mod => {
+          setRecompensas(mod.default)
+          setCarregando(false)
+        })
+      })
+  }, [])
 
   const recompensasFiltradas = useMemo(() => {
-    if (filtroAtivo === 'todos') return RECOMPENSAS
-    return RECOMPENSAS.filter(r => r.categoria === filtroAtivo)
-  }, [filtroAtivo])
+    if (filtroAtivo === 'todos') return recompensas
+    return recompensas.filter(r => r.categoria === filtroAtivo)
+  }, [filtroAtivo, recompensas])
 
   return (
     <>
@@ -106,7 +69,10 @@ function Recompensas() {
               <div className="recompensas-titulo-icon">
                 <i className="fa-solid fa-gift"></i>
               </div>
-              <h1 className="recompensas-titulo">Catálogo de Recompensas</h1>
+              <div>
+                <h1 className="recompensas-titulo">Catálogo de Recompensas</h1>
+                <p className="recompensas-subtitulo">Troque seus Health Coins por prêmios</p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip hc-chip--destaque">
@@ -118,7 +84,7 @@ function Recompensas() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>
@@ -139,11 +105,21 @@ function Recompensas() {
               ))}
             </div>
 
+            {/* Estado de carregamento */}
+            {carregando && (
+              <div className="d-flex justify-content-center align-items-center py-5">
+                <div className="d-flex flex-column align-items-center gap-3">
+                  <i className="fa-solid fa-spinner fa-spin text-primary" style={{ fontSize: '32px' }}></i>
+                  <span className="text-muted">Carregando recompensas...</span>
+                </div>
+              </div>
+            )}
+
             {/* Grid de recompensas */}
-            {recompensasFiltradas.length > 0 ? (
-              <div className="row g-4">
+            {!carregando && recompensasFiltradas.length > 0 && (
+              <div className="recompensas-grid">
                 {recompensasFiltradas.map(r => (
-                  <div key={r.id} className="col-12 col-md-6 col-lg-4 recompensa-filter-item">
+                  <div key={r.id} className="recompensa-filter-item">
                     <div className="card recompensa-card">
                       <div className={`recompensa-thumb ${r.thumb}`}>
                         <i className={`fa-solid ${r.icone}`}></i>
@@ -156,13 +132,23 @@ function Recompensas() {
                           <span className="fa-solid fa-coins"></span>
                           {r.hc} HC
                         </div>
-                        <button className="btn recompensa-btn">Resgatar Agora</button>
+                        <button
+                          className="btn recompensa-btn"
+                          disabled={totalHC < r.hc}
+                          title={totalHC < r.hc ? 'HC insuficiente' : 'Resgatar'}
+                          onClick={() => handleResgatar(r)}
+                        >
+                          {totalHC >= r.hc ? 'Resgatar Agora' : 'HC insuficiente'}
+                        </button>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
-            ) : (
+            )}
+
+            {/* Estado vazio */}
+            {!carregando && recompensasFiltradas.length === 0 && (
               <div className="recompensa-empty">
                 <i className="fa-solid fa-filter-circle-xmark recompensa-empty-icon"></i>
                 <p className="recompensa-empty-text">

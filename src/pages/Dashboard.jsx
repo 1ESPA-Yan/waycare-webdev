@@ -1,18 +1,138 @@
-import { useState } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
+import { motion, AnimatePresence } from 'motion/react'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/dashboard.css'
 
+function CardMissao({ missao, mlConsumido }) {
+  if (missao.tipo === 'bottle') {
+    const pct = Math.round((mlConsumido / missao.metaMl) * 100)
+    return (
+      <div className="card-mission bottle-mission d-flex flex-column gap-3">
+        <span className="bottle-mission-badge">
+          <i className="fa-solid fa-droplet"></i>
+          WayCare Bottle • Auto Sync
+        </span>
+        <div className="d-flex align-items-start gap-3">
+          <div className={`mission-emoji mission-emoji--${missao.emojiCor}`}>
+            <i className={`fa-solid ${missao.icone}`}></i>
+          </div>
+          <div className="d-flex flex-column gap-1">
+            <h3 className="mission-title">{missao.titulo}</h3>
+            <p className="mission-desc">{missao.descricao}</p>
+          </div>
+        </div>
+        <div className="d-flex justify-content-between align-items-center">
+          <span className="bottle-mission-progress-label">{mlConsumido} ml / {missao.metaMl} ml</span>
+          <span className="bottle-mission-progress-pct">{pct}%</span>
+        </div>
+        <div className="progress-bar">
+          <div className="progress-fill bottle-progress-fill" style={{ width: `${pct}%` }}></div>
+        </div>
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-2">
+            <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
+            <span className={`badge ${missao.categoriaBadge}`}>{missao.categoria}</span>
+          </div>
+          <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
+        </div>
+        <button className="btn-bottle-auto" disabled>
+          <i className="fa-solid fa-droplet"></i>
+          Monitorado automaticamente
+        </button>
+      </div>
+    )
+  }
+
+  if (missao.status === 'concluida') {
+    return (
+      <div className="card-mission completed d-flex flex-column gap-3">
+        <div className="d-flex align-items-start gap-3">
+          <div className={`mission-emoji mission-emoji--${missao.emojiCor}`}>
+            <i className={`fa-solid ${missao.icone}`}></i>
+          </div>
+          <div className="d-flex flex-column gap-1">
+            <h3 className="mission-title">{missao.titulo}</h3>
+            <p className="mission-desc">{missao.descricao}</p>
+          </div>
+          <i className="fa-solid fa-check mission-check-icon ms-auto"></i>
+        </div>
+        <div className="d-flex align-items-center justify-content-between">
+          <div className="d-flex align-items-center gap-2">
+            <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
+            <span className={`badge ${missao.categoriaBadge}`}>{missao.categoria}</span>
+          </div>
+          <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
+        </div>
+        <button className="btn mission-btn-done" disabled>
+          <i className="fa-regular fa-circle-check"></i> Concluída
+        </button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="card-mission d-flex flex-column gap-3">
+      <div className="d-flex align-items-start gap-3">
+        <div className={`mission-emoji mission-emoji--${missao.emojiCor}`}>
+          <i className={`fa-solid ${missao.icone}`}></i>
+        </div>
+        <div className="d-flex flex-column gap-1">
+          <h3 className="mission-title">{missao.titulo}</h3>
+          <p className="mission-desc">{missao.descricao}</p>
+        </div>
+      </div>
+      <div className="d-flex align-items-center justify-content-between">
+        <div className="d-flex align-items-center gap-2">
+          <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
+          <span className={`badge ${missao.categoriaBadge}`}>{missao.categoria}</span>
+        </div>
+        <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
+      </div>
+      <Link to={`/missao/${missao.id}`} className="btn btn-primary btn-block btn-mission">
+        Iniciar Missão
+      </Link>
+    </div>
+  )
+}
+
 function Dashboard() {
-  // Controla se a sidebar está aberta no mobile
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG } = useApp()
+  const [missoes, setMissoes] = useState([])
+  const [carregando, setCarregando] = useState(true)
+  const [filtroAtivo, setFiltroAtivo] = useState('todos')
+  const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, mlConsumido, naoLidas } = useApp()
   const humorAtual = HUMOR_CONFIG[humor]
+
+  const categorias = useMemo(() => {
+    const unicas = [...new Set(missoes.map(m => m.categoria))]
+    return [{ key: 'todos', label: 'Todas' }, ...unicas.map(c => ({ key: c, label: c }))]
+  }, [missoes])
+
+  const missoesFiltradas = useMemo(() =>
+    filtroAtivo === 'todos' ? missoes : missoes.filter(m => m.categoria === filtroAtivo),
+    [missoes, filtroAtivo]
+  )
+
+  useEffect(() => {
+    fetch('/data/missoes-dashboard.json')
+      .then(res => res.json())
+      .then(data => {
+        setMissoes(data)
+        setCarregando(false)
+      })
+      .catch(() => {
+        import('../data/missoes-dashboard.json').then(mod => {
+          setMissoes(mod.default)
+          setCarregando(false)
+        })
+      })
+  }, [])
 
   return (
     <>
-      {/* Botão hamburguer — só aparece no mobile */}
       <button
         className="sidebar-toggle"
         aria-label="Abrir menu"
@@ -22,8 +142,6 @@ function Dashboard() {
       </button>
 
       <div className="app-layout">
-
-        {/* Sidebar — recebe a classe 'open' quando sidebarOpen for true */}
         <Sidebar isOpen={sidebarOpen} />
 
         <main className="main-content" id="main-content">
@@ -33,7 +151,7 @@ function Dashboard() {
             <div className="topbar-greeting">
               <h1 className="greeting-title">Olá, {nomeUsuario}! 👋</h1>
               <div className="d-flex align-items-center gap-3">
-                <span className="humor-badge" style={{backgroundColor: humorAtual.badgeBg, color: humorAtual.badgeColor, borderColor: humorAtual.badgeBorder,}}>
+                <span className="humor-badge" style={{ backgroundColor: humorAtual.badgeBg, color: humorAtual.badgeColor, borderColor: humorAtual.badgeBorder }}>
                   <i className={`fa-solid ${humorAtual.icon}`}></i>
                   {humorAtual.label}
                 </span>
@@ -50,19 +168,21 @@ function Dashboard() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>
 
           <section id="page-content" className="page-transition">
 
-            {/* Trilha de hoje */}
+            {/* Trilha de hoje — baseada no humor selecionado */}
             <div className="trilha-card dashboard-section">
               <div className="d-flex align-items-start justify-content-between gap-3 mb-3">
                 <div className="d-flex align-items-center gap-2">
-                  <div className="trilha-hoje-icon"><i className="fa-solid fa-moon"></i></div>
-                  <h2 className="trilha-card-title">Sua Trilha de Hoje: Sono Profundo</h2>
+                  <div className="trilha-hoje-icon" style={{ color: humorAtual.badgeColor, backgroundColor: humorAtual.badgeBg }}>
+                    <i className={`fa-solid ${humorAtual.icon}`}></i>
+                  </div>
+                  <h2 className="trilha-card-title">Sua Trilha de Hoje: {humorAtual.trilha}</h2>
                 </div>
                 <Link to="/trilhas" className="trilha-link">Ver trilha completa →</Link>
               </div>
@@ -74,21 +194,11 @@ function Dashboard() {
                 <div className="progress-fill" style={{ width: '60%' }}></div>
               </div>
               <div className="trilha-slots">
-                <div className="trilha-slot completed" aria-label="Missão concluída">
-                  <i className="fa-solid fa-check"></i>
-                </div>
-                <div className="trilha-slot completed" aria-label="Missão concluída">
-                  <i className="fa-solid fa-check"></i>
-                </div>
-                <div className="trilha-slot completed" aria-label="Missão concluída">
-                  <i className="fa-solid fa-check"></i>
-                </div>
-                <div className="trilha-slot pending" aria-label="Missão pendente">
-                  <i className="fa-solid fa-spa"></i>
-                </div>
-                <div className="trilha-slot pending" aria-label="Missão pendente">
-                  <i className="fa-solid fa-clipboard-list"></i>
-                </div>
+                <div className="trilha-slot completed" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
+                <div className="trilha-slot completed" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
+                <div className="trilha-slot completed" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
+                <div className="trilha-slot pending" aria-label="Missão pendente"><i className="fa-solid fa-spa"></i></div>
+                <div className="trilha-slot pending" aria-label="Missão pendente"><i className="fa-solid fa-clipboard-list"></i></div>
               </div>
             </div>
 
@@ -96,157 +206,67 @@ function Dashboard() {
             <div className="dashboard-section">
               <div className="d-flex align-items-center justify-content-between mb-4">
                 <h2 className="section-title">Missões Disponíveis</h2>
-                <button className="filter-btn">
-                  Filtrar <i className="fa-solid fa-chevron-down"></i>
+                <button
+                  className={`filter-btn${filtrosVisiveis ? ' active' : ''}`}
+                  onClick={() => setFiltrosVisiveis(v => !v)}
+                  aria-expanded={filtrosVisiveis}
+                >
+                  Filtrar <i className={`fa-solid fa-chevron-down filter-btn-chevron${filtrosVisiveis ? ' rotated' : ''}`}></i>
                 </button>
               </div>
 
-              <div className="row g-4">
-
-                {/* Missão — Movimento */}
-                <div className="col-12 col-md-6">
-                  <div className="card-mission h-100 d-flex flex-column gap-3">
-                    <div className="d-flex align-items-start gap-3">
-                      <div className="mission-emoji mission-emoji--blue"><i className="fa-solid fa-shoe-prints"></i></div>
-                      <div className="d-flex flex-column gap-1">
-                        <h3 className="mission-title">Caminhar 5.000 passos</h3>
-                        <p className="mission-desc">Movimente-se ao longo do dia</p>
-                      </div>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="mission-time"><i className="fa-regular fa-clock"></i> 30-40 min</span>
-                        <span className="badge badge-info">Movimento</span>
-                      </div>
-                      <span className="mission-hc"><span className="fa-solid fa-coins"></span> +50 HC</span>
-                    </div>
-                    <button className="btn btn-primary btn-block btn-mission">Iniciar Missão</button>
-                  </div>
-                </div>
-
-                {/* Missão — WayCare Bottle */}
-                <div className="col-12 col-md-6">
-                  <div className="card-mission bottle-mission h-100 d-flex flex-column gap-3">
-                    <span className="bottle-mission-badge">
-                      <i className="fa-solid fa-droplet"></i>
-                      WayCare Bottle • Auto Sync
-                    </span>
-                    <div className="d-flex align-items-start gap-3">
-                      <div className="mission-emoji mission-emoji--blue"><i className="fa-solid fa-droplet"></i></div>
-                      <div className="d-flex flex-column gap-1">
-                        <h3 className="mission-title">Beber 2L de água</h3>
-                        <p className="mission-desc">Hidratação monitorada pelo WayCare Bottle</p>
-                      </div>
-                    </div>
-                    <div className="d-flex justify-content-between align-items-center">
-                      <span className="bottle-mission-progress-label">450 ml / 2000 ml</span>
-                      <span className="bottle-mission-progress-pct">23%</span>
-                    </div>
-                    <div className="progress-bar">
-                      <div className="progress-fill bottle-progress-fill" style={{ width: '23%' }}></div>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="mission-time"><i className="fa-regular fa-clock"></i> Durante o dia</span>
-                        <span className="badge badge-info">Hidratação</span>
-                      </div>
-                      <span className="mission-hc"><span className="fa-solid fa-coins"></span> +30 HC</span>
-                    </div>
-                    <button className="btn-bottle-auto" disabled>
-                      <i className="fa-solid fa-droplet"></i>
-                      Monitorado automaticamente
+              {filtrosVisiveis && (
+                <div className="d-flex gap-2 flex-wrap mb-4">
+                  {categorias.map(f => (
+                    <button
+                      key={f.key}
+                      className={`mission-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
+                      onClick={() => setFiltroAtivo(f.key)}
+                      aria-pressed={filtroAtivo === f.key}
+                    >
+                      {f.label}
                     </button>
-                  </div>
+                  ))}
                 </div>
+              )}
 
-                {/* Missão — Sono */}
-                <div className="col-12 col-md-6">
-                  <div className="card-mission h-100 d-flex flex-column gap-3">
-                    <div className="d-flex align-items-start gap-3">
-                      <div className="mission-emoji mission-emoji--purple"><i className="fa-solid fa-moon"></i></div>
-                      <div className="d-flex flex-column gap-1">
-                        <h3 className="mission-title">Dormir 7h esta noite</h3>
-                        <p className="mission-desc">Prepare-se para uma boa noite</p>
+              {carregando ? (
+                <div className="missions-grid">
+                  {[1, 2, 3, 4].map(i => (
+                    <div key={i} className="card-mission" style={{ padding: 'var(--space-5)' }}>
+                      <div className="d-flex align-items-start gap-3 mb-3">
+                        <div className="skeleton" style={{ width: 44, height: 44, borderRadius: '50%', flexShrink: 0 }}></div>
+                        <div className="d-flex flex-column gap-2 grow">
+                          <div className="skeleton" style={{ height: 14, width: '65%' }}></div>
+                          <div className="skeleton" style={{ height: 11, width: '85%' }}></div>
+                        </div>
                       </div>
+                      <div className="skeleton" style={{ height: 12, width: '50%', marginBottom: 12 }}></div>
+                      <div className="skeleton" style={{ height: 40, borderRadius: 8 }}></div>
                     </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="mission-time"><i className="fa-regular fa-clock"></i> Noite</span>
-                        <span className="badge badge-purple">Sono</span>
-                      </div>
-                      <span className="mission-hc"><span className="fa-solid fa-coins"></span> +40 HC</span>
-                    </div>
-                    <button className="btn btn-primary btn-block btn-mission">Ver detalhes</button>
-                  </div>
+                  ))}
                 </div>
-
-                {/* Missão — Mindfulness */}
-                <div className="col-12 col-md-6">
-                  <div className="card-mission h-100 d-flex flex-column gap-3">
-                    <div className="d-flex align-items-start gap-3">
-                      <div className="mission-emoji mission-emoji--teal"><i className="fa-solid fa-brain"></i></div>
-                      <div className="d-flex flex-column gap-1">
-                        <h3 className="mission-title">5 minutos de meditação</h3>
-                        <p className="mission-desc">Acalme sua mente</p>
-                      </div>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="mission-time"><i className="fa-regular fa-clock"></i> 5 min</span>
-                        <span className="badge badge-teal">Mindfulness</span>
-                      </div>
-                      <span className="mission-hc"><span className="fa-solid fa-coins"></span> +30 HC</span>
-                    </div>
-                    <button className="btn btn-primary btn-block btn-mission">Iniciar Missão</button>
-                  </div>
-                </div>
-
-                {/* Missão — Check-up */}
-                <div className="col-12 col-md-6">
-                  <div className="card-mission h-100 d-flex flex-column gap-3">
-                    <div className="d-flex align-items-start gap-3">
-                      <div className="mission-emoji mission-emoji--red"><i className="fa-solid fa-heart-pulse"></i></div>
-                      <div className="d-flex flex-column gap-1">
-                        <h3 className="mission-title">Check-up anual</h3>
-                        <p className="mission-desc">Agende sua consulta preventiva</p>
-                      </div>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="mission-time"><i className="fa-regular fa-clock"></i> 1 hora</span>
-                        <span className="badge badge-error">Check-up</span>
-                      </div>
-                      <span className="mission-hc"><span className="fa-solid fa-coins"></span> +500 HC</span>
-                    </div>
-                    <button className="btn btn-primary btn-block btn-mission">Iniciar Missão</button>
-                  </div>
-                </div>
-
-                {/* Missão concluída — Alongamento */}
-                <div className="col-12 col-md-6">
-                  <div className="card-mission completed h-100 d-flex flex-column gap-3">
-                    <div className="d-flex align-items-start gap-3">
-                      <div className="mission-emoji mission-emoji--blue"><i className="fa-solid fa-person-running"></i></div>
-                      <div className="d-flex flex-column gap-1">
-                        <h3 className="mission-title">Alongamento matinal</h3>
-                        <p className="mission-desc">Desperte o corpo com alongamentos</p>
-                      </div>
-                      <i className="fa-solid fa-check mission-check-icon ms-auto"></i>
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between">
-                      <div className="d-flex align-items-center gap-2">
-                        <span className="mission-time"><i className="fa-regular fa-clock"></i> 10 min</span>
-                        <span className="badge badge-info">Movimento</span>
-                      </div>
-                      <span className="mission-hc"><span className="fa-solid fa-coins"></span> +20 HC</span>
-                    </div>
-                    <button className="btn mission-btn-done" disabled>
-                      <i className="fa-regular fa-circle-check"></i> Concluída
-                    </button>
-                  </div>
-                </div>
-
-              </div>
+              ) : (
+                <motion.div
+                  className="missions-grid"
+                  key={filtroAtivo}
+                  initial="hidden"
+                  animate="visible"
+                  variants={{ visible: { transition: { staggerChildren: 0.07 } } }}
+                >
+                  {missoesFiltradas.map(missao => (
+                    <motion.div
+                      key={missao.id}
+                      variants={{
+                        hidden:  { opacity: 0, y: 18 },
+                        visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: 'easeOut' } },
+                      }}
+                    >
+                      <CardMissao missao={missao} mlConsumido={mlConsumido} />
+                    </motion.div>
+                  ))}
+                </motion.div>
+              )}
             </div>
 
             {/* Descoberta do dia */}
@@ -269,7 +289,7 @@ function Dashboard() {
                 <i className="fa-solid fa-gem recompensas-banner-gem"></i>
                 <div className="d-flex flex-column gap-1">
                   <h3 className="recompensas-banner-title">Catálogo de Recompensas</h3>
-                  <p className="recompensas-banner-desc">Troque seus 1300 Health Coins por prêmios incríveis!</p>
+                  <p className="recompensas-banner-desc">Troque seus {totalHC} Health Coins por prêmios incríveis!</p>
                 </div>
               </div>
               <i className="fa-solid fa-gift recompensas-banner-gift"></i>

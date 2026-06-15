@@ -1,0 +1,118 @@
+[
+  {
+    "id": 1,
+    "titulo": "Caminhar 5.000 passos",
+    "descricao": "Movimente-se ao longo do dia",
+    "descricaoLonga": "Caminhar 5.000 passos por dia é um dos hábitos mais simples e eficazes para manter a saúde cardiovascular, controlar o peso e melhorar o humor. Você não precisa fazer tudo de uma vez — distribua ao longo do dia em pequenas caminhadas e veja a diferença em poucos dias.",
+    "categoria": "Movimento",
+    "categoriaBadge": "badge-info",
+    "icone": "fa-shoe-prints",
+    "emojiCor": "blue",
+    "tempo": "30-40 min",
+    "hc": 50,
+    "status": "disponivel",
+    "tipo": "normal",
+    "dicas": [
+      { "icone": "fa-utensils",  "titulo": "Ande no almoço",   "descricao": "Caminhe 15 min após comer",  "cor": "#FF9800" },
+      { "icone": "fa-stairs",    "titulo": "Use as escadas",   "descricao": "Evite o elevador",            "cor": "#2196F3" },
+      { "icone": "fa-paw",       "titulo": "Passeie com pet",  "descricao": "Duplo benefício diário",      "cor": "#F44336" }
+    ]
+  },
+  {
+    "id": 2,
+    "titulo": "Beber 2L de água",
+    "descricao": "Hidratação monitorada pelo WayCare Bottle",
+    "descricaoLonga": "Manter-se hidratado melhora a concentração, a disposição e o funcionamento dos rins. O WayCare Bottle monitora automaticamente cada gole e envia os dados em tempo real para o app, garantindo que você atinja sua meta sem precisar contar manualmente.",
+    "categoria": "Hidratação",
+    "categoriaBadge": "badge-info",
+    "icone": "fa-droplet",
+    "emojiCor": "blue",
+    "tempo": "Durante o dia",
+    "hc": 30,
+    "status": "em-progresso",
+    "tipo": "bottle",
+    "progressoMl": 450,
+    "metaMl": 2000,
+    "dicas": [
+      { "icone": "fa-bell",            "titulo": "Alarmes de hora",  "descricao": "A cada 2h, beba um copo",    "cor": "#2196F3" },
+      { "icone": "fa-lemon",           "titulo": "Adicione limão",   "descricao": "Mais saboroso e vitamínico", "cor": "#FFEB3B" },
+      { "icone": "fa-temperature-low", "titulo": "Água gelada",      "descricao": "Estimula o metabolismo",     "cor": "#42A5F5" }
+    ]
+  },
+  {
+    "id": 3,
+    "titulo": "Dormir 7h esta noite",
+    "descricao": "Prepare-se para uma boa noite de sono",
+    "descricaoLonga": "O sono de qualidade é fundamental para a recuperação muscular, a consolidação da memória e o equilíbrio hormonal. Adultos precisam de 7 a 9 horas por noite. Criar uma rotina de sono consistente — mesmo nos fins de semana — é o segredo para acordar disposto todos os dias.",
+    "categoria": "Sono",
+    "categoriaBadge": "badge-purple",
+    "icone": "fa-moon",
+    "emojiCor": "purple",
+    "tempo": "Noite",
+    "hc": 40,
+    "status": "disponivel",
+    "tipo": "normal",
+    "dicas": [
+      { "icone": "fa-mobile-screen",   "titulo": "Sem telas",          "descricao": "1h antes de dormir",      "cor": "#7986CB" },
+      { "icone": "fa-mug-hot",         "titulo": "Chá de camomila",    "descricao": "Relaxamento natural",     "cor": "#8D6E63" },
+      { "icone": "fa-temperature-low", "titulo": "Ambiente fresco",    "descricao": "18–20°C é o ideal",       "cor": "#42A5F5" }
+    ]
+  },
+  {
+    "id": 4,
+    "titulo": "5 minutos de meditação",
+    "descricao": "Acalme sua mente com meditação guiada",
+    "descricaoLonga": "Apenas 5 minutos de meditação por dia são suficientes para reduzir o cortisol, aumentar o foco e melhorar o bem-estar emocional. Não é preciso experiência prévia — basta encontrar um lugar tranquilo, fechar os olhos e focar na respiração. Com o tempo, os benefícios se acumulam.",
+    "categoria": "Mindfulness",
+    "categoriaBadge": "badge-teal",
+    "icone": "fa-brain",
+    "emojiCor": "teal",
+    "tempo": "5 min",
+    "hc": 30,
+    "status": "disponivel",
+    "tipo": "normal",
+    "dicas": [
+      { "icone": "fa-wind",       "titulo": "Respiração 4-7-8",    "descricao": "Inspira 4s, segura 7s, expira 8s", "cor": "#7AD1C3" },
+      { "icone": "fa-headphones", "titulo": "Sons da natureza",    "descricao": "Facilita o foco mental",           "cor": "#9C27B0" },
+      { "icone": "fa-chair",      "titulo": "Postura confortável", "descricao": "Coluna reta, ombros soltos",       "cor": "#4CAF50" }
+    ]
+  },
+  {
+    "id": 5,
+    "titulo": "Check-up anual",
+    "descricao": "Agende sua consulta preventiva",
+    "descricaoLonga": "O check-up anual permite identificar condições de saúde em estágios iniciais, quando o tratamento é mais eficaz. Exames de rotina como hemograma, pressão arterial e glicemia são rápidos e podem fazer uma enorme diferença na sua qualidade de vida a longo prazo. Não deixe para depois!",
+    "categoria": "Check-up",
+    "categoriaBadge": "badge-error",
+    "icone": "fa-heart-pulse",
+    "emojiCor": "red",
+    "tempo": "1 hora",
+    "hc": 500,
+    "status": "disponivel",
+    "tipo": "normal",
+    "dicas": [
+      { "icone": "fa-calendar-check", "titulo": "Agende online",    "descricao": "Acesso pelo app do plano",    "cor": "#1C9770" },
+      { "icone": "fa-clipboard-list", "titulo": "Leve seus exames", "descricao": "Histórico sempre atualizado", "cor": "#2196F3" },
+      { "icone": "fa-bell",           "titulo": "Crie um lembrete", "descricao": "Para não esquecer a data",    "cor": "#FF9800" }
+    ]
+  },
+  {
+    "id": 6,
+    "titulo": "Alongamento matinal",
+    "descricao": "Desperte o corpo com alongamentos leves",
+    "descricaoLonga": "Alongar-se pela manhã ativa a circulação, reduz a rigidez muscular e prepara o corpo para o dia. Apenas 10 minutos de mobilidade logo ao acordar melhoram a postura, diminuem dores nas costas e aumentam a disposição para as atividades do dia.",
+    "categoria": "Movimento",
+    "categoriaBadge": "badge-info",
+    "icone": "fa-person-running",
+    "emojiCor": "blue",
+    "tempo": "10 min",
+    "hc": 20,
+    "status": "concluida",
+    "tipo": "normal",
+    "dicas": [
+      { "icone": "fa-bed",           "titulo": "Comece deitado",     "descricao": "Ainda na cama, estique os braços", "cor": "#7986CB" },
+      { "icone": "fa-rotate",        "titulo": "Rotação de pescoço", "descricao": "Alivia tensão cervical",            "cor": "#FF9800" },
+      { "icone": "fa-person-walking","titulo": "Caminhe em casa",    "descricao": "2 min para ativar a circulação",   "cor": "#4CAF50" }
+    ]
+  }
+]

@@ -1,6 +1,13 @@
 /* WAYCARE — Configurações CSS
    Estilos exclusivos da página de configurações */
 
+/* Subtítulo da topbar */
+.config-subtitulo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
 /* Link de voltar */
 .config-voltar {
   display: inline-flex;
@@ -190,6 +197,98 @@
 
 .config-perigo-action--warning { color: var(--color-warning); }
 .config-perigo-action--error   { color: var(--color-error); }
+
+/* Edição inline */
+.config-row--editing {
+  align-items: flex-end;
+  gap: var(--space-3);
+}
+
+.config-edit-wrap {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-top: var(--space-1);
+}
+
+.config-edit-input {
+  font-size: var(--font-size-base);
+  color: var(--color-text-primary);
+  border: 1.5px solid var(--color-primary);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
+  background: var(--color-white);
+  outline: none;
+  width: 100%;
+  max-width: 280px;
+  transition: box-shadow var(--transition-fast);
+}
+
+.config-edit-input:focus {
+  box-shadow: 0 0 0 3px rgba(28, 151, 112, 0.15);
+}
+
+.config-edit-input[type='number'] {
+  max-width: 120px;
+}
+
+.config-edit-unidade {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+}
+
+.config-row-action--save {
+  background: var(--color-primary);
+  color: var(--color-white);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+  white-space: nowrap;
+}
+
+.config-row-action--save:hover {
+  background: var(--color-primary-dark);
+}
+
+.config-row-action--cancel {
+  background: transparent;
+  color: var(--color-text-muted);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: var(--space-1) var(--space-3);
+  font-size: var(--font-size-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  white-space: nowrap;
+}
+
+.config-row-action--cancel:hover {
+  border-color: var(--color-text-muted);
+  color: var(--color-text-primary);
+}
+
+/* Badge de confirmação de salvo */
+.config-salvo-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--font-size-xs);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-medium);
+  margin-left: var(--space-2);
+  animation: fadeInOut 2s ease forwards;
+}
+
+@keyframes fadeInOut {
+  0%   { opacity: 0; transform: translateY(-4px); }
+  15%  { opacity: 1; transform: translateY(0); }
+  80%  { opacity: 1; }
+  100% { opacity: 0; }
+}
 
 /* Responsividade */
 @media (max-width: 768px) {

@@ -42,6 +42,13 @@
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
   margin: 0;
+  line-height: 1.2;
+}
+
+.recompensas-subtitulo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
 }
 
 /* Filtros de categoria */
@@ -68,6 +75,21 @@
   background-color: var(--color-primary);
   color: var(--color-white);
   border-color: var(--color-primary);
+}
+
+/* Grid de recompensas — CSS Grid nativo, 3 colunas */
+.recompensas-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 1024px) {
+  .recompensas-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .recompensas-grid { grid-template-columns: 1fr; }
 }
 
 /* Cards de recompensa */

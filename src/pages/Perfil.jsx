@@ -1,16 +1,60 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { motion } from 'motion/react'
 import Sidebar from '../components/Sidebar'
+import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
 import '../styles/perfil.css'
 
+const cardVariants = {
+  hidden:  { opacity: 0, y: 22 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
+}
+
 function Perfil() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC, nomeUsuario, emailUsuario } = useApp()
+  const [totalConquistas, setTotalConquistas] = useState(0)
+  const [editando, setEditando] = useState(false)
+  const [salvo, setSalvo] = useState(false)
+  const [rascunhoNome, setRascunhoNome] = useState('')
+  const [rascunhoEmail, setRascunhoEmail] = useState('')
+  const [rascunhoBio, setRascunhoBio] = useState('')
+
+  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, naoLidas } = useApp()
+
+  useEffect(() => {
+    fetch('/data/conquistas.json')
+      .then(res => res.json())
+      .then(data => setTotalConquistas(data.filter(c => c.desbloqueada).length))
+      .catch(() => {
+        import('../data/conquistas.json').then(mod =>
+          setTotalConquistas(mod.default.filter(c => c.desbloqueada).length)
+        )
+      })
+  }, [])
+
+  const iniciarEdicao = () => {
+    setRascunhoNome(nomeUsuario)
+    setRascunhoEmail(emailUsuario)
+    setRascunhoBio(bioUsuario || '')
+    setEditando(true)
+  }
+
+  const cancelar = () => setEditando(false)
+
+  const salvar = () => {
+    if (!rascunhoNome.trim()) return
+    salvarUsuario(rascunhoNome.trim(), rascunhoEmail.trim())
+    setBioUsuario(rascunhoBio.trim())
+    setEditando(false)
+    setSalvo(true)
+    setTimeout(() => setSalvo(false), 2500)
+  }
+
+  const letraAvatar = nomeUsuario?.[0]?.toUpperCase() || 'U'
 
   return (
     <>
-      {/* Botão hamburguer — só aparece no mobile */}
       <button
         className="sidebar-toggle"
         aria-label="Abrir menu"
@@ -24,13 +68,15 @@ function Perfil() {
 
         <main className="main-content" id="main-content">
 
-          {/* Topbar */}
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="perfil-titulo-icon">
                 <i className="fa-solid fa-user"></i>
               </div>
-              <h1 className="perfil-titulo">Meu Perfil</h1>
+              <div>
+                <h1 className="perfil-titulo">Meu Perfil</h1>
+                <p className="perfil-subtitulo">Gerencie suas informações pessoais</p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip">
@@ -42,64 +88,141 @@ function Perfil() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>
 
           <section id="page-content" className="page-transition">
 
-            <div className="row g-4">
+            <motion.div
+              className="perfil-layout"
+              initial="hidden"
+              animate="visible"
+              variants={{ visible: { transition: { staggerChildren: 0.1 } } }}
+            >
 
               {/* Coluna esquerda */}
-              <div className="col-12 col-lg-8 d-flex flex-column gap-4">
+              <motion.div
+                className="d-flex flex-column gap-4"
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }}
+              >
 
                 {/* Card principal do perfil */}
-                <div className="card perfil-card-principal">
-                  <div className="d-flex align-items-start gap-4 mb-4">
-                    <div className="avatar avatar-lg perfil-avatar">J</div>
-                    <div className="d-flex flex-column gap-2 flex-grow-1">
-                      <div className="d-flex align-items-center gap-2">
-                        <h2 className="perfil-nome">{nomeUsuario}</h2>
-                        <button className="perfil-edit-btn" aria-label="Editar perfil">
-                          <i className="fa-regular fa-pen-to-square"></i>
-                        </button>
-                      </div>
-                      <div className="d-flex align-items-center gap-3 flex-wrap">
-                        <span className="perfil-meta">
-                          <i className="fa-regular fa-envelope"></i>
-                          {emailUsuario}
-                        </span>
-                        <span className="perfil-meta">
-                          <i className="fa-regular fa-calendar"></i>
-                          Membro desde Mai 2024
-                        </span>
-                      </div>
-                      <div className="d-flex align-items-center gap-2 flex-wrap">
-                        <span className="perfil-stat-chip perfil-stat-chip--green">
-                          Nível<strong>5</strong>
-                        </span>
-                        <span className="perfil-stat-chip perfil-stat-chip--gray">
-                          XP<strong>2.450</strong>
-                        </span>
-                        <span className="perfil-stat-chip perfil-stat-chip--hc">
-                          Próximo nível<strong>550 XP</strong>
-                        </span>
-                      </div>
+                <motion.div variants={cardVariants} className="card perfil-card-principal">
+
+                  <div className="d-flex align-items-start gap-4">
+                    <div className="avatar avatar-lg perfil-avatar">{letraAvatar}</div>
+
+                    <div className="d-flex flex-column gap-2 grow">
+                      {editando ? (
+                        <div className="perfil-edit-form">
+                          <div className="perfil-edit-field">
+                            <label className="perfil-edit-label">Nome</label>
+                            <input
+                              className="perfil-edit-input"
+                              type="text"
+                              value={rascunhoNome}
+                              onChange={e => setRascunhoNome(e.target.value)}
+                              onKeyDown={e => { if (e.key === 'Enter') salvar(); if (e.key === 'Escape') cancelar() }}
+                              autoFocus
+                              maxLength={40}
+                            />
+                          </div>
+                          <div className="perfil-edit-field">
+                            <label className="perfil-edit-label">E-mail</label>
+                            <input
+                              className="perfil-edit-input"
+                              type="email"
+                              value={rascunhoEmail}
+                              onChange={e => setRascunhoEmail(e.target.value)}
+                              onKeyDown={e => { if (e.key === 'Enter') salvar(); if (e.key === 'Escape') cancelar() }}
+                              placeholder="seu@email.com"
+                            />
+                          </div>
+                          <div className="perfil-edit-field">
+                            <label className="perfil-edit-label">
+                              Bio
+                              <span className="perfil-edit-hint"> {rascunhoBio.length}/80</span>
+                            </label>
+                            <textarea
+                              className="perfil-edit-input perfil-edit-textarea"
+                              value={rascunhoBio}
+                              onChange={e => setRascunhoBio(e.target.value.slice(0, 80))}
+                              onKeyDown={e => { if (e.key === 'Escape') cancelar() }}
+                              placeholder="Uma frase sobre você..."
+                              rows={2}
+                            />
+                          </div>
+                          <div className="perfil-edit-actions">
+                            <button
+                              className="perfil-edit-btn-salvar"
+                              onClick={salvar}
+                              disabled={!rascunhoNome.trim()}
+                            >
+                              <i className="fa-solid fa-check"></i> Salvar
+                            </button>
+                            <button className="perfil-edit-btn-cancelar" onClick={cancelar}>
+                              <i className="fa-solid fa-xmark"></i> Cancelar
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
+                        <>
+                          <div className="d-flex align-items-center gap-2">
+                            <h2 className="perfil-nome">{nomeUsuario}</h2>
+                            {salvo && <span className="perfil-salvo-badge">Salvo!</span>}
+                            <button
+                              className="perfil-edit-btn ms-auto"
+                              aria-label="Editar perfil"
+                              onClick={iniciarEdicao}
+                            >
+                              <i className="fa-regular fa-pen-to-square"></i>
+                            </button>
+                          </div>
+                          {bioUsuario && <p className="perfil-bio">{bioUsuario}</p>}
+                          <div className="d-flex align-items-center gap-3 flex-wrap">
+                            <span className="perfil-meta">
+                              <i className="fa-regular fa-envelope"></i>
+                              {emailUsuario || 'Sem email'}
+                            </span>
+                            <span className="perfil-meta">
+                              <i className="fa-regular fa-calendar"></i>
+                              Membro desde Mai 2024
+                            </span>
+                          </div>
+                          <div className="d-flex align-items-center gap-2 flex-wrap">
+                            <span className="perfil-stat-chip perfil-stat-chip--green">
+                              Nível<strong>5</strong>
+                            </span>
+                            <span className="perfil-stat-chip perfil-stat-chip--gray">
+                              XP<strong>2.450</strong>
+                            </span>
+                            <span className="perfil-stat-chip perfil-stat-chip--hc">
+                              Próximo nível<strong>550 XP</strong>
+                            </span>
+                          </div>
+                        </>
+                      )}
                     </div>
                   </div>
-                  <div className="d-flex justify-content-between align-items-center mb-2">
-                    <span className="text-sm text-secondary">Progresso para Nível 6</span>
-                    <span className="text-sm font-bold trilha-pct">82%</span>
-                  </div>
-                  <div className="progress-bar perfil-progress-bar">
-                    <div className="progress-fill" style={{ width: '82%' }}></div>
-                  </div>
-                </div>
+
+                  {!editando && (
+                    <div className="mt-4">
+                      <div className="d-flex justify-content-between align-items-center mb-2">
+                        <span className="text-sm text-secondary">Progresso para Nível 6</span>
+                        <span className="text-sm font-bold trilha-pct">82%</span>
+                      </div>
+                      <div className="progress-bar perfil-progress-bar">
+                        <div className="progress-fill" style={{ width: '82%' }}></div>
+                      </div>
+                    </div>
+                  )}
+                </motion.div>
 
                 {/* Grid de estatísticas */}
-                <div className="row g-3">
-                  <div className="col-6">
+                <motion.div variants={cardVariants} className="perfil-stats-grid">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--blue">
                         <i className="fa-solid fa-bullseye"></i>
@@ -110,7 +233,7 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--orange">
                         <i className="fa-solid fa-fire"></i>
@@ -121,32 +244,37 @@ function Perfil() {
                       </div>
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--hc">
                         <i className="fa-solid fa-coins"></i>
                       </div>
                       <div className="d-flex flex-column gap-1">
                         <span className="perfil-stat-label">Total de Coins Ganhos</span>
-                        <span className="perfil-stat-valor">3.450</span>
+                        <span className="perfil-stat-valor">{totalHC.toLocaleString('pt-BR')}</span>
                       </div>
                     </div>
                   </div>
-                  <div className="col-6">
+                  <div>
                     <div className="card perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--trophy">
                         <i className="fa-solid fa-trophy"></i>
                       </div>
                       <div className="d-flex flex-column gap-1">
                         <span className="perfil-stat-label">Conquistas</span>
-                        <span className="perfil-stat-valor">12</span>
+                        <span className="perfil-stat-valor">{totalConquistas}</span>
                       </div>
                     </div>
                   </div>
-                </div>
+                </motion.div>
+
+                {/* Meta de hidratação personalizada (conectada ao backend) */}
+                <motion.div variants={cardVariants}>
+                  <PerfilMetaHidratacao />
+                </motion.div>
 
                 {/* Conquistas recentes */}
-                <div className="card">
+                <motion.div variants={cardVariants} className="card">
                   <div className="d-flex align-items-center gap-2 mb-4">
                     <div className="perfil-stat-icon perfil-stat-icon--trophy">
                       <i className="fa-solid fa-trophy"></i>
@@ -154,9 +282,8 @@ function Perfil() {
                     <h3 className="perfil-secao-titulo">Conquistas Recentes</h3>
                   </div>
 
-                  <div className="row g-3 mb-4">
-                    {/* Semana Ativa — desbloqueada */}
-                    <div className="col-6">
+                  <div className="perfil-conquistas-grid">
+                    <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--orange">
                           <i className="fa-solid fa-fire"></i>
@@ -168,8 +295,7 @@ function Perfil() {
                       </div>
                     </div>
 
-                    {/* Mestre do Sono — desbloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--purple">
                           <i className="fa-solid fa-moon"></i>
@@ -181,8 +307,7 @@ function Perfil() {
                       </div>
                     </div>
 
-                    {/* Hidratação em Dia — desbloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--blue">
                           <i className="fa-solid fa-droplet"></i>
@@ -194,8 +319,7 @@ function Perfil() {
                       </div>
                     </div>
 
-                    {/* Maratonista — bloqueada */}
-                    <div className="col-6">
+                    <div>
                       <div className="perfil-conquista-item">
                         <div className="perfil-conquista-icon perfil-conquista-icon--locked">
                           <i className="fa-solid fa-person-running"></i>
@@ -211,11 +335,15 @@ function Perfil() {
                   <Link to="/conquistas" className="btn perfil-btn-conquistas">
                     Ver Todas as Conquistas
                   </Link>
-                </div>
-              </div>
+                </motion.div>
+              </motion.div>
 
               {/* Coluna direita — atalhos */}
-              <div className="col-12 col-lg-4 d-flex flex-column gap-4">
+              <motion.div
+                className="d-flex flex-column gap-4"
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } } }}
+              >
+                <motion.div variants={cardVariants}>
                 <Link to="/configuracoes" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--gray">
                     <i className="fa-solid fa-gear"></i>
@@ -225,7 +353,9 @@ function Perfil() {
                     <span className="perfil-atalho-desc">Ajuste suas preferências</span>
                   </div>
                 </Link>
+                </motion.div>
 
+                <motion.div variants={cardVariants}>
                 <Link to="/recompensas" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--green">
                     <i className="fa-solid fa-gift"></i>
@@ -235,7 +365,9 @@ function Perfil() {
                     <span className="perfil-atalho-desc">Vouchers resgatados</span>
                   </div>
                 </Link>
+                </motion.div>
 
+                <motion.div variants={cardVariants}>
                 <Link to="/descobertas" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--yellow">
                     <i className="fa-solid fa-lightbulb"></i>
@@ -245,9 +377,10 @@ function Perfil() {
                     <span className="perfil-atalho-desc">Insights sobre sua saúde</span>
                   </div>
                 </Link>
-              </div>
+                </motion.div>
+              </motion.div>
 
-            </div>
+            </motion.div>
           </section>
         </main>
       </div>

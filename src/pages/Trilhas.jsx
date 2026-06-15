@@ -1,137 +1,8 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/trilhas.css'
-
-// Dados das missões por trilha
-
-const MISSOES_POR_TRILHA = {
-  'sono-profundo': [
-    { id: 1, nome: 'Dormir às 22h', hc: 50, status: 'concluida' },
-    { id: 2, nome: 'Sem telas 1h antes de dormir', hc: 60, status: 'concluida' },
-    { id: 3, nome: 'Meditação noturna 5 min', hc: 70, status: 'atual' },
-    { id: 4, nome: 'Chá de camomila', hc: 40, status: 'bloqueada' },
-    { id: 5, nome: 'Diário de gratidão', hc: 130, status: 'bloqueada' },
-  ],
-  'movimento-diario': [
-    { id: 1, nome: 'Caminhar 5.000 passos', hc: 50, status: 'concluida' },
-    { id: 2, nome: 'Alongamento matinal 10 min', hc: 30, status: 'atual' },
-    { id: 3, nome: 'Subir escadas no trabalho', hc: 20, status: 'bloqueada' },
-    { id: 4, nome: 'Caminhar 8.000 passos', hc: 80, status: 'bloqueada' },
-    { id: 5, nome: 'Exercício leve 20 min', hc: 100, status: 'bloqueada' },
-    { id: 6, nome: 'Alongamento pós-trabalho 10 min', hc: 60, status: 'bloqueada' },
-    { id: 7, nome: 'Caminhar 10.000 passos', hc: 120, status: 'bloqueada' },
-    { id: 8, nome: 'Atividade aeróbica 30 min', hc: 160, status: 'bloqueada' },
-  ],
-  'mente-tranquila': [
-    { id: 1, nome: 'Respiração 4-7-8 por 5 min', hc: 40, status: 'disponivel' },
-    { id: 2, nome: 'Meditação guiada 10 min', hc: 60, status: 'bloqueada' },
-    { id: 3, nome: 'Pausa consciente no trabalho', hc: 50, status: 'bloqueada' },
-    { id: 4, nome: 'Journaling de pensamentos', hc: 80, status: 'bloqueada' },
-    { id: 5, nome: 'Caminhada mindful 15 min', hc: 90, status: 'bloqueada' },
-    { id: 6, nome: 'Gratidão diária — 3 itens', hc: 100, status: 'bloqueada' },
-  ],
-  'alimentacao-consciente': [
-    { id: 1, nome: 'Beber 2L de água no dia', hc: 50, status: 'disponivel' },
-    { id: 2, nome: 'Substituir um snack processado', hc: 60, status: 'bloqueada' },
-    { id: 3, nome: 'Comer sem telas por 1 refeição', hc: 70, status: 'bloqueada' },
-    { id: 4, nome: 'Incluir verduras no almoço', hc: 60, status: 'bloqueada' },
-    { id: 5, nome: 'Café da manhã nutritivo', hc: 80, status: 'bloqueada' },
-    { id: 6, nome: 'Reduzir açúcar adicionado', hc: 90, status: 'bloqueada' },
-    { id: 7, nome: 'Fruta como sobremesa', hc: 70, status: 'bloqueada' },
-    { id: 8, nome: 'Mastigar devagar (20x por mordida)', hc: 80, status: 'bloqueada' },
-    { id: 9, nome: 'Planejar refeições da semana', hc: 110, status: 'bloqueada' },
-    { id: 10, nome: 'Semana sem fast food', hc: 130, status: 'bloqueada' },
-  ],
-  'checkup-preventivo': [
-    { id: 1, nome: 'Agendar consulta com clínico geral', hc: 150, status: 'disponivel' },
-    { id: 2, nome: 'Realizar exame de sangue de rotina', hc: 350, status: 'bloqueada' },
-    { id: 3, nome: 'Consulta com dentista', hc: 300, status: 'bloqueada' },
-    { id: 4, nome: 'Aferir pressão arterial e IMC', hc: 400, status: 'bloqueada' },
-  ],
-  'cardio-intenso': [],
-}
-
-// Dados das trilhas
-const TRILHAS_EM_ANDAMENTO = [
-  {
-    id: 'sono-profundo',
-    nome: 'Sono Profundo',
-    status: 'Em andamento',
-    dificuldade: 'Fácil',
-    nivel: 1,
-    participantes: '1.240',
-    descricao: 'Melhore a qualidade do seu sono com hábitos noturnos saudáveis e rotinas de relaxamento comprovadas.',
-    tags: ['Relaxamento', 'Rotina', 'Descanso'],
-    dias: 7, missoes: 5, hc: 350, progresso: 60,
-    categoria: 'sono', variante: 'purple', icone: 'fa-moon',
-  },
-  {
-    id: 'movimento-diario',
-    nome: 'Movimento Diário',
-    status: 'Em andamento',
-    dificuldade: 'Médio',
-    nivel: 2,
-    participantes: '890',
-    descricao: 'Incorpore atividade física leve à sua rotina diária sem precisar ir à academia.',
-    tags: ['Passos', 'Cardio', 'Energia'],
-    dias: 14, missoes: 8, hc: 620, progresso: 25,
-    categoria: 'movimento', variante: 'blue', icone: 'fa-person-running',
-  },
-]
-
-const TRILHAS_DISPONIVEIS = [
-  {
-    id: 'mente-tranquila',
-    nome: 'Mente Tranquila',
-    dificuldade: 'Fácil',
-    nivel: 1,
-    participantes: '2.100',
-    descricao: 'Reduza o estresse e a ansiedade com técnicas de mindfulness e respiração consciente.',
-    tags: ['Respiração', 'Foco', 'Ansiedade'],
-    dias: 10, missoes: 6, hc: 420,
-    categoria: 'mindfulness', variante: 'teal', icone: 'fa-brain', recomendada: true,
-  },
-  {
-    id: 'alimentacao-consciente',
-    nome: 'Alimentação Consciente',
-    dificuldade: 'Difícil',
-    nivel: 3,
-    participantes: '660',
-    descricao: 'Desenvolva uma relação saudável com a comida e melhore seus hábitos alimentares.',
-    tags: ['Hidratação', 'Proteína', 'Vitaminas'],
-    dias: 21, missoes: 10, hc: 900,
-    categoria: 'nutricao', variante: 'orange', icone: 'fa-bowl-food', recomendada: true,
-  },
-  {
-    id: 'checkup-preventivo',
-    nome: 'Check-up Preventivo',
-    dificuldade: 'Médio',
-    nivel: 2,
-    participantes: '440',
-    descricao: 'Cuide da sua saúde com consultas regulares e exames preventivos essenciais.',
-    tags: ['Consulta', 'Exames', 'Prevenção'],
-    dias: 30, missoes: 4, hc: 1200,
-    categoria: 'saude', variante: 'checkup', icone: 'fa-clipboard-list', recomendada: false,
-  },
-]
-
-const TRILHAS_BLOQUEADAS = [
-  {
-    id: 'cardio-intenso',
-    nome: 'Cardio Intenso',
-    dificuldade: 'Difícil',
-    nivel: 4,
-    participantes: '280',
-    descricao: 'Eleve seu condicionamento físico com atividades cardiovasculares progressivas.',
-    tags: ['Resistência', 'Força', 'Velocidade'],
-    dias: 21, missoes: 12, hc: 1100,
-    categoria: 'movimento', icone: 'fa-person-biking',
-  },
-]
-
-// Estilos por variante
 
 const VARIANTE_STYLES = {
   purple: {
@@ -176,10 +47,20 @@ const DIFICULDADE_BADGE = {
   'Difícil': 'badge-dificil',
 }
 
-// Painel de missões
+const FILTROS = [
+  { key: 'todos',       label: 'Todos',       icon: 'fa-circle-dot' },
+  { key: 'movimento',   label: 'Movimento',   icon: 'fa-person-running' },
+  { key: 'sono',        label: 'Sono',        icon: 'fa-moon' },
+  { key: 'nutricao',    label: 'Nutrição',    icon: 'fa-apple-whole' },
+  { key: 'mindfulness', label: 'Mindfulness', icon: 'fa-brain' },
+  { key: 'saude',       label: 'Saúde',       icon: 'fa-heart-pulse' },
+]
 
-function PainelMissoes({ trilha, variante }) {
-  const missoes = MISSOES_POR_TRILHA[trilha.id] || []
+const FILTRO_LABEL = Object.fromEntries(FILTROS.map(f => [f.key, f.label]))
+
+// Painel de missões
+function PainelMissoes({ trilha, variante, missoesPorTrilha }) {
+  const missoes = missoesPorTrilha[trilha.id] || []
   const s = variante ? VARIANTE_STYLES[variante] : {}
 
   return (
@@ -196,16 +77,12 @@ function PainelMissoes({ trilha, variante }) {
 
       <div className="trilha-missoes-lista">
         {missoes.map((missao, i) => (
-          <div
-            key={missao.id}
-            className={`trilha-missao-item trilha-missao-item--${missao.status}`}
-          >
-            {/* Ícone de status */}
+          <div key={missao.id} className={`trilha-missao-item trilha-missao-item--${missao.status}`}>
             <div className={`trilha-missao-icone trilha-missao-icone--${missao.status}`}>
-              {missao.status === 'concluida' && <i className="fa-solid fa-check"></i>}
-              {missao.status === 'atual' && <i className="fa-solid fa-play"></i>}
+              {missao.status === 'concluida'  && <i className="fa-solid fa-check"></i>}
+              {missao.status === 'atual'      && <i className="fa-solid fa-play"></i>}
               {missao.status === 'disponivel' && <i className="fa-solid fa-play"></i>}
-              {missao.status === 'bloqueada' && <i className="fa-solid fa-lock"></i>}
+              {missao.status === 'bloqueada'  && <i className="fa-solid fa-lock"></i>}
             </div>
 
             {/* Número + nome */}
@@ -227,11 +104,10 @@ function PainelMissoes({ trilha, variante }) {
 }
 
 // Card em andamento
-
-function TrilhaEmAndamento({ trilha, expandida, onToggle }) {
+function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
   const s = VARIANTE_STYLES[trilha.variante]
   return (
-    <div className={`col-12 trilha-filter-item ${expandida ? 'trilha-expandida-col' : 'col-lg-6'}`}>
+    <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
       <div
         className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
@@ -288,7 +164,7 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle }) {
         {/* Painel lateral de missões (só aparece quando expandido) */}
         {expandida && (
           <div onClick={e => e.stopPropagation()}>
-            <PainelMissoes trilha={trilha} variante={trilha.variante} />
+            <PainelMissoes trilha={trilha} variante={trilha.variante} missoesPorTrilha={missoesPorTrilha} />
           </div>
         )}
       </div>
@@ -297,11 +173,10 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle }) {
 }
 
 // Card disponível
-
-function TrilhaDisponivel({ trilha, expandida, onToggle }) {
+function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
   const s = VARIANTE_STYLES[trilha.variante]
   return (
-    <div className={`col-12 trilha-filter-item ${expandida ? 'trilha-expandida-col' : 'col-lg-6'}`}>
+    <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
       <div
         className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
@@ -345,10 +220,9 @@ function TrilhaDisponivel({ trilha, expandida, onToggle }) {
             <button className={`btn ${s.btn} w-100`}>+ Iniciar Trilha</button>
           </div>
         </div>
-
         {expandida && (
           <div onClick={e => e.stopPropagation()}>
-            <PainelMissoes trilha={trilha} variante={trilha.variante} />
+            <PainelMissoes trilha={trilha} variante={trilha.variante} missoesPorTrilha={missoesPorTrilha} />
           </div>
         )}
       </div>
@@ -357,10 +231,9 @@ function TrilhaDisponivel({ trilha, expandida, onToggle }) {
 }
 
 // Card bloqueado
-
 function TrilhaBloqueada({ trilha }) {
   return (
-    <div className="col-12 col-lg-6 trilha-filter-item">
+    <div className="trilha-filter-item">
       <div className="card trilha-card trilha-card-bloqueada d-flex flex-column gap-3">
         <div className="d-flex align-items-start gap-3">
           <div className="trilha-thumb trilha-thumb--locked">
@@ -398,7 +271,7 @@ function TrilhaBloqueada({ trilha }) {
   )
 }
 
-// Seção vazia quando nenhuma trilha bate com o filtro
+// Seção vazia
 function SecaoVazia({ label }) {
   return (
     <div className="trilha-empty-state">
@@ -408,25 +281,39 @@ function SecaoVazia({ label }) {
   )
 }
 
-const FILTROS = [
-  { key: 'todos',       label: 'Todos',       icon: 'fa-circle-dot' },
-  { key: 'movimento',   label: 'Movimento',   icon: 'fa-person-running' },
-  { key: 'sono',        label: 'Sono',        icon: 'fa-moon' },
-  { key: 'nutricao',    label: 'Nutrição',    icon: 'fa-apple-whole' },
-  { key: 'mindfulness', label: 'Mindfulness', icon: 'fa-brain' },
-  { key: 'saude',       label: 'Saúde',       icon: 'fa-heart-pulse' },
-]
-
-const FILTRO_LABEL = Object.fromEntries(FILTROS.map(f => [f.key, f.label]))
-
 // Página principal
-
 function Trilhas() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [filtroAtivo, setFiltroAtivo] = useState('todos')
-  const [busca, setBusca] = useState('')
+  const [sidebarOpen, setSidebarOpen]     = useState(false)
+  const [filtroAtivo, setFiltroAtivo]     = useState('todos')
+  const [busca, setBusca]                 = useState('')
   const [trilhaExpandida, setTrilhaExpandida] = useState(null)
-  const { totalHC, humor, HUMOR_CONFIG } = useApp()
+  const [trilhasData, setTrilhasData]     = useState({ emAndamento: [], disponiveis: [], bloqueadas: [] })
+  const [missoesPorTrilha, setMissoesPorTrilha] = useState({})
+  const [carregando, setCarregando]       = useState(true)
+  const { totalHC, humor, HUMOR_CONFIG, naoLidas }  = useApp()
+
+  // Busca trilhas e missões dos JSONs locais
+  useEffect(() => {
+    Promise.all([
+      fetch('/data/trilhas.json').then(r => r.json()),
+      fetch('/data/missoes.json').then(r => r.json()),
+    ])
+      .then(([trilhas, missoes]) => {
+        setTrilhasData(trilhas)
+        setMissoesPorTrilha(missoes)
+        setCarregando(false)
+      })
+      .catch(async () => {
+        // Fallback via import direto
+        const [trilhas, missoes] = await Promise.all([
+          import('../data/trilhas.json').then(m => m.default),
+          import('../data/missoes.json').then(m => m.default),
+        ])
+        setTrilhasData(trilhas)
+        setMissoesPorTrilha(missoes)
+        setCarregando(false)
+      })
+  }, [])
 
   const toggleExpandir = (id) => {
     setTrilhaExpandida(prev => prev === id ? null : id)
@@ -435,7 +322,7 @@ function Trilhas() {
   const aplicarFiltros = (lista) => {
     return lista.filter(t => {
       const bateFiltro = filtroAtivo === 'todos' || t.categoria === filtroAtivo
-      const bateBusca = busca.trim() === '' ||
+      const bateBusca  = busca.trim() === '' ||
         t.nome.toLowerCase().includes(busca.toLowerCase()) ||
         t.descricao.toLowerCase().includes(busca.toLowerCase()) ||
         t.tags.some(tag => tag.toLowerCase().includes(busca.toLowerCase()))
@@ -443,12 +330,12 @@ function Trilhas() {
     })
   }
 
-  const andamento   = useMemo(() => aplicarFiltros(TRILHAS_EM_ANDAMENTO),  [filtroAtivo, busca])
-  const disponiveis = useMemo(() => aplicarFiltros(TRILHAS_DISPONIVEIS),    [filtroAtivo, busca])
-  const bloqueadas  = useMemo(() => aplicarFiltros(TRILHAS_BLOQUEADAS),     [filtroAtivo, busca])
+  const andamento   = useMemo(() => aplicarFiltros(trilhasData.emAndamento),  [filtroAtivo, busca, trilhasData])
+  const disponiveis = useMemo(() => aplicarFiltros(trilhasData.disponiveis),   [filtroAtivo, busca, trilhasData])
+  const bloqueadas  = useMemo(() => aplicarFiltros(trilhasData.bloqueadas),    [filtroAtivo, busca, trilhasData])
 
   const totalResultados = andamento.length + disponiveis.length + bloqueadas.length
-  const semResultados   = totalResultados === 0
+  const semResultados   = !carregando && totalResultados === 0
 
   return (
     <>
@@ -463,12 +350,17 @@ function Trilhas() {
 
           {/* Topbar */}
           <header className="topbar">
-            <div>
-              <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
-              <p className="trilhas-page-subtitle">
-                Recomendado para você: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
-                <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
-              </p>
+            <div className="d-flex align-items-center gap-3">
+              <div className="trilhas-titulo-icon">
+                <i className="fa-solid fa-route"></i>
+              </div>
+              <div>
+                <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
+                <p className="trilhas-page-subtitle">
+                  Recomendado: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
+                  <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
+                </p>
+              </div>
             </div>
             <div className="topbar-actions">
               <div className="hc-chip">
@@ -480,7 +372,7 @@ function Trilhas() {
               </Link>
               <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
                 <i className="fa-solid fa-bell"></i>
-                <span className="notif-dot"></span>
+                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
               </Link>
             </div>
           </header>
@@ -488,17 +380,17 @@ function Trilhas() {
           <section id="page-content" className="page-transition">
 
             {/* Cards de resumo */}
-            <div className="row g-3 mb-4">
-              <div className="col-6 col-lg-3">
+            <div className="trilhas-resumo-grid mb-4">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--primary"><i className="fa-solid fa-bullseye"></i></div>
                   <div className="resumo-card-body">
-                    <span className="resumo-valor">2</span>
+                    <span className="resumo-valor">{trilhasData.emAndamento.length}</span>
                     <span className="resumo-label">Trilhas Ativas</span>
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--success"><i className="fa-solid fa-circle-check"></i></div>
                   <div className="resumo-card-body">
@@ -507,7 +399,7 @@ function Trilhas() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--warning"><i className="fa-solid fa-fire"></i></div>
                   <div className="resumo-card-body">
@@ -516,7 +408,7 @@ function Trilhas() {
                   </div>
                 </div>
               </div>
-              <div className="col-6 col-lg-3">
+              <div>
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
                   <div className="resumo-card-body">
@@ -529,7 +421,7 @@ function Trilhas() {
 
             {/* Busca e filtros */}
             <div className="d-flex align-items-center gap-3 mb-5 flex-wrap">
-              <div className="trilhas-search flex-grow-1">
+              <div className="trilhas-search grow">
                 <i className="fa-solid fa-magnifying-glass trilhas-search-icon"></i>
                 <input
                   type="search"
@@ -553,6 +445,16 @@ function Trilhas() {
               </div>
             </div>
 
+            {/* Spinner de carregamento */}
+            {carregando && (
+              <div className="d-flex justify-content-center align-items-center py-5">
+                <div className="d-flex flex-column align-items-center gap-3">
+                  <i className="fa-solid fa-spinner fa-spin text-primary" style={{ fontSize: '32px' }}></i>
+                  <span className="text-muted">Carregando trilhas...</span>
+                </div>
+              </div>
+            )}
+
             {/* Estado vazio global */}
             {semResultados && (
               <div className="trilha-empty-global">
@@ -573,7 +475,7 @@ function Trilhas() {
             )}
 
             {/* Trilhas em andamento */}
-            {!semResultados && (
+            {!carregando && !semResultados && (
               <div className="trilhas-secao">
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <span className="trilhas-secao-barra trilhas-secao-barra--primary"></span>
@@ -581,13 +483,14 @@ function Trilhas() {
                   <span className="badge badge-primary">{andamento.length} ativas</span>
                 </div>
                 {andamento.length > 0 ? (
-                  <div className="row g-4">
+                  <div className="trilhas-cards-grid">
                     {andamento.map(t => (
                       <TrilhaEmAndamento
                         key={t.id}
                         trilha={t}
                         expandida={trilhaExpandida === t.id}
                         onToggle={() => toggleExpandir(t.id)}
+                        missoesPorTrilha={missoesPorTrilha}
                       />
                     ))}
                   </div>
@@ -596,7 +499,7 @@ function Trilhas() {
             )}
 
             {/* Trilhas disponíveis */}
-            {!semResultados && (
+            {!carregando && !semResultados && (
               <div className="trilhas-secao">
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <span className="trilhas-secao-barra trilhas-secao-barra--warning"></span>
@@ -604,13 +507,14 @@ function Trilhas() {
                   <span className="badge badge-warning">{disponiveis.length} disponíveis</span>
                 </div>
                 {disponiveis.length > 0 ? (
-                  <div className="row g-4">
+                  <div className="trilhas-cards-grid">
                     {disponiveis.map(t => (
                       <TrilhaDisponivel
                         key={t.id}
                         trilha={t}
                         expandida={trilhaExpandida === t.id}
                         onToggle={() => toggleExpandir(t.id)}
+                        missoesPorTrilha={missoesPorTrilha}
                       />
                     ))}
                   </div>
@@ -619,7 +523,7 @@ function Trilhas() {
             )}
 
             {/* Trilhas bloqueadas */}
-            {!semResultados && (
+            {!carregando && !semResultados && (
               <div className="trilhas-secao">
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <span className="trilhas-secao-barra trilhas-secao-barra--muted"></span>
@@ -627,7 +531,7 @@ function Trilhas() {
                   <span className="text-sm text-muted">Complete outras trilhas para desbloquear</span>
                 </div>
                 {bloqueadas.length > 0 ? (
-                  <div className="row g-4">
+                  <div className="trilhas-cards-grid">
                     {bloqueadas.map(t => <TrilhaBloqueada key={t.id} trilha={t} />)}
                   </div>
                 ) : <SecaoVazia label={FILTRO_LABEL[filtroAtivo]} />}

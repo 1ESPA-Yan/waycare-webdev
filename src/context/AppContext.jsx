@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from 'react'
+import { createContext, useContext, useState, useEffect } from 'react'
 
 const AppContext = createContext()
 
@@ -12,6 +12,15 @@ export function AppProvider({ children }) {
     localStorage.getItem('wc_email') || ''
   )
 
+  const [bioUsuario, setBioUsuarioState] = useState(
+    localStorage.getItem('wc_bio') || ''
+  )
+
+  const setBioUsuario = (bio) => {
+    setBioUsuarioState(bio)
+    localStorage.setItem('wc_bio', bio)
+  }
+
   // Salva nome e email no estado e no localStorage
   const salvarUsuario = (nome, email = '') => {
     const primeiroNome = nome.trim().split(' ')[0]
@@ -22,7 +31,13 @@ export function AppProvider({ children }) {
   }
 
   // HUMOR
-  const [humor, setHumor] = useState('energetico')
+  const [humor, setHumor] = useState(
+    localStorage.getItem('wc_humor') || 'energetico'
+  )
+
+  useEffect(() => {
+    localStorage.setItem('wc_humor', humor)
+  }, [humor])
 
   // Mapeamento humor → badge + recomendação para trilhas
   const HUMOR_CONFIG = {
@@ -34,25 +49,61 @@ export function AppProvider({ children }) {
   }
 
   // GARRAFA
-  const [mlGarrafa, setMlGarrafa] = useState(600)
-  const [mlConsumido, setMlConsumido] = useState(450)
-  const [metaDiaria, setMetaDiaria] = useState(2000)
+  const [mlGarrafa, setMlGarrafa] = useState(
+    () => Number(localStorage.getItem('wc_ml_garrafa')) || 600
+  )
+  const [mlConsumido, setMlConsumido] = useState(
+    () => Number(localStorage.getItem('wc_ml_consumido')) || 0
+  )
+  const [metaDiaria, setMetaDiaria] = useState(
+    () => Number(localStorage.getItem('wc_meta_diaria')) || 2000
+  )
 
-  //HEALTH COINS
-  const [totalHC, setTotalHC] = useState(1300)
+  useEffect(() => { localStorage.setItem('wc_ml_garrafa',  mlGarrafa)  }, [mlGarrafa])
+  useEffect(() => { localStorage.setItem('wc_ml_consumido', mlConsumido) }, [mlConsumido])
+  useEffect(() => { localStorage.setItem('wc_meta_diaria', metaDiaria)  }, [metaDiaria])
+
+  // NOTIFICAÇÕES — contador de não lidas
+  const [naoLidas, setNaoLidasState] = useState(
+    () => Number(localStorage.getItem('wc_nao_lidas') ?? 2)
+  )
+
+  const setNaoLidas = (count) => {
+    const v = Math.max(0, count)
+    setNaoLidasState(v)
+    localStorage.setItem('wc_nao_lidas', v)
+  }
+
+  // HEALTH COINS
+  const [totalHC, setTotalHC] = useState(
+    () => Number(localStorage.getItem('wc_hc')) || 1300
+  )
 
   const adicionarHC = (quantidade) => {
-    setTotalHC(prev => prev + quantidade)
+    setTotalHC(prev => {
+      const novo = prev + quantidade
+      localStorage.setItem('wc_hc', novo)
+      return novo
+    })
   }
 
   // HISTÓRICO DE LEITURAS DA GARRAFA
-  const [leituras, setLeituras] = useState([
-    { hora: '09:50', de: 600, para: 500, diff: 100, hc: 4 },
-    { hora: '08:45', de: 400, para: 250, diff: 150, hc: 6 },
-    { hora: '07:32', de: 600, para: 400, diff: 200, hc: 8 },
-  ])
+  const [leituras, setLeituras] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('wc_leituras')) || [
+        { hora: '09:50', de: 600, para: 500, diff: 100, hc: 4 },
+        { hora: '08:45', de: 400, para: 250, diff: 150, hc: 6 },
+        { hora: '07:32', de: 600, para: 400, diff: 200, hc: 8 },
+      ]
+    } catch { return [] }
+  })
 
-  const [hcGarrafa, setHcGarrafa] = useState(18)
+  const [hcGarrafa, setHcGarrafa] = useState(
+    () => Number(localStorage.getItem('wc_hc_garrafa')) || 18
+  )
+
+  useEffect(() => { localStorage.setItem('wc_leituras',    JSON.stringify(leituras)) }, [leituras])
+  useEffect(() => { localStorage.setItem('wc_hc_garrafa', hcGarrafa) }, [hcGarrafa])
 
   const CAPACIDADE_GARRAFA = 750
 
@@ -90,6 +141,8 @@ export function AppProvider({ children }) {
     // Usuário
     nomeUsuario,
     emailUsuario,
+    bioUsuario,
+    setBioUsuario,
     salvarUsuario,
 
     // Garrafa
@@ -114,6 +167,10 @@ export function AppProvider({ children }) {
     humor,
     setHumor,
     HUMOR_CONFIG,
+
+    // Notificações
+    naoLidas,
+    setNaoLidas,
   }
 
   return (

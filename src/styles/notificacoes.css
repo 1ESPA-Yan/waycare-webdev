@@ -66,6 +66,25 @@
   background-color: var(--color-primary-light);
 }
 
+.notif-page-limpar {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-error);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-md);
+  transition: background-color var(--transition-fast);
+}
+
+.notif-page-limpar:hover {
+  background-color: #fff0f0;
+}
+
 /* Filtros */
 .notif-tag {
   display: inline-flex;

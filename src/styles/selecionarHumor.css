@@ -30,6 +30,27 @@
   color: var(--color-primary);
 }
 
+/* Botão fechar/voltar */
+.humor-btn-voltar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--color-bg);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 16px;
+  transition: all var(--transition-fast);
+}
+
+.humor-btn-voltar:hover {
+  background: var(--color-border);
+  color: var(--color-text-primary);
+}
+
 /* Conteúdo central */
 .humor-main {
   flex: 1;

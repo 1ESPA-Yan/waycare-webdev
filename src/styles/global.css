@@ -1,3 +1,5 @@
+@import "tailwindcss";
+
 /* WAYCARE — Global CSS
    Design System: variáveis, reset, tipografia e componentes */
 
@@ -78,7 +80,7 @@
   --transition-slow: 0.4s ease;
 
   /* Layout */
-  --sidebar-width: 220px;
+  --sidebar-width: 280px;
   --topbar-height: 64px;
   --content-max: 1200px;
 }
@@ -176,13 +178,21 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   padding: 0 var(--space-4);
 }
 
-.flex        { display: flex; }
-.flex-col    { flex-direction: column; }
-.items-center{ align-items: center; }
-.items-start { align-items: flex-start; }
-.justify-center  { justify-content: center; }
-.justify-between { justify-content: space-between; }
-.justify-end     { justify-content: flex-end; }
+/* Flex */
+.flex, .d-flex          { display: flex; }
+.flex-col, .flex-column { flex-direction: column; }
+.flex-wrap              { flex-wrap: wrap; }
+.items-center,    .align-items-center    { align-items: center; }
+.items-start,     .align-items-start     { align-items: flex-start; }
+.items-end,       .align-items-end       { align-items: flex-end; }
+.items-baseline,  .align-items-baseline  { align-items: baseline; }
+.justify-center,  .justify-content-center  { justify-content: center; }
+.justify-between, .justify-content-between { justify-content: space-between; }
+.justify-end,     .justify-content-end     { justify-content: flex-end; }
+.grow { flex: 1 1 0%; }
+.ms-auto { margin-left: auto; }
+
+/* Gap */
 .gap-1 { gap: var(--space-1); }
 .gap-2 { gap: var(--space-2); }
 .gap-3 { gap: var(--space-3); }
@@ -190,11 +200,32 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 .gap-6 { gap: var(--space-6); }
 .gap-8 { gap: var(--space-8); }
 
+/* Grid */
 .grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
 .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
 
-.w-full  { width: 100%; }
+/* Dimensões */
+.w-full, .w-100 { width: 100%; }
 .h-full  { height: 100%; }
+
+/* Display */
+.d-block { display: block; }
+
+/* Texto */
+.text-center { text-align: center; }
+
+/* Margens */
+.mb-1 { margin-bottom: var(--space-1); }
+.mb-2 { margin-bottom: var(--space-2); }
+.mb-3 { margin-bottom: var(--space-3); }
+.mb-4 { margin-bottom: var(--space-4); }
+.mb-5 { margin-bottom: var(--space-6); }
+.mt-1 { margin-top: var(--space-1); }
+.mt-2 { margin-top: var(--space-2); }
+.mt-3 { margin-top: var(--space-3); }
+.mt-4 { margin-top: var(--space-4); }
+.mt-5 { margin-top: var(--space-6); }
+.py-5 { padding-top: var(--space-6); padding-bottom: var(--space-6); }
 
 /* COMPONENTES REUTILIZÁVEIS */
 
@@ -354,11 +385,18 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   overflow: hidden;
 }
 
+@keyframes fillBar {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
 .progress-fill {
   height: 100%;
   border-radius: var(--radius-full);
   background-color: var(--color-primary);
   transition: width var(--transition-slow);
+  transform-origin: left center;
+  animation: fillBar 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
 .progress-fill.warning { background-color: var(--color-warning); }
@@ -375,6 +413,14 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   font-size: var(--font-size-sm);
   padding: var(--space-2) var(--space-3);
   border-radius: var(--radius-full);
+  border: 1px solid rgba(245, 166, 35, 0.28);
+  box-shadow: 0 1px 4px rgba(245, 166, 35, 0.12);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+
+.hc-chip:hover {
+  box-shadow: 0 0 10px rgba(245, 166, 35, 0.32), 0 0 0 2px rgba(245, 166, 35, 0.18);
+  transform: translateY(-1px);
 }
 
 /* Health Coins em cards de missão, trilhas e conquistas */
@@ -552,7 +598,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background: linear-gradient(135deg, #27c48a 0%, #0f6347 100%);
   color: var(--color-white);
   display: flex;
   align-items: center;
@@ -560,6 +606,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-sm);
   flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(28, 151, 112, 0.35);
 }
 
 .avatar-lg {
@@ -625,8 +672,9 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 
 .nav-item.active {
   color: var(--color-primary);
-  background-color: var(--color-primary-light);
-  border-left-color: var(--color-primary);
+  background: linear-gradient(90deg, #d4efe5 0%, rgba(232, 245, 241, 0) 100%);
+  border-left: 4px solid var(--color-primary);
+  font-weight: var(--font-weight-bold);
 }
 
 /* ÍCONES */
@@ -731,13 +779,54 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 
 .notif-dot {
   position: absolute;
-  top: 6px;
-  right: 6px;
+  top: 4px;
+  right: 4px;
+  min-width: 16px;
+  height: 16px;
+  background-color: var(--color-error);
+  border-radius: var(--radius-full);
+  border: 2px solid var(--color-white);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  font-weight: var(--font-weight-bold);
+  color: var(--color-white);
+  padding: 0 3px;
+  line-height: 1;
+}
+
+.notif-dot:empty {
+  min-width: 8px;
   width: 8px;
   height: 8px;
-  background-color: var(--color-error);
-  border-radius: 50%;
-  border: 2px solid var(--color-white);
+  top: 6px;
+  right: 6px;
+  padding: 0;
+  animation: notifPulse 2s ease-in-out infinite;
+}
+
+@keyframes notifPulse {
+  0%, 100% { transform: scale(1);   box-shadow: 0 0 0 0 rgba(229, 57, 53, 0.5); }
+  50%       { transform: scale(1.2); box-shadow: 0 0 0 4px rgba(229, 57, 53, 0); }
+}
+
+/* Skeleton shimmer loader */
+@keyframes shimmer {
+  0%   { background-position: -600px 0; }
+  100% { background-position: 600px 0; }
+}
+
+.skeleton {
+  background: linear-gradient(
+    90deg,
+    var(--color-border) 25%,
+    #ebebeb 50%,
+    var(--color-border) 75%
+  );
+  background-size: 1200px 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: var(--radius-sm);
 }
 
 /* Alerta - Card de Descoberta */
@@ -765,7 +854,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 @keyframes fadeInPage {
   from {
     opacity: 0;
-    transform: translateY(8px);
+    transform: translateY(12px);
   }
   to {
     opacity: 1;
@@ -773,8 +862,30 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   }
 }
 
+
 .page-transition {
-  animation: fadeInPage 0.25s ease forwards;
+  animation: fadeInPage 0.3s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+/* Micro-interação de pressão em todos os filtros/tags */
+.mission-filter-tag:active,
+.notif-tag:active,
+.trilha-tag:active,
+.recompensa-tag:active,
+.conquista-filter-tag:active,
+.descoberta-filter-tag:active,
+.filter-btn:active,
+.humor-card:active {
+  transform: scale(0.94) !important;
+}
+
+/* Melhora o hover dos cards com transição suave */
+.card {
+  transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.card:hover {
+  transform: translateY(-1px);
 }
 
 /* RESPONSIVIDADE */
@@ -806,7 +917,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 }
 
 @media (max-width: 1024px) {
-  :root { --sidebar-width: 200px; }
+  :root { --sidebar-width: 240px; }
   .main-content { padding: var(--space-6); }
 }
 

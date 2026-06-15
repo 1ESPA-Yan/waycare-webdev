@@ -1,0 +1,46 @@
+{
+  "sono-profundo": [
+    { "id": 1, "nome": "Dormir às 22h", "hc": 50, "status": "concluida" },
+    { "id": 2, "nome": "Sem telas 1h antes de dormir", "hc": 60, "status": "concluida" },
+    { "id": 3, "nome": "Meditação noturna 5 min", "hc": 70, "status": "atual" },
+    { "id": 4, "nome": "Chá de camomila", "hc": 40, "status": "bloqueada" },
+    { "id": 5, "nome": "Diário de gratidão", "hc": 130, "status": "bloqueada" }
+  ],
+  "movimento-diario": [
+    { "id": 1, "nome": "Caminhar 5.000 passos", "hc": 50, "status": "concluida" },
+    { "id": 2, "nome": "Alongamento matinal 10 min", "hc": 30, "status": "atual" },
+    { "id": 3, "nome": "Subir escadas no trabalho", "hc": 20, "status": "bloqueada" },
+    { "id": 4, "nome": "Caminhar 8.000 passos", "hc": 80, "status": "bloqueada" },
+    { "id": 5, "nome": "Exercício leve 20 min", "hc": 100, "status": "bloqueada" },
+    { "id": 6, "nome": "Alongamento pós-trabalho 10 min", "hc": 60, "status": "bloqueada" },
+    { "id": 7, "nome": "Caminhar 10.000 passos", "hc": 120, "status": "bloqueada" },
+    { "id": 8, "nome": "Atividade aeróbica 30 min", "hc": 160, "status": "bloqueada" }
+  ],
+  "mente-tranquila": [
+    { "id": 1, "nome": "Respiração 4-7-8 por 5 min", "hc": 40, "status": "disponivel" },
+    { "id": 2, "nome": "Meditação guiada 10 min", "hc": 60, "status": "bloqueada" },
+    { "id": 3, "nome": "Pausa consciente no trabalho", "hc": 50, "status": "bloqueada" },
+    { "id": 4, "nome": "Journaling de pensamentos", "hc": 80, "status": "bloqueada" },
+    { "id": 5, "nome": "Caminhada mindful 15 min", "hc": 90, "status": "bloqueada" },
+    { "id": 6, "nome": "Gratidão diária — 3 itens", "hc": 100, "status": "bloqueada" }
+  ],
+  "alimentacao-consciente": [
+    { "id": 1, "nome": "Beber 2L de água no dia", "hc": 50, "status": "disponivel" },
+    { "id": 2, "nome": "Substituir um snack processado", "hc": 60, "status": "bloqueada" },
+    { "id": 3, "nome": "Comer sem telas por 1 refeição", "hc": 70, "status": "bloqueada" },
+    { "id": 4, "nome": "Incluir verduras no almoço", "hc": 60, "status": "bloqueada" },
+    { "id": 5, "nome": "Café da manhã nutritivo", "hc": 80, "status": "bloqueada" },
+    { "id": 6, "nome": "Reduzir açúcar adicionado", "hc": 90, "status": "bloqueada" },
+    { "id": 7, "nome": "Fruta como sobremesa", "hc": 70, "status": "bloqueada" },
+    { "id": 8, "nome": "Mastigar devagar (20x por mordida)", "hc": 80, "status": "bloqueada" },
+    { "id": 9, "nome": "Planejar refeições da semana", "hc": 110, "status": "bloqueada" },
+    { "id": 10, "nome": "Semana sem fast food", "hc": 130, "status": "bloqueada" }
+  ],
+  "checkup-preventivo": [
+    { "id": 1, "nome": "Agendar consulta com clínico geral", "hc": 150, "status": "disponivel" },
+    { "id": 2, "nome": "Realizar exame de sangue de rotina", "hc": 350, "status": "bloqueada" },
+    { "id": 3, "nome": "Consulta com dentista", "hc": 300, "status": "bloqueada" },
+    { "id": 4, "nome": "Aferir pressão arterial e IMC", "hc": 400, "status": "bloqueada" }
+  ],
+  "cardio-intenso": []
+}

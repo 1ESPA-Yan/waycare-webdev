@@ -2,6 +2,20 @@
    Estilos específicos da página de trilhas */
 
 /* Cabeçalho da página */
+.trilhas-titulo-icon {
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--font-size-base);
+  flex-shrink: 0;
+}
+
 .trilhas-page-title {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
@@ -22,6 +36,33 @@
 .trilhas-subtitle-texto {
   color: var(--color-primary);
   font-weight: var(--font-weight-medium);
+}
+
+/* Grid de resumo — 4 colunas */
+.trilhas-resumo-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-3);
+}
+
+@media (max-width: 768px) {
+  .trilhas-resumo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* Grid de cards de trilha — 2 colunas */
+.trilhas-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-4);
+}
+
+@media (max-width: 900px) {
+  .trilhas-cards-grid { grid-template-columns: 1fr; }
+}
+
+/* Card expandido ocupa a linha inteira */
+.trilha-filter-item--expandida {
+  grid-column: 1 / -1;
 }
 
 /* Cards de resumo */
@@ -622,12 +663,6 @@
 .trilha-missao-hc--disponivel { color: var(--color-primary); }
 .trilha-missao-hc--bloqueada  { color: var(--color-text-muted); }
 
-/* Col expandida para ocupar a linha inteira */
-.trilha-expandida-col {
-  width: 100% !important;
-  flex: 0 0 100% !important;
-  max-width: 100% !important;
-}
 
 /* Animação de entrada do painel */
 @keyframes painelSlideIn {
