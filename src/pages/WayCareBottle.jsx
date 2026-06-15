@@ -4,7 +4,6 @@ import Sidebar from '../components/Sidebar'
 import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
-import { useWayCareDock } from '../hooks/useWayCareDock'
 import { getHistory, postTara } from '../services/waycareApi'
 import '../styles/waycare-bottle.css'
 
@@ -36,11 +35,11 @@ function WaycareBottle() {
     encherGarrafa,
     totalHC,
     naoLidas,
+    statusDock: status,
+    statusErro: erro,
+    statusCarregando: carregando,
+    usandoReal,
   } = useApp()
-
-  // Dados reais do dispositivo (polling do /status a cada 3s)
-  const { status, erro, carregando } = useWayCareDock(3000)
-  const usandoReal = !carregando && !erro && !!status
 
   // Histórico real para o gráfico (atualiza a cada 60s)
   const [history, setHistory] = useState([])

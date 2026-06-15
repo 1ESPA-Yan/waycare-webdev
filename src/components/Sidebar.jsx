@@ -3,8 +3,8 @@ import { useApp } from '../context/AppContext'
 
 function Sidebar({ isOpen }) {
   const location = useLocation()
-  const { mlConsumido, metaDiaria, nomeUsuario } = useApp()
-  const pctWidget = Math.round((mlConsumido / metaDiaria) * 100)
+  const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock } = useApp()
+  const pctWidget = Math.min(100, Math.round((consumidoHoje / metaHoje) * 100))
   const navClass = (path) =>
     location.pathname === path ? 'nav-item active' : 'nav-item'
 
@@ -28,12 +28,15 @@ function Sidebar({ isOpen }) {
           <div className="bottle-widget-icon"><i className="fa-solid fa-droplet"></i></div>
           <div className="d-flex flex-column gap-0">
             <span className="bottle-widget-title">WayCare Bottle</span>
-            <span className="bottle-widget-status"><span className="bottle-status-dot"></span>Conectada</span>
+            <span className="bottle-widget-status">
+              <span className="bottle-status-dot" style={{ backgroundColor: usandoReal && statusDock?.online ? '' : 'var(--color-text-muted)' }}></span>
+              {usandoReal && statusDock?.online ? 'Conectada' : usandoReal ? 'Offline' : 'Demo'}
+            </span>
           </div>
         </div>
         <div className="d-flex align-items-baseline gap-1 mb-1">
-          <span className="bottle-widget-ml">{mlConsumido}</span>
-          <span className="bottle-widget-meta">/ {metaDiaria} ml</span>
+          <span className="bottle-widget-ml">{consumidoHoje}</span>
+          <span className="bottle-widget-meta">/ {metaHoje} ml</span>
         </div>
         <div className="progress-bar bottle-widget-bar">
           <div className="progress-fill bottle-widget-fill" style={{ width: `${pctWidget}%` }}></div>

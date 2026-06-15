@@ -1,4 +1,5 @@
 import { createContext, useContext, useState, useEffect } from 'react'
+import { useWayCareDock } from '../hooks/useWayCareDock'
 
 const AppContext = createContext()
 
@@ -132,6 +133,14 @@ export function AppProvider({ children }) {
     setMlGarrafa(CAPACIDADE_GARRAFA)
   }
 
+  // STATUS REAL DO DISPOSITIVO — polling centralizado (compartilhado por todo o app)
+  const { status: statusDock, erro: statusErro, carregando: statusCarregando } = useWayCareDock(3000)
+  const usandoReal = !statusCarregando && !statusErro && !!statusDock
+
+  // Valores que vêm da API quando disponível, ou do estado demo como fallback
+  const consumidoHoje = usandoReal ? Math.round(statusDock.consumo_dia ?? 0) : mlConsumido
+  const metaHoje = usandoReal ? (Math.round(statusDock.meta ?? 0) || 2000) : metaDiaria
+
   // CÁLCULOS DERIVADOS
   const pctGarrafa = Math.round((mlGarrafa / CAPACIDADE_GARRAFA) * 100)
   const pctMeta = Math.round((mlConsumido / metaDiaria) * 100)
@@ -171,6 +180,14 @@ export function AppProvider({ children }) {
     // Notificações
     naoLidas,
     setNaoLidas,
+
+    // Status real do dispositivo (compartilhado por todo o app)
+    statusDock,
+    statusErro,
+    statusCarregando,
+    usandoReal,
+    consumidoHoje,
+    metaHoje,
   }
 
   return (
