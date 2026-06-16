@@ -293,7 +293,7 @@ function Cadastro() {
 
               <div className="auth-footer-text">
                 <p>Já tem conta?</p>
-                <Link to="/login" className="auth-link auth-link-bold">
+                <Link to="/" className="auth-link auth-link-bold">
                   Entrar <i className="fa-solid fa-arrow-right"></i>
                 </Link>
               </div>
@@ -362,7 +362,7 @@ function Cadastro() {
 
               <div className="auth-footer-text">
                 <p>Já tem conta?</p>
-                <Link to="/login" className="auth-link auth-link-bold">
+                <Link to="/" className="auth-link auth-link-bold">
                   Entrar <i className="fa-solid fa-arrow-right"></i>
                 </Link>
               </div>
