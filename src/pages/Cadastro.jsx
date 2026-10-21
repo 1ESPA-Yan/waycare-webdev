@@ -78,7 +78,7 @@ function Cadastro() {
 
         {/* Logo */}
         <div className="auth-hero-logo">
-          <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
+          <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
           <span className="auth-logo-name">WayCare</span>
         </div>
 

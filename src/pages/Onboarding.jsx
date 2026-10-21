@@ -1,7 +1,6 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { HeartPulse } from 'lucide-react'
 
 function Splash() {
   const navigate = useNavigate()
@@ -32,11 +31,15 @@ function Splash() {
           transition={{ delay: 0.2, type: 'spring', stiffness: 200 }}
           className="mb-6"
         >
-          <div className="w-24 h-24 rounded-[24px] flex items-center justify-center"
-            style={{ backgroundColor: 'rgba(255,255,255,0.2)' }}
-          >
-            <HeartPulse className="w-14 h-14 text-white" />
-          </div>
+          {/* alt vazio: o nome "WayCare" já vem no título logo abaixo */}
+          <img
+            src="/images/logo-192.png"
+            alt=""
+            width="96"
+            height="96"
+            className="w-24 h-24"
+            style={{ filter: 'drop-shadow(0 8px 24px rgba(0,0,0,0.18))' }}
+          />
         </motion.div>
 
         {/* Nome */}

@@ -8,7 +8,7 @@ function Sidebar({ isOpen }) {
   return (
     <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar">
       <div className="sidebar-logo">
-        <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
+        <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
         WayCare
       </div>
       <nav className="sidebar-nav" aria-label="Menu principal">
