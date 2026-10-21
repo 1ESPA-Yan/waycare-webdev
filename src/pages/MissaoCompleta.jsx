@@ -17,10 +17,12 @@ const CONFETES = Array.from({ length: 20 }, (_, i) => ({
 function MissaoCompleta() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { totalHC } = useApp()
+  const { totalHC, usandoReal, statusDock } = useApp()
   const missao = location.state?.missao
 
   if (!missao) return <Navigate to="/dashboard" replace />
+
+  const streak = usandoReal ? Number(statusDock.streak) || 0 : 0
 
   return (
     <div className="completa-overlay">
@@ -98,16 +100,18 @@ function MissaoCompleta() {
           <span className="completa-hc-valor">+{missao.hc} HC</span>
         </motion.div>
 
-        {/* Streak */}
-        <motion.div
-          className="completa-streak"
-          initial={{ opacity: 0, x: -20 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ delay: 0.7 }}
-        >
-          <i className="fa-solid fa-fire"></i>
-          <span>7 dias seguidos! Continue assim!</span>
-        </motion.div>
+        {/* Streak — só com o dado real da dock */}
+        {streak > 0 && (
+          <motion.div
+            className="completa-streak"
+            initial={{ opacity: 0, x: -20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ delay: 0.7 }}
+          >
+            <i className="fa-solid fa-fire"></i>
+            <span>{streak === 1 ? '1 dia seguido!' : `${streak} dias seguidos!`} Continue assim!</span>
+          </motion.div>
+        )}
 
         {/* Saldo total */}
         <motion.p

@@ -2,7 +2,7 @@ import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 
 function Sidebar({ isOpen }) {
-  const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock } = useApp()
+  const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock, nivel } = useApp()
   const pctWidget = Math.min(100, Math.round((consumidoHoje / metaHoje) * 100))
 
   return (
@@ -44,7 +44,7 @@ function Sidebar({ isOpen }) {
         <div className="avatar" aria-hidden="true">{nomeUsuario.charAt(0).toUpperCase()}</div>
         <div className="sidebar-user-info">
           <span className="sidebar-user-name">{nomeUsuario}</span>
-          <span className="sidebar-user-level">Nível 5</span>
+          <span className="sidebar-user-level">Nível {nivel}</span>
         </div>
         <Link to="/" className="sidebar-logout" aria-label="Sair">
           <i className="fa-solid fa-arrow-right-from-bracket"></i>

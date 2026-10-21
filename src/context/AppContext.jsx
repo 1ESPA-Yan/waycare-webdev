@@ -6,6 +6,25 @@ const AppContext = createContext()
 // Data local no formato AAAA-MM-DD
 const hojeISO = () => new Date().toLocaleDateString('sv-SE')
 
+// Nível progressivo: do nível 1 para o 2 são 500 XP, e cada nível seguinte pede +100
+function calcularNivel(xp) {
+  let nivel = 1
+  let inicioNivel = 0
+  let custo = 500
+  while (xp >= inicioNivel + custo) {
+    inicioNivel += custo
+    nivel += 1
+    custo += 100
+  }
+  const xpNoNivel = xp - inicioNivel
+  return {
+    nivel,
+    xpNoNivel,
+    xpParaProximo: custo - xpNoNivel,
+    pctNivel: Math.floor((xpNoNivel / custo) * 100),
+  }
+}
+
 export function AppProvider({ children }) {
 
   // USUÁRIO — lê do localStorage ao iniciar
@@ -32,7 +51,17 @@ export function AppProvider({ children }) {
     setEmailUsuario(email)
     localStorage.setItem('wc_nome', primeiroNome)
     if (email) localStorage.setItem('wc_email', email)
+    // Guarda a data do primeiro cadastro/login; não sobrescreve depois
+    if (!localStorage.getItem('wc_membro_desde')) {
+      const hoje = hojeISO()
+      localStorage.setItem('wc_membro_desde', hoje)
+      setMembroDesde(hoje)
+    }
   }
+
+  const [membroDesde, setMembroDesde] = useState(
+    () => localStorage.getItem('wc_membro_desde') || ''
+  )
 
   // HUMOR
   const [humor, setHumor] = useState(
@@ -83,13 +112,27 @@ export function AppProvider({ children }) {
     () => Number(localStorage.getItem('wc_hc')) || 1300
   )
 
+  // XP — 1 XP por HC ganho; gastar HC não tira XP
+  const [xp, setXp] = useState(
+    () => Number(localStorage.getItem('wc_xp')) || 0
+  )
+
   const adicionarHC = (quantidade) => {
     setTotalHC(prev => {
       const novo = prev + quantidade
       localStorage.setItem('wc_hc', novo)
       return novo
     })
+    if (quantidade > 0) {
+      setXp(prev => {
+        const novo = prev + quantidade
+        localStorage.setItem('wc_xp', novo)
+        return novo
+      })
+    }
   }
+
+  const { nivel, xpNoNivel, xpParaProximo, pctNivel } = calcularNivel(xp)
 
   // MISSÕES CONCLUÍDAS — ids concluídos no dia; vale só para a data salva
   const [missoesDoDia, setMissoesDoDia] = useState(() => {
@@ -182,6 +225,7 @@ export function AppProvider({ children }) {
     bioUsuario,
     setBioUsuario,
     salvarUsuario,
+    membroDesde,
 
     // Garrafa
     mlGarrafa,
@@ -200,6 +244,13 @@ export function AppProvider({ children }) {
     // Health Coins
     totalHC,
     adicionarHC,
+
+    // XP e nível
+    xp,
+    nivel,
+    xpNoNivel,
+    xpParaProximo,
+    pctNivel,
 
     // Missões
     missaoConcluida,

@@ -6,6 +6,15 @@ import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
 import '../styles/perfil.css'
 
+// "2026-10-21" → "Out 2026"
+function formatarMesAno(dataISO) {
+  const [ano, mes] = dataISO.split('-').map(Number)
+  const nomeMes = new Date(ano, mes - 1, 1)
+    .toLocaleDateString('pt-BR', { month: 'short' })
+    .replace('.', '')
+  return `${nomeMes.charAt(0).toUpperCase()}${nomeMes.slice(1)} ${ano}`
+}
+
 const cardVariants = {
   hidden:  { opacity: 0, y: 22 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.3, ease: 'easeOut' } },
@@ -20,7 +29,7 @@ function Perfil() {
   const [rascunhoEmail, setRascunhoEmail] = useState('')
   const [rascunhoBio, setRascunhoBio] = useState('')
 
-  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, naoLidas } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, naoLidas, membroDesde, nivel, xp, xpParaProximo, pctNivel } = useApp()
 
   useEffect(() => {
     fetch('/data/conquistas.json')
@@ -186,20 +195,22 @@ function Perfil() {
                               <i className="fa-regular fa-envelope"></i>
                               {emailUsuario || 'Sem email'}
                             </span>
-                            <span className="perfil-meta">
-                              <i className="fa-regular fa-calendar"></i>
-                              Membro desde Mai 2024
-                            </span>
+                            {membroDesde && (
+                              <span className="perfil-meta">
+                                <i className="fa-regular fa-calendar"></i>
+                                Membro desde {formatarMesAno(membroDesde)}
+                              </span>
+                            )}
                           </div>
                           <div className="d-flex align-items-center gap-2 flex-wrap">
                             <span className="perfil-stat-chip perfil-stat-chip--green">
-                              Nível<strong>5</strong>
+                              Nível<strong>{nivel}</strong>
                             </span>
                             <span className="perfil-stat-chip perfil-stat-chip--gray">
-                              XP<strong>2.450</strong>
+                              XP<strong>{xp.toLocaleString('pt-BR')}</strong>
                             </span>
                             <span className="perfil-stat-chip perfil-stat-chip--hc">
-                              Próximo nível<strong>550 XP</strong>
+                              Próximo nível<strong>{xpParaProximo.toLocaleString('pt-BR')} XP</strong>
                             </span>
                           </div>
                         </>
@@ -210,11 +221,11 @@ function Perfil() {
                   {!editando && (
                     <div className="mt-4">
                       <div className="d-flex justify-content-between align-items-center mb-2">
-                        <span className="text-sm text-secondary">Progresso para Nível 6</span>
-                        <span className="text-sm font-bold trilha-pct">82%</span>
+                        <span className="text-sm text-secondary">Progresso para Nível {nivel + 1}</span>
+                        <span className="text-sm font-bold trilha-pct">{pctNivel}%</span>
                       </div>
                       <div className="progress-bar perfil-progress-bar">
-                        <div className="progress-fill" style={{ width: '82%' }}></div>
+                        <div className="progress-fill" style={{ width: `${pctNivel}%` }}></div>
                       </div>
                     </div>
                   )}

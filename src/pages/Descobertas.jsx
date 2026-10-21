@@ -154,13 +154,14 @@ function Descobertas() {
               <div className="d-flex flex-column gap-2">
                 <h4 className="descobertas-info-titulo">Como funcionam as descobertas?</h4>
                 <p className="descobertas-info-desc">
-                  A WayCare Band — nossa pulseira inteligente — coleta seus dados de saúde em tempo real:
-                  sono, passos, hidratação e humor. Com esses dados, identificamos padrões e correlações
-                  personalizadas para você. Quanto mais você usa a WayCare Band, mais precisas ficam as descobertas!
+                  A WayCare Bottle e a dock registram cada gole automaticamente: a balança da dock pesa a
+                  garrafa e calcula quanto você bebeu ao longo do dia. Junto com suas missões e seu humor,
+                  esses dados revelam padrões e correlações personalizadas para você. Quanto mais você usa a
+                  WayCare Bottle, mais precisas ficam as descobertas!
                 </p>
                 <ul className="descobertas-info-lista">
                   <li><i className="fa-solid fa-circle-dot"></i> Novas descobertas são geradas semanalmente</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Baseadas em pelo menos 7 dias de dados da pulseira</li>
+                  <li><i className="fa-solid fa-circle-dot"></i> Baseadas em pelo menos 7 dias de dados da garrafa</li>
                   <li><i className="fa-solid fa-circle-dot"></i> Priorizamos insights com maior impacto na sua saúde</li>
                 </ul>
               </div>
