@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import '../styles/sucesso-resgate.css'
 
@@ -11,10 +11,7 @@ function SucessoResgate() {
   const recompensa = location.state?.recompensa
   const [copiado, setCopiado] = useState(false)
 
-  if (!recompensa) {
-    navigate('/recompensas')
-    return null
-  }
+  if (!recompensa) return <Navigate to="/recompensas" replace />
 
   const copiarCodigo = () => {
     navigator.clipboard.writeText(CODIGO_VOUCHER).catch(() => {})

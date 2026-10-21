@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
 import '../styles/confirmar-resgate.css'
@@ -12,10 +12,7 @@ function ConfirmarResgate() {
 
   const [aceitouTermos, setAceitouTermos] = useState(false)
 
-  if (!recompensa) {
-    navigate('/recompensas')
-    return null
-  }
+  if (!recompensa) return <Navigate to="/recompensas" replace />
 
   const saldoApos = totalHC - recompensa.preco
 

@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
 import '../styles/missao-completa.css'
@@ -20,10 +20,7 @@ function MissaoCompleta() {
   const { totalHC } = useApp()
   const missao = location.state?.missao
 
-  if (!missao) {
-    navigate('/dashboard')
-    return null
-  }
+  if (!missao) return <Navigate to="/dashboard" replace />
 
   return (
     <div className="completa-overlay">
