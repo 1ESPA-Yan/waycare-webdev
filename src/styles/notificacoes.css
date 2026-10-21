@@ -229,6 +229,7 @@
 .notif-btn-detalhes {
   display: inline-flex;
   align-items: center;
+  min-height: 32px;
   padding: var(--space-1) var(--space-3);
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
@@ -245,8 +246,8 @@
 }
 
 .notif-btn-icone {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: var(--radius-sm);
   display: flex;
   align-items: center;
@@ -267,6 +268,12 @@
 .notif-btn-icone--remover:hover {
   color: var(--color-error);
   background-color: #ffebee;
+}
+
+/* Telas de toque: área de 44px */
+@media (pointer: coarse) {
+  .notif-btn-detalhes { min-height: 44px; }
+  .notif-btn-icone { width: 44px; height: 44px; }
 }
 
 /* Estado vazio */

@@ -255,7 +255,13 @@
 /* Botão de mostrar e esconder senha */
 .input-toggle-password {
   position: absolute;
-  right: var(--space-4);
+  right: var(--space-1);
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm);
   color: var(--color-text-muted);
   font-size: 14px;
   background: none;
@@ -267,6 +273,15 @@
 
 .input-toggle-password:hover {
   color: var(--color-text-primary);
+}
+
+/* Telas de toque: área de 44px (cabe no padding direito do campo) */
+@media (pointer: coarse) {
+  .input-toggle-password {
+    right: 0;
+    width: 44px;
+    height: 44px;
+  }
 }
 
 /* Label + link "Esqueci a senha" na mesma linha */
