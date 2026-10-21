@@ -970,3 +970,16 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
     --font-size-md:  18px;
   }
 }
+/* MOVIMENTO REDUZIDO
+   Com a preferência do sistema ativa, as animações e transições terminam na hora
+   (o estado final continua valendo). O spinner de carregamento continua girando. */
+@media (prefers-reduced-motion: reduce) {
+  *:not(.detalhes-spinner),
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
