@@ -189,7 +189,7 @@ function Configuracoes() {
                   <span className="config-item-titulo">Privacidade e Dados</span>
                   <span className="config-item-desc">Controle seus dados e privacidade</span>
                 </div>
-                <a href="#" className="config-row-action config-row-action--arrow">Gerenciar →</a>
+                <button type="button" className="config-row-action em-breve" disabled>Gerenciar <span className="badge-em-breve">Em breve</span></button>
               </div>
             </div>
 
@@ -203,7 +203,7 @@ function Configuracoes() {
                   <span className="config-item-titulo">Aparência</span>
                   <span className="config-item-desc">Personalize cores e tema</span>
                 </div>
-                <a href="#" className="config-row-action config-row-action--arrow">Personalizar →</a>
+                <button type="button" className="config-row-action em-breve" disabled>Personalizar <span className="badge-em-breve">Em breve</span></button>
               </div>
             </div>
 
@@ -232,7 +232,7 @@ function Configuracoes() {
                     <span className="config-perigo-desc">Esta ação não pode ser desfeita</span>
                   </div>
                 </div>
-                <a href="#" className="config-perigo-action config-perigo-action--error">Excluir →</a>
+                <button type="button" className="config-perigo-action em-breve" disabled>Excluir <span className="badge-em-breve">Em breve</span></button>
               </div>
             </div>
 
@@ -249,21 +249,21 @@ function Configuracoes() {
 
               <div className="config-row">
                 <span className="config-row-label">Termos de Uso</span>
-                <a href="#" className="config-row-action">Ver →</a>
+                <Link to="/termos" className="config-row-action">Ver →</Link>
               </div>
 
               <div className="config-divider"></div>
 
               <div className="config-row">
                 <span className="config-row-label">Política de Privacidade</span>
-                <a href="#" className="config-row-action">Ver →</a>
+                <Link to="/privacidade" className="config-row-action">Ver →</Link>
               </div>
 
               <div className="config-divider"></div>
 
               <div className="config-row">
                 <span className="config-row-label">Suporte</span>
-                <a href="#" className="config-row-action">Contato →</a>
+                <button type="button" className="config-row-action em-breve" disabled>Contato <span className="badge-em-breve">Em breve</span></button>
               </div>
             </div>
 

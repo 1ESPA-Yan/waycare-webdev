@@ -100,7 +100,7 @@ function ConfirmarResgate() {
               </span>
               <span className="confirmar-termos-texto">Li e aceito os termos de resgate</span>
             </label>
-            <a href="#" onClick={e => e.preventDefault()} className="confirmar-termos-link">
+            <a href="/termos" target="_blank" rel="noopener" className="confirmar-termos-link">
               Ver termos completos <i className="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
           </div>

@@ -22,6 +22,8 @@ import MissaoCompleta from './pages/MissaoCompleta'
 import ConfirmarResgate from './pages/ConfirmarResgate'
 import SucessoResgate from './pages/SucessoResgate'
 import NotFound from './pages/Notfound'
+import Termos from './pages/Termos'
+import Privacidade from './pages/Privacidade'
 
 import './styles/global.css'
 
@@ -35,6 +37,8 @@ function App() {
             <Route path="/" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
             <Route path="/onboarding" element={<Onboarding />} />
+            <Route path="/termos" element={<Termos />} />
+            <Route path="/privacidade" element={<Privacidade />} />
 
             {/* App */}
             <Route path="/dashboard" element={<Dashboard />} />

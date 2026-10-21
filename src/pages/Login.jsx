@@ -107,7 +107,7 @@ function Login() {
             <div className="input-group">
               <div className="input-label-row">
                 <label className="input-label" htmlFor="login-senha">Senha</label>
-                <a href="#" className="auth-link text-sm">Esqueci a senha</a>
+                <button type="button" className="auth-link text-sm em-breve" disabled>Esqueci a senha <span className="badge-em-breve">Em breve</span></button>
               </div>
               <div className="input-icon-wrapper">
                 <i className="fa-solid fa-lock input-icon"></i>
@@ -155,9 +155,9 @@ function Login() {
           {/* Termos */}
           <p className="auth-terms">
             Ao entrar, você concorda com a{' '}
-            <a href="#" className="auth-link">Política de Privacidade</a>
+            <Link to="/privacidade" target="_blank" rel="noopener" className="auth-link">Política de Privacidade</Link>
             {' '}e os{' '}
-            <a href="#" className="auth-link">Termos de Uso</a>
+            <Link to="/termos" target="_blank" rel="noopener" className="auth-link">Termos de Uso</Link>
             {' '}do WayCare.
           </p>
 

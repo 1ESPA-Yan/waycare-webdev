@@ -37,7 +37,7 @@ function CardDescoberta({ d }) {
       </p>
       <div className="d-flex align-items-center gap-3 flex-wrap">
         <button className="btn descoberta-btn-criar">Criar missão baseada nisto</button>
-        <button className="btn descoberta-btn-historico">Ver histórico completo</button>
+        <button type="button" className="btn descoberta-btn-historico em-breve" disabled>Ver histórico completo <span className="badge-em-breve">Em breve</span></button>
       </div>
     </div>
   )

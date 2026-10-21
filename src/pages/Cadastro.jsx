@@ -339,8 +339,8 @@ function Cadastro() {
                   onChange={(e) => setAceitouTermos(e.target.checked)}
                 />
                 <span className="text-sm">
-                  Concordo com a <a href="#" className="auth-link">Política de Privacidade</a>
-                  {' '}e os <a href="#" className="auth-link">Termos de Uso</a>
+                  Concordo com a <Link to="/privacidade" target="_blank" rel="noopener" className="auth-link">Política de Privacidade</Link>
+                  {' '}e os <Link to="/termos" target="_blank" rel="noopener" className="auth-link">Termos de Uso</Link>
                   {' '}do WayCare e autorizo o tratamento dos meus dados pessoais conforme descrito.
                 </span>
               </label>
