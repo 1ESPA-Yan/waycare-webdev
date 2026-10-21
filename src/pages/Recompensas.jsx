@@ -22,7 +22,7 @@ function Recompensas() {
 
   const handleResgatar = (r) => {
     navigate('/resgate/confirmar', {
-      state: { recompensa: { nome: r.nome, preco: r.hc, icone: r.icone } },
+      state: { recompensa: { id: r.id, nome: r.nome, preco: r.hc, icone: r.icone } },
     })
   }
 

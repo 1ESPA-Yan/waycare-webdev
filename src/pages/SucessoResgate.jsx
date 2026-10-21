@@ -3,18 +3,17 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import '../styles/sucesso-resgate.css'
 
-const CODIGO_VOUCHER = 'WC-NUTRI-2024-1234'
-
 function SucessoResgate() {
   const location = useLocation()
   const navigate = useNavigate()
   const recompensa = location.state?.recompensa
+  const codigo = location.state?.codigo
   const [copiado, setCopiado] = useState(false)
 
-  if (!recompensa) return <Navigate to="/recompensas" replace />
+  if (!recompensa || !codigo) return <Navigate to="/recompensas" replace />
 
   const copiarCodigo = () => {
-    navigator.clipboard.writeText(CODIGO_VOUCHER).catch(() => {})
+    navigator.clipboard.writeText(codigo).catch(() => {})
     setCopiado(true)
     setTimeout(() => setCopiado(false), 2000)
   }
@@ -94,7 +93,7 @@ function SucessoResgate() {
         >
           <h3 className="sucesso-voucher-titulo">Código do Voucher</h3>
           <div className="sucesso-voucher-codigo-wrap">
-            <span className="sucesso-voucher-codigo">{CODIGO_VOUCHER}</span>
+            <span className="sucesso-voucher-codigo">{codigo}</span>
           </div>
           <button
             onClick={copiarCodigo}

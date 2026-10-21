@@ -7,7 +7,7 @@ import '../styles/confirmar-resgate.css'
 function ConfirmarResgate() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { totalHC, adicionarHC } = useApp()
+  const { totalHC, resgatarRecompensa } = useApp()
   const recompensa = location.state?.recompensa
 
   const [aceitouTermos, setAceitouTermos] = useState(false)
@@ -18,8 +18,8 @@ function ConfirmarResgate() {
 
   const handleConfirmar = () => {
     if (!aceitouTermos) return
-    adicionarHC(-recompensa.preco)
-    navigate('/resgate/sucesso', { state: { recompensa } })
+    const codigo = resgatarRecompensa(recompensa)
+    navigate('/resgate/sucesso', { state: { recompensa, codigo }, replace: true })
   }
 
   return (

@@ -6,6 +6,16 @@ const AppContext = createContext()
 // Data local no formato AAAA-MM-DD
 const hojeISO = () => new Date().toLocaleDateString('sv-SE')
 
+// Prefixo do código de voucher por recompensa (ids de recompensas.json)
+const PREFIXOS_VOUCHER = {
+  'consulta-nutricional': 'NUTRI',
+  'kit-hidratacao': 'HIDRA',
+  'desconto-academia': 'ACAD',
+  'massagem-relaxante': 'MASSA',
+  'checkup-gratuito': 'CHECK',
+  'aula-yoga': 'YOGA',
+}
+
 // Nível progressivo: do nível 1 para o 2 são 500 XP, e cada nível seguinte pede +100
 function calcularNivel(xp) {
   let nivel = 1
@@ -134,6 +144,30 @@ export function AppProvider({ children }) {
 
   const { nivel, xpNoNivel, xpParaProximo, pctNivel } = calcularNivel(xp)
 
+  // RESGATES — histórico com o código de voucher de cada resgate
+  const [resgates, setResgates] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('wc_resgates')) || []
+    } catch { return [] }
+  })
+
+  useEffect(() => {
+    localStorage.setItem('wc_resgates', JSON.stringify(resgates))
+  }, [resgates])
+
+  // Debita o HC, gera o código (prefixo + ano + 4 dígitos) e salva; devolve o código
+  const resgatarRecompensa = (recompensa) => {
+    const prefixo = PREFIXOS_VOUCHER[recompensa.id] || 'RESG'
+    const digitos = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
+    const codigo = `WC-${prefixo}-${new Date().getFullYear()}-${digitos}`
+    adicionarHC(-recompensa.preco)
+    setResgates(prev => [
+      { codigo, nome: recompensa.nome, preco: recompensa.preco, data: new Date().toISOString() },
+      ...prev,
+    ])
+    return codigo
+  }
+
   // MISSÕES CONCLUÍDAS — ids concluídos no dia; vale só para a data salva
   const [missoesDoDia, setMissoesDoDia] = useState(() => {
     try {
@@ -244,6 +278,10 @@ export function AppProvider({ children }) {
     // Health Coins
     totalHC,
     adicionarHC,
+
+    // Resgates
+    resgates,
+    resgatarRecompensa,
 
     // XP e nível
     xp,
