@@ -22,6 +22,7 @@ import MissaoCompleta from './pages/MissaoCompleta'
 import ConfirmarResgate from './pages/ConfirmarResgate'
 import SucessoResgate from './pages/SucessoResgate'
 import NotFound from './pages/Notfound'
+import RotaPrivada from './components/RotaPrivada'
 import Termos from './pages/Termos'
 import Privacidade from './pages/Privacidade'
 
@@ -36,26 +37,29 @@ function App() {
             {/* Auth */}
             <Route path="/" element={<Login />} />
             <Route path="/cadastro" element={<Cadastro />} />
-            <Route path="/onboarding" element={<Onboarding />} />
             <Route path="/termos" element={<Termos />} />
             <Route path="/privacidade" element={<Privacidade />} />
 
-            {/* App */}
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/humor" element={<SelecionarHumor />} />
-            <Route path="/trilhas" element={<Trilhas />} />
-            <Route path="/conquistas" element={<Conquistas />} />
-            <Route path="/descobertas" element={<Descobertas />} />
-            <Route path="/recompensas" element={<Recompensas />} />
-            <Route path="/perfil" element={<Perfil />} />
-            <Route path="/configuracoes" element={<Configuracoes />} />
-            <Route path="/waycare-bottle" element={<WaycareBottle />} />
-            <Route path="/carteira" element={<Carteira />} />
-            <Route path="/notificacoes" element={<Notificacoes />} />
-            <Route path="/missao/completa" element={<MissaoCompleta />} />
-            <Route path="/missao/:id" element={<DetalhesMissao />} />
-            <Route path="/resgate/confirmar" element={<ConfirmarResgate />} />
-            <Route path="/resgate/sucesso" element={<SucessoResgate />} />
+            {/* App — exige sessão */}
+            <Route element={<RotaPrivada />}>
+              <Route path="/onboarding" element={<Onboarding />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/humor" element={<SelecionarHumor />} />
+              <Route path="/trilhas" element={<Trilhas />} />
+              <Route path="/conquistas" element={<Conquistas />} />
+              <Route path="/descobertas" element={<Descobertas />} />
+              <Route path="/recompensas" element={<Recompensas />} />
+              <Route path="/perfil" element={<Perfil />} />
+              <Route path="/configuracoes" element={<Configuracoes />} />
+              <Route path="/waycare-bottle" element={<WaycareBottle />} />
+              <Route path="/carteira" element={<Carteira />} />
+              <Route path="/notificacoes" element={<Notificacoes />} />
+              <Route path="/missao/completa" element={<MissaoCompleta />} />
+              <Route path="/missao/:id" element={<DetalhesMissao />} />
+              <Route path="/resgate/confirmar" element={<ConfirmarResgate />} />
+              <Route path="/resgate/sucesso" element={<SucessoResgate />} />
+            </Route>
+
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

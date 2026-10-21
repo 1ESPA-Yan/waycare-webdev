@@ -68,7 +68,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 
 function Configuracoes() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const { totalHC, nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, naoLidas } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, naoLidas, sairDaConta } = useApp()
 
   return (
     <>
@@ -219,7 +219,7 @@ function Configuracoes() {
                     <span className="config-perigo-desc">Você pode voltar a qualquer momento</span>
                   </div>
                 </div>
-                <Link to="/" className="config-perigo-action config-perigo-action--warning">
+                <Link to="/" replace onClick={sairDaConta} className="config-perigo-action config-perigo-action--warning">
                   Sair →
                 </Link>
               </div>

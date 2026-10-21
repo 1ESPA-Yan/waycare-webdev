@@ -61,6 +61,8 @@ export function AppProvider({ children }) {
     setEmailUsuario(email)
     localStorage.setItem('wc_nome', primeiroNome)
     if (email) localStorage.setItem('wc_email', email)
+    localStorage.setItem('wc_logado', '1')
+    setLogado(true)
     // Guarda a data do primeiro cadastro/login; não sobrescreve depois
     if (!localStorage.getItem('wc_membro_desde')) {
       const hoje = hojeISO()
@@ -72,6 +74,20 @@ export function AppProvider({ children }) {
   const [membroDesde, setMembroDesde] = useState(
     () => localStorage.getItem('wc_membro_desde') || ''
   )
+
+  // SESSÃO — marcada no login/cadastro; as rotas do app exigem sessão
+  const [logado, setLogado] = useState(
+    () => localStorage.getItem('wc_logado') === '1'
+  )
+
+  // Logout: apaga só os dados do usuário; progresso (HC, XP, missões...) continua salvo
+  const sairDaConta = () => {
+    ['wc_logado', 'wc_nome', 'wc_email', 'wc_bio'].forEach(chave => localStorage.removeItem(chave))
+    setLogado(false)
+    setNomeUsuario('Usuário')
+    setEmailUsuario('')
+    setBioUsuarioState('')
+  }
 
   // HUMOR
   const [humor, setHumor] = useState(
@@ -260,6 +276,8 @@ export function AppProvider({ children }) {
     setBioUsuario,
     salvarUsuario,
     membroDesde,
+    logado,
+    sairDaConta,
 
     // Garrafa
     mlGarrafa,

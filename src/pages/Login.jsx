@@ -6,17 +6,24 @@ import '../styles/auth.css'
 function Login() {
   const [senhaVisivel, setSenhaVisivel] = useState(false)
   const [email, setEmail] = useState('')
+  const [senha, setSenha] = useState('')
+  const [erros, setErros] = useState({})
   const navigate = useNavigate()
   const { salvarUsuario } = useApp()
 
-  // Submit do formulário — redireciona para o dashboard
+  // Submit do formulário — valida e redireciona para o dashboard
   const handleSubmit = (e) => {
     e.preventDefault()
-    if (!email.trim()) return
+    const novosErros = {}
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) novosErros.email = 'Informe um e-mail válido.'
+    if (senha.length < 8) novosErros.senha = 'A senha deve ter no mínimo 8 caracteres.'
+    setErros(novosErros)
+    if (Object.keys(novosErros).length) return
 
-    // Pega o nome a partir do que veio antes do @
-    const nome = email.split('@')[0]
-    salvarUsuario(nome, email)
+    // Nome = parte antes do @ (até o primeiro ponto, hífen ou _), com inicial maiúscula
+    const base = email.trim().split('@')[0].split(/[._-]/)[0]
+    const nome = base.charAt(0).toUpperCase() + base.slice(1)
+    salvarUsuario(nome, email.trim())
     navigate('/dashboard')
   }
 
@@ -93,14 +100,17 @@ function Login() {
                 <input
                   type="email"
                   id="login-email"
-                  className="input-field input-with-icon"
+                  className={`input-field input-with-icon ${erros.email ? 'input-invalido' : ''}`}
                   placeholder="seu@email.com.br"
                   autoComplete="email"
                   required
+                  aria-invalid={!!erros.email}
+                  aria-describedby={erros.email ? 'login-email-erro' : undefined}
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
+              {erros.email && <p id="login-email-erro" className="input-erro-msg">{erros.email}</p>}
             </div>
 
             {/* Senha */}
@@ -114,10 +124,14 @@ function Login() {
                 <input
                   type={senhaVisivel ? 'text' : 'password'}
                   id="login-senha"
-                  className="input-field input-with-icon input-with-icon-right"
-                  placeholder="Mínimo 6 caracteres"
+                  className={`input-field input-with-icon input-with-icon-right ${erros.senha ? 'input-invalido' : ''}`}
+                  placeholder="Mínimo 8 caracteres"
                   autoComplete="current-password"
                   required
+                  aria-invalid={!!erros.senha}
+                  aria-describedby={erros.senha ? 'login-senha-erro' : undefined}
+                  value={senha}
+                  onChange={(e) => setSenha(e.target.value)}
                 />
                 <button
                   type="button"
@@ -128,6 +142,7 @@ function Login() {
                   <i className={senhaVisivel ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'}></i>
                 </button>
               </div>
+              {erros.senha && <p id="login-senha-erro" className="input-erro-msg">{erros.senha}</p>}
             </div>
 
             {/* Botão entrar */}
