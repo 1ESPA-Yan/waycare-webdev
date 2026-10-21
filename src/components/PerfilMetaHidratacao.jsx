@@ -203,8 +203,10 @@ function PerfilMetaHidratacao() {
 
       <p className="perfil-meta-disclaimer">
         <i className="fa-solid fa-circle-info"></i>
-        Estimativa baseada em peso, sexo, atividade (ACSM) e temperatura local (EFSA).
-        É uma <strong>meta sugerida</strong>, não substitui orientação médica.
+        <span>
+          Estimativa baseada em peso, sexo, atividade (ACSM) e temperatura local (EFSA).
+          É uma <strong>meta sugerida</strong>, não substitui orientação médica.
+        </span>
       </p>
     </div>
   )
