@@ -78,7 +78,7 @@
   align-items: center;
   gap: var(--space-1);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   padding: 3px var(--space-3);
@@ -116,8 +116,8 @@
 }
 
 .bottle-resumo-icon--blue    { background-color: #e3f2fd; color: #1565c0; }
-.bottle-resumo-icon--green   { background-color: #e8f5f0; color: var(--color-primary); }
-.bottle-resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary); }
+.bottle-resumo-icon--green   { background-color: #e8f5f0; color: var(--color-primary-dark); }
+.bottle-resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .bottle-resumo-icon--hc      { background-color: #fff8ec; color: var(--color-hc); }
 
 .bottle-resumo-valor {
@@ -128,7 +128,7 @@
   display: block;
 }
 
-.bottle-resumo-valor--hc { color: var(--color-hc); }
+.bottle-resumo-valor--hc { color: var(--color-hc-text); }
 
 .bottle-resumo-label {
   font-size: var(--font-size-xs);
@@ -207,7 +207,7 @@
 .bottle-secao-label {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.08em;
 }
 
@@ -276,7 +276,7 @@
 .bottle-como-titulo {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.08em;
   display: block;
   margin-bottom: var(--space-2);
@@ -290,7 +290,7 @@
 }
 
 .bottle-como-desc strong {
-  color: var(--color-info);
+  color: #64b5f6;
 }
 
 /* Meta diária */
@@ -360,7 +360,7 @@
 
 .bottle-mini-label {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Histórico de leituras */
@@ -378,7 +378,7 @@
 .bottle-leitura-para  { color: rgba(255, 255, 255, 0.7); }
 .bottle-leitura-diff  { color: var(--color-info); font-weight: var(--font-weight-bold); flex: 1; }
 .bottle-leitura-hc    {
-  color: var(--color-hc);
+  color: var(--color-hc-text);
   font-weight: var(--font-weight-bold);
   font-size: var(--font-size-xs);
 }
@@ -411,13 +411,13 @@
 
 .bottle-gole-desc {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
   font-weight: var(--font-weight-regular);
 }
 
 .bottle-simular-aviso {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: var(--space-3);
   margin-bottom: 0;
 }
@@ -561,7 +561,7 @@
   color: var(--color-text-muted);
 }
 
-.bottle-col-titulo-icon--green  { color: var(--color-primary); }
+.bottle-col-titulo-icon--green  { color: var(--color-primary-dark); }
 .bottle-col-titulo-icon--yellow { color: var(--color-hc); }
 
 /* Linhas de informação do dispositivo */
@@ -585,7 +585,7 @@
 .bottle-info-icon--gray       { color: var(--color-text-muted); }
 .bottle-info-icon--purple     { color: #5e35b1; }
 .bottle-info-icon--green-light{ color: #66bb6a; }
-.bottle-info-icon--green      { color: var(--color-primary); }
+.bottle-info-icon--green      { color: var(--color-primary-dark); }
 
 .bottle-info-valor {
   font-size: var(--font-size-sm);
@@ -623,24 +623,24 @@
 
 .bottle-meta-card-label {
   font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
 }
 
 .bottle-meta-card-valor {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .bottle-meta-card-consumido {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .bottle-meta-card-pct {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
 }
 
@@ -671,7 +671,7 @@
 }
 
 .bottle-meta-opcao--ativa .bottle-meta-opcao-nome {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
 }
 
@@ -681,7 +681,7 @@
 }
 
 .bottle-meta-opcao--ativa .bottle-meta-opcao-ml {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
 }
 
@@ -699,7 +699,7 @@
 
 .bottle-dica-icon--yellow { background-color: #fff8ec; color: var(--color-hc); }
 .bottle-dica-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
-.bottle-dica-icon--green  { background-color: #e8f5f0; color: var(--color-primary); }
+.bottle-dica-icon--green  { background-color: #e8f5f0; color: var(--color-primary-dark); }
 
 .bottle-dica-texto {
   font-size: var(--font-size-sm);
@@ -716,7 +716,7 @@
 
 .bottle-live-badge--off {
   background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Avisos de conexão / dispositivo */
@@ -744,7 +744,7 @@
 
 .bottle-aviso--garrafa {
   background-color: #fff8ec;
-  color: #b76e00;
+  color: var(--color-hc-text);
   border: 1px solid #ffe0a0;
 }
 
@@ -801,7 +801,7 @@
 
 .bottle-led--vermelho {
   background-color: rgba(231, 76, 60, 0.16);
-  color: #ff6b5e;
+  color: #ff8a80;
 }
 .bottle-led--vermelho .bottle-led-dot {
   background-color: #ff6b5e;
@@ -910,7 +910,7 @@
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   text-decoration: none;

@@ -33,7 +33,7 @@
   align-items: center;
   gap: var(--space-1);
   background-color: #fff8ec;
-  color: var(--color-warning);
+  color: var(--color-hc-text);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   padding: var(--space-1) var(--space-3);
@@ -50,7 +50,7 @@
 }
 
 .humor-change-btn:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Widget WayCare Bottle — estilos movidos para global.css */
@@ -72,7 +72,7 @@
 
 .trilha-link {
   font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   white-space: nowrap;
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -87,7 +87,7 @@
 }
 
 .trilha-pct {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Slots de missão — fundo branco para todos */
@@ -111,7 +111,7 @@
 .trilha-slot.completed {
   background-color: var(--color-white);
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-base);
 }
 
@@ -141,7 +141,7 @@
 
 .filter-btn:hover,
 .filter-btn.active {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .filter-btn-chevron {
@@ -169,13 +169,13 @@
 
 .mission-filter-tag:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .mission-filter-tag.active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-dark);
 }
 
 /* Botões dentro dos cards de missão — bordas menos arredondadas */
@@ -202,7 +202,7 @@
   font-size: 20px;
   flex-shrink: 0;
   background-color: #e8f5f1;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .mission-emoji--blue   { background-color: #e3f2fd; color: #1565c0; }
@@ -240,7 +240,7 @@
 }
 
 .mission-check-icon {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-base);
   flex-shrink: 0;
 }
@@ -296,7 +296,7 @@
 .descoberta-link {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
   transition: color var(--transition-fast);
 }

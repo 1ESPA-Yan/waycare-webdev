@@ -88,7 +88,7 @@
 .config-row-action {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
   white-space: nowrap;
   transition: color var(--transition-fast);
@@ -133,7 +133,7 @@
   flex-shrink: 0;
 }
 
-.config-item-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary); }
+.config-item-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .config-item-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
 .config-item-icon--orange { background-color: #fff3e0; color: #e65100; }
 
@@ -239,7 +239,7 @@
 }
 
 .config-row-action--save {
-  background: var(--color-primary);
+  background: var(--color-primary-dark);
   color: var(--color-white);
   border-radius: var(--radius-md);
   padding: var(--space-1) var(--space-3);
@@ -251,7 +251,7 @@
 }
 
 .config-row-action--save:hover {
-  background: var(--color-primary-dark);
+  background: var(--color-primary-darker);
 }
 
 .config-row-action--cancel {
@@ -277,7 +277,7 @@
   align-items: center;
   gap: var(--space-1);
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
   margin-left: var(--space-2);
   animation: fadeInOut 2s ease forwards;

@@ -124,7 +124,7 @@
 .sucesso-voucher-codigo {
   font-family: 'Courier New', Courier, monospace;
   font-size: 24px;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   letter-spacing: 0.1em;
   font-weight: var(--font-weight-bold);
   user-select: all;
@@ -136,7 +136,7 @@
   border-radius: var(--radius-full) !important;
   border: 2px solid var(--color-primary) !important;
   background: var(--color-white) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
   font-size: var(--font-size-sm) !important;
   display: inline-flex !important;
   align-items: center;
@@ -180,7 +180,7 @@
 
 .sucesso-btn-inicio:hover {
   border-color: var(--color-primary) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
 }
 
 /* Responsividade */

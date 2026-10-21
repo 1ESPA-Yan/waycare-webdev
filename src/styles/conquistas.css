@@ -61,7 +61,7 @@
 
 .conquista-filter-tag:hover {
   border-color: var(--color-hc);
-  color: var(--color-hc);
+  color: var(--color-hc-text);
 }
 
 .conquista-filter-tag.active {
@@ -222,8 +222,8 @@
   font-weight: var(--font-weight-bold);
 }
 
-.conquista-pct--done     { color: var(--color-hc); }
-.conquista-pct--progress { color: var(--color-primary); }
+.conquista-pct--done     { color: var(--color-hc-text); }
+.conquista-pct--progress { color: var(--color-primary-dark); }
 
 /* Barra de progresso — amarela (Health Coins) para todas as conquistas
    Usa seletor duplo para sobrescrever o .progress-fill do global.css */
@@ -238,13 +238,13 @@
   gap: var(--space-1);
 }
 
-.conquista-status--done   { color: var(--color-primary); }
+.conquista-status--done   { color: var(--color-primary-dark); }
 .conquista-status--locked { color: var(--color-text-muted); }
 
 /* Health Coins nas conquistas — cor verde */
 .conquista-card .mission-hc,
 .conquista-card .mission-hc .fa-coins {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Card de como desbloquear */
@@ -274,7 +274,7 @@
 .conquistas-dica-titulo {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin: 0;
 }
 
@@ -296,7 +296,7 @@
 }
 
 .conquistas-dica-lista li i {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   flex-shrink: 0;
 }

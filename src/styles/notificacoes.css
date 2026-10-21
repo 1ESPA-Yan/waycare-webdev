@@ -7,7 +7,7 @@
   height: 44px;
   border-radius: var(--radius-md);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -53,7 +53,7 @@
   gap: var(--space-2);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   background: none;
   border: none;
   cursor: pointer;
@@ -102,13 +102,13 @@
 
 .notif-tag:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .notif-tag.active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-dark);
 }
 
 /* Lista de notificações */
@@ -177,7 +177,7 @@
   flex-shrink: 0;
 }
 
-.notif-item-icone--green   { background-color: var(--color-primary-light); color: var(--color-primary); }
+.notif-item-icone--green   { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .notif-item-icone--warning { background-color: #fff8ec; color: var(--color-hc); }
 .notif-item-icone--orange  { background-color: #fff3e0; color: #e65100; }
 .notif-item-icone--yellow  { background-color: #fffde7; color: #f9a825; }
@@ -233,7 +233,7 @@
   border-radius: var(--radius-sm);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   background-color: var(--color-primary-light);
   border: none;
   cursor: pointer;
@@ -260,7 +260,7 @@
 }
 
 .notif-btn-icone:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   background-color: var(--color-primary-light);
 }
 

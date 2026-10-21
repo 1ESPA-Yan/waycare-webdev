@@ -27,7 +27,7 @@
 .humor-logo-nome {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Botão fechar/voltar */
@@ -169,13 +169,13 @@
 }
 
 .humor-btn-continuar--ativo {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   cursor: pointer;
   opacity: 1;
 }
 
 .humor-btn-continuar--ativo:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--color-primary-darker);
   transform: translateY(-1px);
   box-shadow: var(--shadow-md);
 }

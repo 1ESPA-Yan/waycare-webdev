@@ -137,7 +137,7 @@
 }
 
 .completa-saldo-valor {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
 }
 

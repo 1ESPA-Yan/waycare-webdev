@@ -89,7 +89,7 @@
 /* Badges de impacto */
 .descoberta-badge--alto  { background-color: #ffebee; color: var(--color-error); }
 .descoberta-badge--medio { background-color: #fff3e0; color: #e65100; }
-.descoberta-badge--baixo { background-color: var(--color-primary-light); color: var(--color-primary); }
+.descoberta-badge--baixo { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 
 /* Box de insight */
 .descoberta-insight {
@@ -123,14 +123,14 @@
 }
 
 .descoberta-dado i {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: 12px;
 }
 
 /* Botões da descoberta */
 .descoberta-btn-criar {
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   border: 1px solid rgba(28, 151, 112, 0.3);
   border-radius: var(--radius-md) !important;
   font-size: var(--font-size-sm);
@@ -155,7 +155,7 @@
 }
 
 .descoberta-btn-historico:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   background-color: var(--color-primary-light);
 }
 
@@ -175,7 +175,7 @@
   height: 40px;
   border-radius: var(--radius-md);
   background-color: var(--color-white);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -186,7 +186,7 @@
 .descobertas-info-titulo {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin: 0;
 }
 
@@ -215,7 +215,7 @@
 }
 
 .descobertas-info-lista li i {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   flex-shrink: 0;
 }
@@ -237,13 +237,13 @@
 
 .descoberta-filter-tag:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .descoberta-filter-tag.active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-dark);
 }
 
 /* Responsividade */

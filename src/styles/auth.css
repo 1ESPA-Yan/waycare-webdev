@@ -335,7 +335,7 @@
 }
 
 .auth-link {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -426,7 +426,7 @@
 }
 
 .criteria-item.valid {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Mensagem de confirmação de senha */
@@ -436,7 +436,7 @@
   display: block;
 }
 
-.match-ok    { color: var(--color-primary); }
+.match-ok    { color: var(--color-primary-dark); }
 .match-error { color: var(--color-error); }
 
 /* Passo 3 (Resumo e LGPD) */
@@ -488,7 +488,7 @@
 }
 
 .lgpd-icon {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: 20px;
   flex-shrink: 0;
   margin-top: 2px;
@@ -497,7 +497,7 @@
 .cadastro-lgpd strong {
   display: block;
   font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin-bottom: var(--space-1);
 }
 

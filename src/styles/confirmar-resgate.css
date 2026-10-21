@@ -123,11 +123,11 @@
 }
 
 .confirmar-detalhe-valor--destaque {
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
 }
 
 .confirmar-detalhe-valor--destaque i {
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
 }
 
 /* Termos */
@@ -177,7 +177,7 @@
 
 .confirmar-termos-link {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
@@ -240,7 +240,7 @@
 
 .confirmar-btn-cancelar:hover {
   border-color: var(--color-primary) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
 }
 
 @media (max-width: 480px) {

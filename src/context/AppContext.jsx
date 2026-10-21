@@ -42,11 +42,11 @@ export function AppProvider({ children }) {
 
   // Mapeamento humor → badge + recomendação para trilhas
   const HUMOR_CONFIG = {
-    energetico: { label: 'Energético', icon: 'fa-bolt',                trilha: 'Movimento & Cardio',       badgeBg: '#fff8e1', badgeColor: '#f5a623', badgeBorder: '#ffe0a0' },
-    cansado:    { label: 'Cansado',    icon: 'fa-moon',                trilha: 'Sono & Relaxamento',       badgeBg: '#ede7f6', badgeColor: '#7c6bbf', badgeBorder: '#d1c4e9' },
-    tranquilo:  { label: 'Tranquilo',  icon: 'fa-wind',                trilha: 'Mindfulness & Equilíbrio', badgeBg: '#e0f7f4', badgeColor: '#5ab8b0', badgeBorder: '#b2dfdb' },
-    estressado: { label: 'Estressado', icon: 'fa-cloud-showers-heavy', trilha: 'Mindfulness & Respiração', badgeBg: '#fff3e0', badgeColor: '#f5a623', badgeBorder: '#ffcc80' },
-    neutro:     { label: 'Neutro',     icon: 'fa-minus',               trilha: 'Bem-estar Geral',          badgeBg: '#f0f0f0', badgeColor: '#9e9e9e', badgeBorder: '#e0e0e0' },
+    energetico: { label: 'Energético', icon: 'fa-bolt',                trilha: 'Movimento & Cardio',       badgeBg: '#fff8e1', badgeColor: '#9a5b00', badgeBorder: '#ffe0a0' },
+    cansado:    { label: 'Cansado',    icon: 'fa-moon',                trilha: 'Sono & Relaxamento',       badgeBg: '#ede7f6', badgeColor: '#5e4b9e', badgeBorder: '#d1c4e9' },
+    tranquilo:  { label: 'Tranquilo',  icon: 'fa-wind',                trilha: 'Mindfulness & Equilíbrio', badgeBg: '#e0f7f4', badgeColor: '#1f7a72', badgeBorder: '#b2dfdb' },
+    estressado: { label: 'Estressado', icon: 'fa-cloud-showers-heavy', trilha: 'Mindfulness & Respiração', badgeBg: '#fff3e0', badgeColor: '#9a5b00', badgeBorder: '#ffcc80' },
+    neutro:     { label: 'Neutro',     icon: 'fa-minus',               trilha: 'Bem-estar Geral',          badgeBg: '#f0f0f0', badgeColor: '#6b6b6b', badgeBorder: '#e0e0e0' },
   }
 
   // GARRAFA

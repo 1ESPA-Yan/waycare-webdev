@@ -134,7 +134,7 @@ function DetalhesMissao() {
               </div>
               <div>
                 <span className="detalhes-info-label">Recompensa</span>
-                <span className="detalhes-info-valor" style={{ color: '#1C9770' }}>+{missao.hc} HC</span>
+                <span className="detalhes-info-valor" style={{ color: 'var(--color-primary-dark)' }}>+{missao.hc} HC</span>
               </div>
             </div>
             <div className="detalhes-info-item">

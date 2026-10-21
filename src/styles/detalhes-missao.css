@@ -45,7 +45,7 @@
   transition: color var(--transition-fast);
 }
 
-.detalhes-back-btn:hover { color: var(--color-primary); }
+.detalhes-back-btn:hover { color: var(--color-primary-dark); }
 
 .detalhes-header-label {
   font-size: var(--font-size-xs);
@@ -153,7 +153,7 @@
 .detalhes-progresso-atual {
   font-size: 32px;
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .detalhes-progresso-meta {
@@ -168,7 +168,7 @@
 
 .detalhes-progresso-pct {
   font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
   text-align: right;
 }
@@ -208,7 +208,7 @@
   flex-shrink: 0;
 }
 
-.detalhes-info-icon--green  { background: var(--color-primary-light); color: var(--color-primary); }
+.detalhes-info-icon--green  { background: var(--color-primary-light); color: var(--color-primary-dark); }
 .detalhes-info-icon--blue   { background: #e3f2fd; color: #1565c0; }
 .detalhes-info-icon--purple { background: #ede7f6; color: #5e35b1; }
 

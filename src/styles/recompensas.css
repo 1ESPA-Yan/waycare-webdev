@@ -29,7 +29,7 @@
   height: 44px;
   border-radius: var(--radius-md);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -68,13 +68,13 @@
 
 .recompensa-tag:hover {
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .recompensa-tag.active {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
-  border-color: var(--color-primary);
+  border-color: var(--color-primary-dark);
 }
 
 /* Grid de recompensas — CSS Grid nativo, 3 colunas */
@@ -114,7 +114,7 @@
   font-size: 64px;
 }
 
-.recompensa-thumb--green  { background-color: #d6f0e8; color: var(--color-primary); }
+.recompensa-thumb--green  { background-color: #d6f0e8; color: var(--color-primary-dark); }
 .recompensa-thumb--blue   { background-color: #daeeff; color: #1565c0; }
 .recompensa-thumb--orange { background-color: #fff3e0; color: #e65100; }
 .recompensa-thumb--pink   { background-color: #fce4ec; color: #e91e63; }
@@ -162,7 +162,7 @@
   align-items: center;
   gap: var(--space-2);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   padding: var(--space-2) var(--space-4);
@@ -173,7 +173,7 @@
 
 /* Botão resgatar */
 .recompensa-btn {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
   border: none;
   border-radius: var(--radius-md) !important;
@@ -182,7 +182,7 @@
 }
 
 .recompensa-btn:hover {
-  background-color: var(--color-primary-dark);
+  background-color: var(--color-primary-darker);
   transform: translateY(-1px);
   box-shadow: var(--shadow-sm);
 }

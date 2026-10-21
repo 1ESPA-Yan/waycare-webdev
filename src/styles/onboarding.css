@@ -35,7 +35,7 @@
 .onboarding-logo-name {
   font-size: var(--font-size-md);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Bolinhas de progresso */
@@ -116,7 +116,7 @@
 }
 
 .onboarding-icon-bubble--red    { background-color: #ffebee; color: #e53935; }
-.onboarding-icon-bubble--green  { background-color: var(--color-primary-light); color: var(--color-primary); }
+.onboarding-icon-bubble--green  { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .onboarding-icon-bubble--yellow { background-color: #fff8ec; color: var(--color-hc); }
 
 /* Títulos */
@@ -159,7 +159,7 @@
   height: 44px;
   border-radius: var(--radius-md);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -191,7 +191,7 @@
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
@@ -213,7 +213,7 @@
 }
 
 .onboarding-how-icon--purple { background-color: #ede7f6; color: #5e35b1; }
-.onboarding-how-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary); }
+.onboarding-how-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .onboarding-how-icon--yellow { background-color: #fff8ec; color: var(--color-hc); }
 
 .onboarding-how-titulo {
@@ -235,7 +235,7 @@
   height: 72px;
   border-radius: 50%;
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -261,7 +261,7 @@
 }
 
 .onboarding-lgpd-lista li i {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin-top: 3px;
   flex-shrink: 0;
 }
@@ -276,7 +276,7 @@
 .onboarding-lgpd-box-titulo {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin-bottom: var(--space-2);
 }
 
@@ -298,7 +298,7 @@
 }
 
 .onboarding-lgpd-coleta li i {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
 }
 
@@ -325,9 +325,9 @@
 
 /* Botões */
 .onboarding-btn-primary {
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
-  border: 2px solid var(--color-primary);
+  border: 2px solid var(--color-primary-dark);
   border-radius: var(--radius-md) !important;
   flex: 1;
   font-weight: var(--font-weight-medium);
@@ -335,8 +335,8 @@
 }
 
 .onboarding-btn-primary:hover:not(:disabled) {
-  background-color: var(--color-primary-dark);
-  border-color: var(--color-primary-dark);
+  background-color: var(--color-primary-darker);
+  border-color: var(--color-primary-darker);
   color: var(--color-white);
 }
 

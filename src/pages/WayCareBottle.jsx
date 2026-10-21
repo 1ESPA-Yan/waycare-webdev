@@ -118,6 +118,15 @@ function WaycareBottle() {
     ? 'var(--color-info)'
     : 'var(--color-hc)'
 
+  // Versão clara da mesma cor para o texto sobre o painel escuro
+  const corMetaTexto = d.estado_led === 'vermelho'
+    ? '#ff8a80'
+    : metaBatida
+    ? '#4fd1a5'
+    : pctClamp >= 50
+    ? '#64b5f6'
+    : 'var(--color-hc)'
+
   const ledTexto = {
     verde: 'Tudo certo — siga bebendo',
     vermelho: 'Faz um tempo que você não bebe',
@@ -315,7 +324,7 @@ function WaycareBottle() {
                         <span className="bottle-meta-faltam">
                           {mlFaltam > 0 ? `Faltam ${mlFaltam} ml` : '🎉 Meta atingida!'}
                         </span>
-                        <span className="bottle-meta-pct" style={{ color: corMeta }}>{d.pct}%</span>
+                        <span className="bottle-meta-pct" style={{ color: corMetaTexto }}>{d.pct}%</span>
                       </div>
 
                       {metaBatida && (
@@ -466,10 +475,10 @@ function WaycareBottle() {
                         return (
                           <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
                             {ml > 0 && (
-                              <span style={{ fontSize: '10px', color: dia.hoje ? 'var(--color-info)' : 'var(--color-text-muted)' }}>{ml}</span>
+                              <span style={{ fontSize: '10px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)' }}>{ml}</span>
                             )}
                             <div style={{ width: '100%', height: `${altura}px`, backgroundColor: cor, borderRadius: '4px 4px 0 0', transition: 'height 0.4s ease', marginTop: 'auto' }}></div>
-                            <span style={{ fontSize: '11px', color: dia.hoje ? 'var(--color-info)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400' }}>
+                            <span style={{ fontSize: '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400' }}>
                               {dia.dia}
                             </span>
                           </div>
