@@ -174,7 +174,6 @@
   color: var(--color-text-primary);
   background-color: var(--color-white);
   transition: border-color var(--transition-fast);
-  outline: none;
   font-family: inherit;
   resize: none;
 }

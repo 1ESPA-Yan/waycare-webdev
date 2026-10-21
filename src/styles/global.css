@@ -135,13 +135,32 @@ ul, ol {
 button, input, select, textarea {
   font-family: inherit;
   font-size: inherit;
-  outline: none;
   border: none;
   background: none;
 }
 
 button {
   cursor: pointer;
+}
+
+/* Foco visível ao navegar pelo teclado (.btn sobrescreve o outline: 0 do Bootstrap) */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+summary:focus-visible,
+[tabindex]:focus-visible,
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 2px;
+}
+
+/* Sobre fundos escuros ou verdes o contorno fica branco */
+.bottle-painel :focus-visible,
+.auth-hero :focus-visible,
+.carteira-saldo-card :focus-visible {
+  outline-color: var(--color-white);
 }
 
 /* TIPOGRAFIA */
