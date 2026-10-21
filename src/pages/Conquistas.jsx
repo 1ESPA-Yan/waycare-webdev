@@ -42,7 +42,7 @@ function CardConquista({ c }) {
             <div className="progress-fill conquista-fill--hc" style={{ width: `${pct}%` }}></div>
           </div>
           <div className="d-flex align-items-center justify-content-between">
-            <span className="mission-hc"><span className="fa-solid fa-coins"></span> {c.hc} HC</span>
+            <span className="mission-hc"><span className="fa-solid fa-coins"></span> {c.hc.toLocaleString('pt-BR')} HC</span>
             {c.desbloqueada ? (
               <span className="conquista-status conquista-status--done">
                 <i className="fa-regular fa-circle-check"></i>
@@ -109,7 +109,7 @@ function Conquistas() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
-                {totalHC} HC
+                {totalHC.toLocaleString('pt-BR')} HC
               </div>
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>

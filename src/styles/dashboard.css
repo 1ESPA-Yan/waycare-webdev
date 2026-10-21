@@ -408,6 +408,17 @@
   gap: var(--space-4);
 }
 
+/* Cards da mesma linha com a mesma altura; o botão fica no fim do card */
+.missions-grid .card-mission {
+  height: 100%;
+}
+
+.missions-grid .btn-mission,
+.missions-grid .mission-btn-done,
+.missions-grid .btn-bottle-auto {
+  margin-top: auto;
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .dashboard-topbar {

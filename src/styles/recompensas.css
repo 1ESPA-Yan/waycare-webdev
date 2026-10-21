@@ -94,6 +94,9 @@
 
 /* Cards de recompensa */
 .recompensa-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 0;
   overflow: hidden;
   transition: all var(--transition-normal);
@@ -141,6 +144,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  flex: 1;
 }
 
 .recompensa-nome {
@@ -173,6 +177,7 @@
 
 /* Botão resgatar */
 .recompensa-btn {
+  margin-top: auto;
   background-color: var(--color-primary-dark);
   color: var(--color-white);
   border: none;

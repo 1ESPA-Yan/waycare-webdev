@@ -122,7 +122,7 @@ function MissaoCompleta() {
         >
           Saldo atual:{' '}
           <strong className="completa-saldo-valor">
-            {totalHC} HC <i className="fa-solid fa-check-circle"></i>
+            {totalHC.toLocaleString('pt-BR')} HC <i className="fa-solid fa-check-circle"></i>
           </strong>
         </motion.p>
 

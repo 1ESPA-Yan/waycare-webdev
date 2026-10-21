@@ -161,12 +161,12 @@ function Carteira() {
                 </div>
                 <div className="conquistas-lista">
                   {destaques.map(c => (
-                    <div key={c.id} className="conquista-card">
+                    <div key={c.id} className="carteira-conquista-card">
                       <div className={`conquista-icone conquista-icone--${c.cor}`}>
                         <i className={`fa-solid ${c.icone}`}></i>
                       </div>
-                      <p className="conquista-nome">{c.titulo}</p>
-                      <p className="conquista-tempo">{c.tempo}</p>
+                      <p className="carteira-conquista-nome">{c.titulo}</p>
+                      <p className="carteira-conquista-tempo">{c.tempo}</p>
                     </div>
                   ))}
                 </div>

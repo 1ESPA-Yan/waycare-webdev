@@ -60,14 +60,14 @@
 }
 
 .conquista-filter-tag:hover {
-  border-color: var(--color-hc);
-  color: var(--color-hc-text);
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .conquista-filter-tag.active {
-  background-color: var(--color-hc);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
-  border-color: var(--color-hc);
+  border-color: var(--color-primary-dark);
 }
 
 .conquista-filter-count {

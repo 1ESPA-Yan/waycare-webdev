@@ -161,7 +161,7 @@ function Dashboard() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
-                {totalHC} HC
+                {totalHC.toLocaleString('pt-BR')} HC
               </div>
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>
@@ -292,7 +292,7 @@ function Dashboard() {
                 <i className="fa-solid fa-gem recompensas-banner-gem"></i>
                 <div className="d-flex flex-column gap-1">
                   <h3 className="recompensas-banner-title">Catálogo de Recompensas</h3>
-                  <p className="recompensas-banner-desc">Troque seus {totalHC} Health Coins por prêmios incríveis!</p>
+                  <p className="recompensas-banner-desc">Troque seus {totalHC.toLocaleString('pt-BR')} Health Coins por prêmios incríveis!</p>
                 </div>
               </div>
               <i className="fa-solid fa-gift recompensas-banner-gift"></i>

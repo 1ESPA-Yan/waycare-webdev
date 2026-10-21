@@ -30,7 +30,7 @@ const HUMORES = [
     label: 'Estressado',
     desc: 'Sobrecarregado',
     icon: 'fa-cloud-showers-heavy',
-    cor: 'orange',
+    cor: 'rose',
   },
   {
     id: 'neutro',
@@ -64,7 +64,7 @@ function SelecionarHumor() {
         <div className="d-flex align-items-center gap-3">
           <div className="hc-chip">
             <i className="fa-solid fa-coins"></i>
-            {totalHC} HC
+            {totalHC.toLocaleString('pt-BR')} HC
           </div>
           <button className="humor-btn-voltar" onClick={() => navigate('/dashboard')} aria-label="Voltar">
             <i className="fa-solid fa-xmark"></i>

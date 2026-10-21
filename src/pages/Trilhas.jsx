@@ -366,7 +366,7 @@ function Trilhas() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
-                {totalHC} HC
+                {totalHC.toLocaleString('pt-BR')} HC
               </div>
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>
@@ -413,7 +413,7 @@ function Trilhas() {
                 <div className="card resumo-card">
                   <div className="resumo-icon resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
                   <div className="resumo-card-body">
-                    <span className="resumo-valor resumo-valor--hc">{totalHC}</span>
+                    <span className="resumo-valor resumo-valor--hc">{totalHC.toLocaleString('pt-BR')}</span>
                     <span className="resumo-label">Health Coins</span>
                   </div>
                 </div>

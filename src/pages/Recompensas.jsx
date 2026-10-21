@@ -77,7 +77,7 @@ function Recompensas() {
             <div className="topbar-actions">
               <div className="hc-chip hc-chip--destaque">
                 <span className="fa-solid fa-coins"></span>
-                Seu saldo: <strong>{totalHC} HC</strong>
+                Seu saldo: <strong>{totalHC.toLocaleString('pt-BR')} HC</strong>
               </div>
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>
@@ -130,7 +130,7 @@ function Recompensas() {
                         <p className="recompensa-desc">{r.desc}</p>
                         <div className="recompensa-hc">
                           <span className="fa-solid fa-coins"></span>
-                          {r.hc} HC
+                          {r.hc.toLocaleString('pt-BR')} HC
                         </div>
                         <button
                           className="btn recompensa-btn"

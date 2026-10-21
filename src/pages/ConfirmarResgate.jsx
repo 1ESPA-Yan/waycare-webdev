@@ -61,21 +61,21 @@ function ConfirmarResgate() {
               <span className="confirmar-detalhe-label">Valor:</span>
               <div className="confirmar-detalhe-valor">
                 <i className="fa-solid fa-coins"></i>
-                <span>{recompensa.preco} HC</span>
+                <span>{recompensa.preco.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo atual:</span>
               <div className="confirmar-detalhe-valor">
                 <i className="fa-solid fa-coins"></i>
-                <span>{totalHC} HC</span>
+                <span>{totalHC.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo após resgate:</span>
               <div className="confirmar-detalhe-valor confirmar-detalhe-valor--destaque">
                 <i className="fa-solid fa-coins"></i>
-                <span>{saldoApos} HC</span>
+                <span>{saldoApos.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
           </div>

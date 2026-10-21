@@ -180,7 +180,7 @@ function WaycareBottle() {
             <div className="topbar-actions">
               <div className="hc-chip">
                 <i className="fa-solid fa-coins"></i>
-                {totalHC} HC
+                {totalHC.toLocaleString('pt-BR')} HC
               </div>
               <Link to="/carteira" className="notif-btn" aria-label="Carteira">
                 <i className="fa-solid fa-wallet"></i>
