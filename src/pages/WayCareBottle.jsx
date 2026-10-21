@@ -293,7 +293,7 @@ function WaycareBottle() {
                       <GarrafaAnimada pct={pctClamp} ml={d.consumido} descricao="bebidos hoje" />
 
                       {/* Fatias da meta (0–4) */}
-                      <div className="bottle-fatias" aria-label={`${d.fatias} de 4 fatias`}>
+                      <div className="bottle-fatias" aria-hidden="true">
                         {[0, 1, 2, 3].map((i) => (
                           <span key={i} className={`bottle-fatia ${i < d.fatias ? 'bottle-fatia--on' : ''}`}></span>
                         ))}
@@ -449,7 +449,7 @@ function WaycareBottle() {
                   <div className="d-flex align-items-center justify-content-between mb-4">
                     <div className="d-flex align-items-center gap-2">
                       <i className="fa-solid fa-arrow-trend-up bottle-historico-icon"></i>
-                      <h3 className="bottle-historico-titulo">{usandoReal ? 'Consumo de hoje' : 'Histórico Semanal'}</h3>
+                      <h2 className="bottle-historico-titulo">{usandoReal ? 'Consumo de hoje' : 'Histórico Semanal'}</h2>
                     </div>
                     <div className="d-flex align-items-center gap-3">
                       <span className="bottle-legenda">
@@ -493,10 +493,10 @@ function WaycareBottle() {
               <div className="d-flex flex-column gap-4">
 
                 <div className="card">
-                  <h3 className="bottle-col-titulo mb-4">
+                  <h2 className="bottle-col-titulo mb-4">
                     <i className="fa-solid fa-circle-info bottle-col-titulo-icon"></i>
                     Informações do Dispositivo
-                  </h3>
+                  </h2>
                   <div className="d-flex flex-column gap-0">
                     <div className="bottle-info-row">
                       <span className="bottle-info-label"><i className="fa-solid fa-wifi bottle-info-icon--green"></i> Conexão</span>
@@ -537,10 +537,10 @@ function WaycareBottle() {
 
                 {/* Meta de Hidratação — resumo + link para personalizar */}
                 <div className="card">
-                  <h3 className="bottle-col-titulo mb-4">
+                  <h2 className="bottle-col-titulo mb-4">
                     <i className="fa-solid fa-bullseye bottle-col-titulo-icon bottle-col-titulo-icon--green"></i>
                     Meta de Hidratação
-                  </h3>
+                  </h2>
                   <div className="bottle-meta-card mb-4">
                     <div className="d-flex justify-content-between align-items-center mb-1">
                       <span className="bottle-meta-card-label">Meta diária</span>
@@ -564,10 +564,10 @@ function WaycareBottle() {
                 </div>
 
                 <div className="card">
-                  <h3 className="bottle-col-titulo mb-4">
+                  <h2 className="bottle-col-titulo mb-4">
                     <i className="fa-solid fa-lightbulb bottle-col-titulo-icon bottle-col-titulo-icon--yellow"></i>
                     Dicas de Hidratação
-                  </h3>
+                  </h2>
                   <div className="d-flex flex-column gap-3">
                     <div className="d-flex align-items-start gap-3">
                       <div className="bottle-dica-icon bottle-dica-icon--yellow"><i className="fa-solid fa-bolt"></i></div>

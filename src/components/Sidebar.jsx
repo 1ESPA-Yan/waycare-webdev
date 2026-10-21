@@ -1,27 +1,24 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 
 function Sidebar({ isOpen }) {
-  const location = useLocation()
   const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock } = useApp()
   const pctWidget = Math.min(100, Math.round((consumidoHoje / metaHoje) * 100))
-  const navClass = (path) =>
-    location.pathname === path ? 'nav-item active' : 'nav-item'
 
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar" role="navigation" aria-label="Menu principal">
+    <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar">
       <div className="sidebar-logo">
         <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
         WayCare
       </div>
-      <nav className="sidebar-nav">
-        <Link to="/dashboard" className={navClass('/dashboard')}><i className="fa-solid fa-house nav-icon"></i>Início</Link>
-        <Link to="/trilhas" className={navClass('/trilhas')}><i className="fa-solid fa-route nav-icon"></i>Trilhas</Link>
-        <Link to="/conquistas" className={navClass('/conquistas')}><i className="fa-solid fa-trophy nav-icon"></i>Conquistas</Link>
-        <Link to="/descobertas" className={navClass('/descobertas')}><i className="fa-solid fa-lightbulb nav-icon"></i>Descobertas</Link>
-        <Link to="/recompensas" className={navClass('/recompensas')}><i className="fa-solid fa-gifts nav-icon"></i>Recompensas</Link>
-        <Link to="/perfil" className={navClass('/perfil')}><i className="fa-solid fa-user nav-icon"></i>Perfil</Link>
-        <Link to="/configuracoes" className={navClass('/configuracoes')}><i className="fa-solid fa-gear nav-icon"></i>Configurações</Link>
+      <nav className="sidebar-nav" aria-label="Menu principal">
+        <NavLink to="/dashboard" className="nav-item"><i className="fa-solid fa-house nav-icon"></i>Início</NavLink>
+        <NavLink to="/trilhas" className="nav-item"><i className="fa-solid fa-route nav-icon"></i>Trilhas</NavLink>
+        <NavLink to="/conquistas" className="nav-item"><i className="fa-solid fa-trophy nav-icon"></i>Conquistas</NavLink>
+        <NavLink to="/descobertas" className="nav-item"><i className="fa-solid fa-lightbulb nav-icon"></i>Descobertas</NavLink>
+        <NavLink to="/recompensas" className="nav-item"><i className="fa-solid fa-gifts nav-icon"></i>Recompensas</NavLink>
+        <NavLink to="/perfil" className="nav-item"><i className="fa-solid fa-user nav-icon"></i>Perfil</NavLink>
+        <NavLink to="/configuracoes" className="nav-item"><i className="fa-solid fa-gear nav-icon"></i>Configurações</NavLink>
       </nav>
       <Link to="/waycare-bottle" className="bottle-sidebar-widget">
         <div className="d-flex align-items-center gap-2 mb-2">

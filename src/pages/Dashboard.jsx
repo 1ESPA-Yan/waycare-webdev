@@ -194,11 +194,11 @@ function Dashboard() {
                 <div className="progress-fill" style={{ width: '60%' }}></div>
               </div>
               <div className="trilha-slots">
-                <div className="trilha-slot completed" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
-                <div className="trilha-slot completed" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
-                <div className="trilha-slot completed" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
-                <div className="trilha-slot pending" aria-label="Missão pendente"><i className="fa-solid fa-spa"></i></div>
-                <div className="trilha-slot pending" aria-label="Missão pendente"><i className="fa-solid fa-clipboard-list"></i></div>
+                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
+                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
+                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
+                <div className="trilha-slot pending" role="img" aria-label="Missão pendente"><i className="fa-solid fa-spa"></i></div>
+                <div className="trilha-slot pending" role="img" aria-label="Missão pendente"><i className="fa-solid fa-clipboard-list"></i></div>
               </div>
             </div>
 
