@@ -84,21 +84,25 @@ function ConfirmarResgate() {
 
           {/* Termos */}
           <div className="confirmar-termos-wrap">
-            <label className="confirmar-termos-label" onClick={() => setAceitouTermos(v => !v)}>
-              <div className={`confirmar-checkbox ${aceitouTermos ? 'checked' : ''}`}>
+            <label className="confirmar-termos-label">
+              <input
+                type="checkbox"
+                className="confirmar-checkbox-input"
+                checked={aceitouTermos}
+                onChange={e => setAceitouTermos(e.target.checked)}
+              />
+              <span className="confirmar-checkbox" aria-hidden="true">
                 {aceitouTermos && (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 )}
-              </div>
-              <div className="confirmar-termos-texto">
-                <span>Li e aceito os termos de resgate</span>
-                <a href="#" onClick={e => e.preventDefault()} className="confirmar-termos-link">
-                  Ver termos completos <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-              </div>
+              </span>
+              <span className="confirmar-termos-texto">Li e aceito os termos de resgate</span>
             </label>
+            <a href="#" onClick={e => e.preventDefault()} className="confirmar-termos-link">
+              Ver termos completos <i className="fa-solid fa-arrow-up-right-from-square"></i>
+            </a>
           </div>
 
           {/* Aviso */}

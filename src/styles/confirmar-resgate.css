@@ -140,6 +140,24 @@
   align-items: flex-start;
   gap: var(--space-3);
   cursor: pointer;
+  position: relative;
+}
+
+/* Checkbox real: invisível, mas focável e lido por leitores de tela */
+.confirmar-checkbox-input {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.confirmar-checkbox-input:focus-visible + .confirmar-checkbox {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 2px;
 }
 
 .confirmar-checkbox {
@@ -156,7 +174,7 @@
   margin-top: 2px;
 }
 
-.confirmar-checkbox.checked {
+.confirmar-checkbox-input:checked + .confirmar-checkbox {
   background: var(--color-primary);
   border-color: var(--color-primary);
 }
@@ -182,6 +200,8 @@
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
+  /* alinhado ao texto, depois da caixinha (20px + gap) */
+  margin: 4px 0 0 calc(20px + var(--space-3));
 }
 
 .confirmar-termos-link:hover { text-decoration: underline; }
