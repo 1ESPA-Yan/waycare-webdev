@@ -13,7 +13,7 @@ const DICAS_DEFAULT = [
 function DetalhesMissao() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { adicionarHC, consumidoHoje: mlConsumido } = useApp()
+  const { concluirMissao, missaoConcluida, consumidoHoje: mlConsumido } = useApp()
   const [missao, setMissao] = useState(null)
   const [carregando, setCarregando] = useState(true)
 
@@ -35,8 +35,7 @@ function DetalhesMissao() {
   }, [id])
 
   const handleConcluir = () => {
-    if (!missao) return
-    adicionarHC(missao.hc)
+    if (!missao || !concluirMissao(missao)) return
     navigate('/missao/completa', { state: { missao } })
   }
 
@@ -185,7 +184,7 @@ function DetalhesMissao() {
 
           {/* Ações */}
           <div className="detalhes-actions">
-            {missao.status === 'concluida' ? (
+            {missao.status === 'concluida' || missaoConcluida(missao.id) ? (
               <button className="btn detalhes-btn-done" disabled>
                 <i className="fa-regular fa-circle-check"></i>
                 Missão já concluída

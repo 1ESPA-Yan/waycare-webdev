@@ -103,7 +103,7 @@ function Dashboard() {
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
-  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, naoLidas } = useApp()
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, naoLidas, missaoConcluida } = useApp()
   const humorAtual = HUMOR_CONFIG[humor]
 
   const categorias = useMemo(() => {
@@ -262,7 +262,10 @@ function Dashboard() {
                         visible: { opacity: 1, y: 0, transition: { duration: 0.28, ease: 'easeOut' } },
                       }}
                     >
-                      <CardMissao missao={missao} mlConsumido={mlConsumido} />
+                      <CardMissao
+                        missao={missaoConcluida(missao.id) ? { ...missao, status: 'concluida' } : missao}
+                        mlConsumido={mlConsumido}
+                      />
                     </motion.div>
                   ))}
                 </motion.div>

@@ -3,6 +3,9 @@ import { useWayCareDock } from '../hooks/useWayCareDock'
 
 const AppContext = createContext()
 
+// Data local no formato AAAA-MM-DD
+const hojeISO = () => new Date().toLocaleDateString('sv-SE')
+
 export function AppProvider({ children }) {
 
   // USUÁRIO — lê do localStorage ao iniciar
@@ -88,6 +91,32 @@ export function AppProvider({ children }) {
     })
   }
 
+  // MISSÕES CONCLUÍDAS — ids concluídos no dia; vale só para a data salva
+  const [missoesDoDia, setMissoesDoDia] = useState(() => {
+    try {
+      return JSON.parse(localStorage.getItem('wc_missoes_concluidas')) || { dia: '', ids: [] }
+    } catch { return { dia: '', ids: [] } }
+  })
+
+  useEffect(() => {
+    localStorage.setItem('wc_missoes_concluidas', JSON.stringify(missoesDoDia))
+  }, [missoesDoDia])
+
+  const missaoConcluida = (id) =>
+    missoesDoDia.dia === hojeISO() && missoesDoDia.ids.includes(id)
+
+  // Credita o HC uma vez por dia; devolve false se a missão já foi concluída hoje
+  const concluirMissao = (missao) => {
+    if (missaoConcluida(missao.id)) return false
+    const hoje = hojeISO()
+    setMissoesDoDia(prev => ({
+      dia: hoje,
+      ids: prev.dia === hoje ? [...prev.ids, missao.id] : [missao.id],
+    }))
+    adicionarHC(missao.hc)
+    return true
+  }
+
   // HISTÓRICO DE LEITURAS DA GARRAFA
   const [leituras, setLeituras] = useState(() => {
     try {
@@ -171,6 +200,10 @@ export function AppProvider({ children }) {
     // Health Coins
     totalHC,
     adicionarHC,
+
+    // Missões
+    missaoConcluida,
+    concluirMissao,
 
     // Humor
     humor,
