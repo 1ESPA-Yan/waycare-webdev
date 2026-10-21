@@ -281,6 +281,18 @@ function SecaoVazia({ label }) {
   )
 }
 
+// Filtra uma lista de trilhas pela categoria e pelo texto da busca
+function aplicarFiltros(lista, filtroAtivo, busca) {
+  return lista.filter(t => {
+    const bateFiltro = filtroAtivo === 'todos' || t.categoria === filtroAtivo
+    const bateBusca  = busca.trim() === '' ||
+      t.nome.toLowerCase().includes(busca.toLowerCase()) ||
+      t.descricao.toLowerCase().includes(busca.toLowerCase()) ||
+      t.tags.some(tag => tag.toLowerCase().includes(busca.toLowerCase()))
+    return bateFiltro && bateBusca
+  })
+}
+
 // Página principal
 function Trilhas() {
   const [sidebarOpen, setSidebarOpen]     = useState(false)
@@ -319,20 +331,9 @@ function Trilhas() {
     setTrilhaExpandida(prev => prev === id ? null : id)
   }
 
-  const aplicarFiltros = (lista) => {
-    return lista.filter(t => {
-      const bateFiltro = filtroAtivo === 'todos' || t.categoria === filtroAtivo
-      const bateBusca  = busca.trim() === '' ||
-        t.nome.toLowerCase().includes(busca.toLowerCase()) ||
-        t.descricao.toLowerCase().includes(busca.toLowerCase()) ||
-        t.tags.some(tag => tag.toLowerCase().includes(busca.toLowerCase()))
-      return bateFiltro && bateBusca
-    })
-  }
-
-  const andamento   = useMemo(() => aplicarFiltros(trilhasData.emAndamento),  [filtroAtivo, busca, trilhasData])
-  const disponiveis = useMemo(() => aplicarFiltros(trilhasData.disponiveis),   [filtroAtivo, busca, trilhasData])
-  const bloqueadas  = useMemo(() => aplicarFiltros(trilhasData.bloqueadas),    [filtroAtivo, busca, trilhasData])
+  const andamento   = useMemo(() => aplicarFiltros(trilhasData.emAndamento, filtroAtivo, busca),  [filtroAtivo, busca, trilhasData])
+  const disponiveis = useMemo(() => aplicarFiltros(trilhasData.disponiveis, filtroAtivo, busca),  [filtroAtivo, busca, trilhasData])
+  const bloqueadas  = useMemo(() => aplicarFiltros(trilhasData.bloqueadas, filtroAtivo, busca),   [filtroAtivo, busca, trilhasData])
 
   const totalResultados = andamento.length + disponiveis.length + bloqueadas.length
   const semResultados   = !carregando && totalResultados === 0

@@ -32,7 +32,7 @@ function Notificacoes() {
   // Sincroniza contador global sempre que a lista muda
   useEffect(() => {
     setNaoLidas(notificacoes.filter(n => !n.lida).length)
-  }, [notificacoes])
+  }, [notificacoes, setNaoLidas])
 
   const naoLidasCount = notificacoes.filter(n => !n.lida).length
 

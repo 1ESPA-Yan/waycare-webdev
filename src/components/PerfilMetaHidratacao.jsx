@@ -50,12 +50,7 @@ function PerfilMetaHidratacao() {
   // Preview com debounce quando peso e cidade estão preenchidos
   useEffect(() => {
     clearTimeout(debounceRef.current)
-    if (!form.peso || !form.cidade) {
-      setPreview(null)
-      setCarregandoPreview(false)
-      return
-    }
-    setCarregandoPreview(true)
+    if (!form.peso || !form.cidade) return
     debounceRef.current = setTimeout(async () => {
       try {
         const r = await calcularMetaPreview({
@@ -74,7 +69,10 @@ function PerfilMetaHidratacao() {
     return () => clearTimeout(debounceRef.current)
   }, [form.peso, form.genero, form.atividade, form.cidade])
 
-  const alterar = (campo, valor) => setForm((f) => ({ ...f, [campo]: valor }))
+  const alterar = (campo, valor) => {
+    setForm((f) => ({ ...f, [campo]: valor }))
+    setCarregandoPreview(true)
+  }
 
   async function salvar() {
     setErro('')
@@ -98,8 +96,9 @@ function PerfilMetaHidratacao() {
     }
   }
 
-  // Mostra resultado salvo; senão o preview ao vivo
-  const r = resultado || preview
+  // Mostra resultado salvo; senão o preview ao vivo (só com peso e cidade)
+  const podeCalcular = Boolean(form.peso && form.cidade)
+  const r = resultado || (podeCalcular ? preview : null)
   const salvo = !!resultado
 
   return (
@@ -173,7 +172,7 @@ function PerfilMetaHidratacao() {
 
           <div className="perfil-meta-valor-wrap">
             <span className="perfil-meta-valor-label">
-              {salvo ? 'Meta salva' : 'Meta sugerida'} {carregandoPreview && !salvo ? '· atualizando…' : ''}
+              {salvo ? 'Meta salva' : 'Meta sugerida'} {carregandoPreview && podeCalcular && !salvo ? '· atualizando…' : ''}
             </span>
             <span className="perfil-meta-valor-grande">{r.meta} <small>ml/dia</small></span>
           </div>

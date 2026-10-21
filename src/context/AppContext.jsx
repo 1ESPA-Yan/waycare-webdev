@@ -1,4 +1,4 @@
-import { createContext, useContext, useState, useEffect } from 'react'
+import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { useWayCareDock } from '../hooks/useWayCareDock'
 
 const AppContext = createContext()
@@ -69,11 +69,11 @@ export function AppProvider({ children }) {
     () => Number(localStorage.getItem('wc_nao_lidas') ?? 2)
   )
 
-  const setNaoLidas = (count) => {
+  const setNaoLidas = useCallback((count) => {
     const v = Math.max(0, count)
     setNaoLidasState(v)
     localStorage.setItem('wc_nao_lidas', v)
-  }
+  }, [])
 
   // HEALTH COINS
   const [totalHC, setTotalHC] = useState(
@@ -197,6 +197,8 @@ export function AppProvider({ children }) {
   )
 }
 
+// O hook fica junto do Provider de propósito; o aviso de Fast Refresh não se aplica
+// eslint-disable-next-line react-refresh/only-export-components
 export function useApp() {
   return useContext(AppContext)
 }

@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/configuracoes.css'
@@ -68,7 +68,6 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 
 function Configuracoes() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const navigate = useNavigate()
   const { totalHC, nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, naoLidas } = useApp()
 
   return (

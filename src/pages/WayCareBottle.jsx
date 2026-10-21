@@ -36,7 +36,6 @@ function WaycareBottle() {
     totalHC,
     naoLidas,
     statusDock: status,
-    statusErro: erro,
     statusCarregando: carregando,
     usandoReal,
   } = useApp()

@@ -5,6 +5,15 @@ import '../styles/missao-completa.css'
 
 const CORES_CONFETE = ['#1C9770', '#FFC107', '#42A5F5', '#FF9800', '#7AD1C3', '#7986CB', '#4CAF50', '#F44336']
 
+// Valores aleatórios gerados uma vez, fora da renderização
+const CONFETES = Array.from({ length: 20 }, (_, i) => ({
+  cor: CORES_CONFETE[i % CORES_CONFETE.length],
+  x: (Math.random() - 0.5) * 800,
+  y: Math.random() * 600,
+  rotate: Math.random() * 360,
+  duration: 1.5 + Math.random(),
+}))
+
 function MissaoCompleta() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -19,20 +28,20 @@ function MissaoCompleta() {
   return (
     <div className="completa-overlay">
       {/* Confete */}
-      {Array.from({ length: 20 }).map((_, i) => (
+      {CONFETES.map((c, i) => (
         <motion.div
           key={i}
           className="completa-confete"
-          style={{ backgroundColor: CORES_CONFETE[i % CORES_CONFETE.length] }}
+          style={{ backgroundColor: c.cor }}
           initial={{ x: '50vw', y: '40vh', opacity: 1, scale: 0 }}
           animate={{
-            x: `calc(50vw + ${(Math.random() - 0.5) * 800}px)`,
-            y: `calc(40vh + ${Math.random() * 600}px)`,
+            x: `calc(50vw + ${c.x}px)`,
+            y: `calc(40vh + ${c.y}px)`,
             opacity: 0,
             scale: 1,
-            rotate: Math.random() * 360,
+            rotate: c.rotate,
           }}
-          transition={{ duration: 1.5 + Math.random(), ease: 'easeOut' }}
+          transition={{ duration: c.duration, ease: 'easeOut' }}
         />
       ))}
 
