@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef, useSyncExternalStore } from 'react'
+import { useState, useEffect, useRef, useSyncExternalStore, Suspense } from 'react'
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Sidebar from './Sidebar'
+import CarregandoPagina from './CarregandoPagina'
 import '../styles/topbar.css'
 
 // Mesmo ponto de quebra do CSS: abaixo dele a Sidebar vira menu deslizante
@@ -85,7 +86,10 @@ function AppLayout() {
         <Sidebar ref={sidebarRef} isOpen={sidebarOpen} inert={celular && !sidebarOpen} />
 
         <main className="main-content" id="main-content">
-          <Outlet />
+          {/* Enquanto o código da página carrega, a Sidebar continua na tela */}
+          <Suspense fallback={<CarregandoPagina />}>
+            <Outlet />
+          </Suspense>
         </main>
       </div>
     </>
