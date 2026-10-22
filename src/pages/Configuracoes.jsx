@@ -43,7 +43,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
             {unidade && <span className="config-edit-unidade">{unidade}</span>}
           </div>
         </div>
-        <div className="d-flex gap-2">
+        <div className="flex gap-2">
           <button className="config-row-action config-row-action--save" onClick={handleSalvar}>Salvar</button>
           <button className="config-row-action config-row-action--cancel" onClick={handleCancelar}>Cancelar</button>
         </div>
@@ -77,8 +77,8 @@ function Configuracoes() {
           <section id="page-content" className="page-transition">
 
             {/* Informações da Conta */}
-            <Card className="config-section mb-4">
-              <h2 className="config-section-titulo mb-4">Informações da Conta</h2>
+            <Card className="config-section mb-6">
+              <h2 className="config-section-titulo mb-6">Informações da Conta</h2>
 
               <CampoEditavel
                 label="Nome"
@@ -107,8 +107,8 @@ function Configuracoes() {
             </Card>
 
             {/* Saúde & Metas */}
-            <Card className="config-section mb-4">
-              <h2 className="config-section-titulo mb-4">Saúde & Metas</h2>
+            <Card className="config-section mb-6">
+              <h2 className="config-section-titulo mb-6">Saúde & Metas</h2>
 
               <CampoEditavel
                 label="Meta diária de hidratação"
@@ -130,12 +130,12 @@ function Configuracoes() {
             </Card>
 
             {/* Notificações */}
-            <Card className="config-item-card mb-4">
-              <div className="d-flex align-items-center gap-4">
+            <Card className="config-item-card mb-6">
+              <div className="flex items-center gap-6">
                 <div className="config-item-icon config-item-icon--green">
                   <i className="fa-solid fa-bell"></i>
                 </div>
-                <div className="d-flex flex-column gap-1 grow">
+                <div className="flex flex-col gap-1 grow">
                   <span className="config-item-titulo">Notificações</span>
                   <span className="config-item-desc">Gerencie suas preferências de notificação</span>
                 </div>
@@ -144,12 +144,12 @@ function Configuracoes() {
             </Card>
 
             {/* Privacidade e Dados */}
-            <Card className="config-item-card mb-4">
-              <div className="d-flex align-items-center gap-4">
+            <Card className="config-item-card mb-6">
+              <div className="flex items-center gap-6">
                 <div className="config-item-icon config-item-icon--blue">
                   <i className="fa-solid fa-shield-halved"></i>
                 </div>
-                <div className="d-flex flex-column gap-1 grow">
+                <div className="flex flex-col gap-1 grow">
                   <span className="config-item-titulo">Privacidade e Dados</span>
                   <span className="config-item-desc">Controle seus dados e privacidade</span>
                 </div>
@@ -158,12 +158,12 @@ function Configuracoes() {
             </Card>
 
             {/* Aparência */}
-            <Card className="config-item-card mb-4">
-              <div className="d-flex align-items-center gap-4">
+            <Card className="config-item-card mb-6">
+              <div className="flex items-center gap-6">
                 <div className="config-item-icon config-item-icon--orange">
                   <i className="fa-solid fa-palette"></i>
                 </div>
-                <div className="d-flex flex-column gap-1 grow">
+                <div className="flex flex-col gap-1 grow">
                   <span className="config-item-titulo">Aparência</span>
                   <span className="config-item-desc">Personalize cores e tema</span>
                 </div>
@@ -172,13 +172,13 @@ function Configuracoes() {
             </Card>
 
             {/* Zona de Perigo */}
-            <Card className="config-section mb-4">
-              <h2 className="config-section-titulo mb-4">Zona de Perigo</h2>
+            <Card className="config-section mb-6">
+              <h2 className="config-section-titulo mb-6">Zona de Perigo</h2>
 
               <div className="config-perigo-item config-perigo-item--warning">
-                <div className="d-flex align-items-center gap-3 grow">
+                <div className="flex items-center gap-4 grow">
                   <i className="fa-solid fa-arrow-right-from-bracket config-perigo-icon config-perigo-icon--warning"></i>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="config-perigo-titulo">Sair da Conta</span>
                     <span className="config-perigo-desc">Você pode voltar a qualquer momento</span>
                   </div>
@@ -188,10 +188,10 @@ function Configuracoes() {
                 </Link>
               </div>
 
-              <div className="config-perigo-item config-perigo-item--error mt-3">
-                <div className="d-flex align-items-center gap-3 grow">
+              <div className="config-perigo-item config-perigo-item--error mt-4">
+                <div className="flex items-center gap-4 grow">
                   <i className="fa-solid fa-shield-halved config-perigo-icon config-perigo-icon--error"></i>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="config-perigo-titulo">Excluir Conta</span>
                     <span className="config-perigo-desc">Esta ação não pode ser desfeita</span>
                   </div>
@@ -202,7 +202,7 @@ function Configuracoes() {
 
             {/* Sobre */}
             <Card className="config-section">
-              <h2 className="config-section-titulo mb-4">Sobre</h2>
+              <h2 className="config-section-titulo mb-6">Sobre</h2>
 
               <div className="config-row">
                 <span className="config-row-label">Versão</span>

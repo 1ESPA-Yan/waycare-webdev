@@ -44,7 +44,7 @@ function Splash() {
 
         {/* Nome */}
         <motion.h1
-          className="text-white tracking-tight mb-4"
+          className="text-white tracking-tight mb-6"
           style={{ fontSize: '64px', fontWeight: 600 }}
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

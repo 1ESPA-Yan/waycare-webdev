@@ -21,9 +21,9 @@ function Sidebar({ isOpen, inert, ref }) {
         <NavLink to="/configuracoes" className="nav-item"><i className="fa-solid fa-gear nav-icon"></i>Configurações</NavLink>
       </nav>
       <Link to="/waycare-bottle" className="bottle-sidebar-widget">
-        <div className="d-flex align-items-center gap-2 mb-2">
+        <div className="flex items-center gap-2 mb-2">
           <div className="bottle-widget-icon"><i className="fa-solid fa-droplet"></i></div>
-          <div className="d-flex flex-column gap-0">
+          <div className="flex flex-col gap-0">
             <span className="bottle-widget-title">WayCare Bottle</span>
             <span className="bottle-widget-status">
               <span className="bottle-status-dot" style={{ backgroundColor: usandoReal && statusDock?.online ? '' : 'var(--color-text-muted)' }}></span>
@@ -31,7 +31,7 @@ function Sidebar({ isOpen, inert, ref }) {
             </span>
           </div>
         </div>
-        <div className="d-flex align-items-baseline gap-1 mb-1">
+        <div className="flex items-baseline gap-1 mb-1">
           <span className="bottle-widget-ml">{consumidoHoje}</span>
           <span className="bottle-widget-meta">/ {metaHoje} ml</span>
         </div>

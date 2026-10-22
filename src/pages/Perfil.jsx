@@ -78,17 +78,17 @@ function Perfil() {
 
               {/* Coluna esquerda */}
               <motion.div
-                className="d-flex flex-column gap-4"
+                className="flex flex-col gap-6"
                 variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09 } } }}
               >
 
                 {/* Card principal do perfil */}
                 <motion.div variants={cardVariants} className="card perfil-card-principal">
 
-                  <div className="d-flex align-items-start gap-4">
+                  <div className="flex items-start gap-6">
                     <div className="avatar avatar-lg perfil-avatar">{letraAvatar}</div>
 
-                    <div className="d-flex flex-column gap-2 grow">
+                    <div className="flex flex-col gap-2 grow">
                       {editando ? (
                         <div className="perfil-edit-form">
                           <div className="perfil-edit-field">
@@ -143,11 +143,11 @@ function Perfil() {
                         </div>
                       ) : (
                         <>
-                          <div className="d-flex align-items-center gap-2">
+                          <div className="flex items-center gap-2">
                             <h2 className="perfil-nome">{nomeUsuario}</h2>
                             {salvo && <span className="perfil-salvo-badge">Salvo!</span>}
                             <button
-                              className="perfil-edit-btn ms-auto"
+                              className="perfil-edit-btn ml-auto"
                               aria-label="Editar perfil"
                               onClick={iniciarEdicao}
                             >
@@ -155,7 +155,7 @@ function Perfil() {
                             </button>
                           </div>
                           {bioUsuario && <p className="perfil-bio">{bioUsuario}</p>}
-                          <div className="d-flex align-items-center gap-3 flex-wrap">
+                          <div className="flex items-center gap-4 flex-wrap">
                             <span className="perfil-meta">
                               <i className="fa-regular fa-envelope"></i>
                               {emailUsuario || 'Sem email'}
@@ -167,7 +167,7 @@ function Perfil() {
                               </span>
                             )}
                           </div>
-                          <div className="d-flex align-items-center gap-2 flex-wrap">
+                          <div className="flex items-center gap-2 flex-wrap">
                             <span className="perfil-stat-chip perfil-stat-chip--green">
                               Nível<strong>{nivel}</strong>
                             </span>
@@ -184,8 +184,8 @@ function Perfil() {
                   </div>
 
                   {!editando && (
-                    <div className="mt-4">
-                      <div className="d-flex justify-content-between align-items-center mb-2">
+                    <div className="mt-6">
+                      <div className="flex justify-between items-center mb-2">
                         <span className="text-sm text-secondary">Progresso para Nível {nivel + 1}</span>
                         <span className="text-sm font-bold trilha-pct">{pctNivel}%</span>
                       </div>
@@ -203,7 +203,7 @@ function Perfil() {
                       <div className="perfil-stat-icon perfil-stat-icon--blue">
                         <i className="fa-solid fa-bullseye"></i>
                       </div>
-                      <div className="d-flex flex-column gap-1">
+                      <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Missões Completadas</span>
                         <span className="perfil-stat-valor">48</span>
                       </div>
@@ -214,7 +214,7 @@ function Perfil() {
                       <div className="perfil-stat-icon perfil-stat-icon--orange">
                         <i className="fa-solid fa-fire"></i>
                       </div>
-                      <div className="d-flex flex-column gap-1">
+                      <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Streak Atual</span>
                         <span className="perfil-stat-valor">5 dias</span>
                       </div>
@@ -225,7 +225,7 @@ function Perfil() {
                       <div className="perfil-stat-icon perfil-stat-icon--hc">
                         <i className="fa-solid fa-coins"></i>
                       </div>
-                      <div className="d-flex flex-column gap-1">
+                      <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Total de Coins Ganhos</span>
                         <span className="perfil-stat-valor">{totalHC.toLocaleString('pt-BR')}</span>
                       </div>
@@ -236,7 +236,7 @@ function Perfil() {
                       <div className="perfil-stat-icon perfil-stat-icon--trophy">
                         <i className="fa-solid fa-trophy"></i>
                       </div>
-                      <div className="d-flex flex-column gap-1">
+                      <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Conquistas</span>
                         <span className="perfil-stat-valor">{totalConquistas}</span>
                       </div>
@@ -251,7 +251,7 @@ function Perfil() {
 
                 {/* Conquistas recentes */}
                 <motion.div variants={cardVariants} className="card">
-                  <div className="d-flex align-items-center gap-2 mb-4">
+                  <div className="flex items-center gap-2 mb-6">
                     <div className="perfil-stat-icon perfil-stat-icon--trophy">
                       <i className="fa-solid fa-trophy"></i>
                     </div>
@@ -264,7 +264,7 @@ function Perfil() {
                         <div className="perfil-conquista-icon perfil-conquista-icon--orange">
                           <i className="fa-solid fa-fire"></i>
                         </div>
-                        <div className="d-flex flex-column gap-1">
+                        <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome">Semana Ativa</span>
                           <span className="perfil-conquista-desc">Completou 7 dias consecutivos</span>
                         </div>
@@ -276,7 +276,7 @@ function Perfil() {
                         <div className="perfil-conquista-icon perfil-conquista-icon--purple">
                           <i className="fa-solid fa-moon"></i>
                         </div>
-                        <div className="d-flex flex-column gap-1">
+                        <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome">Mestre do Sono</span>
                           <span className="perfil-conquista-desc">Dormiu 7h+ por 10 dias</span>
                         </div>
@@ -288,7 +288,7 @@ function Perfil() {
                         <div className="perfil-conquista-icon perfil-conquista-icon--blue">
                           <i className="fa-solid fa-droplet"></i>
                         </div>
-                        <div className="d-flex flex-column gap-1">
+                        <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome">Hidratação em Dia</span>
                           <span className="perfil-conquista-desc">30 dias bebendo 2L de água</span>
                         </div>
@@ -300,7 +300,7 @@ function Perfil() {
                         <div className="perfil-conquista-icon perfil-conquista-icon--locked">
                           <i className="fa-solid fa-person-running"></i>
                         </div>
-                        <div className="d-flex flex-column gap-1">
+                        <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome text-muted">Maratonista</span>
                           <span className="perfil-conquista-desc">Caminhou 100km no total</span>
                         </div>
@@ -316,7 +316,7 @@ function Perfil() {
 
               {/* Coluna direita — atalhos */}
               <motion.div
-                className="d-flex flex-column gap-4"
+                className="flex flex-col gap-6"
                 variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.1, delayChildren: 0.15 } } }}
               >
                 <motion.div variants={cardVariants}>
@@ -324,7 +324,7 @@ function Perfil() {
                   <div className="perfil-atalho-icon perfil-atalho-icon--gray">
                     <i className="fa-solid fa-gear"></i>
                   </div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="perfil-atalho-titulo">Configurações</span>
                     <span className="perfil-atalho-desc">Ajuste suas preferências</span>
                   </div>
@@ -336,7 +336,7 @@ function Perfil() {
                   <div className="perfil-atalho-icon perfil-atalho-icon--green">
                     <i className="fa-solid fa-gift"></i>
                   </div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="perfil-atalho-titulo">Minhas Recompensas</span>
                     <span className="perfil-atalho-desc">Vouchers resgatados</span>
                   </div>
@@ -348,7 +348,7 @@ function Perfil() {
                   <div className="perfil-atalho-icon perfil-atalho-icon--yellow">
                     <i className="fa-solid fa-lightbulb"></i>
                   </div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="perfil-atalho-titulo">Descobertas</span>
                     <span className="perfil-atalho-desc">Insights sobre sua saúde</span>
                   </div>

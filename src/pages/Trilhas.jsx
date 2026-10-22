@@ -40,7 +40,7 @@ function PainelMissoes({ trilha, missoesPorTrilha }) {
   return (
     <div className="trilha-painel-missoes">
       <div className="trilha-painel-header">
-        <div className="d-flex align-items-center gap-2">
+        <div className="flex items-center gap-2">
           <i className="fa-solid fa-list-check"></i>
           <span className="trilha-painel-titulo">Missões da Trilha</span>
         </div>
@@ -83,46 +83,46 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
   return (
     <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
       <Card
-        className={`trilha-card d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
+        className={`trilha-card flex ${expandida ? 'trilha-card-expandida' : 'flex-col'} gap-4`}
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >
         {/* Conteúdo principal do card */}
-        <div className={`trilha-card-conteudo ${expandida ? 'trilha-card-conteudo--expandida' : 'flex-column'} d-flex gap-3`}>
-          <div className="d-flex align-items-start gap-3">
+        <div className={`trilha-card-conteudo ${expandida ? 'trilha-card-conteudo--expandida' : 'flex-col'} flex gap-4`}>
+          <div className="flex items-start gap-4">
             <div className={`trilha-thumb ${s.thumb}`}>
               <i className={`fa-solid ${trilha.icone}`}></i>
             </div>
-            <div className="d-flex flex-column gap-1">
-              <div className="d-flex align-items-center gap-2">
+            <div className="flex flex-col gap-1">
+              <div className="flex items-center gap-2">
                 <h3 className="trilha-nome">{trilha.nome}</h3>
                 <span className="trilha-status-badge">● {trilha.status}</span>
               </div>
-              <div className="d-flex align-items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
                 <span className="text-xs text-muted">Nível {trilha.nivel} · {trilha.participantes} participantes</span>
               </div>
             </div>
             {/* Ícone de expandir */}
-            <div className="trilha-expand-icon ms-auto">
+            <div className="trilha-expand-icon ml-auto">
               <i className={`fa-solid ${expandida ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
             </div>
           </div>
           <p className="trilha-desc">{trilha.descricao}</p>
-          <div className="d-flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap">
             {trilha.tags.map(tag => (
               <Chip key={tag} cor={s.tagBadge}>{tag}</Chip>
             ))}
           </div>
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="flex justify-between items-center">
             <span className="text-sm text-secondary">Progresso da trilha</span>
             <span className="text-sm font-bold trilha-pct">{trilha.progresso}%</span>
           </div>
           <div className="progress-bar">
             <div className="progress-fill" style={{ width: `${trilha.progresso}%` }}></div>
           </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="d-flex align-items-center gap-3">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
               <span className="trilha-meta-item"><i className="fa-regular fa-calendar"></i> {trilha.dias} dias</span>
               <span className="trilha-meta-item"><i className="fa-regular fa-circle-check"></i> {trilha.missoes} missões</span>
             </div>
@@ -152,39 +152,39 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
   return (
     <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
       <Card
-        className={`trilha-card d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
+        className={`trilha-card flex ${expandida ? 'trilha-card-expandida' : 'flex-col'} gap-4`}
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >
-        <div className={`trilha-card-conteudo ${expandida ? 'trilha-card-conteudo--expandida' : 'flex-column'} d-flex gap-3`}>
+        <div className={`trilha-card-conteudo ${expandida ? 'trilha-card-conteudo--expandida' : 'flex-col'} flex gap-4`}>
           {trilha.recomendada && (
             <span className="trilha-recomendada-label">
               <i className="fa-solid fa-star"></i> Recomendada para seu humor
             </span>
           )}
-          <div className="d-flex align-items-start gap-3">
+          <div className="flex items-start gap-4">
             <div className={`trilha-thumb ${s.thumb}`}>
               <i className={`fa-solid ${trilha.icone}`}></i>
             </div>
-            <div className="d-flex flex-column gap-1">
+            <div className="flex flex-col gap-1">
               <h3 className="trilha-nome">{trilha.nome}</h3>
-              <div className="d-flex align-items-center gap-2">
+              <div className="flex items-center gap-2">
                 <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
                 <span className="text-xs text-muted">Nível {trilha.nivel} · {trilha.participantes} participantes</span>
               </div>
             </div>
-            <div className="trilha-expand-icon ms-auto">
+            <div className="trilha-expand-icon ml-auto">
               <i className={`fa-solid ${expandida ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
             </div>
           </div>
           <p className="trilha-desc">{trilha.descricao}</p>
-          <div className="d-flex gap-2 flex-wrap">
+          <div className="flex gap-2 flex-wrap">
             {trilha.tags.map(tag => (
               <Chip key={tag} cor={s.tagBadge}>{tag}</Chip>
             ))}
           </div>
-          <div className="d-flex justify-content-between align-items-center">
-            <div className="d-flex align-items-center gap-3">
+          <div className="flex justify-between items-center">
+            <div className="flex items-center gap-4">
               <span className="trilha-meta-item"><i className="fa-regular fa-calendar"></i> {trilha.dias} dias</span>
               <span className="trilha-meta-item"><i className="fa-regular fa-circle-check"></i> {trilha.missoes} missões</span>
             </div>
@@ -208,30 +208,30 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
 function TrilhaBloqueada({ trilha }) {
   return (
     <div className="trilha-filter-item">
-      <Card className="trilha-card trilha-card-bloqueada d-flex flex-column gap-3">
-        <div className="d-flex align-items-start gap-3">
+      <Card className="trilha-card trilha-card-bloqueada flex flex-col gap-4">
+        <div className="flex items-start gap-4">
           <div className="trilha-thumb trilha-thumb--locked">
             <i className={`fa-solid ${trilha.icone}`}></i>
           </div>
-          <div className="d-flex flex-column gap-1">
-            <div className="d-flex align-items-center gap-2">
+          <div className="flex flex-col gap-1">
+            <div className="flex items-center gap-2">
               <h3 className="trilha-nome text-muted">{trilha.nome}</h3>
               <i className="fa-solid fa-lock text-muted text-sm"></i>
             </div>
-            <div className="d-flex align-items-center gap-2">
+            <div className="flex items-center gap-2">
               <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
               <span className="text-xs text-muted">Nível {trilha.nivel} · {trilha.participantes} participantes</span>
             </div>
           </div>
         </div>
         <p className="trilha-desc text-muted">{trilha.descricao}</p>
-        <div className="d-flex gap-2 flex-wrap">
+        <div className="flex gap-2 flex-wrap">
           {trilha.tags.map(tag => (
             <Chip key={tag} cor="muted">{tag}</Chip>
           ))}
         </div>
-        <div className="d-flex justify-content-between align-items-center">
-          <div className="d-flex align-items-center gap-3">
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-4">
             <span className="trilha-meta-item text-muted"><i className="fa-regular fa-calendar"></i> {trilha.dias} dias</span>
             <span className="trilha-meta-item text-muted"><i className="fa-regular fa-circle-check"></i> {trilha.missoes} missões</span>
           </div>
@@ -328,7 +328,7 @@ function Trilhas() {
           <section id="page-content" className="page-transition">
 
             {/* Cards de resumo */}
-            <div className="trilhas-resumo-grid mb-4">
+            <div className="trilhas-resumo-grid mb-6">
               <div>
                 <Card className="resumo-card">
                   <div className="resumo-icon resumo-icon--primary"><i className="fa-solid fa-bullseye"></i></div>
@@ -368,7 +368,7 @@ function Trilhas() {
             </div>
 
             {/* Busca e filtros */}
-            <div className="d-flex align-items-center gap-3 mb-5 flex-wrap">
+            <div className="flex items-center gap-4 mb-12 flex-wrap">
               <div className="trilhas-search grow">
                 <i className="fa-solid fa-magnifying-glass trilhas-search-icon"></i>
                 <input
@@ -384,8 +384,8 @@ function Trilhas() {
 
             {/* Spinner de carregamento */}
             {carregando && (
-              <div className="d-flex justify-content-center align-items-center py-5">
-                <div className="d-flex flex-column align-items-center gap-3">
+              <div className="flex justify-center items-center py-12">
+                <div className="flex flex-col items-center gap-4">
                   <i className="fa-solid fa-spinner fa-spin text-primary" style={{ fontSize: '32px' }}></i>
                   <span className="text-muted">Carregando trilhas...</span>
                 </div>
@@ -403,7 +403,7 @@ function Trilhas() {
                 </p>
                 <Button
                   variante="secundario"
-                  className="mt-3"
+                  className="mt-4"
                   onClick={() => { setFiltroAtivo('todos'); setBusca('') }}
                 >
                   Limpar filtros
@@ -414,7 +414,7 @@ function Trilhas() {
             {/* Trilhas em andamento */}
             {!carregando && !semResultados && (
               <div className="trilhas-secao">
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="flex items-center gap-4 mb-6">
                   <span className="trilhas-secao-barra trilhas-secao-barra--primary"></span>
                   <h2 className="trilhas-secao-titulo">Trilhas em Andamento</h2>
                   <Chip cor="primary">{andamento.length} ativas</Chip>
@@ -438,7 +438,7 @@ function Trilhas() {
             {/* Trilhas disponíveis */}
             {!carregando && !semResultados && (
               <div className="trilhas-secao">
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="flex items-center gap-4 mb-6">
                   <span className="trilhas-secao-barra trilhas-secao-barra--warning"></span>
                   <h2 className="trilhas-secao-titulo">Trilhas Disponíveis</h2>
                   <Chip cor="warning">{disponiveis.length} disponíveis</Chip>
@@ -462,7 +462,7 @@ function Trilhas() {
             {/* Trilhas bloqueadas */}
             {!carregando && !semResultados && (
               <div className="trilhas-secao">
-                <div className="d-flex align-items-center gap-3 mb-4">
+                <div className="flex items-center gap-4 mb-6">
                   <span className="trilhas-secao-barra trilhas-secao-barra--muted"></span>
                   <h2 className="trilhas-secao-titulo">Trilhas Bloqueadas</h2>
                   <span className="text-sm text-muted">Complete outras trilhas para desbloquear</span>

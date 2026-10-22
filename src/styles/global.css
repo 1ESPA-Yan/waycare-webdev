@@ -99,6 +99,48 @@
     margin: 0;
     padding: 0;
   }
+
+  /* Herdado do Bootstrap (removido na tarefa 30): o layout das páginas foi feito
+     contando com estes padrões. Ficam na camada base para perder, como antes,
+     para o CSS das páginas e para os utilitários. */
+  h1, h2, h3, h4, h5, h6 { margin-bottom: 0.5rem; }
+  h4, h5, h6 { font-weight: var(--font-weight-medium); line-height: 1.2; }
+  h4 { font-size: 1.5rem; }
+  h5 { font-size: 1.25rem; }
+  h6 { font-size: 1rem; }
+  p { margin-bottom: 1rem; }
+  ul, ol { padding-left: 2rem; margin-bottom: 1rem; }
+  ul ul, ol ol, ul ol, ol ul { margin-bottom: 0; }
+  small { font-size: 0.875em; }
+  b, strong { font-weight: bolder; }
+  label { display: inline-block; }
+  input, button, select, optgroup, textarea { line-height: inherit; }
+
+  .card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow-wrap: break-word;
+  }
+
+  .btn {
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+  }
+
+  .badge {
+    line-height: 1;
+    text-align: center;
+    vertical-align: baseline;
+  }
+
+  .input-group {
+    position: relative;
+    width: 100%;
+  }
 }
 
 html {
@@ -148,15 +190,14 @@ button {
   cursor: pointer;
 }
 
-/* Foco visível ao navegar pelo teclado (.btn sobrescreve o outline: 0 do Bootstrap) */
+/* Foco visível ao navegar pelo teclado */
 a:focus-visible,
 button:focus-visible,
 input:focus-visible,
 select:focus-visible,
 textarea:focus-visible,
 summary:focus-visible,
-[tabindex]:focus-visible,
-.btn:focus-visible {
+[tabindex]:focus-visible {
   outline: 2px solid var(--color-primary-dark);
   outline-offset: 2px;
 }

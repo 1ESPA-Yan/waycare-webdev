@@ -104,7 +104,7 @@ function PerfilMetaHidratacao() {
 
   return (
     <Card className="perfil-meta-hidratacao">
-      <div className="d-flex align-items-center gap-2 mb-1">
+      <div className="flex items-center gap-2 mb-1">
         <div className="perfil-stat-icon perfil-stat-icon--blue">
           <i className="fa-solid fa-droplet"></i>
         </div>

@@ -151,7 +151,7 @@ function WaycareBottle() {
               </span>
             )}
             subtitulo={
-              <div className="d-flex align-items-center gap-3 flex-wrap">
+              <div className="flex items-center gap-4 flex-wrap">
                 <span className="bottle-status-info">
                   <i className="fa-solid fa-signal"></i> {usandoReal ? 'Dock conectada' : 'Sensor IoT (demo)'}
                 </span>
@@ -169,33 +169,33 @@ function WaycareBottle() {
 
             {/* Avisos de conexão / dispositivo */}
             {carregando && (
-              <div className="bottle-aviso bottle-aviso--info mb-4">
+              <div className="bottle-aviso bottle-aviso--info mb-6">
                 <i className="fa-solid fa-circle-notch fa-spin"></i> Conectando ao dispositivo…
               </div>
             )}
             {!carregando && !usandoReal && (
-              <div className="bottle-aviso bottle-aviso--garrafa mb-4">
+              <div className="bottle-aviso bottle-aviso--garrafa mb-6">
                 <i className="fa-solid fa-triangle-exclamation"></i>
                 Sem conexão com a dock — exibindo dados de demonstração.
               </div>
             )}
             {usandoReal && !d.online && (
-              <div className="bottle-aviso bottle-aviso--offline mb-4">
+              <div className="bottle-aviso bottle-aviso--offline mb-6">
                 <i className="fa-solid fa-plug-circle-xmark"></i> Dispositivo offline — o ESP32 parou de enviar dados.
               </div>
             )}
             {usandoReal && !d.garrafa_presente && (
-              <div className="bottle-aviso bottle-aviso--garrafa mb-4">
+              <div className="bottle-aviso bottle-aviso--garrafa mb-6">
                 <i className="fa-solid fa-bottle-water"></i> Garrafa fora da base.
               </div>
             )}
 
             {/* Cards de resumo */}
-            <div className="bottle-resumo-grid mb-4">
+            <div className="bottle-resumo-grid mb-6">
               <div>
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--blue"><i className="fa-solid fa-droplet"></i></div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor">{d.consumido} ml</span>
                     <span className="bottle-resumo-label">Consumo de hoje</span>
                   </div>
@@ -204,7 +204,7 @@ function WaycareBottle() {
               <div>
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--green"><i className="fa-solid fa-fire"></i></div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor">{d.streak != null ? `${d.streak} dia${d.streak === 1 ? '' : 's'}` : '—'}</span>
                     <span className="bottle-resumo-label">Streak (metas seguidas)</span>
                   </div>
@@ -213,7 +213,7 @@ function WaycareBottle() {
               <div>
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--primary"><i className="fa-solid fa-temperature-half"></i></div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor">{d.temp != null ? `${d.temp}°C` : '—'}</span>
                     <span className="bottle-resumo-label">{d.cidade || 'Temperatura local'}</span>
                   </div>
@@ -222,7 +222,7 @@ function WaycareBottle() {
               <div>
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
-                  <div className="d-flex flex-column gap-1">
+                  <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{hcGarrafa} HC</span>
                     <span className="bottle-resumo-label">HC da garrafa</span>
                   </div>
@@ -236,15 +236,15 @@ function WaycareBottle() {
               <div>
                 <div className="bottle-painel">
 
-                  <div className="d-flex align-items-center justify-content-between mb-4">
-                    <div className="d-flex align-items-center gap-3">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-4">
                       <div className="bottle-painel-icon"><i className="fa-solid fa-droplet"></i></div>
                       <div>
                         <span className="bottle-painel-titulo">WayCare Bottle</span>
-                        <span className="bottle-painel-subtitulo d-block">Suporte IoT de hidratação inteligente</span>
+                        <span className="bottle-painel-subtitulo block">Suporte IoT de hidratação inteligente</span>
                       </div>
                     </div>
-                    <div className="d-flex align-items-center gap-2">
+                    <div className="flex items-center gap-2">
                       {usandoReal && d.online ? (
                         <span className="bottle-live-badge">
                           <span className="bottle-live-dot" style={{ opacity: liveVisivel ? 1 : 0, transition: 'opacity 0.2s ease' }}></span>
@@ -258,7 +258,7 @@ function WaycareBottle() {
                     </div>
                   </div>
 
-                  <div className="bottle-painel-grid mb-4">
+                  <div className="bottle-painel-grid mb-6">
 
                     {/* Garrafa SVG animada — preenche conforme o progresso da meta */}
                     <div>
@@ -293,7 +293,7 @@ function WaycareBottle() {
                           style={{ width: `${pctClamp}%`, backgroundColor: corMeta, transition: 'width 0.4s ease' }}
                         ></div>
                       </div>
-                      <div className="d-flex justify-content-between mb-4">
+                      <div className="flex justify-between mb-6">
                         <span className="bottle-meta-faltam">
                           {mlFaltam > 0 ? `Faltam ${mlFaltam} ml` : '🎉 Meta atingida!'}
                         </span>
@@ -301,13 +301,13 @@ function WaycareBottle() {
                       </div>
 
                       {metaBatida && (
-                        <div className="bottle-celebracao mb-4">
+                        <div className="bottle-celebracao mb-6">
                           <i className="fa-solid fa-trophy"></i> Mandou bem! Meta do dia concluída.
                         </div>
                       )}
 
                       {/* Mini estatísticas */}
-                      <div className="bottle-mini-grid mb-4">
+                      <div className="bottle-mini-grid mb-6">
                         {usandoReal ? (
                           <>
                             <div>
@@ -372,8 +372,8 @@ function WaycareBottle() {
                   {/* Ação do dispositivo: Tara (real) ou simular gole (fallback) */}
                   {usandoReal ? (
                     <div>
-                      <span className="bottle-secao-label mb-3 d-block">CONTROLE DO DISPOSITIVO</span>
-                      <div className="d-flex align-items-center gap-3 flex-wrap">
+                      <span className="bottle-secao-label mb-4 block">CONTROLE DO DISPOSITIVO</span>
+                      <div className="flex items-center gap-4 flex-wrap">
                         <button className="btn bottle-tara-btn" onClick={acionarTara} disabled={tarando}>
                           <i className="fa-solid fa-scale-balanced"></i>
                           {tarando ? 'Zerando…' : 'Tarar balança'}
@@ -387,8 +387,8 @@ function WaycareBottle() {
                     </div>
                   ) : (
                     <div>
-                      <span className="bottle-secao-label mb-3 d-block">SIMULAR LEITURA DA GARRAFA IOT</span>
-                      <div className="d-flex gap-3 flex-wrap">
+                      <span className="bottle-secao-label mb-4 block">SIMULAR LEITURA DA GARRAFA IOT</span>
+                      <div className="flex gap-4 flex-wrap">
                         <button className="btn bottle-gole-btn" onClick={() => simularGole(100)} disabled={mlGarrafa < 100}>
                           Gole pequeno
                           <span className="bottle-gole-desc">−100 ml da garrafa</span>
@@ -418,13 +418,13 @@ function WaycareBottle() {
                 </div>
 
                 {/* Gráfico de consumo */}
-                <Card className="bottle-historico-card mt-4">
-                  <div className="d-flex align-items-center justify-content-between mb-4">
-                    <div className="d-flex align-items-center gap-2">
+                <Card className="bottle-historico-card mt-6">
+                  <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-center gap-2">
                       <i className="fa-solid fa-arrow-trend-up bottle-historico-icon"></i>
                       <h2 className="bottle-historico-titulo">{usandoReal ? 'Consumo de hoje' : 'Histórico Semanal'}</h2>
                     </div>
-                    <div className="d-flex align-items-center gap-3">
+                    <div className="flex items-center gap-4">
                       <span className="bottle-legenda">
                         <span className="bottle-legenda-dot bottle-legenda-dot--primary"></span>
                         Consumo
@@ -463,14 +463,14 @@ function WaycareBottle() {
               </div>
 
               {/* Coluna direita */}
-              <div className="d-flex flex-column gap-4">
+              <div className="flex flex-col gap-6">
 
                 <Card>
-                  <h2 className="bottle-col-titulo mb-4">
+                  <h2 className="bottle-col-titulo mb-6">
                     <i className="fa-solid fa-circle-info bottle-col-titulo-icon"></i>
                     Informações do Dispositivo
                   </h2>
-                  <div className="d-flex flex-column gap-0">
+                  <div className="flex flex-col gap-0">
                     <div className="bottle-info-row">
                       <span className="bottle-info-label"><i className="fa-solid fa-wifi bottle-info-icon--green"></i> Conexão</span>
                       <span className="bottle-info-valor">{usandoReal ? (d.online ? 'Online' : 'Offline') : 'Sem conexão'}</span>
@@ -502,7 +502,7 @@ function WaycareBottle() {
                     </div>
                   </div>
                   {usandoReal && (
-                    <button className="btn bottle-sync-btn mt-4" onClick={acionarTara} disabled={tarando}>
+                    <button className="btn bottle-sync-btn mt-6" onClick={acionarTara} disabled={tarando}>
                       <i className="fa-solid fa-scale-balanced"></i> {tarando ? 'Zerando…' : 'Tarar balança'}
                     </button>
                   )}
@@ -510,19 +510,19 @@ function WaycareBottle() {
 
                 {/* Meta de Hidratação — resumo + link para personalizar */}
                 <Card>
-                  <h2 className="bottle-col-titulo mb-4">
+                  <h2 className="bottle-col-titulo mb-6">
                     <i className="fa-solid fa-bullseye bottle-col-titulo-icon bottle-col-titulo-icon--green"></i>
                     Meta de Hidratação
                   </h2>
-                  <div className="bottle-meta-card mb-4">
-                    <div className="d-flex justify-content-between align-items-center mb-1">
+                  <div className="bottle-meta-card mb-6">
+                    <div className="flex justify-between items-center mb-1">
                       <span className="bottle-meta-card-label">Meta diária</span>
                       <span className="bottle-meta-card-valor">{d.meta} ml</span>
                     </div>
                     <div className="progress-bar mb-1">
                       <div className="progress-fill" style={{ width: `${pctClamp}%`, transition: 'width 0.4s ease' }}></div>
                     </div>
-                    <div className="d-flex justify-content-between">
+                    <div className="flex justify-between">
                       <span className="bottle-meta-card-consumido">{d.consumido} ml consumidos</span>
                       <span className="bottle-meta-card-pct">{d.pct}%</span>
                     </div>
@@ -537,20 +537,20 @@ function WaycareBottle() {
                 </Card>
 
                 <Card>
-                  <h2 className="bottle-col-titulo mb-4">
+                  <h2 className="bottle-col-titulo mb-6">
                     <i className="fa-solid fa-lightbulb bottle-col-titulo-icon bottle-col-titulo-icon--yellow"></i>
                     Dicas de Hidratação
                   </h2>
-                  <div className="d-flex flex-column gap-3">
-                    <div className="d-flex align-items-start gap-3">
+                  <div className="flex flex-col gap-4">
+                    <div className="flex items-start gap-4">
                       <div className="bottle-dica-icon bottle-dica-icon--yellow"><i className="fa-solid fa-bolt"></i></div>
                       <p className="bottle-dica-texto">Beba um copo ao acordar para ativar o metabolismo</p>
                     </div>
-                    <div className="d-flex align-items-start gap-3">
+                    <div className="flex items-start gap-4">
                       <div className="bottle-dica-icon bottle-dica-icon--blue"><i className="fa-regular fa-clock"></i></div>
                       <p className="bottle-dica-texto">Configure lembretes a cada 90 minutos durante o trabalho</p>
                     </div>
-                    <div className="d-flex align-items-start gap-3">
+                    <div className="flex items-start gap-4">
                       <div className="bottle-dica-icon bottle-dica-icon--green"><i className="fa-solid fa-arrow-trend-up"></i></div>
                       <p className="bottle-dica-texto">Dias mais quentes elevam sua meta automaticamente</p>
                     </div>

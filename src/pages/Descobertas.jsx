@@ -13,18 +13,21 @@ const FILTROS = [
   { key: 'Baixo',  label: 'Baixo Impacto' },
 ]
 
+// Cor do selo de impacto (as classes impactoBadge dos JSON nunca existiram no CSS)
+const COR_IMPACTO = { Alto: 'error', Médio: 'warning', Baixo: 'info' }
+
 function CardDescoberta({ d }) {
   return (
     <Card className="descoberta-card">
-      <div className="d-flex align-items-start gap-4 mb-3">
+      <div className="flex items-start gap-6 mb-4">
         <div className={`descoberta-icon descoberta-icon--${d.cor}`}>
           <i className={`fa-solid ${d.icone}`}></i>
         </div>
-        <div className="d-flex flex-column gap-2">
+        <div className="flex flex-col gap-2">
           <h3 className="descoberta-nome">{d.nome}</h3>
-          <div className="d-flex align-items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-2 flex-wrap">
             <Chip cor={d.categoriaBadge}>{d.categoria}</Chip>
-            <Chip cor={d.impactoBadge}>Impacto: {d.impacto}</Chip>
+            <Chip cor={COR_IMPACTO[d.impacto] || 'muted'}>Impacto: {d.impacto}</Chip>
             <span className="descoberta-data">{d.data}</span>
           </div>
         </div>
@@ -37,7 +40,7 @@ function CardDescoberta({ d }) {
         <i className="fa-solid fa-arrow-trend-up"></i>
         {d.dado}
       </p>
-      <div className="d-flex align-items-center gap-3 flex-wrap">
+      <div className="flex items-center gap-4 flex-wrap">
         <Button variante="secundario" tamanho="sm" className="descoberta-acao">Criar missão baseada nisto</Button>
         <Button variante="fantasma" tamanho="sm" className="descoberta-acao em-breve" disabled>Ver histórico completo <span className="badge-em-breve">Em breve</span></Button>
       </div>
@@ -72,15 +75,15 @@ function Descobertas() {
 
           <section id="page-content" className="page-transition">
 
-            <FiltroPills className="mb-4" rotulo="Filtrar descobertas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
+            <FiltroPills className="mb-6" rotulo="Filtrar descobertas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
             {carregando ? (
-              <div className="d-flex flex-column gap-4">
+              <div className="flex flex-col gap-6">
                 {[1, 2, 3].map(i => (
                   <div key={i} className="card descoberta-card">
-                    <div className="d-flex align-items-start gap-4 mb-3">
+                    <div className="flex items-start gap-6 mb-4">
                       <div className="skeleton" style={{ width: 48, height: 48, borderRadius: '50%', flexShrink: 0 }}></div>
-                      <div className="d-flex flex-column gap-2 grow">
+                      <div className="flex flex-col gap-2 grow">
                         <div className="skeleton" style={{ height: 14, width: '50%' }}></div>
                         <div className="skeleton" style={{ height: 11, width: '35%' }}></div>
                       </div>
@@ -91,18 +94,18 @@ function Descobertas() {
                 ))}
               </div>
             ) : filtradas.length === 0 ? (
-              <p className="text-muted text-center py-5">Nenhuma descoberta para este filtro.</p>
+              <p className="text-muted text-center py-12">Nenhuma descoberta para este filtro.</p>
             ) : (
-              <div className="d-flex flex-column gap-4">
+              <div className="flex flex-col gap-6">
                 {filtradas.map(d => <CardDescoberta key={d.id} d={d} />)}
               </div>
             )}
 
-            <div className="descobertas-info mt-5">
+            <div className="descobertas-info mt-12">
               <div className="descobertas-info-icon">
                 <i className="fa-solid fa-circle-info"></i>
               </div>
-              <div className="d-flex flex-column gap-2">
+              <div className="flex flex-col gap-2">
                 <h4 className="descobertas-info-titulo">Como funcionam as descobertas?</h4>
                 <p className="descobertas-info-desc">
                   A WayCare Bottle e a dock registram cada gole automaticamente: a balança da dock pesa a

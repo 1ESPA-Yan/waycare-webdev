@@ -58,12 +58,12 @@ function Recompensas() {
           <section id="page-content" className="page-transition">
 
             {/* Filtros de categoria */}
-            <FiltroPills className="mb-5" rotulo="Filtrar recompensas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
+            <FiltroPills className="mb-12" rotulo="Filtrar recompensas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
             {/* Estado de carregamento */}
             {carregando && (
-              <div className="d-flex justify-content-center align-items-center py-5">
-                <div className="d-flex flex-column align-items-center gap-3">
+              <div className="flex justify-center items-center py-12">
+                <div className="flex flex-col items-center gap-4">
                   <i className="fa-solid fa-spinner fa-spin text-primary" style={{ fontSize: '32px' }}></i>
                   <span className="text-muted">Carregando recompensas...</span>
                 </div>

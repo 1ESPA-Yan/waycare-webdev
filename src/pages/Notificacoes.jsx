@@ -64,13 +64,13 @@ function Notificacoes() {
           <section id="page-content" className="page-transition">
 
             {/* Barra de ações */}
-            <div className="d-flex align-items-center justify-content-between w-full mb-4 flex-wrap gap-3">
+            <div className="flex items-center justify-between w-full mb-6 flex-wrap gap-4">
               <FiltroPills rotulo="Filtrar notificações" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
-              <div className="d-flex gap-3 align-items-center">
+              <div className="flex gap-4 items-center">
                 {naoLidasCount > 0 && (
                   <button
-                    className="notif-page-marcar-todas d-flex align-items-center gap-2"
+                    className="notif-page-marcar-todas flex items-center gap-2"
                     onClick={marcarTodasLidas}
                   >
                     <i className="fa-solid fa-check-double"></i>
@@ -79,7 +79,7 @@ function Notificacoes() {
                 )}
                 {notificacoes.length > 0 && (
                   <button
-                    className="notif-page-limpar d-flex align-items-center gap-2"
+                    className="notif-page-limpar flex items-center gap-2"
                     onClick={limparTodas}
                   >
                     <i className="fa-solid fa-trash-can"></i>

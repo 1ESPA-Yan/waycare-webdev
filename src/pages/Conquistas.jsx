@@ -16,7 +16,7 @@ function CardConquista({ c }) {
 
   return (
     <Card className={`conquista-card${!c.desbloqueada ? ' conquista-card--bloqueada' : ''}`}>
-      <div className="d-flex align-items-start gap-4">
+      <div className="flex items-start gap-6">
         {c.desbloqueada ? (
           <div className={`conquista-icon conquista-icon--${c.cor}`}>
             <i className={`fa-solid ${c.icone}`}></i>
@@ -27,12 +27,12 @@ function CardConquista({ c }) {
             <i className="fa-solid fa-lock conquista-icon-lock"></i>
           </div>
         )}
-        <div className="d-flex flex-column gap-2 grow">
+        <div className="flex flex-col gap-2 grow">
           <div>
             <h3 className={`conquista-nome${!c.desbloqueada ? ' text-muted' : ''}`}>{c.nome}</h3>
             <p className="conquista-desc">{c.desc}</p>
           </div>
-          <div className="d-flex justify-content-between align-items-center">
+          <div className="flex justify-between items-center">
             <span className="conquista-progresso-label">Progresso: {c.progresso}/{c.total}</span>
             <span className={`conquista-pct ${c.desbloqueada ? 'conquista-pct--done' : 'conquista-pct--progress'}`}>
               {pct}%
@@ -41,7 +41,7 @@ function CardConquista({ c }) {
           <div className="progress-bar">
             <div className="progress-fill conquista-fill--hc" style={{ width: `${pct}%` }}></div>
           </div>
-          <div className="d-flex align-items-center justify-content-between">
+          <div className="flex items-center justify-between">
             <span className="mission-hc"><span className="fa-solid fa-coins"></span> {c.hc.toLocaleString('pt-BR')} HC</span>
             {c.desbloqueada ? (
               <span className="conquista-status conquista-status--done">
@@ -92,9 +92,9 @@ function Conquistas() {
           <section id="page-content" className="page-transition">
 
             {/* Resumo */}
-            <Card className="conquistas-resumo mb-5">
-              <div className="d-flex align-items-center justify-content-between gap-4">
-                <div className="d-flex flex-column gap-2 grow">
+            <Card className="conquistas-resumo mb-12">
+              <div className="flex items-center justify-between gap-6">
+                <div className="flex flex-col gap-2 grow">
                   <h2 className="conquistas-resumo-titulo">
                     {desbloqueadas} de {conquistas.length} Conquistados
                   </h2>
@@ -114,7 +114,7 @@ function Conquistas() {
 
             {/* Filtros */}
             <FiltroPills
-              className="mb-4"
+              className="mb-6"
               rotulo="Filtrar conquistas"
               opcoes={FILTROS.map(f => ({
                 ...f,
@@ -132,9 +132,9 @@ function Conquistas() {
               <div className="conquistas-grid">
                 {[1, 2, 3, 4].map(i => (
                   <div key={i} className="card" style={{ padding: 'var(--space-5)' }}>
-                    <div className="d-flex align-items-start gap-4">
+                    <div className="flex items-start gap-6">
                       <div className="skeleton" style={{ width: 48, height: 48, borderRadius: '50%', flexShrink: 0 }}></div>
-                      <div className="d-flex flex-column gap-2 grow">
+                      <div className="flex flex-col gap-2 grow">
                         <div className="skeleton" style={{ height: 14, width: '55%' }}></div>
                         <div className="skeleton" style={{ height: 11, width: '80%' }}></div>
                         <div className="skeleton" style={{ height: 8 }}></div>
@@ -145,7 +145,7 @@ function Conquistas() {
                 ))}
               </div>
             ) : filtradas.length === 0 ? (
-              <p className="text-muted text-center py-5">Nenhuma conquista para este filtro.</p>
+              <p className="text-muted text-center py-12">Nenhuma conquista para este filtro.</p>
             ) : (
               <motion.div
                 className="conquistas-grid"
@@ -169,9 +169,9 @@ function Conquistas() {
             )}
 
             {/* Dica */}
-            <div className="conquistas-dica mt-5">
+            <div className="conquistas-dica mt-12">
               <div className="conquistas-dica-icon"><i className="fa-solid fa-lightbulb"></i></div>
-              <div className="d-flex flex-column gap-2">
+              <div className="flex flex-col gap-2">
                 <h4 className="conquistas-dica-titulo">Como Desbloquear Conquistas</h4>
                 <ul className="conquistas-dica-lista">
                   <li><i className="fa-solid fa-circle-dot"></i> Complete missões diárias e mantenha sua sequência</li>

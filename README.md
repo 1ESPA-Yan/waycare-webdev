@@ -9,7 +9,6 @@
 [![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
 [![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
-[![Bootstrap](https://img.shields.io/badge/Bootstrap-5.3-7952B3?logo=bootstrap&logoColor=white)](https://getbootstrap.com/)
 [![License](https://img.shields.io/badge/Licença-Acadêmica-green)](/)
 
 *Challenge Care Plus — FIAP 2025/2026 · 1º ano de Engenharia de Software*
@@ -91,7 +90,6 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 | [Vite](https://vitejs.dev/) | 5+ | Build tool e dev server |
 | [React Router DOM](https://reactrouter.com/) | 6+ | Roteamento SPA |
 | [Tailwind CSS](https://tailwindcss.com/) | 4+ | Classes utilitárias (`@tailwindcss/vite`) |
-| [Bootstrap](https://getbootstrap.com/) | 5.3.3 | Grid e componentes |
 | [Font Awesome](https://fontawesome.com/) | 6.5.0 | Ícones |
 | Context API | — | Gerenciamento de estado global |
 | Fetch API | — | Consumo de JSON local e backend IoT |

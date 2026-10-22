@@ -61,7 +61,7 @@ function SelecionarHumor() {
           <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
           <span className="humor-logo-nome">WayCare</span>
         </div>
-        <div className="d-flex align-items-center gap-3">
+        <div className="flex items-center gap-4">
           <div className="hc-chip">
             <i className="fa-solid fa-coins"></i>
             {totalHC.toLocaleString('pt-BR')} HC
