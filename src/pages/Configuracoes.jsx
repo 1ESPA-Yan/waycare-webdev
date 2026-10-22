@@ -1,6 +1,5 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/configuracoes.css'
 
@@ -67,24 +66,10 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 }
 
 function Configuracoes() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const { totalHC, nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, naoLidas, sairDaConta } = useApp()
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="config-titulo-icon">
@@ -268,8 +253,6 @@ function Configuracoes() {
             </div>
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

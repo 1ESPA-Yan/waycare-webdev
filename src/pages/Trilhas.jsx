@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/trilhas.css'
 
@@ -295,7 +294,6 @@ function aplicarFiltros(lista, filtroAtivo, busca) {
 
 // Página principal
 function Trilhas() {
-  const [sidebarOpen, setSidebarOpen]     = useState(false)
   const [filtroAtivo, setFiltroAtivo]     = useState('todos')
   const [busca, setBusca]                 = useState('')
   const [trilhaExpandida, setTrilhaExpandida] = useState(null)
@@ -340,15 +338,6 @@ function Trilhas() {
 
   return (
     <>
-      <button className="sidebar-toggle" aria-label="Abrir menu" onClick={() => setSidebarOpen(!sidebarOpen)}>
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           {/* Topbar */}
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
@@ -540,8 +529,6 @@ function Trilhas() {
             )}
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

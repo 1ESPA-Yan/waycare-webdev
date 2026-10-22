@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/carteira.css'
 
@@ -43,7 +42,6 @@ function GraficoLinha({ dados }) {
 }
 
 function Carteira() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [historico, setHistorico] = useState([])
   const [grafico, setGrafico] = useState([])
   const [destaques, setDestaques] = useState([])
@@ -68,19 +66,6 @@ function Carteira() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="carteira-titulo-icon">
@@ -186,8 +171,6 @@ function Carteira() {
             </div>
           </div>
 
-        </main>
-      </div>
     </>
   )
 }

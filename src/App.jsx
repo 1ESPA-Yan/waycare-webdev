@@ -23,6 +23,7 @@ import ConfirmarResgate from './pages/ConfirmarResgate'
 import SucessoResgate from './pages/SucessoResgate'
 import NotFound from './pages/Notfound'
 import RotaPrivada from './components/RotaPrivada'
+import AppLayout from './components/AppLayout'
 import Termos from './pages/Termos'
 import Privacidade from './pages/Privacidade'
 
@@ -42,18 +43,23 @@ function App() {
 
             {/* App — exige sessão */}
             <Route element={<RotaPrivada />}>
+              {/* Páginas com Sidebar */}
+              <Route element={<AppLayout />}>
+                <Route path="/dashboard" element={<Dashboard />} />
+                <Route path="/trilhas" element={<Trilhas />} />
+                <Route path="/conquistas" element={<Conquistas />} />
+                <Route path="/descobertas" element={<Descobertas />} />
+                <Route path="/recompensas" element={<Recompensas />} />
+                <Route path="/perfil" element={<Perfil />} />
+                <Route path="/configuracoes" element={<Configuracoes />} />
+                <Route path="/waycare-bottle" element={<WaycareBottle />} />
+                <Route path="/carteira" element={<Carteira />} />
+                <Route path="/notificacoes" element={<Notificacoes />} />
+              </Route>
+
+              {/* Telas cheias, sem Sidebar */}
               <Route path="/onboarding" element={<Onboarding />} />
-              <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/humor" element={<SelecionarHumor />} />
-              <Route path="/trilhas" element={<Trilhas />} />
-              <Route path="/conquistas" element={<Conquistas />} />
-              <Route path="/descobertas" element={<Descobertas />} />
-              <Route path="/recompensas" element={<Recompensas />} />
-              <Route path="/perfil" element={<Perfil />} />
-              <Route path="/configuracoes" element={<Configuracoes />} />
-              <Route path="/waycare-bottle" element={<WaycareBottle />} />
-              <Route path="/carteira" element={<Carteira />} />
-              <Route path="/notificacoes" element={<Notificacoes />} />
               <Route path="/missao/completa" element={<MissaoCompleta />} />
               <Route path="/missao/:id" element={<DetalhesMissao />} />
               <Route path="/resgate/confirmar" element={<ConfirmarResgate />} />

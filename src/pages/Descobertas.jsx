@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/descobertas.css'
 
@@ -44,7 +43,6 @@ function CardDescoberta({ d }) {
 }
 
 function Descobertas() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [descobertas, setDescoberta] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
@@ -68,19 +66,6 @@ function Descobertas() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="descobertas-titulo-icon">
@@ -168,8 +153,6 @@ function Descobertas() {
             </div>
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import Sidebar from '../components/Sidebar'
 import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
 import '../styles/perfil.css'
@@ -21,7 +20,6 @@ const cardVariants = {
 }
 
 function Perfil() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [totalConquistas, setTotalConquistas] = useState(0)
   const [editando, setEditando] = useState(false)
   const [salvo, setSalvo] = useState(false)
@@ -64,19 +62,6 @@ function Perfil() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="perfil-titulo-icon">
@@ -393,8 +378,6 @@ function Perfil() {
 
             </motion.div>
           </section>
-        </main>
-      </div>
     </>
   )
 }

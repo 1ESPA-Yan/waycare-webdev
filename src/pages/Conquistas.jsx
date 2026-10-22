@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/conquistas.css'
 
@@ -62,7 +61,6 @@ function CardConquista({ c }) {
 }
 
 function Conquistas() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [conquistas, setConquistas] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
@@ -89,15 +87,6 @@ function Conquistas() {
 
   return (
     <>
-      <button className="sidebar-toggle" aria-label="Abrir menu" onClick={() => setSidebarOpen(!sidebarOpen)}>
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="conquistas-titulo-icon"><i className="fa-solid fa-trophy"></i></div>
@@ -219,8 +208,6 @@ function Conquistas() {
             </div>
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

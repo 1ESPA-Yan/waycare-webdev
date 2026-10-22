@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
@@ -19,7 +18,6 @@ const dadosSemana = [
 ]
 
 function WaycareBottle() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [liveVisivel, setLiveVisivel] = useState(true)
 
   // Dados simulados do contexto (fallback quando o backend está offline)
@@ -140,15 +138,6 @@ function WaycareBottle() {
 
   return (
     <>
-      <button className="sidebar-toggle" aria-label="Abrir menu" onClick={() => setSidebarOpen(!sidebarOpen)}>
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar bottle-topbar">
             <div className="d-flex align-items-start gap-3">
               <div className="d-flex flex-column gap-1">
@@ -587,8 +576,6 @@ function WaycareBottle() {
               </div>
             </div>
           </section>
-        </main>
-      </div>
     </>
   )
 }

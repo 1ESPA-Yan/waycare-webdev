@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/notificacoes.css'
 
@@ -15,7 +14,6 @@ const FILTROS = [
 ]
 
 function Notificacoes() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [notificacoes, setNotificacoes] = useState([])
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
   const { totalHC, setNaoLidas } = useApp()
@@ -53,19 +51,6 @@ function Notificacoes() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
               <div className="notif-page-titulo-icon">
@@ -198,8 +183,6 @@ function Notificacoes() {
             )}
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

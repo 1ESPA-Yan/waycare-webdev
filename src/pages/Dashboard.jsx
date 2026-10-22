@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/dashboard.css'
 
@@ -98,7 +97,6 @@ function CardMissao({ missao, mlConsumido }) {
 }
 
 function Dashboard() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [missoes, setMissoes] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
@@ -133,19 +131,6 @@ function Dashboard() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           {/* Topbar */}
           <header className="topbar dashboard-topbar">
             <div className="topbar-greeting">
@@ -299,8 +284,6 @@ function Dashboard() {
             </Link>
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

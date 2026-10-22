@@ -1,6 +1,5 @@
 import { useState, useMemo, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
 import '../styles/recompensas.css'
 
@@ -13,7 +12,6 @@ const FILTROS = [
 ]
 
 function Recompensas() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [recompensas, setRecompensas] = useState([])
   const [carregando, setCarregando] = useState(true)
@@ -50,19 +48,6 @@ function Recompensas() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
           {/* Topbar */}
           <header className="topbar">
             <div className="d-flex align-items-center gap-3">
@@ -165,8 +150,6 @@ function Recompensas() {
             )}
 
           </section>
-        </main>
-      </div>
     </>
   )
 }
