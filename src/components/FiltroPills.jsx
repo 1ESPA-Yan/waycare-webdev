@@ -1,3 +1,5 @@
+import Icone from './Icone'
+
 // Linha de filtros em pílulas, igual em todas as páginas.
 // opcoes: [{ key, label, icon?, contagem? }]
 function FiltroPills({ opcoes, ativo, aoMudar, rotulo = 'Filtros', className = '' }) {
@@ -11,7 +13,7 @@ function FiltroPills({ opcoes, ativo, aoMudar, rotulo = 'Filtros', className = '
           onClick={() => aoMudar(op.key)}
           aria-pressed={ativo === op.key}
         >
-          {op.icon && <i className={`fa-solid ${op.icon}`} aria-hidden="true"></i>}
+          {op.icon && <Icone nome={op.icon} />}
           {op.label}
           {op.contagem != null && <span className="filtro-pill-contagem">{op.contagem}</span>}
         </button>

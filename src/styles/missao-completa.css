@@ -125,7 +125,7 @@
   margin-bottom: var(--space-4);
 }
 
-.completa-streak i {
+.completa-streak .icone {
   font-size: var(--font-size-md);
 }
 

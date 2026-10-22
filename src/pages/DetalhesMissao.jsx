@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext'
 import { useDados } from '../hooks/useDados'
 import Button from '../components/Button'
 import Chip from '../components/Chip'
+import Icone from '../components/Icone'
 import '../styles/detalhes-missao.css'
 
 const DICAS_DEFAULT = [
@@ -35,7 +36,7 @@ function DetalhesMissao() {
   if (!missao) {
     return (
       <div className="detalhes-not-found">
-        <i className="fa-solid fa-circle-xmark detalhes-not-found-icon"></i>
+        <Icone nome="fa-circle-xmark" className="detalhes-not-found-icon" />
         <h2>Missão não encontrada</h2>
         <Button to="/dashboard" tamanho="sm">Voltar ao início</Button>
       </div>
@@ -56,12 +57,12 @@ function DetalhesMissao() {
         {/* Header */}
         <div className="detalhes-header">
           <button onClick={() => navigate(-1)} className="detalhes-back-btn" aria-label="Voltar">
-            <i className="fa-solid fa-chevron-left"></i>
+            <Icone nome="fa-chevron-left" />
             Voltar
           </button>
           <span className="detalhes-header-label">MISSÃO</span>
           <button onClick={() => navigate(-1)} className="detalhes-close-btn" aria-label="Fechar">
-            <i className="fa-solid fa-xmark"></i>
+            <Icone nome="fa-xmark" />
           </button>
         </div>
 
@@ -71,7 +72,7 @@ function DetalhesMissao() {
           {/* Ícone da missão */}
           <div className="detalhes-icon-wrap">
             <div className={`detalhes-icon mission-emoji--${missao.emojiCor}`}>
-              <i className={`fa-solid ${missao.icone}`}></i>
+              <Icone nome={missao.icone} />
             </div>
           </div>
 
@@ -79,7 +80,7 @@ function DetalhesMissao() {
           <h1 className="detalhes-titulo">{missao.titulo}</h1>
           <div className="detalhes-categoria-wrap">
             <Chip cor={missao.categoriaBadge} className="detalhes-categoria-badge">
-              <i className="fa-solid fa-tag"></i>
+              <Icone nome="fa-tag" />
               {missao.categoria}
             </Chip>
           </div>
@@ -104,7 +105,7 @@ function DetalhesMissao() {
               </div>
               <div className="detalhes-progresso-pct">{progresso}%</div>
               <p className="detalhes-progresso-sync">
-                <i className="fa-solid fa-rotate"></i>
+                <Icone nome="fa-rotate" />
                 Sincronizado com WayCare Bottle • Automático
               </p>
             </div>
@@ -114,7 +115,7 @@ function DetalhesMissao() {
           <div className="detalhes-info-grid">
             <div className="detalhes-info-item">
               <div className="detalhes-info-icon detalhes-info-icon--green">
-                <i className="fa-solid fa-coins"></i>
+                <Icone nome="fa-coins" />
               </div>
               <div>
                 <span className="detalhes-info-label">Recompensa</span>
@@ -123,7 +124,7 @@ function DetalhesMissao() {
             </div>
             <div className="detalhes-info-item">
               <div className="detalhes-info-icon detalhes-info-icon--blue">
-                <i className="fa-regular fa-clock"></i>
+                <Icone nome="fa-clock" />
               </div>
               <div>
                 <span className="detalhes-info-label">Duração</span>
@@ -132,7 +133,7 @@ function DetalhesMissao() {
             </div>
             <div className="detalhes-info-item">
               <div className="detalhes-info-icon detalhes-info-icon--purple">
-                <i className="fa-solid fa-tag"></i>
+                <Icone nome="fa-tag" />
               </div>
               <div>
                 <span className="detalhes-info-label">Categoria</span>
@@ -144,7 +145,7 @@ function DetalhesMissao() {
           {/* Dicas */}
           <div className="detalhes-dicas-section">
             <h3 className="detalhes-dicas-titulo">
-              <i className="fa-solid fa-lightbulb" style={{ color: '#FFC107' }}></i>
+              <Icone nome="fa-lightbulb" style={{ color: '#FFC107' }} />
               Dicas para completar
             </h3>
             <div className="detalhes-dicas-grid">
@@ -158,7 +159,7 @@ function DetalhesMissao() {
                   whileHover={{ y: -4, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
                 >
                   <div className="detalhes-dica-icon" style={{ backgroundColor: `${dica.cor}18` }}>
-                    <i className={`fa-solid ${dica.icone}`} style={{ color: dica.cor }}></i>
+                    <Icone nome={dica.icone} style={{ color: dica.cor }} />
                   </div>
                   <span className="detalhes-dica-name">{dica.titulo}</span>
                   <span className="detalhes-dica-desc">{dica.descricao}</span>
@@ -171,12 +172,12 @@ function DetalhesMissao() {
           <div className="detalhes-actions">
             {missao.status === 'concluida' || missaoConcluida(missao.id) ? (
               <button className="btn detalhes-btn-done" disabled>
-                <i className="fa-regular fa-circle-check"></i>
+                <Icone nome="fa-circle-check" />
                 Missão já concluída
               </button>
             ) : missao.tipo === 'bottle' ? (
               <button className="btn detalhes-btn-auto" disabled>
-                <i className="fa-solid fa-droplet"></i>
+                <Icone nome="fa-droplet" />
                 Monitorado automaticamente
               </button>
             ) : (
@@ -186,7 +187,7 @@ function DetalhesMissao() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <i className="fa-solid fa-check"></i>
+                <Icone nome="fa-check" />
                 Marcar como Concluída
               </motion.button>
             )}

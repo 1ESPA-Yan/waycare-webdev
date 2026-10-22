@@ -3,6 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Sidebar from './Sidebar'
 import CarregandoPagina from './CarregandoPagina'
+import Icone from '../components/Icone'
 import '../styles/topbar.css'
 
 // Mesmo ponto de quebra do CSS: abaixo dele a Sidebar vira menu deslizante
@@ -53,7 +54,7 @@ function AppLayout() {
         </Link>
         <div className="barra-mobile-acoes">
           <Link to="/carteira" className="hc-chip" aria-label={`Carteira: ${totalHC.toLocaleString('pt-BR')} HC`}>
-            <i className="fa-solid fa-coins"></i>
+            <Icone nome="fa-coins" />
             {totalHC.toLocaleString('pt-BR')}
           </Link>
           <NavLink
@@ -61,7 +62,7 @@ function AppLayout() {
             className="notif-btn"
             aria-label={naoLidas > 0 ? `Notificações, ${naoLidas} não lidas` : 'Notificações'}
           >
-            <i className="fa-solid fa-bell"></i>
+            <Icone nome="fa-bell" />
             {naoLidas > 0 && <span className="notif-dot" aria-hidden="true">{naoLidas > 9 ? '9+' : naoLidas}</span>}
           </NavLink>
           <button
@@ -73,7 +74,7 @@ function AppLayout() {
             aria-expanded={sidebarOpen}
             onClick={() => (sidebarOpen ? fecharMenu() : setAbertoEm(pathname))}
           >
-            <i className={`fa-solid ${sidebarOpen ? 'fa-xmark' : 'fa-bars'}`}></i>
+            <Icone nome={sidebarOpen ? 'fa-xmark' : 'fa-bars'} />
           </button>
         </div>
       </header>

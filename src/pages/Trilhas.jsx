@@ -6,6 +6,7 @@ import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import Chip from '../components/Chip'
+import Icone from '../components/Icone'
 import '../styles/trilhas.css'
 
 // Cor da categoria: só no ícone (thumb) e nas tags
@@ -42,7 +43,7 @@ function PainelMissoes({ trilha, missoesPorTrilha }) {
     <div className="trilha-painel-missoes">
       <div className="trilha-painel-header">
         <div className="flex items-center gap-2">
-          <i className="fa-solid fa-list-check"></i>
+          <Icone nome="fa-list-check" />
           <span className="trilha-painel-titulo">Missões da Trilha</span>
         </div>
         <span className="trilha-painel-total">
@@ -54,10 +55,10 @@ function PainelMissoes({ trilha, missoesPorTrilha }) {
         {missoes.map((missao, i) => (
           <div key={missao.id} className={`trilha-missao-item trilha-missao-item--${missao.status}`}>
             <div className={`trilha-missao-icone trilha-missao-icone--${missao.status}`}>
-              {missao.status === 'concluida'  && <i className="fa-solid fa-check"></i>}
-              {missao.status === 'atual'      && <i className="fa-solid fa-play"></i>}
-              {missao.status === 'disponivel' && <i className="fa-solid fa-play"></i>}
-              {missao.status === 'bloqueada'  && <i className="fa-solid fa-lock"></i>}
+              {missao.status === 'concluida'  && <Icone nome="fa-check" />}
+              {missao.status === 'atual'      && <Icone nome="fa-play" />}
+              {missao.status === 'disponivel' && <Icone nome="fa-play" />}
+              {missao.status === 'bloqueada'  && <Icone nome="fa-lock" />}
             </div>
 
             {/* Número + nome */}
@@ -68,7 +69,7 @@ function PainelMissoes({ trilha, missoesPorTrilha }) {
 
             {/* HC */}
             <span className={`trilha-missao-hc trilha-missao-hc--${missao.status}`}>
-              <i className="fa-solid fa-coins"></i>
+              <Icone nome="fa-coins" />
               +{missao.hc}
             </span>
           </div>
@@ -92,7 +93,7 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
         <div className={`trilha-card-conteudo ${expandida ? 'trilha-card-conteudo--expandida' : 'flex-col'} flex gap-4`}>
           <div className="flex items-start gap-4">
             <div className={`trilha-thumb ${s.thumb}`}>
-              <i className={`fa-solid ${trilha.icone}`}></i>
+              <Icone nome={trilha.icone} />
             </div>
             <div className="flex flex-col gap-1">
               <div className="flex items-center gap-2">
@@ -106,7 +107,7 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
             </div>
             {/* Ícone de expandir */}
             <div className="trilha-expand-icon ml-auto">
-              <i className={`fa-solid ${expandida ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+              <Icone nome={expandida ? 'fa-chevron-up' : 'fa-chevron-down'} />
             </div>
           </div>
           <p className="trilha-desc">{trilha.descricao}</p>
@@ -124,14 +125,14 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              <span className="trilha-meta-item"><i className="fa-regular fa-calendar"></i> {trilha.dias} dias</span>
-              <span className="trilha-meta-item"><i className="fa-regular fa-circle-check"></i> {trilha.missoes} missões</span>
+              <span className="trilha-meta-item"><Icone nome="fa-calendar" /> {trilha.dias} dias</span>
+              <span className="trilha-meta-item"><Icone nome="fa-circle-check" /> {trilha.missoes} missões</span>
             </div>
-            <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{trilha.hc} HC</span>
+            <span className="mission-hc"><Icone nome="fa-coins" /> +{trilha.hc} HC</span>
           </div>
           <div onClick={e => e.stopPropagation()}>
             <Button bloco>
-              <i className="fa-solid fa-play"></i> Continuar Trilha
+              <Icone nome="fa-play" /> Continuar Trilha
             </Button>
           </div>
         </div>
@@ -160,12 +161,12 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
         <div className={`trilha-card-conteudo ${expandida ? 'trilha-card-conteudo--expandida' : 'flex-col'} flex gap-4`}>
           {trilha.recomendada && (
             <span className="trilha-recomendada-label">
-              <i className="fa-solid fa-star"></i> Recomendada para seu humor
+              <Icone nome="fa-star" /> Recomendada para seu humor
             </span>
           )}
           <div className="flex items-start gap-4">
             <div className={`trilha-thumb ${s.thumb}`}>
-              <i className={`fa-solid ${trilha.icone}`}></i>
+              <Icone nome={trilha.icone} />
             </div>
             <div className="flex flex-col gap-1">
               <h3 className="trilha-nome">{trilha.nome}</h3>
@@ -175,7 +176,7 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
               </div>
             </div>
             <div className="trilha-expand-icon ml-auto">
-              <i className={`fa-solid ${expandida ? 'fa-chevron-up' : 'fa-chevron-down'}`}></i>
+              <Icone nome={expandida ? 'fa-chevron-up' : 'fa-chevron-down'} />
             </div>
           </div>
           <p className="trilha-desc">{trilha.descricao}</p>
@@ -186,10 +187,10 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
           </div>
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              <span className="trilha-meta-item"><i className="fa-regular fa-calendar"></i> {trilha.dias} dias</span>
-              <span className="trilha-meta-item"><i className="fa-regular fa-circle-check"></i> {trilha.missoes} missões</span>
+              <span className="trilha-meta-item"><Icone nome="fa-calendar" /> {trilha.dias} dias</span>
+              <span className="trilha-meta-item"><Icone nome="fa-circle-check" /> {trilha.missoes} missões</span>
             </div>
-            <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{trilha.hc} HC</span>
+            <span className="mission-hc"><Icone nome="fa-coins" /> +{trilha.hc} HC</span>
           </div>
           <div onClick={e => e.stopPropagation()}>
             <Button variante="secundario" bloco>+ Iniciar Trilha</Button>
@@ -212,12 +213,12 @@ function TrilhaBloqueada({ trilha }) {
       <Card className="trilha-card trilha-card-bloqueada flex flex-col gap-4">
         <div className="flex items-start gap-4">
           <div className="trilha-thumb trilha-thumb--locked">
-            <i className={`fa-solid ${trilha.icone}`}></i>
+            <Icone nome={trilha.icone} />
           </div>
           <div className="flex flex-col gap-1">
             <div className="flex items-center gap-2">
               <h3 className="trilha-nome text-muted">{trilha.nome}</h3>
-              <i className="fa-solid fa-lock text-muted text-sm"></i>
+              <Icone nome="fa-lock" className="text-muted text-sm" />
             </div>
             <div className="flex items-center gap-2">
               <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
@@ -233,13 +234,13 @@ function TrilhaBloqueada({ trilha }) {
         </div>
         <div className="flex justify-between items-center">
           <div className="flex items-center gap-4">
-            <span className="trilha-meta-item text-muted"><i className="fa-regular fa-calendar"></i> {trilha.dias} dias</span>
-            <span className="trilha-meta-item text-muted"><i className="fa-regular fa-circle-check"></i> {trilha.missoes} missões</span>
+            <span className="trilha-meta-item text-muted"><Icone nome="fa-calendar" /> {trilha.dias} dias</span>
+            <span className="trilha-meta-item text-muted"><Icone nome="fa-circle-check" /> {trilha.missoes} missões</span>
           </div>
-          <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{trilha.hc} HC</span>
+          <span className="mission-hc"><Icone nome="fa-coins" /> +{trilha.hc} HC</span>
         </div>
         <Button variante="fantasma" bloco disabled>
-          <i className="fa-solid fa-lock"></i> Bloqueada
+          <Icone nome="fa-lock" /> Bloqueada
         </Button>
       </Card>
     </div>
@@ -250,7 +251,7 @@ function TrilhaBloqueada({ trilha }) {
 function SecaoVazia({ label }) {
   return (
     <div className="trilha-empty-state">
-      <i className="fa-solid fa-filter-circle-xmark trilha-empty-icon"></i>
+      <Icone nome="fa-filter-circle-xmark" className="trilha-empty-icon" />
       <p className="trilha-empty-text">Nenhuma trilha de <strong>{label}</strong> nesta seção.</p>
     </div>
   )
@@ -299,7 +300,7 @@ function Trilhas() {
             titulo="Trilhas de Bem-estar"
             subtitulo={
               <>
-                Recomendado: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
+                Recomendado: <Icone nome={HUMOR_CONFIG[humor].icon} className="trilhas-subtitle-icon" />
                 <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
               </>
             }
@@ -311,7 +312,7 @@ function Trilhas() {
             <div className="trilhas-resumo-grid mb-6">
               <div>
                 <Card className="resumo-card">
-                  <div className="resumo-icon resumo-icon--primary"><i className="fa-solid fa-bullseye"></i></div>
+                  <div className="resumo-icon resumo-icon--primary"><Icone nome="fa-bullseye" /></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor">{trilhasData.emAndamento.length}</span>
                     <span className="resumo-label">Trilhas Ativas</span>
@@ -320,7 +321,7 @@ function Trilhas() {
               </div>
               <div>
                 <Card className="resumo-card">
-                  <div className="resumo-icon resumo-icon--success"><i className="fa-solid fa-circle-check"></i></div>
+                  <div className="resumo-icon resumo-icon--success"><Icone nome="fa-circle-check" /></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor">3</span>
                     <span className="resumo-label">Missões Concluídas</span>
@@ -329,7 +330,7 @@ function Trilhas() {
               </div>
               <div>
                 <Card className="resumo-card">
-                  <div className="resumo-icon resumo-icon--warning"><i className="fa-solid fa-fire"></i></div>
+                  <div className="resumo-icon resumo-icon--warning"><Icone nome="fa-fire" /></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor text-warning">5 dias</span>
                     <span className="resumo-label">Sequência</span>
@@ -338,7 +339,7 @@ function Trilhas() {
               </div>
               <div>
                 <Card className="resumo-card">
-                  <div className="resumo-icon resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
+                  <div className="resumo-icon resumo-icon--hc"><Icone nome="fa-coins" /></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor resumo-valor--hc">{totalHC.toLocaleString('pt-BR')}</span>
                     <span className="resumo-label">Health Coins</span>
@@ -350,7 +351,7 @@ function Trilhas() {
             {/* Busca e filtros */}
             <div className="flex items-center gap-4 mb-12 flex-wrap">
               <div className="trilhas-search grow">
-                <i className="fa-solid fa-magnifying-glass trilhas-search-icon"></i>
+                <Icone nome="fa-magnifying-glass" className="trilhas-search-icon" />
                 <input
                   type="search"
                   className="input-field trilhas-search-input"
@@ -366,7 +367,7 @@ function Trilhas() {
             {carregando && (
               <div className="flex justify-center items-center py-12">
                 <div className="flex flex-col items-center gap-4">
-                  <i className="fa-solid fa-spinner fa-spin text-primary" style={{ fontSize: '32px' }}></i>
+                  <Icone nome="fa-spinner" className="text-primary" girar style={{ fontSize: '32px' }} />
                   <span className="text-muted">Carregando trilhas...</span>
                 </div>
               </div>
@@ -375,7 +376,7 @@ function Trilhas() {
             {/* Estado vazio global */}
             {semResultados && (
               <div className="trilha-empty-global">
-                <i className="fa-solid fa-magnifying-glass trilha-empty-icon"></i>
+                <Icone nome="fa-magnifying-glass" className="trilha-empty-icon" />
                 <p className="trilha-empty-text">
                   Nenhuma trilha encontrada
                   {busca && <> para "<strong>{busca}</strong>"</>}

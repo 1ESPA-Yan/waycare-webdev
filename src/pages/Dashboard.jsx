@@ -7,6 +7,7 @@ import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
 import Chip from '../components/Chip'
+import Icone from '../components/Icone'
 import '../styles/dashboard.css'
 
 function CardMissao({ missao, mlConsumido }) {
@@ -15,12 +16,12 @@ function CardMissao({ missao, mlConsumido }) {
     return (
       <div className="card-mission bottle-mission flex flex-col gap-4">
         <span className="bottle-mission-badge">
-          <i className="fa-solid fa-droplet"></i>
+          <Icone nome="fa-droplet" />
           WayCare Bottle • Auto Sync
         </span>
         <div className="flex items-start gap-4">
           <div className={`mission-emoji mission-emoji--${missao.emojiCor}`}>
-            <i className={`fa-solid ${missao.icone}`}></i>
+            <Icone nome={missao.icone} />
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="mission-title">{missao.titulo}</h3>
@@ -36,13 +37,13 @@ function CardMissao({ missao, mlConsumido }) {
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
+            <span className="mission-time"><Icone nome="fa-clock" /> {missao.tempo}</span>
             <Chip cor={missao.categoriaBadge}>{missao.categoria}</Chip>
           </div>
-          <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
+          <span className="mission-hc"><Icone nome="fa-coins" /> +{missao.hc} HC</span>
         </div>
         <button className="btn-bottle-auto" disabled>
-          <i className="fa-solid fa-droplet"></i>
+          <Icone nome="fa-droplet" />
           Monitorado automaticamente
         </button>
       </div>
@@ -54,23 +55,23 @@ function CardMissao({ missao, mlConsumido }) {
       <div className="card-mission completed flex flex-col gap-4">
         <div className="flex items-start gap-4">
           <div className={`mission-emoji mission-emoji--${missao.emojiCor}`}>
-            <i className={`fa-solid ${missao.icone}`}></i>
+            <Icone nome={missao.icone} />
           </div>
           <div className="flex flex-col gap-1">
             <h3 className="mission-title">{missao.titulo}</h3>
             <p className="mission-desc">{missao.descricao}</p>
           </div>
-          <i className="fa-solid fa-check mission-check-icon ml-auto"></i>
+          <Icone nome="fa-check" className="mission-check-icon ml-auto" />
         </div>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
+            <span className="mission-time"><Icone nome="fa-clock" /> {missao.tempo}</span>
             <Chip cor={missao.categoriaBadge}>{missao.categoria}</Chip>
           </div>
-          <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
+          <span className="mission-hc"><Icone nome="fa-coins" /> +{missao.hc} HC</span>
         </div>
         <button className="btn mission-btn-done" disabled>
-          <i className="fa-regular fa-circle-check"></i> Concluída
+          <Icone nome="fa-circle-check" /> Concluída
         </button>
       </div>
     )
@@ -80,7 +81,7 @@ function CardMissao({ missao, mlConsumido }) {
     <div className="card-mission flex flex-col gap-4">
       <div className="flex items-start gap-4">
         <div className={`mission-emoji mission-emoji--${missao.emojiCor}`}>
-          <i className={`fa-solid ${missao.icone}`}></i>
+          <Icone nome={missao.icone} />
         </div>
         <div className="flex flex-col gap-1">
           <h3 className="mission-title">{missao.titulo}</h3>
@@ -89,10 +90,10 @@ function CardMissao({ missao, mlConsumido }) {
       </div>
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-2">
-          <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
+          <span className="mission-time"><Icone nome="fa-clock" /> {missao.tempo}</span>
           <Chip cor={missao.categoriaBadge}>{missao.categoria}</Chip>
         </div>
-        <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
+        <span className="mission-hc"><Icone nome="fa-coins" /> +{missao.hc} HC</span>
       </div>
       <Button to={`/missao/${missao.id}`} bloco className="btn-mission">
         Iniciar Missão
@@ -128,7 +129,7 @@ function Dashboard() {
             subtitulo={
               <div className="flex items-center gap-4">
                 <span className="humor-badge" style={{ backgroundColor: humorAtual.badgeBg, color: humorAtual.badgeColor, borderColor: humorAtual.badgeBorder }}>
-                  <i className={`fa-solid ${humorAtual.icon}`}></i>
+                  <Icone nome={humorAtual.icon} />
                   {humorAtual.label}
                 </span>
                 <Link to="/humor" className="humor-change-btn">mudar humor</Link>
@@ -143,7 +144,7 @@ function Dashboard() {
               <div className="flex items-start justify-between gap-4 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="trilha-hoje-icon" style={{ color: humorAtual.badgeColor, backgroundColor: humorAtual.badgeBg }}>
-                    <i className={`fa-solid ${humorAtual.icon}`}></i>
+                    <Icone nome={humorAtual.icon} />
                   </div>
                   <h2 className="trilha-card-title">Sua Trilha de Hoje: {humorAtual.trilha}</h2>
                 </div>
@@ -157,11 +158,11 @@ function Dashboard() {
                 <div className="progress-fill" style={{ width: '60%' }}></div>
               </div>
               <div className="trilha-slots">
-                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
-                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
-                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><i className="fa-solid fa-check"></i></div>
-                <div className="trilha-slot pending" role="img" aria-label="Missão pendente"><i className="fa-solid fa-spa"></i></div>
-                <div className="trilha-slot pending" role="img" aria-label="Missão pendente"><i className="fa-solid fa-clipboard-list"></i></div>
+                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><Icone nome="fa-check" /></div>
+                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><Icone nome="fa-check" /></div>
+                <div className="trilha-slot completed" role="img" aria-label="Missão concluída"><Icone nome="fa-check" /></div>
+                <div className="trilha-slot pending" role="img" aria-label="Missão pendente"><Icone nome="fa-spa" /></div>
+                <div className="trilha-slot pending" role="img" aria-label="Missão pendente"><Icone nome="fa-clipboard-list" /></div>
               </div>
             </div>
 
@@ -174,7 +175,7 @@ function Dashboard() {
                   onClick={() => setFiltrosVisiveis(v => !v)}
                   aria-expanded={filtrosVisiveis}
                 >
-                  Filtrar <i className={`fa-solid fa-chevron-down filter-btn-chevron${filtrosVisiveis ? ' rotated' : ''}`}></i>
+                  Filtrar <Icone nome="fa-chevron-down" className={`filter-btn-chevron${filtrosVisiveis ? ' rotated' : ''}`} />
                 </button>
               </div>
 
@@ -226,7 +227,7 @@ function Dashboard() {
 
             {/* Descoberta do dia */}
             <div className="descoberta-card dashboard-section">
-              <div className="descoberta-icon"><i className="fa-solid fa-lightbulb"></i></div>
+              <div className="descoberta-icon"><Icone nome="fa-lightbulb" /></div>
               <div className="flex flex-col gap-2">
                 <h3 className="font-bold">Descoberta do Dia</h3>
                 <p className="mission-title">Você dorme melhor nos dias que caminha à tarde!</p>
@@ -241,13 +242,13 @@ function Dashboard() {
               className="recompensas-banner dashboard-section flex items-center justify-between"
             >
               <div className="flex items-center gap-6">
-                <i className="fa-solid fa-gem recompensas-banner-gem"></i>
+                <Icone nome="fa-gem" className="recompensas-banner-gem" />
                 <div className="flex flex-col gap-1">
                   <h3 className="recompensas-banner-title">Catálogo de Recompensas</h3>
                   <p className="recompensas-banner-desc">Troque seus {totalHC.toLocaleString('pt-BR')} Health Coins por prêmios incríveis!</p>
                 </div>
               </div>
-              <i className="fa-solid fa-gift recompensas-banner-gift"></i>
+              <Icone nome="fa-gift" className="recompensas-banner-gift" />
             </Link>
 
           </section>

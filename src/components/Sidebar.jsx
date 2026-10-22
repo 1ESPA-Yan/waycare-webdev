@@ -1,5 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Icone from '../components/Icone'
 
 function Sidebar({ isOpen, inert, ref }) {
   const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock, nivel, sairDaConta } = useApp()
@@ -12,17 +13,17 @@ function Sidebar({ isOpen, inert, ref }) {
         WayCare
       </div>
       <nav className="sidebar-nav" aria-label="Menu principal">
-        <NavLink to="/dashboard" className="nav-item"><i className="fa-solid fa-house nav-icon"></i>Início</NavLink>
-        <NavLink to="/trilhas" className="nav-item"><i className="fa-solid fa-route nav-icon"></i>Trilhas</NavLink>
-        <NavLink to="/conquistas" className="nav-item"><i className="fa-solid fa-trophy nav-icon"></i>Conquistas</NavLink>
-        <NavLink to="/descobertas" className="nav-item"><i className="fa-solid fa-lightbulb nav-icon"></i>Descobertas</NavLink>
-        <NavLink to="/recompensas" className="nav-item"><i className="fa-solid fa-gifts nav-icon"></i>Recompensas</NavLink>
-        <NavLink to="/perfil" className="nav-item"><i className="fa-solid fa-user nav-icon"></i>Perfil</NavLink>
-        <NavLink to="/configuracoes" className="nav-item"><i className="fa-solid fa-gear nav-icon"></i>Configurações</NavLink>
+        <NavLink to="/dashboard" className="nav-item"><Icone nome="fa-house" className="nav-icon" />Início</NavLink>
+        <NavLink to="/trilhas" className="nav-item"><Icone nome="fa-route" className="nav-icon" />Trilhas</NavLink>
+        <NavLink to="/conquistas" className="nav-item"><Icone nome="fa-trophy" className="nav-icon" />Conquistas</NavLink>
+        <NavLink to="/descobertas" className="nav-item"><Icone nome="fa-lightbulb" className="nav-icon" />Descobertas</NavLink>
+        <NavLink to="/recompensas" className="nav-item"><Icone nome="fa-gifts" className="nav-icon" />Recompensas</NavLink>
+        <NavLink to="/perfil" className="nav-item"><Icone nome="fa-user" className="nav-icon" />Perfil</NavLink>
+        <NavLink to="/configuracoes" className="nav-item"><Icone nome="fa-gear" className="nav-icon" />Configurações</NavLink>
       </nav>
       <Link to="/waycare-bottle" className="bottle-sidebar-widget">
         <div className="flex items-center gap-2 mb-2">
-          <div className="bottle-widget-icon"><i className="fa-solid fa-droplet"></i></div>
+          <div className="bottle-widget-icon"><Icone nome="fa-droplet" /></div>
           <div className="flex flex-col gap-0">
             <span className="bottle-widget-title">WayCare Bottle</span>
             <span className="bottle-widget-status">
@@ -47,7 +48,7 @@ function Sidebar({ isOpen, inert, ref }) {
           <span className="sidebar-user-level">Nível {nivel}</span>
         </div>
         <Link to="/" replace onClick={sairDaConta} className="sidebar-logout" aria-label="Sair">
-          <i className="fa-solid fa-arrow-right-from-bracket"></i>
+          <Icone nome="fa-arrow-right-from-bracket" />
         </Link>
       </div>
     </aside>

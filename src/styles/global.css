@@ -175,6 +175,21 @@ img, svg {
   max-width: 100%;
 }
 
+/* Ícones do lucide (componente Icone): em linha e alinhados ao texto, como o <i> do Font Awesome */
+.icone {
+  display: inline-block;
+  flex-shrink: 0;
+  vertical-align: -0.125em;
+}
+
+.icone-girando {
+  animation: iconeGirar 1s linear infinite;
+}
+
+@keyframes iconeGirar {
+  to { transform: rotate(360deg); }
+}
+
 ul, ol {
   list-style: none;
 }
@@ -893,7 +908,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
   background-color: var(--color-bg);
 }
 
-.notif-btn i {
+.notif-btn .icone {
   font-size: 18px;
 }
 

@@ -1,6 +1,7 @@
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import Icone from '../components/Icone'
 import '../styles/missao-completa.css'
 
 const CORES_CONFETE = ['#1C9770', '#FFC107', '#42A5F5', '#FF9800', '#7AD1C3', '#7986CB', '#4CAF50', '#F44336']
@@ -96,7 +97,7 @@ function MissaoCompleta() {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ delay: 0.6, type: 'spring' }}
         >
-          <i className="fa-solid fa-coins completa-hc-icon"></i>
+          <Icone nome="fa-coins" className="completa-hc-icon" />
           <span className="completa-hc-valor">+{missao.hc} HC</span>
         </motion.div>
 
@@ -108,7 +109,7 @@ function MissaoCompleta() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: 0.7 }}
           >
-            <i className="fa-solid fa-fire"></i>
+            <Icone nome="fa-fire" />
             <span>{streak === 1 ? '1 dia seguido!' : `${streak} dias seguidos!`} Continue assim!</span>
           </motion.div>
         )}
@@ -122,7 +123,7 @@ function MissaoCompleta() {
         >
           Saldo atual:{' '}
           <strong className="completa-saldo-valor">
-            {totalHC.toLocaleString('pt-BR')} HC <i className="fa-solid fa-check-circle"></i>
+            {totalHC.toLocaleString('pt-BR')} HC <Icone nome="fa-check-circle" />
           </strong>
         </motion.p>
 

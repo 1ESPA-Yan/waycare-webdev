@@ -224,7 +224,7 @@
   gap: var(--space-1);
 }
 
-.trilha-recomendada-label i {
+.trilha-recomendada-label .icone {
   color: var(--color-warning);
 }
 
