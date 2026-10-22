@@ -91,10 +91,14 @@
 
 /* RESET & BASE */
 
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Na camada base do Tailwind: fora dela, este reset anulava todos os
+   utilitários de margem e padding (m-*, p-*), que ficam em @layer utilities */
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
 }
 
 html {
