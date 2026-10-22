@@ -1,10 +1,11 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import Chip from '../components/Chip'
 import '../styles/descobertas.css'
+import { useDados } from '../hooks/useDados'
 
 const FILTROS = [
   { key: 'todos',  label: 'Todos' },
@@ -49,20 +50,9 @@ function CardDescoberta({ d }) {
 }
 
 function Descobertas() {
-  const [descobertas, setDescoberta] = useState([])
-  const [carregando, setCarregando] = useState(true)
+  const { dados, carregando } = useDados('descobertas')
+  const descobertas = useMemo(() => dados ?? [], [dados])
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
-
-  useEffect(() => {
-    fetch('/data/descobertas.json')
-      .then(res => res.json())
-      .then(data => { setDescoberta(data); setCarregando(false) })
-      .catch(() => {
-        import('../data/descobertas.json').then(mod => {
-          setDescoberta(mod.default); setCarregando(false)
-        })
-      })
-  }, [])
 
   const filtradas = useMemo(() =>
     filtroAtivo === 'todos' ? descobertas : descobertas.filter(d => d.impacto === filtroAtivo),

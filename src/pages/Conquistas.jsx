@@ -1,9 +1,10 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { motion } from 'motion/react'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Card from '../components/Card'
 import '../styles/conquistas.css'
+import { useDados } from '../hooks/useDados'
 
 const FILTROS = [
   { key: 'todas',         label: 'Todas' },
@@ -62,20 +63,9 @@ function CardConquista({ c }) {
 }
 
 function Conquistas() {
-  const [conquistas, setConquistas] = useState([])
-  const [carregando, setCarregando] = useState(true)
+  const { dados, carregando } = useDados('conquistas')
+  const conquistas = useMemo(() => dados ?? [], [dados])
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
-
-  useEffect(() => {
-    fetch('/data/conquistas.json')
-      .then(res => res.json())
-      .then(data => { setConquistas(data); setCarregando(false) })
-      .catch(() => {
-        import('../data/conquistas.json').then(mod => {
-          setConquistas(mod.default); setCarregando(false)
-        })
-      })
-  }, [])
 
   const desbloqueadas = useMemo(() => conquistas.filter(c => c.desbloqueada).length, [conquistas])
 

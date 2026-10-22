@@ -1,8 +1,9 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import Button from '../components/Button'
 import Card from '../components/Card'
@@ -23,7 +24,6 @@ const cardVariants = {
 }
 
 function Perfil() {
-  const [totalConquistas, setTotalConquistas] = useState(0)
   const [editando, setEditando] = useState(false)
   const [salvo, setSalvo] = useState(false)
   const [rascunhoNome, setRascunhoNome] = useState('')
@@ -32,16 +32,8 @@ function Perfil() {
 
   const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, membroDesde, nivel, xp, xpParaProximo, pctNivel } = useApp()
 
-  useEffect(() => {
-    fetch('/data/conquistas.json')
-      .then(res => res.json())
-      .then(data => setTotalConquistas(data.filter(c => c.desbloqueada).length))
-      .catch(() => {
-        import('../data/conquistas.json').then(mod =>
-          setTotalConquistas(mod.default.filter(c => c.desbloqueada).length)
-        )
-      })
-  }, [])
+  const { dados: conquistas } = useDados('conquistas')
+  const totalConquistas = conquistas?.filter(c => c.desbloqueada).length ?? 0
 
   const iniciarEdicao = () => {
     setRascunhoNome(nomeUsuario)

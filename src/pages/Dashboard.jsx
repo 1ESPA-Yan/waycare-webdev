@@ -1,7 +1,8 @@
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
@@ -101,8 +102,8 @@ function CardMissao({ missao, mlConsumido }) {
 }
 
 function Dashboard() {
-  const [missoes, setMissoes] = useState([])
-  const [carregando, setCarregando] = useState(true)
+  const { dados, carregando } = useDados('missoes-dashboard')
+  const missoes = useMemo(() => dados ?? [], [dados])
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
   const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, missaoConcluida } = useApp()
@@ -117,21 +118,6 @@ function Dashboard() {
     filtroAtivo === 'todos' ? missoes : missoes.filter(m => m.categoria === filtroAtivo),
     [missoes, filtroAtivo]
   )
-
-  useEffect(() => {
-    fetch('/data/missoes-dashboard.json')
-      .then(res => res.json())
-      .then(data => {
-        setMissoes(data)
-        setCarregando(false)
-      })
-      .catch(() => {
-        import('../data/missoes-dashboard.json').then(mod => {
-          setMissoes(mod.default)
-          setCarregando(false)
-        })
-      })
-  }, [])
 
   return (
     <>

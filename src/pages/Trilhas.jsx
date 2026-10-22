@@ -1,5 +1,6 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
@@ -272,33 +273,12 @@ function Trilhas() {
   const [filtroAtivo, setFiltroAtivo]     = useState('todos')
   const [busca, setBusca]                 = useState('')
   const [trilhaExpandida, setTrilhaExpandida] = useState(null)
-  const [trilhasData, setTrilhasData]     = useState({ emAndamento: [], disponiveis: [], bloqueadas: [] })
-  const [missoesPorTrilha, setMissoesPorTrilha] = useState({})
-  const [carregando, setCarregando]       = useState(true)
+  const trilhas = useDados('trilhas')
+  const missoes = useDados('missoes')
+  const trilhasData = useMemo(() => trilhas.dados ?? { emAndamento: [], disponiveis: [], bloqueadas: [] }, [trilhas.dados])
+  const missoesPorTrilha = missoes.dados ?? {}
+  const carregando = trilhas.carregando || missoes.carregando
   const { totalHC, humor, HUMOR_CONFIG }  = useApp()
-
-  // Busca trilhas e missões dos JSONs locais
-  useEffect(() => {
-    Promise.all([
-      fetch('/data/trilhas.json').then(r => r.json()),
-      fetch('/data/missoes.json').then(r => r.json()),
-    ])
-      .then(([trilhas, missoes]) => {
-        setTrilhasData(trilhas)
-        setMissoesPorTrilha(missoes)
-        setCarregando(false)
-      })
-      .catch(async () => {
-        // Fallback via import direto
-        const [trilhas, missoes] = await Promise.all([
-          import('../data/trilhas.json').then(m => m.default),
-          import('../data/missoes.json').then(m => m.default),
-        ])
-        setTrilhasData(trilhas)
-        setMissoesPorTrilha(missoes)
-        setCarregando(false)
-      })
-  }, [])
 
   const toggleExpandir = (id) => {
     setTrilhaExpandida(prev => prev === id ? null : id)

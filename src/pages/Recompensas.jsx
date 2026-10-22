@@ -1,6 +1,7 @@
-import { useState, useMemo, useEffect } from 'react'
+import { useState, useMemo } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
@@ -17,8 +18,8 @@ const FILTROS = [
 
 function Recompensas() {
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
-  const [recompensas, setRecompensas] = useState([])
-  const [carregando, setCarregando] = useState(true)
+  const { dados, carregando } = useDados('recompensas')
+  const recompensas = useMemo(() => dados ?? [], [dados])
   const { totalHC } = useApp()
   const navigate = useNavigate()
 
@@ -27,23 +28,6 @@ function Recompensas() {
       state: { recompensa: { id: r.id, nome: r.nome, preco: r.hc, icone: r.icone } },
     })
   }
-
-  // Consumo do JSON local — para simular a chamada de API
-  useEffect(() => {
-    fetch('/data/recompensas.json')
-      .then(res => res.json())
-      .then(data => {
-        setRecompensas(data)
-        setCarregando(false)
-      })
-      .catch(() => {
-        // faz a importação direto se o fetch falhar
-        import('../data/recompensas.json').then(mod => {
-          setRecompensas(mod.default)
-          setCarregando(false)
-        })
-      })
-  }, [])
 
   const recompensasFiltradas = useMemo(() => {
     if (filtroAtivo === 'todos') return recompensas

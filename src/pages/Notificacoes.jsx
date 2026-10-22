@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import '../styles/notificacoes.css'
@@ -15,18 +16,14 @@ const FILTROS = [
 ]
 
 function Notificacoes() {
-  const [notificacoes, setNotificacoes] = useState([])
+  const { dados } = useDados('notificacoes')
+  // Cópia local só a partir da primeira edição (marcar como lida, remover)
+  const [editadas, setEditadas] = useState(null)
+  const notificacoes = useMemo(() => editadas ?? dados ?? [], [editadas, dados])
+  const setNotificacoes = (valor) =>
+    setEditadas(prev => (typeof valor === 'function' ? valor(prev ?? dados ?? []) : valor))
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
   const { setNaoLidas } = useApp()
-
-  useEffect(() => {
-    fetch('/data/notificacoes.json')
-      .then(res => res.json())
-      .then(data => setNotificacoes(data))
-      .catch(() => {
-        import('../data/notificacoes.json').then(mod => setNotificacoes(mod.default))
-      })
-  }, [])
 
   // Sincroniza contador global sempre que a lista muda
   useEffect(() => {

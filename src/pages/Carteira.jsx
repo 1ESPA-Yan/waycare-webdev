@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import Button from '../components/Button'
 import Card from '../components/Card'
@@ -44,27 +44,11 @@ function GraficoLinha({ dados }) {
 }
 
 function Carteira() {
-  const [historico, setHistorico] = useState([])
-  const [grafico, setGrafico] = useState([])
-  const [destaques, setDestaques] = useState([])
+  const { dados } = useDados('carteira')
+  const historico = dados?.historico ?? []
+  const grafico = dados?.grafico ?? []
+  const destaques = dados?.destaques ?? []
   const { totalHC } = useApp()
-
-  useEffect(() => {
-    fetch('/data/carteira.json')
-      .then(res => res.json())
-      .then(data => {
-        setHistorico(data.historico)
-        setGrafico(data.grafico)
-        setDestaques(data.destaques)
-      })
-      .catch(() => {
-        import('../data/carteira.json').then(mod => {
-          setHistorico(mod.default.historico)
-          setGrafico(mod.default.grafico)
-          setDestaques(mod.default.destaques)
-        })
-      })
-  }, [])
 
   return (
     <>

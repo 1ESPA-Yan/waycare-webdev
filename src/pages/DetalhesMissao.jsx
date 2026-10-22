@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
 import Button from '../components/Button'
 import Chip from '../components/Chip'
 import '../styles/detalhes-missao.css'
@@ -16,25 +16,8 @@ function DetalhesMissao() {
   const { id } = useParams()
   const navigate = useNavigate()
   const { concluirMissao, missaoConcluida, consumidoHoje: mlConsumido } = useApp()
-  const [missao, setMissao] = useState(null)
-  const [carregando, setCarregando] = useState(true)
-
-  useEffect(() => {
-    fetch('/data/missoes-dashboard.json')
-      .then(res => res.json())
-      .then(data => {
-        const encontrada = data.find(m => m.id === Number(id))
-        setMissao(encontrada || null)
-        setCarregando(false)
-      })
-      .catch(() => {
-        import('../data/missoes-dashboard.json').then(mod => {
-          const encontrada = mod.default.find(m => m.id === Number(id))
-          setMissao(encontrada || null)
-          setCarregando(false)
-        })
-      })
-  }, [id])
+  const { dados, carregando } = useDados('missoes-dashboard')
+  const missao = dados?.find(m => m.id === Number(id)) ?? null
 
   const handleConcluir = () => {
     if (!missao || !concluirMissao(missao)) return
