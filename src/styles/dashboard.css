@@ -412,11 +412,6 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .dashboard-topbar {
-    flex-direction: column;
-    gap: var(--space-3);
-  }
-
   .missions-grid {
     grid-template-columns: 1fr;
   }
