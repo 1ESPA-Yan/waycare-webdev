@@ -1,12 +1,12 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 
-function Sidebar({ isOpen }) {
+function Sidebar({ isOpen, inert, ref }) {
   const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock, nivel, sairDaConta } = useApp()
   const pctWidget = Math.min(100, Math.round((consumidoHoje / metaHoje) * 100))
 
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar">
+    <aside ref={ref} inert={inert} className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar">
       <div className="sidebar-logo">
         <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
         WayCare
