@@ -1,6 +1,7 @@
 import { useState, useMemo, useEffect } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/recompensas.css'
 
 const FILTROS = [
@@ -15,7 +16,7 @@ function Recompensas() {
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [recompensas, setRecompensas] = useState([])
   const [carregando, setCarregando] = useState(true)
-  const { totalHC, naoLidas } = useApp()
+  const { totalHC } = useApp()
   const navigate = useNavigate()
 
   const handleResgatar = (r) => {
@@ -49,30 +50,7 @@ function Recompensas() {
   return (
     <>
           {/* Topbar */}
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="recompensas-titulo-icon">
-                <i className="fa-solid fa-gift"></i>
-              </div>
-              <div>
-                <h1 className="recompensas-titulo">Catálogo de Recompensas</h1>
-                <p className="recompensas-subtitulo">Troque seus Health Coins por prêmios</p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip hc-chip--destaque">
-                <span className="fa-solid fa-coins"></span>
-                Seu saldo: <strong>{totalHC.toLocaleString('pt-BR')} HC</strong>
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-gift" titulo="Catálogo de Recompensas" subtitulo="Troque seus Health Coins por prêmios" />
 
           <section id="page-content" className="page-transition">
 

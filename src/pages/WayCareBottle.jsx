@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import { getHistory, postTara } from '../services/waycareApi'
 import '../styles/waycare-bottle.css'
 
@@ -31,8 +32,6 @@ function WaycareBottle() {
     pctMeta,
     simularGole,
     encherGarrafa,
-    totalHC,
-    naoLidas,
     statusDock: status,
     statusCarregando: carregando,
     usandoReal,
@@ -138,48 +137,32 @@ function WaycareBottle() {
 
   return (
     <>
-          <header className="topbar bottle-topbar">
-            <div className="d-flex align-items-start gap-3">
-              <div className="d-flex flex-column gap-1">
-                <div className="d-flex align-items-center gap-3">
-                  <h1 className="bottle-page-title">WayCare Bottle</h1>
-                  {usandoReal && d.online ? (
-                    <span className="bottle-conectada-badge">
-                      <i className="fa-solid fa-wifi"></i> Conectada
-                    </span>
-                  ) : (
-                    <span className="bottle-conectada-badge bottle-conectada-badge--off">
-                      <i className="fa-solid fa-plug-circle-xmark"></i> {usandoReal ? 'Offline' : 'Demonstração'}
-                    </span>
-                  )}
-                </div>
-                <div className="d-flex align-items-center gap-3 flex-wrap">
-                  <span className="bottle-status-info">
-                    <i className="fa-solid fa-signal"></i> {usandoReal ? 'Dock conectada' : 'Sensor IoT (demo)'}
-                  </span>
-                  {d.temp != null && (
-                    <span className="bottle-status-info"><i className="fa-solid fa-temperature-half"></i> {d.temp}°C</span>
-                  )}
-                  {d.cidade && (
-                    <span className="bottle-status-info"><i className="fa-solid fa-location-dot"></i> {d.cidade}</span>
-                  )}
-                </div>
+          <Topbar
+            className="bottle-topbar"
+            titulo="WayCare Bottle"
+            aoLadoDoTitulo={usandoReal && d.online ? (
+              <span className="bottle-conectada-badge">
+                <i className="fa-solid fa-wifi"></i> Conectada
+              </span>
+            ) : (
+              <span className="bottle-conectada-badge bottle-conectada-badge--off">
+                <i className="fa-solid fa-plug-circle-xmark"></i> {usandoReal ? 'Offline' : 'Demonstração'}
+              </span>
+            )}
+            subtitulo={
+              <div className="d-flex align-items-center gap-3 flex-wrap">
+                <span className="bottle-status-info">
+                  <i className="fa-solid fa-signal"></i> {usandoReal ? 'Dock conectada' : 'Sensor IoT (demo)'}
+                </span>
+                {d.temp != null && (
+                  <span className="bottle-status-info"><i className="fa-solid fa-temperature-half"></i> {d.temp}°C</span>
+                )}
+                {d.cidade && (
+                  <span className="bottle-status-info"><i className="fa-solid fa-location-dot"></i> {d.cidade}</span>
+                )}
               </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+            }
+          />
 
           <section id="page-content" className="page-transition">
 

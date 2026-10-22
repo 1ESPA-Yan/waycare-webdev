@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/perfil.css'
 
 // "2026-10-21" → "Out 2026"
@@ -27,7 +28,7 @@ function Perfil() {
   const [rascunhoEmail, setRascunhoEmail] = useState('')
   const [rascunhoBio, setRascunhoBio] = useState('')
 
-  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, naoLidas, membroDesde, nivel, xp, xpParaProximo, pctNivel } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, membroDesde, nivel, xp, xpParaProximo, pctNivel } = useApp()
 
   useEffect(() => {
     fetch('/data/conquistas.json')
@@ -62,30 +63,7 @@ function Perfil() {
 
   return (
     <>
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="perfil-titulo-icon">
-                <i className="fa-solid fa-user"></i>
-              </div>
-              <div>
-                <h1 className="perfil-titulo">Meu Perfil</h1>
-                <p className="perfil-subtitulo">Gerencie suas informações pessoais</p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-user" cor="dourado" titulo="Meu Perfil" subtitulo="Gerencie suas informações pessoais" />
 
           <section id="page-content" className="page-transition">
 

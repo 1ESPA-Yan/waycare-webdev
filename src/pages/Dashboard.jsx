@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/dashboard.css'
 
 function CardMissao({ missao, mlConsumido }) {
@@ -101,7 +102,7 @@ function Dashboard() {
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
-  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, naoLidas, missaoConcluida } = useApp()
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, missaoConcluida } = useApp()
   const humorAtual = HUMOR_CONFIG[humor]
 
   const categorias = useMemo(() => {
@@ -132,9 +133,10 @@ function Dashboard() {
   return (
     <>
           {/* Topbar */}
-          <header className="topbar dashboard-topbar">
-            <div className="topbar-greeting">
-              <h1 className="greeting-title">Olá, {nomeUsuario}! 👋</h1>
+          <Topbar
+            className="dashboard-topbar"
+            titulo={`Olá, ${nomeUsuario}! 👋`}
+            subtitulo={
               <div className="d-flex align-items-center gap-3">
                 <span className="humor-badge" style={{ backgroundColor: humorAtual.badgeBg, color: humorAtual.badgeColor, borderColor: humorAtual.badgeBorder }}>
                   <i className={`fa-solid ${humorAtual.icon}`}></i>
@@ -142,21 +144,8 @@ function Dashboard() {
                 </span>
                 <Link to="/humor" className="humor-change-btn">mudar humor</Link>
               </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+            }
+          />
 
           <section id="page-content" className="page-transition">
 

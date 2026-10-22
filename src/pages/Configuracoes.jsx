@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/configuracoes.css'
 
 function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
@@ -66,34 +67,11 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 }
 
 function Configuracoes() {
-  const { totalHC, nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, naoLidas, sairDaConta } = useApp()
+  const { nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, sairDaConta } = useApp()
 
   return (
     <>
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="config-titulo-icon">
-                <i className="fa-solid fa-gear"></i>
-              </div>
-              <div>
-                <h1 className="config-titulo">Configurações</h1>
-                <p className="config-subtitulo">Personalize sua experiência WayCare</p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-gear" cor="cinza" titulo="Configurações" subtitulo="Personalize sua experiência WayCare" />
 
           <section id="page-content" className="page-transition">
 

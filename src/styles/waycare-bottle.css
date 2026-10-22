@@ -66,11 +66,8 @@
   align-items: flex-start;
 }
 
-.bottle-page-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
+.bottle-topbar .topbar-textos {
+  gap: var(--space-1);
 }
 
 .bottle-conectada-badge {

@@ -1,6 +1,5 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/descobertas.css'
 
 const FILTROS = [
@@ -46,7 +45,6 @@ function Descobertas() {
   const [descobertas, setDescoberta] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
-  const { totalHC, naoLidas } = useApp()
 
   useEffect(() => {
     fetch('/data/descobertas.json')
@@ -66,32 +64,7 @@ function Descobertas() {
 
   return (
     <>
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="descobertas-titulo-icon">
-                <i className="fa-solid fa-lightbulb"></i>
-              </div>
-              <div>
-                <h1 className="descobertas-titulo">Descobertas</h1>
-                <p className="descobertas-subtitulo">
-                  Insights personalizados sobre seus hábitos de saúde
-                </p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-lightbulb" cor="dourado" titulo="Descobertas" subtitulo="Insights personalizados sobre seus hábitos de saúde" />
 
           <section id="page-content" className="page-transition">
 

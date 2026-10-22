@@ -15,17 +15,8 @@
   align-items: flex-start;
 }
 
-.topbar-greeting {
-  display: flex;
-  flex-direction: column;
+.dashboard-topbar .topbar-textos {
   gap: var(--space-2);
-}
-
-.greeting-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
 }
 
 .humor-badge {

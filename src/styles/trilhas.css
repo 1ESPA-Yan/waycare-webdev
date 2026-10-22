@@ -2,33 +2,6 @@
    Estilos específicos da página de trilhas */
 
 /* Cabeçalho da página */
-.trilhas-titulo-icon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  border-radius: var(--radius-md);
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-base);
-  flex-shrink: 0;
-}
-
-.trilhas-page-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.trilhas-page-subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
 .trilhas-subtitle-icon {
   color: var(--color-warning);
 }
@@ -673,10 +646,6 @@
 /* Responsividade */
 
 @media (max-width: 768px) {
-  .trilhas-page-title {
-    font-size: var(--font-size-md);
-  }
-
   .trilha-thumb {
     font-size: 28px;
   }

@@ -1,6 +1,6 @@
 import { useState, useMemo, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/trilhas.css'
 
 const VARIANTE_STYLES = {
@@ -300,7 +300,7 @@ function Trilhas() {
   const [trilhasData, setTrilhasData]     = useState({ emAndamento: [], disponiveis: [], bloqueadas: [] })
   const [missoesPorTrilha, setMissoesPorTrilha] = useState({})
   const [carregando, setCarregando]       = useState(true)
-  const { totalHC, humor, HUMOR_CONFIG, naoLidas }  = useApp()
+  const { totalHC, humor, HUMOR_CONFIG }  = useApp()
 
   // Busca trilhas e missões dos JSONs locais
   useEffect(() => {
@@ -339,33 +339,16 @@ function Trilhas() {
   return (
     <>
           {/* Topbar */}
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="trilhas-titulo-icon">
-                <i className="fa-solid fa-route"></i>
-              </div>
-              <div>
-                <h1 className="trilhas-page-title">Trilhas de Bem-estar</h1>
-                <p className="trilhas-page-subtitle">
-                  Recomendado: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
-                  <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
-                </p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar
+            icone="fa-route"
+            titulo="Trilhas de Bem-estar"
+            subtitulo={
+              <>
+                Recomendado: <i className={`fa-solid ${HUMOR_CONFIG[humor].icon} trilhas-subtitle-icon`}></i>
+                <span className="trilhas-subtitle-texto"> {HUMOR_CONFIG[humor].trilha}</span>
+              </>
+            }
+          />
 
           <section id="page-content" className="page-transition">
 

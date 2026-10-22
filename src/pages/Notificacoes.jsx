@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/notificacoes.css'
 
 const FILTROS = [
@@ -16,7 +16,7 @@ const FILTROS = [
 function Notificacoes() {
   const [notificacoes, setNotificacoes] = useState([])
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
-  const { totalHC, setNaoLidas } = useApp()
+  const { setNaoLidas } = useApp()
 
   useEffect(() => {
     fetch('/data/notificacoes.json')
@@ -51,33 +51,14 @@ function Notificacoes() {
 
   return (
     <>
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="notif-page-titulo-icon">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidasCount > 0 && (
-                  <span className="notif-page-badge">{naoLidasCount}</span>
-                )}
-              </div>
-              <div>
-                <h1 className="notif-page-titulo">Notificações</h1>
-                <p className="notif-page-subtitulo">
-                  {naoLidasCount > 0
-                    ? `${naoLidasCount} não lida${naoLidasCount > 1 ? 's' : ''}`
-                    : 'Tudo em dia!'}
-                </p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-            </div>
-          </header>
+          <Topbar
+            icone="fa-bell"
+            iconeBadge={naoLidasCount}
+            titulo="Notificações"
+            subtitulo={naoLidasCount > 0
+              ? `${naoLidasCount} não lida${naoLidasCount > 1 ? 's' : ''}`
+              : 'Tudo em dia!'}
+          />
 
           <section id="page-content" className="page-transition">
 

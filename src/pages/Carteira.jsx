@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/carteira.css'
 
 function GraficoLinha({ dados }) {
@@ -45,7 +46,7 @@ function Carteira() {
   const [historico, setHistorico] = useState([])
   const [grafico, setGrafico] = useState([])
   const [destaques, setDestaques] = useState([])
-  const { totalHC, naoLidas } = useApp()
+  const { totalHC } = useApp()
 
   useEffect(() => {
     fetch('/data/carteira.json')
@@ -66,23 +67,7 @@ function Carteira() {
 
   return (
     <>
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="carteira-titulo-icon">
-                <i className="fa-solid fa-wallet"></i>
-              </div>
-              <div>
-                <h1 className="carteira-titulo">Minha Carteira</h1>
-                <p className="carteira-subtitulo">Seu extrato de Health Coins</p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-wallet" titulo="Minha Carteira" subtitulo="Seu extrato de Health Coins" />
 
           {/* Card de saldo */}
           <div className="carteira-saldo-card">

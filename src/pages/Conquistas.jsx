@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
-import { useApp } from '../context/AppContext'
+import Topbar from '../components/Topbar'
 import '../styles/conquistas.css'
 
 const FILTROS = [
@@ -64,7 +63,6 @@ function Conquistas() {
   const [conquistas, setConquistas] = useState([])
   const [carregando, setCarregando] = useState(true)
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
-  const { totalHC, naoLidas } = useApp()
 
   useEffect(() => {
     fetch('/data/conquistas.json')
@@ -87,28 +85,7 @@ function Conquistas() {
 
   return (
     <>
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="conquistas-titulo-icon"><i className="fa-solid fa-trophy"></i></div>
-              <div>
-                <h1 className="conquistas-titulo">Conquistas</h1>
-                <p className="conquistas-subtitulo">Desbloqueie medalhas completando missões</p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC.toLocaleString('pt-BR')} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-trophy" cor="dourado" titulo="Conquistas" subtitulo="Desbloqueie medalhas completando missões" />
 
           <section id="page-content" className="page-transition">
 
