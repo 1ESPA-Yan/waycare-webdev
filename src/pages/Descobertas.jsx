@@ -1,5 +1,9 @@
 import { useState, useEffect, useMemo } from 'react'
 import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Button from '../components/Button'
+import Card from '../components/Card'
+import Chip from '../components/Chip'
 import '../styles/descobertas.css'
 
 const FILTROS = [
@@ -11,7 +15,7 @@ const FILTROS = [
 
 function CardDescoberta({ d }) {
   return (
-    <div className="card descoberta-card">
+    <Card className="descoberta-card">
       <div className="d-flex align-items-start gap-4 mb-3">
         <div className={`descoberta-icon descoberta-icon--${d.cor}`}>
           <i className={`fa-solid ${d.icone}`}></i>
@@ -19,8 +23,8 @@ function CardDescoberta({ d }) {
         <div className="d-flex flex-column gap-2">
           <h3 className="descoberta-nome">{d.nome}</h3>
           <div className="d-flex align-items-center gap-2 flex-wrap">
-            <span className={`badge ${d.categoriaBadge}`}>{d.categoria}</span>
-            <span className={`badge ${d.impactoBadge}`}>Impacto: {d.impacto}</span>
+            <Chip cor={d.categoriaBadge}>{d.categoria}</Chip>
+            <Chip cor={d.impactoBadge}>Impacto: {d.impacto}</Chip>
             <span className="descoberta-data">{d.data}</span>
           </div>
         </div>
@@ -34,10 +38,10 @@ function CardDescoberta({ d }) {
         {d.dado}
       </p>
       <div className="d-flex align-items-center gap-3 flex-wrap">
-        <button className="btn descoberta-btn-criar">Criar missão baseada nisto</button>
-        <button type="button" className="btn descoberta-btn-historico em-breve" disabled>Ver histórico completo <span className="badge-em-breve">Em breve</span></button>
+        <Button variante="secundario" tamanho="sm" className="descoberta-acao">Criar missão baseada nisto</Button>
+        <Button variante="fantasma" tamanho="sm" className="descoberta-acao em-breve" disabled>Ver histórico completo <span className="badge-em-breve">Em breve</span></Button>
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -68,18 +72,7 @@ function Descobertas() {
 
           <section id="page-content" className="page-transition">
 
-            <div className="d-flex gap-2 flex-wrap mb-4">
-              {FILTROS.map(f => (
-                <button
-                  key={f.key}
-                  className={`descoberta-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                  onClick={() => setFiltroAtivo(f.key)}
-                  aria-pressed={filtroAtivo === f.key}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
+            <FiltroPills className="mb-4" rotulo="Filtrar descobertas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
             {carregando ? (
               <div className="d-flex flex-column gap-4">

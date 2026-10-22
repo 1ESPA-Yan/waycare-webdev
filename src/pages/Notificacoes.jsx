@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
 import '../styles/notificacoes.css'
 
 const FILTROS = [
@@ -64,18 +65,7 @@ function Notificacoes() {
 
             {/* Barra de ações */}
             <div className="d-flex align-items-center justify-content-between w-full mb-4 flex-wrap gap-3">
-              <div className="d-flex gap-2 flex-wrap">
-                {FILTROS.map(f => (
-                  <button
-                    key={f.key}
-                    className={`notif-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                    onClick={() => setFiltroAtivo(f.key)}
-                    aria-pressed={filtroAtivo === f.key}
-                  >
-                    {f.label}
-                  </button>
-                ))}
-              </div>
+              <FiltroPills rotulo="Filtrar notificações" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
               <div className="d-flex gap-3 align-items-center">
                 {naoLidasCount > 0 && (

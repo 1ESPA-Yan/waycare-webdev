@@ -40,32 +40,6 @@
   background-color: #fff0f0;
 }
 
-/* Filtros */
-.notif-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.notif-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
-}
-
-.notif-tag.active {
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border-color: var(--color-primary-dark);
-}
-
 /* Lista de notificações */
 .notif-lista {
   display: flex;

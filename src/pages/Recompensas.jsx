@@ -2,6 +2,9 @@ import { useState, useMemo, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Button from '../components/Button'
+import Card from '../components/Card'
 import '../styles/recompensas.css'
 
 const FILTROS = [
@@ -55,18 +58,7 @@ function Recompensas() {
           <section id="page-content" className="page-transition">
 
             {/* Filtros de categoria */}
-            <div className="d-flex gap-2 flex-wrap mb-5">
-              {FILTROS.map(f => (
-                <button
-                  key={f.key}
-                  className={`recompensa-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                  onClick={() => setFiltroAtivo(f.key)}
-                  aria-pressed={filtroAtivo === f.key}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
+            <FiltroPills className="mb-5" rotulo="Filtrar recompensas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
             {/* Estado de carregamento */}
             {carregando && (
@@ -83,7 +75,7 @@ function Recompensas() {
               <div className="recompensas-grid">
                 {recompensasFiltradas.map(r => (
                   <div key={r.id} className="recompensa-filter-item">
-                    <div className="card recompensa-card">
+                    <Card className="recompensa-card">
                       <div className={`recompensa-thumb ${r.thumb}`}>
                         <i className={`fa-solid ${r.icone}`}></i>
                         {r.popular && <span className="recompensa-popular-badge">POPULAR</span>}
@@ -95,16 +87,17 @@ function Recompensas() {
                           <span className="fa-solid fa-coins"></span>
                           {r.hc.toLocaleString('pt-BR')} HC
                         </div>
-                        <button
-                          className="btn recompensa-btn"
+                        <Button
+                          bloco
+                          className="recompensa-btn"
                           disabled={totalHC < r.hc}
                           title={totalHC < r.hc ? 'HC insuficiente' : 'Resgatar'}
                           onClick={() => handleResgatar(r)}
                         >
                           {totalHC >= r.hc ? 'Resgatar Agora' : 'HC insuficiente'}
-                        </button>
+                        </Button>
                       </div>
-                    </div>
+                    </Card>
                   </div>
                 ))}
               </div>
@@ -117,13 +110,12 @@ function Recompensas() {
                 <p className="recompensa-empty-text">
                   Nenhuma recompensa disponível nesta categoria.
                 </p>
-                <button
-                  className="btn recompensa-btn"
-                  style={{ width: 'auto', padding: '8px 24px' }}
+                <Button
+                  variante="secundario"
                   onClick={() => setFiltroAtivo('todos')}
                 >
                   Ver todas
-                </button>
+                </Button>
               </div>
             )}
 

@@ -101,37 +101,6 @@
 }
 
 /* Botões da descoberta */
-.descoberta-btn-criar {
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-dark);
-  border: 1px solid rgba(28, 151, 112, 0.3);
-  border-radius: var(--radius-md) !important;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-2) var(--space-4);
-  min-height: 36px;
-}
-
-.descoberta-btn-criar:hover {
-  background-color: #d0ece3;
-}
-
-.descoberta-btn-historico {
-  background-color: transparent;
-  color: var(--color-text-secondary);
-  border: none;
-  border-radius: var(--radius-md) !important;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-2) var(--space-4);
-  min-height: 36px;
-}
-
-.descoberta-btn-historico:hover {
-  color: var(--color-primary-dark);
-  background-color: var(--color-primary-light);
-}
-
 /* Card informativo — WayCare Band */
 .descobertas-info {
   display: flex;
@@ -193,32 +162,6 @@
   flex-shrink: 0;
 }
 
-/* Tags de filtro por impacto */
-.descoberta-filter-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.descoberta-filter-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
-}
-
-.descoberta-filter-tag.active {
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border-color: var(--color-primary-dark);
-}
-
 /* Responsividade */
 @media (max-width: 768px) {
   .descoberta-icon {
@@ -227,8 +170,7 @@
     font-size: 20px;
   }
 
-  .descoberta-btn-criar,
-  .descoberta-btn-historico {
+  .descoberta-acao {
     width: 100%;
   }
 }

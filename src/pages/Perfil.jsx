@@ -4,6 +4,8 @@ import { motion } from 'motion/react'
 import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import Button from '../components/Button'
+import Card from '../components/Card'
 import '../styles/perfil.css'
 
 // "2026-10-21" → "Out 2026"
@@ -197,7 +199,7 @@ function Perfil() {
                 {/* Grid de estatísticas */}
                 <motion.div variants={cardVariants} className="perfil-stats-grid">
                   <div>
-                    <div className="card perfil-stat-card">
+                    <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--blue">
                         <i className="fa-solid fa-bullseye"></i>
                       </div>
@@ -205,10 +207,10 @@ function Perfil() {
                         <span className="perfil-stat-label">Missões Completadas</span>
                         <span className="perfil-stat-valor">48</span>
                       </div>
-                    </div>
+                    </Card>
                   </div>
                   <div>
-                    <div className="card perfil-stat-card">
+                    <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--orange">
                         <i className="fa-solid fa-fire"></i>
                       </div>
@@ -216,10 +218,10 @@ function Perfil() {
                         <span className="perfil-stat-label">Streak Atual</span>
                         <span className="perfil-stat-valor">5 dias</span>
                       </div>
-                    </div>
+                    </Card>
                   </div>
                   <div>
-                    <div className="card perfil-stat-card">
+                    <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--hc">
                         <i className="fa-solid fa-coins"></i>
                       </div>
@@ -227,10 +229,10 @@ function Perfil() {
                         <span className="perfil-stat-label">Total de Coins Ganhos</span>
                         <span className="perfil-stat-valor">{totalHC.toLocaleString('pt-BR')}</span>
                       </div>
-                    </div>
+                    </Card>
                   </div>
                   <div>
-                    <div className="card perfil-stat-card">
+                    <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--trophy">
                         <i className="fa-solid fa-trophy"></i>
                       </div>
@@ -238,7 +240,7 @@ function Perfil() {
                         <span className="perfil-stat-label">Conquistas</span>
                         <span className="perfil-stat-valor">{totalConquistas}</span>
                       </div>
-                    </div>
+                    </Card>
                   </div>
                 </motion.div>
 
@@ -306,9 +308,9 @@ function Perfil() {
                     </div>
                   </div>
 
-                  <Link to="/conquistas" className="btn perfil-btn-conquistas">
+                  <Button to="/conquistas" variante="secundario" tamanho="sm" bloco>
                     Ver Todas as Conquistas
-                  </Link>
+                  </Button>
                 </motion.div>
               </motion.div>
 

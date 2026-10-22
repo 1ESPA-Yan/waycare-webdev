@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Button from '../components/Button'
 import '../styles/auth.css'
 
 function Cadastro() {
@@ -180,14 +181,10 @@ function Cadastro() {
                 </div>
               </div>
 
-              <button
-                type="button"
-                className="btn btn-primary btn-block btn-lg auth-submit-btn"
-                onClick={avancar}
-              >
+              <Button bloco tamanho="lg" className="auth-submit-btn" onClick={avancar}>
                 Continuar
                 <i className="fa-solid fa-arrow-right"></i>
-              </button>
+              </Button>
 
               <div className="auth-footer-text">
                 <p>Já tem conta?</p>
@@ -282,13 +279,13 @@ function Cadastro() {
               </div>
 
               <div className="auth-btn-row">
-                <button type="button" className="btn btn-ghost auth-back-btn" onClick={() => setPasso(1)}>
+                <Button variante="fantasma" className="auth-back-btn" aria-label="Voltar" onClick={() => setPasso(1)}>
                   <i className="fa-solid fa-arrow-left"></i>
-                </button>
-                <button type="button" className="btn btn-primary btn-lg auth-submit-btn auth-submit-flex" onClick={avancar}>
+                </Button>
+                <Button tamanho="lg" className="auth-submit-btn auth-submit-flex" onClick={avancar}>
                   Continuar
                   <i className="fa-solid fa-arrow-right"></i>
-                </button>
+                </Button>
               </div>
 
               <div className="auth-footer-text">
@@ -346,18 +343,18 @@ function Cadastro() {
               </label>
 
               <div className="auth-btn-row">
-                <button type="button" className="btn btn-ghost auth-back-btn" onClick={() => setPasso(2)}>
+                <Button variante="fantasma" className="auth-back-btn" aria-label="Voltar" onClick={() => setPasso(2)}>
                   <i className="fa-solid fa-arrow-left"></i>
-                </button>
-                <button
-                  type="button"
-                  className="btn btn-primary btn-lg auth-submit-btn auth-submit-flex"
+                </Button>
+                <Button
+                  tamanho="lg"
+                  className="auth-submit-btn auth-submit-flex"
                   disabled={!aceitouTermos}
                   onClick={criarConta}
                 >
                   Criar conta
                   <i className="fa-solid fa-arrow-right"></i>
-                </button>
+                </Button>
               </div>
 
               <div className="auth-footer-text">

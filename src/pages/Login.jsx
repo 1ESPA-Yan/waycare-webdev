@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Button from '../components/Button'
 import '../styles/auth.css'
 
 function Login() {
@@ -146,10 +147,10 @@ function Login() {
             </div>
 
             {/* Botão entrar */}
-            <button type="submit" className="btn btn-primary btn-block btn-lg auth-submit-btn">
+            <Button type="submit" bloco tamanho="lg" className="auth-submit-btn">
               Entrar
               <i className="fa-solid fa-arrow-right"></i>
-            </button>
+            </Button>
 
             {/* Divisor */}
             <div className="auth-divider">

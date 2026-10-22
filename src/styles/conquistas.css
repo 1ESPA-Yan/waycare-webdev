@@ -16,50 +16,6 @@
   color: var(--color-text-primary);
 }
 
-/* Tags de filtro */
-.conquista-filter-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.conquista-filter-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
-}
-
-.conquista-filter-tag.active {
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border-color: var(--color-primary-dark);
-}
-
-.conquista-filter-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 var(--space-1);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  background-color: rgba(0, 0, 0, 0.12);
-}
-
-.conquista-filter-tag.active .conquista-filter-count {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
 /* Grid de conquistas — CSS Grid nativo, 2 colunas */
 .conquistas-grid {
   display: grid;

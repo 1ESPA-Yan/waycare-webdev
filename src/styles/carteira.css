@@ -295,11 +295,6 @@
   line-height: var(--line-height-base);
 }
 
-.promo-btn {
-  width: 100%;
-  font-size: var(--font-size-sm);
-}
-
 /* Responsividade */
 @media (max-width: 1024px) {
   .carteira-grid {

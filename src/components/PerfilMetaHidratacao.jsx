@@ -12,6 +12,7 @@
 
 import { useState, useEffect, useRef } from 'react'
 import { getPerfil, postPerfil, calcularMetaPreview } from '../services/waycareApi'
+import Card from './Card'
 
 const ATIVIDADES = [
   ['sedentario', 'Sedentário (pouca ou nenhuma)'],
@@ -102,7 +103,7 @@ function PerfilMetaHidratacao() {
   const salvo = !!resultado
 
   return (
-    <div className="card perfil-meta-hidratacao">
+    <Card className="perfil-meta-hidratacao">
       <div className="d-flex align-items-center gap-2 mb-1">
         <div className="perfil-stat-icon perfil-stat-icon--blue">
           <i className="fa-solid fa-droplet"></i>
@@ -208,7 +209,7 @@ function PerfilMetaHidratacao() {
           É uma <strong>meta sugerida</strong>, não substitui orientação médica.
         </span>
       </p>
-    </div>
+    </Card>
   )
 }
 

@@ -5,6 +5,7 @@ import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
 import { getHistory, postTara } from '../services/waycareApi'
+import Card from '../components/Card'
 import '../styles/waycare-bottle.css'
 
 // Dados do gráfico semanal — usados só no fallback (sem conexão com a dock)
@@ -192,40 +193,40 @@ function WaycareBottle() {
             {/* Cards de resumo */}
             <div className="bottle-resumo-grid mb-4">
               <div>
-                <div className="card bottle-resumo-card">
+                <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--blue"><i className="fa-solid fa-droplet"></i></div>
                   <div className="d-flex flex-column gap-1">
                     <span className="bottle-resumo-valor">{d.consumido} ml</span>
                     <span className="bottle-resumo-label">Consumo de hoje</span>
                   </div>
-                </div>
+                </Card>
               </div>
               <div>
-                <div className="card bottle-resumo-card">
+                <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--green"><i className="fa-solid fa-fire"></i></div>
                   <div className="d-flex flex-column gap-1">
                     <span className="bottle-resumo-valor">{d.streak != null ? `${d.streak} dia${d.streak === 1 ? '' : 's'}` : '—'}</span>
                     <span className="bottle-resumo-label">Streak (metas seguidas)</span>
                   </div>
-                </div>
+                </Card>
               </div>
               <div>
-                <div className="card bottle-resumo-card">
+                <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--primary"><i className="fa-solid fa-temperature-half"></i></div>
                   <div className="d-flex flex-column gap-1">
                     <span className="bottle-resumo-valor">{d.temp != null ? `${d.temp}°C` : '—'}</span>
                     <span className="bottle-resumo-label">{d.cidade || 'Temperatura local'}</span>
                   </div>
-                </div>
+                </Card>
               </div>
               <div>
-                <div className="card bottle-resumo-card">
+                <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
                   <div className="d-flex flex-column gap-1">
                     <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{hcGarrafa} HC</span>
                     <span className="bottle-resumo-label">HC da garrafa</span>
                   </div>
-                </div>
+                </Card>
               </div>
             </div>
 
@@ -417,7 +418,7 @@ function WaycareBottle() {
                 </div>
 
                 {/* Gráfico de consumo */}
-                <div className="card bottle-historico-card mt-4">
+                <Card className="bottle-historico-card mt-4">
                   <div className="d-flex align-items-center justify-content-between mb-4">
                     <div className="d-flex align-items-center gap-2">
                       <i className="fa-solid fa-arrow-trend-up bottle-historico-icon"></i>
@@ -458,13 +459,13 @@ function WaycareBottle() {
                       })}
                     </div>
                   )}
-                </div>
+                </Card>
               </div>
 
               {/* Coluna direita */}
               <div className="d-flex flex-column gap-4">
 
-                <div className="card">
+                <Card>
                   <h2 className="bottle-col-titulo mb-4">
                     <i className="fa-solid fa-circle-info bottle-col-titulo-icon"></i>
                     Informações do Dispositivo
@@ -505,10 +506,10 @@ function WaycareBottle() {
                       <i className="fa-solid fa-scale-balanced"></i> {tarando ? 'Zerando…' : 'Tarar balança'}
                     </button>
                   )}
-                </div>
+                </Card>
 
                 {/* Meta de Hidratação — resumo + link para personalizar */}
-                <div className="card">
+                <Card>
                   <h2 className="bottle-col-titulo mb-4">
                     <i className="fa-solid fa-bullseye bottle-col-titulo-icon bottle-col-titulo-icon--green"></i>
                     Meta de Hidratação
@@ -533,9 +534,9 @@ function WaycareBottle() {
                   <p className="bottle-meta-link-desc">
                     Calculada por peso, sexo, atividade física e temperatura da sua cidade.
                   </p>
-                </div>
+                </Card>
 
-                <div className="card">
+                <Card>
                   <h2 className="bottle-col-titulo mb-4">
                     <i className="fa-solid fa-lightbulb bottle-col-titulo-icon bottle-col-titulo-icon--yellow"></i>
                     Dicas de Hidratação
@@ -554,7 +555,7 @@ function WaycareBottle() {
                       <p className="bottle-dica-texto">Dias mais quentes elevam sua meta automaticamente</p>
                     </div>
                   </div>
-                </div>
+                </Card>
 
               </div>
             </div>

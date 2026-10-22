@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import Card from '../components/Card'
 import '../styles/configuracoes.css'
 
 function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
@@ -76,7 +77,7 @@ function Configuracoes() {
           <section id="page-content" className="page-transition">
 
             {/* Informações da Conta */}
-            <div className="card config-section mb-4">
+            <Card className="config-section mb-4">
               <h2 className="config-section-titulo mb-4">Informações da Conta</h2>
 
               <CampoEditavel
@@ -103,10 +104,10 @@ function Configuracoes() {
                 </div>
                 <button className="config-row-action">Alterar</button>
               </div>
-            </div>
+            </Card>
 
             {/* Saúde & Metas */}
-            <div className="card config-section mb-4">
+            <Card className="config-section mb-4">
               <h2 className="config-section-titulo mb-4">Saúde & Metas</h2>
 
               <CampoEditavel
@@ -126,10 +127,10 @@ function Configuracoes() {
                 </div>
                 <Link to="/humor" className="config-row-action">Mudar →</Link>
               </div>
-            </div>
+            </Card>
 
             {/* Notificações */}
-            <div className="card config-item-card mb-4">
+            <Card className="config-item-card mb-4">
               <div className="d-flex align-items-center gap-4">
                 <div className="config-item-icon config-item-icon--green">
                   <i className="fa-solid fa-bell"></i>
@@ -140,10 +141,10 @@ function Configuracoes() {
                 </div>
                 <Link to="/notificacoes" className="config-row-action config-row-action--arrow">Configurar →</Link>
               </div>
-            </div>
+            </Card>
 
             {/* Privacidade e Dados */}
-            <div className="card config-item-card mb-4">
+            <Card className="config-item-card mb-4">
               <div className="d-flex align-items-center gap-4">
                 <div className="config-item-icon config-item-icon--blue">
                   <i className="fa-solid fa-shield-halved"></i>
@@ -154,10 +155,10 @@ function Configuracoes() {
                 </div>
                 <button type="button" className="config-row-action em-breve" disabled>Gerenciar <span className="badge-em-breve">Em breve</span></button>
               </div>
-            </div>
+            </Card>
 
             {/* Aparência */}
-            <div className="card config-item-card mb-4">
+            <Card className="config-item-card mb-4">
               <div className="d-flex align-items-center gap-4">
                 <div className="config-item-icon config-item-icon--orange">
                   <i className="fa-solid fa-palette"></i>
@@ -168,10 +169,10 @@ function Configuracoes() {
                 </div>
                 <button type="button" className="config-row-action em-breve" disabled>Personalizar <span className="badge-em-breve">Em breve</span></button>
               </div>
-            </div>
+            </Card>
 
             {/* Zona de Perigo */}
-            <div className="card config-section mb-4">
+            <Card className="config-section mb-4">
               <h2 className="config-section-titulo mb-4">Zona de Perigo</h2>
 
               <div className="config-perigo-item config-perigo-item--warning">
@@ -197,10 +198,10 @@ function Configuracoes() {
                 </div>
                 <button type="button" className="config-perigo-action em-breve" disabled>Excluir <span className="badge-em-breve">Em breve</span></button>
               </div>
-            </div>
+            </Card>
 
             {/* Sobre */}
-            <div className="card config-section">
+            <Card className="config-section">
               <h2 className="config-section-titulo mb-4">Sobre</h2>
 
               <div className="config-row">
@@ -228,7 +229,7 @@ function Configuracoes() {
                 <span className="config-row-label">Suporte</span>
                 <button type="button" className="config-row-action em-breve" disabled>Contato <span className="badge-em-breve">Em breve</span></button>
               </div>
-            </div>
+            </Card>
 
           </section>
     </>

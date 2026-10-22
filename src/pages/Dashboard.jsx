@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Button from '../components/Button'
+import Chip from '../components/Chip'
 import '../styles/dashboard.css'
 
 function CardMissao({ missao, mlConsumido }) {
@@ -33,7 +36,7 @@ function CardMissao({ missao, mlConsumido }) {
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-2">
             <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
-            <span className={`badge ${missao.categoriaBadge}`}>{missao.categoria}</span>
+            <Chip cor={missao.categoriaBadge}>{missao.categoria}</Chip>
           </div>
           <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
         </div>
@@ -61,7 +64,7 @@ function CardMissao({ missao, mlConsumido }) {
         <div className="d-flex align-items-center justify-content-between">
           <div className="d-flex align-items-center gap-2">
             <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
-            <span className={`badge ${missao.categoriaBadge}`}>{missao.categoria}</span>
+            <Chip cor={missao.categoriaBadge}>{missao.categoria}</Chip>
           </div>
           <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
         </div>
@@ -86,13 +89,13 @@ function CardMissao({ missao, mlConsumido }) {
       <div className="d-flex align-items-center justify-content-between">
         <div className="d-flex align-items-center gap-2">
           <span className="mission-time"><i className="fa-regular fa-clock"></i> {missao.tempo}</span>
-          <span className={`badge ${missao.categoriaBadge}`}>{missao.categoria}</span>
+          <Chip cor={missao.categoriaBadge}>{missao.categoria}</Chip>
         </div>
         <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{missao.hc} HC</span>
       </div>
-      <Link to={`/missao/${missao.id}`} className="btn btn-primary btn-block btn-mission">
+      <Button to={`/missao/${missao.id}`} bloco className="btn-mission">
         Iniciar Missão
-      </Link>
+      </Button>
     </div>
   )
 }
@@ -190,18 +193,7 @@ function Dashboard() {
               </div>
 
               {filtrosVisiveis && (
-                <div className="d-flex gap-2 flex-wrap mb-4">
-                  {categorias.map(f => (
-                    <button
-                      key={f.key}
-                      className={`mission-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                      onClick={() => setFiltroAtivo(f.key)}
-                      aria-pressed={filtroAtivo === f.key}
-                    >
-                      {f.label}
-                    </button>
-                  ))}
-                </div>
+                <FiltroPills className="mb-4" rotulo="Filtrar missões" opcoes={categorias} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
               )}
 
               {carregando ? (

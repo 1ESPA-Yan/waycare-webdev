@@ -16,32 +16,6 @@
   color: var(--color-text-primary);
 }
 
-/* Filtros de categoria */
-.recompensa-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.recompensa-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
-}
-
-.recompensa-tag.active {
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border-color: var(--color-primary-dark);
-}
-
 /* Grid de recompensas — CSS Grid nativo, 3 colunas */
 .recompensas-grid {
   display: grid;
@@ -140,21 +114,9 @@
   justify-content: center;
 }
 
-/* Botão resgatar */
+/* Botão resgatar: no fim do card, alinhado entre cards de alturas diferentes */
 .recompensa-btn {
   margin-top: auto;
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-md) !important;
-  width: 100%;
-  font-weight: var(--font-weight-medium);
-}
-
-.recompensa-btn:hover {
-  background-color: var(--color-primary-darker);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
 }
 
 /* Filtragem — animação e estado vazio */

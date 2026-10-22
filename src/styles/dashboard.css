@@ -143,37 +143,6 @@
   transform: rotate(180deg);
 }
 
-/* Tags de filtro das missões */
-.mission-filter-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.mission-filter-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary-dark);
-}
-
-.mission-filter-tag.active {
-  background-color: var(--color-primary-dark);
-  color: var(--color-white);
-  border-color: var(--color-primary-dark);
-}
-
-/* Botões dentro dos cards de missão — bordas menos arredondadas */
-.btn-mission {
-  border-radius: var(--radius-md);
-}
-
 /* Cards de missão — fundo branco simples */
 .card-mission {
   background: var(--color-surface) !important;

@@ -399,6 +399,57 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 .badge-purple    { background-color: #ede7f6; color: #5e35b1; }
 .badge-teal      { background-color: #e0f7f4; color: #00695c; }
 
+/* Filtros em pílulas (componente FiltroPills) */
+.filtro-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.filtro-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 36px;
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  background-color: var(--color-surface);
+  border: 1px solid var(--color-border);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.filtro-pill:hover {
+  border-color: var(--color-primary);
+  color: var(--color-primary-dark);
+}
+
+.filtro-pill.active {
+  background-color: var(--color-primary-dark);
+  color: var(--color-white);
+  border-color: var(--color-primary-dark);
+}
+
+.filtro-pill-contagem {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 var(--space-1);
+  border-radius: var(--radius-full);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-bold);
+  background-color: rgba(0, 0, 0, 0.12);
+}
+
+.filtro-pill.active .filtro-pill-contagem {
+  background-color: rgba(255, 255, 255, 0.3);
+}
+
 /* Progress Bar */
 .progress-bar {
   width: 100%;
@@ -892,12 +943,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 }
 
 /* Micro-interação de pressão em todos os filtros/tags */
-.mission-filter-tag:active,
-.notif-tag:active,
-.trilha-tag:active,
-.recompensa-tag:active,
-.conquista-filter-tag:active,
-.descoberta-filter-tag:active,
+.filtro-pill:active,
 .filter-btn:active,
 .humor-card:active {
   transform: scale(0.94) !important;

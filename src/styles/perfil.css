@@ -330,25 +330,6 @@
   display: block;
 }
 
-/* Botão ver todas as conquistas */
-.perfil-btn-conquistas {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background-color: var(--color-primary-light);
-  color: var(--color-primary-dark) !important;
-  border-radius: var(--radius-md) !important;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-3);
-  text-decoration: none;
-  transition: background-color var(--transition-fast);
-}
-
-.perfil-btn-conquistas:hover {
-  background-color: #c5e8dc;
-}
-
 /* Atalhos da coluna direita */
 .perfil-atalho {
   display: flex;

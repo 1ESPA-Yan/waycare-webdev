@@ -1,6 +1,8 @@
 import { useState, useEffect, useMemo } from 'react'
 import { motion } from 'motion/react'
 import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Card from '../components/Card'
 import '../styles/conquistas.css'
 
 const FILTROS = [
@@ -13,7 +15,7 @@ function CardConquista({ c }) {
   const pct = Math.round((c.progresso / c.total) * 100)
 
   return (
-    <div className={`card conquista-card${!c.desbloqueada ? ' conquista-card--bloqueada' : ''}`}>
+    <Card className={`conquista-card${!c.desbloqueada ? ' conquista-card--bloqueada' : ''}`}>
       <div className="d-flex align-items-start gap-4">
         {c.desbloqueada ? (
           <div className={`conquista-icon conquista-icon--${c.cor}`}>
@@ -55,7 +57,7 @@ function CardConquista({ c }) {
           </div>
         </div>
       </div>
-    </div>
+    </Card>
   )
 }
 
@@ -90,7 +92,7 @@ function Conquistas() {
           <section id="page-content" className="page-transition">
 
             {/* Resumo */}
-            <div className="card conquistas-resumo mb-5">
+            <Card className="conquistas-resumo mb-5">
               <div className="d-flex align-items-center justify-content-between gap-4">
                 <div className="d-flex flex-column gap-2 grow">
                   <h2 className="conquistas-resumo-titulo">
@@ -108,27 +110,22 @@ function Conquistas() {
                   <i className="fa-solid fa-trophy"></i>
                 </div>
               </div>
-            </div>
+            </Card>
 
             {/* Filtros */}
-            <div className="d-flex gap-2 flex-wrap mb-4">
-              {FILTROS.map(f => (
-                <button
-                  key={f.key}
-                  className={`conquista-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                  onClick={() => setFiltroAtivo(f.key)}
-                  aria-pressed={filtroAtivo === f.key}
-                >
-                  {f.label}
-                  {f.key === 'desbloqueadas' && !carregando && (
-                    <span className="conquista-filter-count">{desbloqueadas}</span>
-                  )}
-                  {f.key === 'bloqueadas' && !carregando && (
-                    <span className="conquista-filter-count">{conquistas.length - desbloqueadas}</span>
-                  )}
-                </button>
-              ))}
-            </div>
+            <FiltroPills
+              className="mb-4"
+              rotulo="Filtrar conquistas"
+              opcoes={FILTROS.map(f => ({
+                ...f,
+                contagem: carregando ? null
+                  : f.key === 'desbloqueadas' ? desbloqueadas
+                  : f.key === 'bloqueadas' ? conquistas.length - desbloqueadas
+                  : null,
+              }))}
+              ativo={filtroAtivo}
+              aoMudar={setFiltroAtivo}
+            />
 
             {/* Grid de conquistas */}
             {carregando ? (

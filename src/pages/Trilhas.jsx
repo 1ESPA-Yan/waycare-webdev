@@ -1,43 +1,19 @@
 import { useState, useMemo, useEffect } from 'react'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Button from '../components/Button'
+import Card from '../components/Card'
+import Chip from '../components/Chip'
 import '../styles/trilhas.css'
 
+// Cor da categoria: só no ícone (thumb) e nas tags
 const VARIANTE_STYLES = {
-  purple: {
-    card: '', thumb: 'trilha-thumb--purple',
-    statusBadge: 'trilha-status-badge--purple',
-    pct: 'trilha-pct--purple', fill: 'trilha-fill--purple',
-    btn: 'trilha-btn-continuar', tagBadge: 'badge-purple',
-    painelHeader: 'trilha-painel-header--purple',
-    border: 'trilha-card--purple-expanded',
-  },
-  blue: {
-    card: 'trilha-card--blue', thumb: 'trilha-thumb--blue',
-    statusBadge: 'trilha-status-badge--blue',
-    pct: 'trilha-pct--blue', fill: 'trilha-fill--blue',
-    btn: 'trilha-btn-continuar trilha-btn-continuar--blue', tagBadge: 'badge-info',
-    painelHeader: 'trilha-painel-header--blue',
-    border: 'trilha-card--blue-expanded',
-  },
-  teal: {
-    card: 'trilha-card-recomendada', thumb: 'trilha-thumb--green',
-    btn: 'trilha-btn-iniciar trilha-btn-iniciar--teal', tagBadge: 'badge-teal',
-    painelHeader: 'trilha-painel-header--teal',
-    border: 'trilha-card-recomendada-teal',
-  },
-  orange: {
-    card: 'trilha-card-recomendada', thumb: 'trilha-thumb--orange',
-    btn: 'trilha-btn-iniciar trilha-btn-iniciar--orange', tagBadge: 'badge-warning',
-    painelHeader: 'trilha-painel-header--orange',
-    border: 'trilha-card-recomendada-orange',
-  },
-  checkup: {
-    card: 'trilha-card-checkup', thumb: 'trilha-thumb--red',
-    btn: 'trilha-btn-iniciar trilha-btn-iniciar--checkup', tagBadge: 'badge-error',
-    painelHeader: 'trilha-painel-header--red',
-    border: 'trilha-card-checkup',
-  },
+  purple:  { thumb: 'trilha-thumb--purple', tagBadge: 'badge-purple' },
+  blue:    { thumb: 'trilha-thumb--blue',   tagBadge: 'badge-info' },
+  teal:    { thumb: 'trilha-thumb--green',  tagBadge: 'badge-teal' },
+  orange:  { thumb: 'trilha-thumb--orange', tagBadge: 'badge-warning' },
+  checkup: { thumb: 'trilha-thumb--red',    tagBadge: 'badge-error' },
 }
 
 const DIFICULDADE_BADGE = {
@@ -58,13 +34,12 @@ const FILTROS = [
 const FILTRO_LABEL = Object.fromEntries(FILTROS.map(f => [f.key, f.label]))
 
 // Painel de missões
-function PainelMissoes({ trilha, variante, missoesPorTrilha }) {
+function PainelMissoes({ trilha, missoesPorTrilha }) {
   const missoes = missoesPorTrilha[trilha.id] || []
-  const s = variante ? VARIANTE_STYLES[variante] : {}
 
   return (
     <div className="trilha-painel-missoes">
-      <div className={`trilha-painel-header ${s.painelHeader || ''}`}>
+      <div className="trilha-painel-header">
         <div className="d-flex align-items-center gap-2">
           <i className="fa-solid fa-list-check"></i>
           <span className="trilha-painel-titulo">Missões da Trilha</span>
@@ -107,8 +82,8 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
   const s = VARIANTE_STYLES[trilha.variante]
   return (
     <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
-      <div
-        className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
+      <Card
+        className={`trilha-card d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >
@@ -121,10 +96,10 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
             <div className="d-flex flex-column gap-1">
               <div className="d-flex align-items-center gap-2">
                 <h3 className="trilha-nome">{trilha.nome}</h3>
-                <span className={`trilha-status-badge ${s.statusBadge}`}>● {trilha.status}</span>
+                <span className="trilha-status-badge">● {trilha.status}</span>
               </div>
               <div className="d-flex align-items-center gap-2">
-                <span className={`badge ${DIFICULDADE_BADGE[trilha.dificuldade]}`}>{trilha.dificuldade}</span>
+                <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
                 <span className="text-xs text-muted">Nível {trilha.nivel} · {trilha.participantes} participantes</span>
               </div>
             </div>
@@ -136,15 +111,15 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
           <p className="trilha-desc">{trilha.descricao}</p>
           <div className="d-flex gap-2 flex-wrap">
             {trilha.tags.map(tag => (
-              <span key={tag} className={`badge ${s.tagBadge}`}>{tag}</span>
+              <Chip key={tag} cor={s.tagBadge}>{tag}</Chip>
             ))}
           </div>
           <div className="d-flex justify-content-between align-items-center">
             <span className="text-sm text-secondary">Progresso da trilha</span>
-            <span className={`text-sm font-bold ${s.pct}`}>{trilha.progresso}%</span>
+            <span className="text-sm font-bold trilha-pct">{trilha.progresso}%</span>
           </div>
           <div className="progress-bar">
-            <div className={`progress-fill ${s.fill}`} style={{ width: `${trilha.progresso}%` }}></div>
+            <div className="progress-fill" style={{ width: `${trilha.progresso}%` }}></div>
           </div>
           <div className="d-flex justify-content-between align-items-center">
             <div className="d-flex align-items-center gap-3">
@@ -154,19 +129,19 @@ function TrilhaEmAndamento({ trilha, expandida, onToggle, missoesPorTrilha }) {
             <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{trilha.hc} HC</span>
           </div>
           <div onClick={e => e.stopPropagation()}>
-            <button className={`btn ${s.btn} w-100`}>
+            <Button bloco>
               <i className="fa-solid fa-play"></i> Continuar Trilha
-            </button>
+            </Button>
           </div>
         </div>
 
         {/* Painel lateral de missões (só aparece quando expandido) */}
         {expandida && (
           <div onClick={e => e.stopPropagation()}>
-            <PainelMissoes trilha={trilha} variante={trilha.variante} missoesPorTrilha={missoesPorTrilha} />
+            <PainelMissoes trilha={trilha} missoesPorTrilha={missoesPorTrilha} />
           </div>
         )}
-      </div>
+      </Card>
     </div>
   )
 }
@@ -176,8 +151,8 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
   const s = VARIANTE_STYLES[trilha.variante]
   return (
     <div className={`trilha-filter-item${expandida ? ' trilha-filter-item--expandida' : ''}`}>
-      <div
-        className={`card trilha-card ${s.card} ${s.border} d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
+      <Card
+        className={`trilha-card d-flex ${expandida ? 'trilha-card-expandida' : 'flex-column'} gap-3`}
         onClick={onToggle}
         style={{ cursor: 'pointer' }}
       >
@@ -194,7 +169,7 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
             <div className="d-flex flex-column gap-1">
               <h3 className="trilha-nome">{trilha.nome}</h3>
               <div className="d-flex align-items-center gap-2">
-                <span className={`badge ${DIFICULDADE_BADGE[trilha.dificuldade]}`}>{trilha.dificuldade}</span>
+                <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
                 <span className="text-xs text-muted">Nível {trilha.nivel} · {trilha.participantes} participantes</span>
               </div>
             </div>
@@ -205,7 +180,7 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
           <p className="trilha-desc">{trilha.descricao}</p>
           <div className="d-flex gap-2 flex-wrap">
             {trilha.tags.map(tag => (
-              <span key={tag} className={`badge ${s.tagBadge}`}>{tag}</span>
+              <Chip key={tag} cor={s.tagBadge}>{tag}</Chip>
             ))}
           </div>
           <div className="d-flex justify-content-between align-items-center">
@@ -216,15 +191,15 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
             <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{trilha.hc} HC</span>
           </div>
           <div onClick={e => e.stopPropagation()}>
-            <button className={`btn ${s.btn} w-100`}>+ Iniciar Trilha</button>
+            <Button variante="secundario" bloco>+ Iniciar Trilha</Button>
           </div>
         </div>
         {expandida && (
           <div onClick={e => e.stopPropagation()}>
-            <PainelMissoes trilha={trilha} variante={trilha.variante} missoesPorTrilha={missoesPorTrilha} />
+            <PainelMissoes trilha={trilha} missoesPorTrilha={missoesPorTrilha} />
           </div>
         )}
-      </div>
+      </Card>
     </div>
   )
 }
@@ -233,7 +208,7 @@ function TrilhaDisponivel({ trilha, expandida, onToggle, missoesPorTrilha }) {
 function TrilhaBloqueada({ trilha }) {
   return (
     <div className="trilha-filter-item">
-      <div className="card trilha-card trilha-card-bloqueada d-flex flex-column gap-3">
+      <Card className="trilha-card trilha-card-bloqueada d-flex flex-column gap-3">
         <div className="d-flex align-items-start gap-3">
           <div className="trilha-thumb trilha-thumb--locked">
             <i className={`fa-solid ${trilha.icone}`}></i>
@@ -244,7 +219,7 @@ function TrilhaBloqueada({ trilha }) {
               <i className="fa-solid fa-lock text-muted text-sm"></i>
             </div>
             <div className="d-flex align-items-center gap-2">
-              <span className={`badge ${DIFICULDADE_BADGE[trilha.dificuldade]}`}>{trilha.dificuldade}</span>
+              <Chip cor={DIFICULDADE_BADGE[trilha.dificuldade]}>{trilha.dificuldade}</Chip>
               <span className="text-xs text-muted">Nível {trilha.nivel} · {trilha.participantes} participantes</span>
             </div>
           </div>
@@ -252,7 +227,7 @@ function TrilhaBloqueada({ trilha }) {
         <p className="trilha-desc text-muted">{trilha.descricao}</p>
         <div className="d-flex gap-2 flex-wrap">
           {trilha.tags.map(tag => (
-            <span key={tag} className="badge badge-muted">{tag}</span>
+            <Chip key={tag} cor="muted">{tag}</Chip>
           ))}
         </div>
         <div className="d-flex justify-content-between align-items-center">
@@ -262,10 +237,10 @@ function TrilhaBloqueada({ trilha }) {
           </div>
           <span className="mission-hc"><span className="fa-solid fa-coins"></span> +{trilha.hc} HC</span>
         </div>
-        <button className="btn trilha-btn-bloqueada" disabled>
+        <Button variante="fantasma" bloco disabled>
           <i className="fa-solid fa-lock"></i> Bloqueada
-        </button>
-      </div>
+        </Button>
+      </Card>
     </div>
   )
 }
@@ -355,40 +330,40 @@ function Trilhas() {
             {/* Cards de resumo */}
             <div className="trilhas-resumo-grid mb-4">
               <div>
-                <div className="card resumo-card">
+                <Card className="resumo-card">
                   <div className="resumo-icon resumo-icon--primary"><i className="fa-solid fa-bullseye"></i></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor">{trilhasData.emAndamento.length}</span>
                     <span className="resumo-label">Trilhas Ativas</span>
                   </div>
-                </div>
+                </Card>
               </div>
               <div>
-                <div className="card resumo-card">
+                <Card className="resumo-card">
                   <div className="resumo-icon resumo-icon--success"><i className="fa-solid fa-circle-check"></i></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor">3</span>
                     <span className="resumo-label">Missões Concluídas</span>
                   </div>
-                </div>
+                </Card>
               </div>
               <div>
-                <div className="card resumo-card">
+                <Card className="resumo-card">
                   <div className="resumo-icon resumo-icon--warning"><i className="fa-solid fa-fire"></i></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor text-warning">5 dias</span>
                     <span className="resumo-label">Sequência</span>
                   </div>
-                </div>
+                </Card>
               </div>
               <div>
-                <div className="card resumo-card">
+                <Card className="resumo-card">
                   <div className="resumo-icon resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
                   <div className="resumo-card-body">
                     <span className="resumo-valor resumo-valor--hc">{totalHC.toLocaleString('pt-BR')}</span>
                     <span className="resumo-label">Health Coins</span>
                   </div>
-                </div>
+                </Card>
               </div>
             </div>
 
@@ -404,18 +379,7 @@ function Trilhas() {
                   onChange={e => setBusca(e.target.value)}
                 />
               </div>
-              <div className="d-flex gap-2 flex-wrap">
-                {FILTROS.map(f => (
-                  <button
-                    key={f.key}
-                    className={`trilha-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                    onClick={() => setFiltroAtivo(f.key)}
-                    aria-pressed={filtroAtivo === f.key}
-                  >
-                    <i className={`fa-solid ${f.icon}`}></i> {f.label}
-                  </button>
-                ))}
-              </div>
+              <FiltroPills rotulo="Filtrar trilhas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
             </div>
 
             {/* Spinner de carregamento */}
@@ -437,13 +401,13 @@ function Trilhas() {
                   {busca && <> para "<strong>{busca}</strong>"</>}
                   {filtroAtivo !== 'todos' && <> na categoria <strong>{FILTRO_LABEL[filtroAtivo]}</strong></>}.
                 </p>
-                <button
-                  className="btn trilha-btn-iniciar mt-3"
-                  style={{ width: 'auto', padding: '8px 24px' }}
+                <Button
+                  variante="secundario"
+                  className="mt-3"
                   onClick={() => { setFiltroAtivo('todos'); setBusca('') }}
                 >
                   Limpar filtros
-                </button>
+                </Button>
               </div>
             )}
 
@@ -453,7 +417,7 @@ function Trilhas() {
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <span className="trilhas-secao-barra trilhas-secao-barra--primary"></span>
                   <h2 className="trilhas-secao-titulo">Trilhas em Andamento</h2>
-                  <span className="badge badge-primary">{andamento.length} ativas</span>
+                  <Chip cor="primary">{andamento.length} ativas</Chip>
                 </div>
                 {andamento.length > 0 ? (
                   <div className="trilhas-cards-grid">
@@ -477,7 +441,7 @@ function Trilhas() {
                 <div className="d-flex align-items-center gap-3 mb-4">
                   <span className="trilhas-secao-barra trilhas-secao-barra--warning"></span>
                   <h2 className="trilhas-secao-titulo">Trilhas Disponíveis</h2>
-                  <span className="badge badge-warning">{disponiveis.length} disponíveis</span>
+                  <Chip cor="warning">{disponiveis.length} disponíveis</Chip>
                 </div>
                 {disponiveis.length > 0 ? (
                   <div className="trilhas-cards-grid">

@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import Button from '../components/Button'
+import Chip from '../components/Chip'
 import '../styles/detalhes-missao.css'
 
 const DICAS_DEFAULT = [
@@ -52,7 +54,7 @@ function DetalhesMissao() {
       <div className="detalhes-not-found">
         <i className="fa-solid fa-circle-xmark detalhes-not-found-icon"></i>
         <h2>Missão não encontrada</h2>
-        <Link to="/dashboard" className="btn btn-primary btn-sm">Voltar ao início</Link>
+        <Button to="/dashboard" tamanho="sm">Voltar ao início</Button>
       </div>
     )
   }
@@ -93,10 +95,10 @@ function DetalhesMissao() {
           {/* Título e categoria */}
           <h1 className="detalhes-titulo">{missao.titulo}</h1>
           <div className="detalhes-categoria-wrap">
-            <span className={`badge ${missao.categoriaBadge} detalhes-categoria-badge`}>
+            <Chip cor={missao.categoriaBadge} className="detalhes-categoria-badge">
               <i className="fa-solid fa-tag"></i>
               {missao.categoria}
-            </span>
+            </Chip>
           </div>
 
           <p className="detalhes-descricao">{missao.descricaoLonga || missao.descricao}</p>

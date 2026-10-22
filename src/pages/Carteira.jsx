@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
+import Button from '../components/Button'
+import Card from '../components/Card'
 import '../styles/carteira.css'
 
 function GraficoLinha({ dados }) {
@@ -86,16 +87,16 @@ function Carteira() {
             <div className="carteira-col-esquerda">
 
               {/* Gráfico */}
-              <div className="card carteira-card-grafico">
+              <Card className="carteira-card-grafico">
                 <div className="carteira-card-header">
                   <i className="fa-solid fa-chart-line carteira-card-header-icon"></i>
                   <h2 className="carteira-card-titulo">Evolução dos últimos 7 dias</h2>
                 </div>
                 <GraficoLinha dados={grafico} />
-              </div>
+              </Card>
 
               {/* Histórico */}
-              <div className="card carteira-card-historico">
+              <Card className="carteira-card-historico">
                 <div className="carteira-card-header">
                   <i className="fa-solid fa-rectangle-list carteira-card-header-icon"></i>
                   <h2 className="carteira-card-titulo">Histórico de Ganhos</h2>
@@ -116,7 +117,7 @@ function Carteira() {
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Card>
 
             </div>
 
@@ -124,7 +125,7 @@ function Carteira() {
             <div className="carteira-col-direita">
 
               {/* Conquistas em destaque */}
-              <div className="card carteira-card-conquistas">
+              <Card className="carteira-card-conquistas">
                 <div className="carteira-card-header">
                   <i className="fa-solid fa-trophy carteira-card-header-icon carteira-card-header-icon--warning"></i>
                   <h2 className="carteira-card-titulo">Conquistas em Destaque</h2>
@@ -140,7 +141,7 @@ function Carteira() {
                     </div>
                   ))}
                 </div>
-              </div>
+              </Card>
 
               {/* Promo recompensas */}
               <div className="carteira-card-promo">
@@ -148,9 +149,9 @@ function Carteira() {
                   <i className="fa-solid fa-gem"></i>
                 </div>
                 <p className="promo-texto">Troque seus coins por recompensas incríveis!</p>
-                <Link to="/recompensas" className="btn btn-primary promo-btn">
+                <Button to="/recompensas" bloco tamanho="sm">
                   Ver catálogo de recompensas
-                </Link>
+                </Button>
               </div>
 
             </div>

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
+import Button from '../components/Button'
 import '../styles/sucesso-resgate.css'
 
 function SucessoResgate() {
@@ -114,18 +115,12 @@ function SucessoResgate() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
         >
-          <button
-            className="btn btn-primary sucesso-btn-ver"
-            onClick={() => navigate('/recompensas')}
-          >
+          <Button className="sucesso-btn" onClick={() => navigate('/recompensas')}>
             Ver Catálogo de Recompensas
-          </button>
-          <button
-            className="btn sucesso-btn-inicio"
-            onClick={() => navigate('/dashboard')}
-          >
+          </Button>
+          <Button variante="fantasma" className="sucesso-btn" onClick={() => navigate('/dashboard')}>
             Voltar ao Início
-          </button>
+          </Button>
         </motion.div>
       </motion.div>
     </div>
