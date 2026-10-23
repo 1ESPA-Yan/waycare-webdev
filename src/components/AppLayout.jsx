@@ -60,7 +60,7 @@ function AppLayout() {
           <NavLink
             to="/notificacoes"
             className="notif-btn"
-            aria-label={naoLidas > 0 ? `Notificações, ${naoLidas} não lidas` : 'Notificações'}
+            aria-label={naoLidas > 0 ? `Notificações, ${naoLidas} não lida${naoLidas > 1 ? 's' : ''}` : 'Notificações'}
           >
             <Icone nome="fa-bell" />
             {naoLidas > 0 && <span className="notif-dot" aria-hidden="true">{naoLidas > 9 ? '9+' : naoLidas}</span>}
