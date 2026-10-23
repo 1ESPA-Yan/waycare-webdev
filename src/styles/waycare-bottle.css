@@ -432,6 +432,7 @@
 
 .bottle-legenda-dot--primary { background-color: var(--color-info); }
 .bottle-legenda-dot--muted   { background-color: var(--color-border); }
+.bottle-legenda-dot--meta    { background-color: var(--color-primary); }
 
 /* Gráfico estático placeholder */
 .bottle-chart-placeholder {

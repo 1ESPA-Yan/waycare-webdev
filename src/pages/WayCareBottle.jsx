@@ -4,9 +4,9 @@ import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
+import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
 import { tempoDesde, horaCurta } from '../lib/tempo'
 import Topbar from '../components/Topbar'
-import { getHistory } from '../services/waycareApi'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
 import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
@@ -29,7 +29,7 @@ function sinalWifi(rssi) {
   return 'sinal fraco'
 }
 
-// Dados do gráfico semanal — usados só no fallback (sem conexão com a dock)
+// Dados do gráfico semanal do modo demonstração (o dia de hoje usa o consumo simulado)
 const dadosSemana = [
   { dia: 'Seg', ml: 0 },
   { dia: 'Ter', ml: 1400 },
@@ -39,6 +39,38 @@ const dadosSemana = [
   { dia: 'Sáb', ml: 0 },
   { dia: 'Hoje', ml: 450, hoje: true },
 ]
+
+// "2026-10-21" -> "Ter" (o último dia do histórico vira "Hoje")
+function rotuloDia(dia, ehHoje) {
+  if (ehHoje) return 'Hoje'
+  const nome = new Date(`${dia}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')
+  return nome.charAt(0).toUpperCase() + nome.slice(1)
+}
+
+// Barras dos últimos 7 dias. dias = [{ rotulo, ml, meta, bateu, hoje }]
+// Dia com a meta batida fica verde; hoje (sem meta batida) fica azul.
+function GraficoSemana({ dias }) {
+  return (
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '144px' }}>
+      {dias.map((dia, i) => {
+        const altura = dia.ml > 0 ? Math.min(Math.max((dia.ml / dia.meta) * 120, 4), 120) : 4
+        const cor = dia.bateu ? 'var(--color-primary)' : dia.hoje ? 'var(--color-info)' : dia.ml > 0 ? '#4aaee8aa' : 'var(--color-border)'
+        return (
+          <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}
+               title={`${dia.rotulo}: ${dia.ml} de ${dia.meta} ml${dia.bateu ? ' (meta batida)' : ''}`}>
+            {dia.ml > 0 && (
+              <span style={{ fontSize: '10px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)' }}>{dia.ml}</span>
+            )}
+            <div style={{ width: '100%', height: `${altura}px`, backgroundColor: cor, borderRadius: '4px 4px 0 0', transition: 'height 0.4s ease', marginTop: 'auto' }}></div>
+            <span style={{ fontSize: '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400' }}>
+              {dia.rotulo}
+            </span>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
 
 function WaycareBottle() {
   const [liveVisivel, setLiveVisivel] = useState(true)
@@ -61,20 +93,20 @@ function WaycareBottle() {
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
 
-  // Histórico real para o gráfico (atualiza a cada 60s)
-  const [history, setHistory] = useState([])
-  useEffect(() => {
-    let ativo = true
-    async function buscar() {
-      try {
-        const h = await getHistory(24)
-        if (ativo) setHistory(Array.isArray(h) ? h : [])
-      } catch { /* mantém o que já tem */ }
-    }
-    buscar()
-    const id = setInterval(buscar, 60000)
-    return () => { ativo = false; clearInterval(id) }
-  }, [])
+  // Gráficos da conta real: curva do dia (goles) e últimos 7 dias (historico)
+  const { curva, semana } = useHistoricoHidratacao()
+  const diasSemana = usandoReal
+    ? semana.map((dia, i) => ({
+        rotulo: rotuloDia(dia.dia, i === semana.length - 1),
+        ml: dia.consumo_ml,
+        meta: dia.meta_ml,
+        bateu: dia.bateu,
+        hoje: i === semana.length - 1,
+      }))
+    : dadosSemana.map(dia => {
+        const ml = dia.hoje ? mlConsumido : dia.ml
+        return { rotulo: dia.dia, ml, meta: metaDiaria, bateu: ml >= metaDiaria, hoje: !!dia.hoje }
+      })
 
   // Ponto LIVE piscando
   useEffect(() => {
@@ -446,46 +478,53 @@ function WaycareBottle() {
                   )}
                 </div>
 
-                {/* Gráfico de consumo */}
+                {/* Consumo de hoje: curva acumulada dos goles (só conta real) */}
+                {usandoReal && (
+                  <Card className="bottle-historico-card mt-6">
+                    <div className="flex items-center justify-between mb-6">
+                      <div className="flex items-center gap-2">
+                        <Icone nome="fa-arrow-trend-up" className="bottle-historico-icon" />
+                        <h2 className="bottle-historico-titulo">Consumo de hoje</h2>
+                      </div>
+                      <div className="flex items-center gap-4">
+                        <span className="bottle-legenda">
+                          <span className="bottle-legenda-dot bottle-legenda-dot--primary"></span>
+                          Consumo
+                        </span>
+                        <span className="bottle-legenda">
+                          <span className="bottle-legenda-dot bottle-legenda-dot--muted"></span>
+                          Meta ({d.meta}ml)
+                        </span>
+                      </div>
+                    </div>
+                    <GraficoHidratacao dados={curva} meta={d.meta} />
+                  </Card>
+                )}
+
+                {/* Histórico semanal: rpc historico (real) ou valores fixos (demo) */}
                 <Card className="bottle-historico-card mt-6">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                      <Icone nome="fa-arrow-trend-up" className="bottle-historico-icon" />
-                      <h2 className="bottle-historico-titulo">{usandoReal ? 'Consumo de hoje' : 'Histórico Semanal'}</h2>
+                      <Icone nome="fa-chart-bar" className="bottle-historico-icon" />
+                      <h2 className="bottle-historico-titulo">Histórico Semanal</h2>
                     </div>
                     <div className="flex items-center gap-4">
                       <span className="bottle-legenda">
-                        <span className="bottle-legenda-dot bottle-legenda-dot--primary"></span>
-                        Consumo
+                        <span className="bottle-legenda-dot bottle-legenda-dot--meta"></span>
+                        Meta batida
                       </span>
                       <span className="bottle-legenda">
-                        <span className="bottle-legenda-dot bottle-legenda-dot--muted"></span>
-                        Meta ({d.meta}ml)
+                        <span className="bottle-legenda-dot bottle-legenda-dot--primary"></span>
+                        Abaixo da meta
                       </span>
                     </div>
                   </div>
-
-                  {usandoReal ? (
-                    <GraficoHidratacao dados={history} meta={d.meta} />
+                  {diasSemana.length ? (
+                    <GraficoSemana dias={diasSemana} />
                   ) : (
-                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '144px' }}>
-                      {dadosSemana.map((dia, i) => {
-                        const ml = dia.hoje ? mlConsumido : dia.ml
-                        const altura = ml > 0 ? Math.max((ml / metaDiaria) * 120, 4) : 4
-                        const atingiu = ml >= metaDiaria
-                        const cor = dia.hoje ? 'var(--color-info)' : atingiu ? 'var(--color-primary)' : ml > 0 ? '#4aaee8aa' : 'var(--color-border)'
-                        return (
-                          <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}>
-                            {ml > 0 && (
-                              <span style={{ fontSize: '10px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)' }}>{ml}</span>
-                            )}
-                            <div style={{ width: '100%', height: `${altura}px`, backgroundColor: cor, borderRadius: '4px 4px 0 0', transition: 'height 0.4s ease', marginTop: 'auto' }}></div>
-                            <span style={{ fontSize: '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400' }}>
-                              {dia.dia}
-                            </span>
-                          </div>
-                        )
-                      })}
+                    <div className="bottle-grafico-vazio">
+                      <Icone nome="fa-chart-bar" />
+                      Carregando o histórico…
                     </div>
                   )}
                 </Card>

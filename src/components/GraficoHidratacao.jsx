@@ -1,7 +1,7 @@
 import Icone from './Icone'
 
-// Gráfico de área do consumo ao longo do dia (dados reais do GET /history)
-// Recebe `dados` = [{ ts, consumo, pct }] e a `meta` diária em ml.
+// Gráfico de área do consumo acumulado do dia (goles da tabela eventos)
+// Recebe `dados` = [{ ts, consumo }] e a `meta` diária em ml.
 
 function GraficoHidratacao({ dados = [], meta = 2000 }) {
   if (!dados.length) {
@@ -51,7 +51,8 @@ function GraficoHidratacao({ dados = [], meta = 2000 }) {
           <>
             <line x1={pad} x2={W - pad} y1={yMeta} y2={yMeta}
                   stroke="var(--color-border)" strokeWidth="1" strokeDasharray="5 5" />
-            <text x={W - pad} y={yMeta - 6} textAnchor="end"
+            {/* Rótulo acima da linha; embaixo quando a meta encosta no topo do gráfico */}
+            <text x={W - pad} y={yMeta < 24 ? yMeta + 14 : yMeta - 6} textAnchor="end"
                   fill="var(--color-text-muted)" fontSize="11">meta {meta}ml</text>
           </>
         )}
