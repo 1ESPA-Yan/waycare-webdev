@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
 import { useDados } from '../hooks/useDados'
+import { useHidratacao } from '../hooks/useHidratacao'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
@@ -10,9 +11,10 @@ import Chip from '../components/Chip'
 import Icone from '../components/Icone'
 import '../styles/dashboard.css'
 
-function CardMissao({ missao, mlConsumido }) {
+// consumo e meta vêm do useHidratacao (dock real ou demonstração)
+function CardMissao({ missao, consumo, meta }) {
   if (missao.tipo === 'bottle') {
-    const pct = Math.round((mlConsumido / missao.metaMl) * 100)
+    const pct = Math.min(100, Math.round((consumo / meta) * 100))
     return (
       <div className="card-mission bottle-mission flex flex-col gap-4">
         <span className="bottle-mission-badge">
@@ -29,7 +31,7 @@ function CardMissao({ missao, mlConsumido }) {
           </div>
         </div>
         <div className="flex justify-between items-center">
-          <span className="bottle-mission-progress-label">{mlConsumido} ml / {missao.metaMl} ml</span>
+          <span className="bottle-mission-progress-label">{consumo} ml / {meta} ml</span>
           <span className="bottle-mission-progress-pct">{pct}%</span>
         </div>
         <div className="progress-bar">
@@ -107,7 +109,8 @@ function Dashboard() {
   const missoes = useMemo(() => dados ?? [], [dados])
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
   const [filtrosVisiveis, setFiltrosVisiveis] = useState(false)
-  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, consumidoHoje: mlConsumido, missaoConcluida } = useApp()
+  const { totalHC, nomeUsuario, humor, HUMOR_CONFIG, missaoConcluida } = useApp()
+  const { consumo, meta } = useHidratacao()
   const humorAtual = HUMOR_CONFIG[humor]
 
   const categorias = useMemo(() => {
@@ -217,7 +220,8 @@ function Dashboard() {
                     >
                       <CardMissao
                         missao={missaoConcluida(missao.id) ? { ...missao, status: 'concluida' } : missao}
-                        mlConsumido={mlConsumido}
+                        consumo={consumo}
+                        meta={meta}
                       />
                     </motion.div>
                   ))}

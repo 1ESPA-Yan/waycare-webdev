@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
+import { useWayCareDock } from '../hooks/useWayCareDock'
 import Topbar from '../components/Topbar'
 import { getHistory, postTara } from '../services/waycareApi'
 import Card from '../components/Card'
@@ -34,10 +35,11 @@ function WaycareBottle() {
     pctMeta,
     simularGole,
     encherGarrafa,
-    statusDock: status,
-    statusCarregando: carregando,
-    usandoReal,
   } = useApp()
+
+  // Polling da VM antiga, só nesta tela até ela passar para o Supabase (tarefa 40)
+  const { status, erro: statusErro, carregando } = useWayCareDock(3000)
+  const usandoReal = !carregando && !statusErro && !!status
 
   // Histórico real para o gráfico (atualiza a cada 60s)
   const [history, setHistory] = useState([])

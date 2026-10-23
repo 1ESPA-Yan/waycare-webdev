@@ -1,6 +1,7 @@
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import { useHidratacao } from '../hooks/useHidratacao'
 import Icone from '../components/Icone'
 import '../styles/missao-completa.css'
 
@@ -18,12 +19,11 @@ const CONFETES = Array.from({ length: 20 }, (_, i) => ({
 function MissaoCompleta() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { totalHC, usandoReal, statusDock } = useApp()
+  const { totalHC } = useApp()
+  const { streak } = useHidratacao()
   const missao = location.state?.missao
 
   if (!missao) return <Navigate to="/dashboard" replace />
-
-  const streak = usandoReal ? Number(statusDock.streak) || 0 : 0
 
   return (
     <div className="completa-overlay">

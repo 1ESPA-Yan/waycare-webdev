@@ -1,10 +1,13 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useHidratacao } from '../hooks/useHidratacao'
 import Icone from './Icone'
 
 function Sidebar({ isOpen, inert, ref }) {
-  const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock, nivel, sairDaConta } = useApp()
-  const pctWidget = Math.min(100, Math.round((consumidoHoje / metaHoje) * 100))
+  const { nomeUsuario, nivel, sairDaConta } = useApp()
+  const { consumo, meta, dock, modo } = useHidratacao()
+  const pctWidget = Math.min(100, Math.round((consumo / meta) * 100))
+  const statusWidget = modo === 'demo' ? 'Demo' : !dock ? 'Sem dock' : dock.online ? 'Conectada' : 'Offline'
 
   return (
     <aside ref={ref} inert={inert} className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar">
@@ -27,14 +30,14 @@ function Sidebar({ isOpen, inert, ref }) {
           <div className="flex flex-col gap-0">
             <span className="bottle-widget-title">WayCare Bottle</span>
             <span className="bottle-widget-status">
-              <span className="bottle-status-dot" style={{ backgroundColor: usandoReal && statusDock?.online ? '' : 'var(--color-text-muted)' }}></span>
-              {usandoReal && statusDock?.online ? 'Conectada' : usandoReal ? 'Offline' : 'Demo'}
+              <span className="bottle-status-dot" style={{ backgroundColor: dock?.online ? '' : 'var(--color-text-muted)' }}></span>
+              {statusWidget}
             </span>
           </div>
         </div>
         <div className="flex items-baseline gap-1 mb-1">
-          <span className="bottle-widget-ml">{consumidoHoje}</span>
-          <span className="bottle-widget-meta">/ {metaHoje} ml</span>
+          <span className="bottle-widget-ml">{consumo}</span>
+          <span className="bottle-widget-meta">/ {meta} ml</span>
         </div>
         <div className="progress-bar bottle-widget-bar">
           <div className="progress-fill bottle-widget-fill" style={{ width: `${pctWidget}%` }}></div>

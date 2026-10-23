@@ -2,6 +2,7 @@ import { lazy, Suspense } from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { MotionConfig } from 'motion/react'
 import { AppProvider } from './context/AppContext'
+import { DockProvider } from './context/DockContext'
 
 // Login, layout e guarda de rota vêm no bundle principal (primeira tela)
 import Login from './pages/Login'
@@ -58,6 +59,7 @@ function App() {
   return (
     <MotionConfig reducedMotion="user">
       <AppProvider>
+      <DockProvider>
         <BrowserRouter>
           <Suspense fallback={<CarregandoPagina telaCheia />}>
             <Routes>
@@ -97,6 +99,7 @@ function App() {
             </Routes>
           </Suspense>
         </BrowserRouter>
+      </DockProvider>
       </AppProvider>
     </MotionConfig>
   )

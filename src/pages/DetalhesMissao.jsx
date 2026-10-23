@@ -1,6 +1,7 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import { useHidratacao } from '../hooks/useHidratacao'
 import { useDados } from '../hooks/useDados'
 import Button from '../components/Button'
 import Chip from '../components/Chip'
@@ -16,7 +17,8 @@ const DICAS_DEFAULT = [
 function DetalhesMissao() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { concluirMissao, missaoConcluida, consumidoHoje: mlConsumido } = useApp()
+  const { concluirMissao, missaoConcluida } = useApp()
+  const { consumo: mlConsumido, meta } = useHidratacao()
   const { dados, carregando } = useDados('missoes-dashboard')
   const missao = dados?.find(m => m.id === Number(id)) ?? null
 
@@ -44,7 +46,7 @@ function DetalhesMissao() {
   }
 
   const dicas = missao.dicas?.length ? missao.dicas : DICAS_DEFAULT
-  const progresso = missao.tipo === 'bottle' ? Math.round((mlConsumido / missao.metaMl) * 100) : null
+  const progresso = missao.tipo === 'bottle' ? Math.min(100, Math.round((mlConsumido / meta) * 100)) : null
 
   return (
     <div className="detalhes-overlay">
@@ -93,7 +95,7 @@ function DetalhesMissao() {
               <h3 className="detalhes-progresso-titulo">Progresso em Tempo Real</h3>
               <div className="detalhes-progresso-valores">
                 <span className="detalhes-progresso-atual">{mlConsumido}</span>
-                <span className="detalhes-progresso-meta">/ {missao.metaMl} ml</span>
+                <span className="detalhes-progresso-meta">/ {meta} ml</span>
               </div>
               <div className="progress-bar detalhes-progress-bar">
                 <motion.div
