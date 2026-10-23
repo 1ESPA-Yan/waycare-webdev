@@ -8,6 +8,7 @@ import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
 import { useTara } from '../hooks/useTara'
 import { ML_POR_HC } from '../hooks/useCreditoAgua'
 import { tempoDesde, horaCurta } from '../lib/tempo'
+import { rpc } from '../lib/supabase'
 import Topbar from '../components/Topbar'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
@@ -95,6 +96,23 @@ function WaycareBottle() {
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
   const tara = useTara()
+
+  // Desvincular: a dock deixa de contar para esta conta; o histórico fica no banco
+  const [desvinculando, setDesvinculando] = useState(false)
+  const [erroDesvincular, setErroDesvincular] = useState('')
+  async function desvincular() {
+    if (!window.confirm('Desvincular esta dock da sua conta? A dock deixa de contar para você. Seu histórico fica.')) return
+    setDesvinculando(true)
+    setErroDesvincular('')
+    try {
+      await rpc('desvincular_dock')
+      await hidratacao.recarregar()
+    } catch (falha) {
+      setErroDesvincular(falha.message)
+    } finally {
+      setDesvinculando(false)
+    }
+  }
 
   // Gráficos da conta real: curva do dia (goles) e últimos 7 dias (historico)
   const { curva, semana } = useHistoricoHidratacao()
@@ -582,6 +600,15 @@ function WaycareBottle() {
                       <span className="bottle-info-valor">{dock?.fw || '—'}</span>
                     </div>
                   </div>
+                  {usandoReal && dock && (
+                    <>
+                      <button className="btn bottle-desvincular-btn mt-6" onClick={desvincular} disabled={desvinculando}>
+                        <Icone nome="fa-plug-circle-xmark" /> {desvinculando ? 'Desvinculando…' : 'Desvincular dock'}
+                      </button>
+                      <p className="bottle-desvincular-desc">A dock deixa de contar para você. Seu histórico fica.</p>
+                      {erroDesvincular && <p className="input-erro-msg" role="alert">{erroDesvincular}</p>}
+                    </>
+                  )}
                 </Card>
 
                 {/* Eventos do dia: painel do Supabase (real) ou leituras simuladas (demo) */}

@@ -43,7 +43,8 @@ Ordem de teste:
 Atenção:
   - Goles enviados antes do vínculo não contam para ninguém.
   - Cada conta só pode ter 1 dock. Antes de vincular a dock real,
-    desvincule a simulada no site.
+    desvincule a simulada no site (WayCare Bottle > Informações do
+    dispositivo > Desvincular dock).
 `
 
 function falhar(msg) {
@@ -195,7 +196,7 @@ switch (comando) {
   }
   case 'esquecer': {
     if (existsSync(ARQUIVO)) unlinkSync(ARQUIVO)
-    console.log('\n✓ Estado local apagado. A dock continua no Supabase; desvincule-a no site se estiver vinculada.\n')
+    console.log('\n✓ Estado local apagado. A dock continua no Supabase; se estiver vinculada, desvincule-a na WayCare Bottle.\n')
     break
   }
   default:

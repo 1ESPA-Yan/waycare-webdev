@@ -306,7 +306,7 @@ npm run dock -- encher 600     # põe água na garrafa
 npm run dock -- gole 150       # bebe 150 ml
 ```
 
-Também há `tirar`, `devolver [ml]`, `status` e `esquecer`. Goles enviados antes do vínculo não contam para ninguém, e cada conta só pode ter uma dock: antes de vincular a dock real, desvincule a simulada.
+Também há `tirar`, `devolver [ml]`, `status` e `esquecer`. Goles enviados antes do vínculo não contam para ninguém, e cada conta só pode ter uma dock: antes de vincular a dock real, desvincule a simulada na WayCare Bottle (**Informações do Dispositivo > Desvincular dock**).
 
 ---
 

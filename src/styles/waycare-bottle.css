@@ -982,3 +982,26 @@
   color: var(--color-text-muted);
   margin: 0;
 }
+
+/* Desvincular a dock (card Informações do dispositivo) */
+.bottle-desvincular-btn {
+  width: 100%;
+  background-color: var(--color-surface);
+  color: var(--color-error);
+  border: 1px solid rgba(198, 40, 40, 0.35);
+  border-radius: var(--radius-md) !important;
+  font-size: var(--font-size-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.bottle-desvincular-btn:hover:not(:disabled) {
+  background-color: #fdecea;
+  color: var(--color-error);
+}
+
+.bottle-desvincular-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: var(--space-2) 0 0;
+}
