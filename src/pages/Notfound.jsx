@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import Icone from '../components/Icone'
 import '../styles/notfound.css'
 
 function NotFound() {
@@ -14,7 +15,7 @@ function NotFound() {
 
       {/* Logo */}
       <div className="nf-logo">
-        <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
+        <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
         <span>WayCare</span>
       </div>
 
@@ -24,7 +25,7 @@ function NotFound() {
         <div className="nf-icon-wrap">
           <div className="nf-icon-ring"></div>
           <div className="nf-icon">
-            <i className="fa-solid fa-map-location-dot"></i>
+            <Icone nome="fa-map-location-dot" />
           </div>
         </div>
 
@@ -39,7 +40,7 @@ function NotFound() {
         </p>
 
         <button className="btn nf-btn-primary" onClick={() => navigate(-1)}>
-          <i className="fa-solid fa-arrow-left"></i>
+          <Icone nome="fa-arrow-left" />
           Voltar à página anterior
         </button>
 

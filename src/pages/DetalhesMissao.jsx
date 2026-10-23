@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react'
-import { useParams, useNavigate, Link } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import { useHidratacao } from '../hooks/useHidratacao'
+import { useDados } from '../hooks/useDados'
+import Button from '../components/Button'
+import Chip from '../components/Chip'
+import Icone from '../components/Icone'
 import '../styles/detalhes-missao.css'
 
 const DICAS_DEFAULT = [
@@ -13,30 +17,13 @@ const DICAS_DEFAULT = [
 function DetalhesMissao() {
   const { id } = useParams()
   const navigate = useNavigate()
-  const { adicionarHC, consumidoHoje: mlConsumido } = useApp()
-  const [missao, setMissao] = useState(null)
-  const [carregando, setCarregando] = useState(true)
-
-  useEffect(() => {
-    fetch('/data/missoes-dashboard.json')
-      .then(res => res.json())
-      .then(data => {
-        const encontrada = data.find(m => m.id === Number(id))
-        setMissao(encontrada || null)
-        setCarregando(false)
-      })
-      .catch(() => {
-        import('../data/missoes-dashboard.json').then(mod => {
-          const encontrada = mod.default.find(m => m.id === Number(id))
-          setMissao(encontrada || null)
-          setCarregando(false)
-        })
-      })
-  }, [id])
+  const { concluirMissao, missaoConcluida } = useApp()
+  const { consumo: mlConsumido, meta } = useHidratacao()
+  const { dados, carregando } = useDados('missoes-dashboard')
+  const missao = dados?.find(m => m.id === Number(id)) ?? null
 
   const handleConcluir = () => {
-    if (!missao) return
-    adicionarHC(missao.hc)
+    if (!missao || !concluirMissao(missao)) return
     navigate('/missao/completa', { state: { missao } })
   }
 
@@ -51,15 +38,15 @@ function DetalhesMissao() {
   if (!missao) {
     return (
       <div className="detalhes-not-found">
-        <i className="fa-solid fa-circle-xmark detalhes-not-found-icon"></i>
+        <Icone nome="fa-circle-xmark" className="detalhes-not-found-icon" />
         <h2>Missão não encontrada</h2>
-        <Link to="/dashboard" className="btn btn-primary btn-sm">Voltar ao início</Link>
+        <Button to="/dashboard" tamanho="sm">Voltar ao início</Button>
       </div>
     )
   }
 
   const dicas = missao.dicas?.length ? missao.dicas : DICAS_DEFAULT
-  const progresso = missao.tipo === 'bottle' ? Math.round((mlConsumido / missao.metaMl) * 100) : null
+  const progresso = missao.tipo === 'bottle' ? Math.min(100, Math.round((mlConsumido / meta) * 100)) : null
 
   return (
     <div className="detalhes-overlay">
@@ -72,12 +59,12 @@ function DetalhesMissao() {
         {/* Header */}
         <div className="detalhes-header">
           <button onClick={() => navigate(-1)} className="detalhes-back-btn" aria-label="Voltar">
-            <i className="fa-solid fa-chevron-left"></i>
+            <Icone nome="fa-chevron-left" />
             Voltar
           </button>
           <span className="detalhes-header-label">MISSÃO</span>
           <button onClick={() => navigate(-1)} className="detalhes-close-btn" aria-label="Fechar">
-            <i className="fa-solid fa-xmark"></i>
+            <Icone nome="fa-xmark" />
           </button>
         </div>
 
@@ -87,17 +74,17 @@ function DetalhesMissao() {
           {/* Ícone da missão */}
           <div className="detalhes-icon-wrap">
             <div className={`detalhes-icon mission-emoji--${missao.emojiCor}`}>
-              <i className={`fa-solid ${missao.icone}`}></i>
+              <Icone nome={missao.icone} />
             </div>
           </div>
 
           {/* Título e categoria */}
           <h1 className="detalhes-titulo">{missao.titulo}</h1>
           <div className="detalhes-categoria-wrap">
-            <span className={`badge ${missao.categoriaBadge} detalhes-categoria-badge`}>
-              <i className="fa-solid fa-tag"></i>
+            <Chip cor={missao.categoriaBadge} className="detalhes-categoria-badge">
+              <Icone nome="fa-tag" />
               {missao.categoria}
-            </span>
+            </Chip>
           </div>
 
           <p className="detalhes-descricao">{missao.descricaoLonga || missao.descricao}</p>
@@ -108,7 +95,7 @@ function DetalhesMissao() {
               <h3 className="detalhes-progresso-titulo">Progresso em Tempo Real</h3>
               <div className="detalhes-progresso-valores">
                 <span className="detalhes-progresso-atual">{mlConsumido}</span>
-                <span className="detalhes-progresso-meta">/ {missao.metaMl} ml</span>
+                <span className="detalhes-progresso-meta">/ {meta} ml</span>
               </div>
               <div className="progress-bar detalhes-progress-bar">
                 <motion.div
@@ -120,7 +107,7 @@ function DetalhesMissao() {
               </div>
               <div className="detalhes-progresso-pct">{progresso}%</div>
               <p className="detalhes-progresso-sync">
-                <i className="fa-solid fa-rotate"></i>
+                <Icone nome="fa-rotate" />
                 Sincronizado com WayCare Bottle • Automático
               </p>
             </div>
@@ -130,16 +117,16 @@ function DetalhesMissao() {
           <div className="detalhes-info-grid">
             <div className="detalhes-info-item">
               <div className="detalhes-info-icon detalhes-info-icon--green">
-                <i className="fa-solid fa-coins"></i>
+                <Icone nome="fa-coins" />
               </div>
               <div>
                 <span className="detalhes-info-label">Recompensa</span>
-                <span className="detalhes-info-valor" style={{ color: '#1C9770' }}>+{missao.hc} HC</span>
+                <span className="detalhes-info-valor" style={{ color: 'var(--color-primary-dark)' }}>+{missao.hc} HC</span>
               </div>
             </div>
             <div className="detalhes-info-item">
               <div className="detalhes-info-icon detalhes-info-icon--blue">
-                <i className="fa-regular fa-clock"></i>
+                <Icone nome="fa-clock" />
               </div>
               <div>
                 <span className="detalhes-info-label">Duração</span>
@@ -148,7 +135,7 @@ function DetalhesMissao() {
             </div>
             <div className="detalhes-info-item">
               <div className="detalhes-info-icon detalhes-info-icon--purple">
-                <i className="fa-solid fa-tag"></i>
+                <Icone nome="fa-tag" />
               </div>
               <div>
                 <span className="detalhes-info-label">Categoria</span>
@@ -160,7 +147,7 @@ function DetalhesMissao() {
           {/* Dicas */}
           <div className="detalhes-dicas-section">
             <h3 className="detalhes-dicas-titulo">
-              <i className="fa-solid fa-lightbulb" style={{ color: '#FFC107' }}></i>
+              <Icone nome="fa-lightbulb" style={{ color: '#FFC107' }} />
               Dicas para completar
             </h3>
             <div className="detalhes-dicas-grid">
@@ -174,7 +161,7 @@ function DetalhesMissao() {
                   whileHover={{ y: -4, boxShadow: '0 8px 24px rgba(0,0,0,0.1)' }}
                 >
                   <div className="detalhes-dica-icon" style={{ backgroundColor: `${dica.cor}18` }}>
-                    <i className={`fa-solid ${dica.icone}`} style={{ color: dica.cor }}></i>
+                    <Icone nome={dica.icone} style={{ color: dica.cor }} />
                   </div>
                   <span className="detalhes-dica-name">{dica.titulo}</span>
                   <span className="detalhes-dica-desc">{dica.descricao}</span>
@@ -185,14 +172,14 @@ function DetalhesMissao() {
 
           {/* Ações */}
           <div className="detalhes-actions">
-            {missao.status === 'concluida' ? (
+            {missao.status === 'concluida' || missaoConcluida(missao.id) ? (
               <button className="btn detalhes-btn-done" disabled>
-                <i className="fa-regular fa-circle-check"></i>
+                <Icone nome="fa-circle-check" />
                 Missão já concluída
               </button>
             ) : missao.tipo === 'bottle' ? (
               <button className="btn detalhes-btn-auto" disabled>
-                <i className="fa-solid fa-droplet"></i>
+                <Icone nome="fa-droplet" />
                 Monitorado automaticamente
               </button>
             ) : (
@@ -202,7 +189,7 @@ function DetalhesMissao() {
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <i className="fa-solid fa-check"></i>
+                <Icone nome="fa-check" />
                 Marcar como Concluída
               </motion.button>
             )}

@@ -125,7 +125,7 @@
   margin-bottom: var(--space-4);
 }
 
-.completa-streak i {
+.completa-streak .icone {
   font-size: var(--font-size-md);
 }
 
@@ -137,7 +137,7 @@
 }
 
 .completa-saldo-valor {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
 }
 

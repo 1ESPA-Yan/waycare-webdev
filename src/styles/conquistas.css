@@ -16,77 +16,6 @@
   color: var(--color-text-primary);
 }
 
-/* Título da página */
-.conquistas-titulo-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  background-color: #fff8ec;
-  color: var(--color-hc);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.conquistas-titulo {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.conquistas-subtitulo {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
-/* Tags de filtro */
-.conquista-filter-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: var(--space-1) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.conquista-filter-tag:hover {
-  border-color: var(--color-hc);
-  color: var(--color-hc);
-}
-
-.conquista-filter-tag.active {
-  background-color: var(--color-hc);
-  color: var(--color-white);
-  border-color: var(--color-hc);
-}
-
-.conquista-filter-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 20px;
-  height: 20px;
-  padding: 0 var(--space-1);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  background-color: rgba(0, 0, 0, 0.12);
-}
-
-.conquista-filter-tag.active .conquista-filter-count {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
 /* Grid de conquistas — CSS Grid nativo, 2 colunas */
 .conquistas-grid {
   display: grid;
@@ -222,8 +151,8 @@
   font-weight: var(--font-weight-bold);
 }
 
-.conquista-pct--done     { color: var(--color-hc); }
-.conquista-pct--progress { color: var(--color-primary); }
+.conquista-pct--done     { color: var(--color-hc-text); }
+.conquista-pct--progress { color: var(--color-primary-dark); }
 
 /* Barra de progresso — amarela (Health Coins) para todas as conquistas
    Usa seletor duplo para sobrescrever o .progress-fill do global.css */
@@ -238,13 +167,13 @@
   gap: var(--space-1);
 }
 
-.conquista-status--done   { color: var(--color-primary); }
+.conquista-status--done   { color: var(--color-primary-dark); }
 .conquista-status--locked { color: var(--color-text-muted); }
 
 /* Health Coins nas conquistas — cor verde */
 .conquista-card .mission-hc,
-.conquista-card .mission-hc .fa-coins {
-  color: var(--color-primary);
+.conquista-card .mission-hc .icone {
+  color: var(--color-primary-dark);
 }
 
 /* Card de como desbloquear */
@@ -274,7 +203,7 @@
 .conquistas-dica-titulo {
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   margin: 0;
 }
 
@@ -295,8 +224,8 @@
   gap: var(--space-2);
 }
 
-.conquistas-dica-lista li i {
-  color: var(--color-primary);
+.conquistas-dica-lista li .icone {
+  color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   flex-shrink: 0;
 }

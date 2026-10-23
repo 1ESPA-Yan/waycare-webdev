@@ -2,111 +2,139 @@
 //  PerfilMetaHidratacao.jsx  -  configura a meta de hidratação personalizada
 // ============================================================================
 //  Form: peso, gênero, atividade física e cidade.
-//  - Preview ao vivo via POST /calcular-meta (debounce enquanto digita).
-//  - Salvar via POST /perfil → recalcula a meta que vale para a dock.
-//  - Pré-preenche com GET /perfil ao montar.
+//  - Prévia ao vivo com calcularMeta() (src/lib/meta.js, mesma conta do PWA).
+//  - A cidade é buscada na Open-Meteo 700 ms depois que o usuário para de
+//    digitar; a temperatura atual dela entra no cálculo.
+//  - Salvar: upsert em `perfis` e depois rpc('salvar_meta').
+//  - No modo demonstração o formulário fica desabilitado.
 //
 //  A meta é uma estimativa (peso/sexo + temperatura local + atividade, base
 //  EFSA/ACSM). Não substitui orientação médica.
 // ============================================================================
 
-import { useState, useEffect, useRef } from 'react'
-import { getPerfil, postPerfil, calcularMetaPreview } from '../services/waycareApi'
+import { useState, useEffect, useMemo, useRef } from 'react'
+import { useHidratacao } from '../hooks/useHidratacao'
+import { supabase, rpc } from '../lib/supabase'
+import { ATIVIDADES, META_MIN, META_MAX, calcularMeta, geocodificar, temperaturaAtual } from '../lib/meta'
+import Card from './Card'
+import Icone from './Icone'
 
-const ATIVIDADES = [
-  ['sedentario', 'Sedentário (pouca ou nenhuma)'],
-  ['leve', 'Leve (poucas vezes/semana)'],
-  ['moderado', 'Moderado (~1h quase todo dia)'],
-  ['intenso', 'Intenso (treino longo / atleta)'],
-]
+const FORM_VAZIO = { peso: '', genero: 'm', atividade: 'moderado', cidade: '' }
 
 function PerfilMetaHidratacao() {
-  const [form, setForm] = useState({ peso: '', genero: 'm', atividade: 'moderado', cidade: '' })
-  const [preview, setPreview] = useState(null)
-  const [resultado, setResultado] = useState(null)
+  const { modo, perfil, recarregar } = useHidratacao()
+  const demo = modo === 'demo'
+
+  const [form, setForm] = useState(FORM_VAZIO)
+  const [local, setLocal] = useState(null)   // { lat, lon, nome } da cidade encontrada
+  const [temp, setTemp] = useState(null)
+  const [buscandoCidade, setBuscandoCidade] = useState(false)
+  // Último texto já buscado (a Open-Meteo devolve "Recife, Pernambuco" para "Recife")
+  const [cidadeBuscada, setCidadeBuscada] = useState('')
+  const [erroCidade, setErroCidade] = useState('')
   const [salvando, setSalvando] = useState(false)
-  const [carregandoPreview, setCarregandoPreview] = useState(false)
   const [erro, setErro] = useState('')
-  const debounceRef = useRef()
+  const [salvoAgora, setSalvoAgora] = useState(false)
 
-  // Pré-preenche com o perfil salvo no backend
-  useEffect(() => {
-    getPerfil()
-      .then((resp) => {
-        // aceita perfil plano ou aninhado em { perfil: {...} }
-        const p = resp?.perfil || resp
-        if (p && (p.peso || p.cidade)) {
-          setForm((f) => ({
-            peso: p.peso ?? f.peso,
-            genero: p.genero ?? f.genero,
-            atividade: p.atividade ?? f.atividade,
-            cidade: p.cidade ?? f.cidade,
-          }))
-        }
-      })
-      .catch(() => {})
-  }, [])
+  // Preenche uma vez com o perfil salvo, quando o painel chega
+  const [preenchido, setPreenchido] = useState(false)
+  if (!preenchido && perfil) {
+    setPreenchido(true)
+    setForm({
+      peso: perfil.peso_kg ?? '',
+      genero: perfil.genero || 'm',
+      atividade: perfil.atividade || 'moderado',
+      cidade: perfil.cidade || '',
+    })
+    if (perfil.lat != null) setLocal({ lat: perfil.lat, lon: perfil.lon, nome: perfil.cidade })
+    setCidadeBuscada(perfil.cidade || '')
+    setTemp(perfil.temp_c ?? null)
+  }
 
-  // Preview com debounce quando peso e cidade estão preenchidos
+  // Busca a cidade 700 ms depois que o usuário para de digitar. Só a resposta da
+  // busca mais recente vale (o contador descarta as que ficaram para trás).
+  const ultimaBusca = useRef(0)
   useEffect(() => {
-    clearTimeout(debounceRef.current)
-    if (!form.peso || !form.cidade) {
-      setPreview(null)
-      setCarregandoPreview(false)
-      return
-    }
-    setCarregandoPreview(true)
-    debounceRef.current = setTimeout(async () => {
+    const cidade = form.cidade.trim()
+    if (demo || !cidade || cidade === cidadeBuscada) return
+    const id = setTimeout(async () => {
+      const busca = ++ultimaBusca.current
+      const ativo = () => busca === ultimaBusca.current
+      setCidadeBuscada(cidade)
+      setBuscandoCidade(true)
+      setErroCidade('')
       try {
-        const r = await calcularMetaPreview({
-          peso: Number(form.peso),
-          genero: form.genero,
-          atividade: form.atividade,
-          cidade: form.cidade,
-        })
-        setPreview(r)
+        const g = await geocodificar(cidade)
+        if (!ativo()) return
+        if (!g) {
+          setLocal(null)
+          setTemp(null)
+          setErroCidade('Cidade não encontrada. Digite uma cidade, não um país ou estado.')
+        } else {
+          setLocal(g)
+          const t = await temperaturaAtual(g.lat, g.lon)
+          if (ativo()) setTemp(t)
+        }
       } catch {
-        setPreview(null)
+        if (ativo()) setErroCidade('Não foi possível buscar a cidade agora. Tente de novo em instantes.')
       } finally {
-        setCarregandoPreview(false)
+        if (ativo()) setBuscandoCidade(false)
       }
-    }, 600)
-    return () => clearTimeout(debounceRef.current)
-  }, [form.peso, form.genero, form.atividade, form.cidade])
+    }, 700)
+    return () => clearTimeout(id)
+  }, [form.cidade, cidadeBuscada, demo])
 
-  const alterar = (campo, valor) => setForm((f) => ({ ...f, [campo]: valor }))
+  const peso = Number(String(form.peso).replace(',', '.'))
+  const pesoOk = peso >= 25 && peso <= 250
+  const det = useMemo(
+    () => (pesoOk ? calcularMeta(peso, form.genero, temp, form.atividade) : null),
+    [peso, pesoOk, form.genero, form.atividade, temp]
+  )
+
+  const alterar = (campo, valor) => {
+    setForm((f) => ({ ...f, [campo]: valor }))
+    setSalvoAgora(false)
+    if (campo === 'cidade') setErroCidade('')
+  }
 
   async function salvar() {
     setErro('')
-    if (!form.peso || !form.cidade) {
-      setErro('Preencha ao menos peso e cidade.')
+    if (!pesoOk) {
+      setErro('Informe um peso entre 25 e 250 kg.')
       return
     }
     setSalvando(true)
     try {
-      const r = await postPerfil({
-        peso: Number(form.peso),
+      const { data: { user } } = await supabase.auth.getUser()
+      const { error } = await supabase.from('perfis').upsert({
+        user_id: user.id,
+        nome: perfil?.nome ?? null,
+        peso_kg: peso,
         genero: form.genero,
         atividade: form.atividade,
-        cidade: form.cidade,
+        cidade: local?.nome || form.cidade.trim() || null,
+        lat: local?.lat ?? null,
+        lon: local?.lon ?? null,
+        atualizado_em: new Date().toISOString(),
       })
-      setResultado(r)
-    } catch (e) {
-      setErro(e.message)
+      if (error) throw new Error('Não foi possível salvar o perfil. Tente de novo.', { cause: error })
+      await rpc('salvar_meta', { p_meta: det.meta, p_temp: temp, p_detalhe: { ...det, temp } })
+      await recarregar()
+      setSalvoAgora(true)
+    } catch (falha) {
+      setErro(falha.message)
     } finally {
       setSalvando(false)
     }
   }
 
-  // Mostra resultado salvo; senão o preview ao vivo
-  const r = resultado || preview
-  const salvo = !!resultado
+  const jaTinhaPerfil = Boolean(perfil?.peso_kg)
 
   return (
-    <div className="card perfil-meta-hidratacao">
-      <div className="d-flex align-items-center gap-2 mb-1">
+    <Card className="perfil-meta-hidratacao">
+      <div className="flex items-center gap-2 mb-1">
         <div className="perfil-stat-icon perfil-stat-icon--blue">
-          <i className="fa-solid fa-droplet"></i>
+          <Icone nome="fa-droplet" />
         </div>
         <div>
           <h3 className="perfil-secao-titulo">Meta de Hidratação</h3>
@@ -114,14 +142,22 @@ function PerfilMetaHidratacao() {
         </div>
       </div>
 
-      <div className="perfil-meta-form">
+      {demo && (
+        <p className="perfil-meta-aviso">
+          <Icone nome="fa-circle-info" /> No modo demonstração a meta não é salva. Entre com a sua conta para personalizar.
+        </p>
+      )}
+
+      <fieldset className="perfil-meta-form" disabled={demo}>
         <div className="perfil-meta-campo">
-          <label className="perfil-edit-label">Peso (kg)</label>
+          <label className="perfil-edit-label" htmlFor="meta-peso">Peso (kg)</label>
           <input
+            id="meta-peso"
             className="perfil-edit-input"
             type="number"
             inputMode="decimal"
-            min="1"
+            min="25"
+            max="250"
             value={form.peso}
             placeholder="78"
             onChange={(e) => alterar('peso', e.target.value)}
@@ -129,19 +165,23 @@ function PerfilMetaHidratacao() {
         </div>
 
         <div className="perfil-meta-campo">
-          <label className="perfil-edit-label">Cidade</label>
+          <label className="perfil-edit-label" htmlFor="meta-cidade">Cidade</label>
           <input
+            id="meta-cidade"
             className="perfil-edit-input"
             type="text"
             value={form.cidade}
             placeholder="São Paulo"
+            aria-invalid={!!erroCidade}
+            aria-describedby={erroCidade ? 'meta-cidade-erro' : undefined}
             onChange={(e) => alterar('cidade', e.target.value)}
           />
         </div>
 
         <div className="perfil-meta-campo">
-          <label className="perfil-edit-label">Gênero</label>
+          <label className="perfil-edit-label" htmlFor="meta-genero">Gênero</label>
           <select
+            id="meta-genero"
             className="perfil-edit-input"
             value={form.genero}
             onChange={(e) => alterar('genero', e.target.value)}
@@ -152,62 +192,70 @@ function PerfilMetaHidratacao() {
         </div>
 
         <div className="perfil-meta-campo">
-          <label className="perfil-edit-label">Atividade física</label>
+          <label className="perfil-edit-label" htmlFor="meta-atividade">Atividade física</label>
           <select
+            id="meta-atividade"
             className="perfil-edit-input"
             value={form.atividade}
             onChange={(e) => alterar('atividade', e.target.value)}
           >
-            {ATIVIDADES.map(([v, label]) => (
-              <option key={v} value={v}>{label}</option>
+            {ATIVIDADES.map((a) => (
+              <option key={a.id} value={a.id} title={a.desc}>{a.nome}</option>
             ))}
           </select>
         </div>
-      </div>
+      </fieldset>
 
-      {erro && <p className="perfil-meta-erro">{erro}</p>}
+      {erroCidade && <p id="meta-cidade-erro" className="perfil-meta-erro" role="alert">{erroCidade}</p>}
+      {erro && <p className="perfil-meta-erro" role="alert">{erro}</p>}
 
-      {r && (
-        <div className={`perfil-meta-resultado ${salvo ? 'perfil-meta-resultado--salvo' : ''}`}>
-          {r.aviso && <p className="perfil-meta-aviso"><i className="fa-solid fa-triangle-exclamation"></i> {r.aviso}</p>}
-
+      {det && !demo && (
+        <div className={`perfil-meta-resultado ${salvoAgora ? 'perfil-meta-resultado--salvo' : ''}`}>
           <div className="perfil-meta-valor-wrap">
             <span className="perfil-meta-valor-label">
-              {salvo ? 'Meta salva' : 'Meta sugerida'} {carregandoPreview && !salvo ? '· atualizando…' : ''}
+              {salvoAgora ? 'Meta salva' : 'Meta sugerida'} {buscandoCidade ? '· buscando a cidade…' : ''}
             </span>
-            <span className="perfil-meta-valor-grande">{r.meta} <small>ml/dia</small></span>
+            <span className="perfil-meta-valor-grande">{det.meta} <small>ml/dia</small></span>
           </div>
 
           <div className="perfil-meta-breakdown">
             <div className="perfil-meta-fator">
-              <span><i className="fa-solid fa-weight-scale"></i> Base (peso/sexo)</span>
-              <strong>{r.base} ml</strong>
+              <span><Icone nome="fa-weight-scale" /> Base (peso/sexo)</span>
+              <strong>{det.base} ml</strong>
             </div>
             <div className="perfil-meta-fator">
               <span>
-                <i className="fa-solid fa-temperature-half"></i> Temperatura
-                {r.temp != null ? ` · ${r.temp}°C em ${r.cidade}` : ''}
+                <Icone nome="fa-temperature-half" /> Temperatura
+                {temp != null && local ? ` · ${Math.round(temp)}°C em ${local.nome}` : ''}
               </span>
-              <strong>+{r.ajuste_temp} ml</strong>
+              <strong>+{det.ajuste_temp} ml</strong>
             </div>
             <div className="perfil-meta-fator">
-              <span><i className="fa-solid fa-person-running"></i> Atividade</span>
-              <strong>+{r.ajuste_atividade} ml</strong>
+              <span><Icone nome="fa-person-running" /> Atividade</span>
+              <strong>+{det.ajuste_atividade} ml</strong>
             </div>
           </div>
+          {(det.meta === META_MIN || det.meta === META_MAX) && (
+            <p className="perfil-meta-aviso">
+              <Icone nome="fa-triangle-exclamation" /> A meta fica sempre entre {META_MIN} e {META_MAX} ml.
+            </p>
+          )}
         </div>
       )}
 
-      <button className="perfil-meta-btn" onClick={salvar} disabled={salvando}>
-        {salvando ? 'Salvando…' : (resultado ? 'Atualizar minha meta' : 'Salvar minha meta')}
+      <button className="perfil-meta-btn" onClick={salvar} disabled={demo || salvando || !pesoOk || buscandoCidade}>
+        {salvando ? 'Salvando…' : (jaTinhaPerfil ? 'Atualizar minha meta' : 'Salvar minha meta')}
       </button>
 
       <p className="perfil-meta-disclaimer">
-        <i className="fa-solid fa-circle-info"></i>
-        Estimativa baseada em peso, sexo, atividade (ACSM) e temperatura local (EFSA).
-        É uma <strong>meta sugerida</strong>, não substitui orientação médica.
+        <Icone nome="fa-circle-info" />
+        <span>
+          Estimativa baseada em peso, sexo, atividade (ACSM) e temperatura local (EFSA).
+          É uma <strong>meta sugerida</strong>, não substitui orientação médica. A meta é
+          recalculada uma vez por dia com a temperatura do dia.
+        </span>
       </p>
-    </div>
+    </Card>
   )
 }
 

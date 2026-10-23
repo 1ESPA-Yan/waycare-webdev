@@ -1,42 +1,43 @@
-import { Link, useLocation } from 'react-router-dom'
+import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useHidratacao } from '../hooks/useHidratacao'
+import Icone from './Icone'
 
-function Sidebar({ isOpen }) {
-  const location = useLocation()
-  const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock } = useApp()
-  const pctWidget = Math.min(100, Math.round((consumidoHoje / metaHoje) * 100))
-  const navClass = (path) =>
-    location.pathname === path ? 'nav-item active' : 'nav-item'
+function Sidebar({ isOpen, inert, ref }) {
+  const { nomeUsuario, nivel, sairDaConta } = useApp()
+  const { consumo, meta, dock, modo } = useHidratacao()
+  const pctWidget = Math.min(100, Math.round((consumo / meta) * 100))
+  const statusWidget = modo === 'demo' ? 'Demo' : !dock ? 'Sem dock' : dock.online ? 'Conectada' : 'Offline'
 
   return (
-    <aside className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar" role="navigation" aria-label="Menu principal">
+    <aside ref={ref} inert={inert} className={`sidebar ${isOpen ? 'open' : ''}`} id="sidebar">
       <div className="sidebar-logo">
-        <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
+        <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
         WayCare
       </div>
-      <nav className="sidebar-nav">
-        <Link to="/dashboard" className={navClass('/dashboard')}><i className="fa-solid fa-house nav-icon"></i>Início</Link>
-        <Link to="/trilhas" className={navClass('/trilhas')}><i className="fa-solid fa-route nav-icon"></i>Trilhas</Link>
-        <Link to="/conquistas" className={navClass('/conquistas')}><i className="fa-solid fa-trophy nav-icon"></i>Conquistas</Link>
-        <Link to="/descobertas" className={navClass('/descobertas')}><i className="fa-solid fa-lightbulb nav-icon"></i>Descobertas</Link>
-        <Link to="/recompensas" className={navClass('/recompensas')}><i className="fa-solid fa-gifts nav-icon"></i>Recompensas</Link>
-        <Link to="/perfil" className={navClass('/perfil')}><i className="fa-solid fa-user nav-icon"></i>Perfil</Link>
-        <Link to="/configuracoes" className={navClass('/configuracoes')}><i className="fa-solid fa-gear nav-icon"></i>Configurações</Link>
+      <nav className="sidebar-nav" aria-label="Menu principal">
+        <NavLink to="/dashboard" className="nav-item"><Icone nome="fa-house" className="nav-icon" />Início</NavLink>
+        <NavLink to="/trilhas" className="nav-item"><Icone nome="fa-route" className="nav-icon" />Trilhas</NavLink>
+        <NavLink to="/conquistas" className="nav-item"><Icone nome="fa-trophy" className="nav-icon" />Conquistas</NavLink>
+        <NavLink to="/descobertas" className="nav-item"><Icone nome="fa-lightbulb" className="nav-icon" />Descobertas</NavLink>
+        <NavLink to="/recompensas" className="nav-item"><Icone nome="fa-gifts" className="nav-icon" />Recompensas</NavLink>
+        <NavLink to="/perfil" className="nav-item"><Icone nome="fa-user" className="nav-icon" />Perfil</NavLink>
+        <NavLink to="/configuracoes" className="nav-item"><Icone nome="fa-gear" className="nav-icon" />Configurações</NavLink>
       </nav>
       <Link to="/waycare-bottle" className="bottle-sidebar-widget">
-        <div className="d-flex align-items-center gap-2 mb-2">
-          <div className="bottle-widget-icon"><i className="fa-solid fa-droplet"></i></div>
-          <div className="d-flex flex-column gap-0">
+        <div className="flex items-center gap-2 mb-2">
+          <div className="bottle-widget-icon"><Icone nome="fa-droplet" /></div>
+          <div className="flex flex-col gap-0">
             <span className="bottle-widget-title">WayCare Bottle</span>
             <span className="bottle-widget-status">
-              <span className="bottle-status-dot" style={{ backgroundColor: usandoReal && statusDock?.online ? '' : 'var(--color-text-muted)' }}></span>
-              {usandoReal && statusDock?.online ? 'Conectada' : usandoReal ? 'Offline' : 'Demo'}
+              <span className="bottle-status-dot" style={{ backgroundColor: dock?.online ? '' : 'var(--color-text-muted)' }}></span>
+              {statusWidget}
             </span>
           </div>
         </div>
-        <div className="d-flex align-items-baseline gap-1 mb-1">
-          <span className="bottle-widget-ml">{consumidoHoje}</span>
-          <span className="bottle-widget-meta">/ {metaHoje} ml</span>
+        <div className="flex items-baseline gap-1 mb-1">
+          <span className="bottle-widget-ml">{consumo}</span>
+          <span className="bottle-widget-meta">/ {meta} ml</span>
         </div>
         <div className="progress-bar bottle-widget-bar">
           <div className="progress-fill bottle-widget-fill" style={{ width: `${pctWidget}%` }}></div>
@@ -47,10 +48,10 @@ function Sidebar({ isOpen }) {
         <div className="avatar" aria-hidden="true">{nomeUsuario.charAt(0).toUpperCase()}</div>
         <div className="sidebar-user-info">
           <span className="sidebar-user-name">{nomeUsuario}</span>
-          <span className="sidebar-user-level">Nível 5</span>
+          <span className="sidebar-user-level">Nível {nivel}</span>
         </div>
-        <Link to="/" className="sidebar-logout" aria-label="Sair">
-          <i className="fa-solid fa-arrow-right-from-bracket"></i>
+        <Link to="/" replace onClick={sairDaConta} className="sidebar-logout" aria-label="Sair">
+          <Icone nome="fa-arrow-right-from-bracket" />
         </Link>
       </div>
     </aside>

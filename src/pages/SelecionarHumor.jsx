@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Icone from '../components/Icone'
 import '../styles/selecionarHumor.css'
 
 const HUMORES = [
@@ -30,7 +31,7 @@ const HUMORES = [
     label: 'Estressado',
     desc: 'Sobrecarregado',
     icon: 'fa-cloud-showers-heavy',
-    cor: 'orange',
+    cor: 'rose',
   },
   {
     id: 'neutro',
@@ -58,16 +59,16 @@ function SelecionarHumor() {
       {/* Topbar minimalista */}
       <header className="humor-topbar">
         <div className="humor-logo">
-          <img src="/images/LogoWayCare.png" alt="WayCare" className="h-7 w-auto" />
+          <img src="/images/logo-64.png" alt="WayCare" width="28" height="28" className="h-7 w-auto" />
           <span className="humor-logo-nome">WayCare</span>
         </div>
-        <div className="d-flex align-items-center gap-3">
+        <div className="flex items-center gap-4">
           <div className="hc-chip">
-            <i className="fa-solid fa-coins"></i>
-            {totalHC} HC
+            <Icone nome="fa-coins" />
+            {totalHC.toLocaleString('pt-BR')} HC
           </div>
           <button className="humor-btn-voltar" onClick={() => navigate('/dashboard')} aria-label="Voltar">
-            <i className="fa-solid fa-xmark"></i>
+            <Icone nome="fa-xmark" />
           </button>
         </div>
       </header>
@@ -90,7 +91,7 @@ function SelecionarHumor() {
               aria-pressed={humorSelecionado === humor.id}
             >
               <div className={`humor-icone humor-icone--${humor.cor}`}>
-                <i className={`fa-solid ${humor.icon}`}></i>
+                <Icone nome={humor.icon} />
               </div>
               <span className="humor-label">{humor.label}</span>
               <span className="humor-desc">{humor.desc}</span>

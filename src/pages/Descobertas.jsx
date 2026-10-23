@@ -1,8 +1,12 @@
-import { useState, useEffect, useMemo } from 'react'
-import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
-import { useApp } from '../context/AppContext'
+import { useState, useMemo } from 'react'
+import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Button from '../components/Button'
+import Card from '../components/Card'
+import Chip from '../components/Chip'
+import Icone from '../components/Icone'
 import '../styles/descobertas.css'
+import { useDados } from '../hooks/useDados'
 
 const FILTROS = [
   { key: 'todos',  label: 'Todos' },
@@ -11,55 +15,45 @@ const FILTROS = [
   { key: 'Baixo',  label: 'Baixo Impacto' },
 ]
 
+// Cor do selo de impacto (as classes impactoBadge dos JSON nunca existiram no CSS)
+const COR_IMPACTO = { Alto: 'error', Médio: 'warning', Baixo: 'info' }
+
 function CardDescoberta({ d }) {
   return (
-    <div className="card descoberta-card">
-      <div className="d-flex align-items-start gap-4 mb-3">
+    <Card className="descoberta-card">
+      <div className="flex items-start gap-6 mb-4">
         <div className={`descoberta-icon descoberta-icon--${d.cor}`}>
-          <i className={`fa-solid ${d.icone}`}></i>
+          <Icone nome={d.icone} />
         </div>
-        <div className="d-flex flex-column gap-2">
+        <div className="flex flex-col gap-2">
           <h3 className="descoberta-nome">{d.nome}</h3>
-          <div className="d-flex align-items-center gap-2 flex-wrap">
-            <span className={`badge ${d.categoriaBadge}`}>{d.categoria}</span>
-            <span className={`badge ${d.impactoBadge}`}>Impacto: {d.impacto}</span>
+          <div className="flex items-center gap-2 flex-wrap">
+            <Chip cor={d.categoriaBadge}>{d.categoria}</Chip>
+            <Chip cor={COR_IMPACTO[d.impacto] || 'muted'}>Impacto: {d.impacto}</Chip>
             <span className="descoberta-data">{d.data}</span>
           </div>
         </div>
       </div>
       <div className="descoberta-insight">
-        <i className="fa-solid fa-lightbulb descoberta-insight-icon"></i>
+        <Icone nome="fa-lightbulb" className="descoberta-insight-icon" />
         <span>{d.insight}</span>
       </div>
       <p className="descoberta-dado">
-        <i className="fa-solid fa-arrow-trend-up"></i>
+        <Icone nome="fa-arrow-trend-up" />
         {d.dado}
       </p>
-      <div className="d-flex align-items-center gap-3 flex-wrap">
-        <button className="btn descoberta-btn-criar">Criar missão baseada nisto</button>
-        <button className="btn descoberta-btn-historico">Ver histórico completo</button>
+      <div className="flex items-center gap-4 flex-wrap">
+        <Button variante="fantasma" tamanho="sm" className="descoberta-acao em-breve" disabled>Criar missão baseada nisto <span className="badge-em-breve">Em breve</span></Button>
+        <Button variante="fantasma" tamanho="sm" className="descoberta-acao em-breve" disabled>Ver histórico completo <span className="badge-em-breve">Em breve</span></Button>
       </div>
-    </div>
+    </Card>
   )
 }
 
 function Descobertas() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [descobertas, setDescoberta] = useState([])
-  const [carregando, setCarregando] = useState(true)
+  const { dados, carregando } = useDados('descobertas')
+  const descobertas = useMemo(() => dados ?? [], [dados])
   const [filtroAtivo, setFiltroAtivo] = useState('todos')
-  const { totalHC, naoLidas } = useApp()
-
-  useEffect(() => {
-    fetch('/data/descobertas.json')
-      .then(res => res.json())
-      .then(data => { setDescoberta(data); setCarregando(false) })
-      .catch(() => {
-        import('../data/descobertas.json').then(mod => {
-          setDescoberta(mod.default); setCarregando(false)
-        })
-      })
-  }, [])
 
   const filtradas = useMemo(() =>
     filtroAtivo === 'todos' ? descobertas : descobertas.filter(d => d.impacto === filtroAtivo),
@@ -68,68 +62,19 @@ function Descobertas() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
+          <Topbar icone="fa-lightbulb" cor="dourado" titulo="Descobertas" subtitulo="Insights personalizados sobre seus hábitos de saúde" />
 
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
+          <section id="page-content" className="page-transition @container">
 
-        <main className="main-content" id="main-content">
-
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="descobertas-titulo-icon">
-                <i className="fa-solid fa-lightbulb"></i>
-              </div>
-              <div>
-                <h1 className="descobertas-titulo">Descobertas</h1>
-                <p className="descobertas-subtitulo">
-                  Insights personalizados sobre seus hábitos de saúde
-                </p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
-
-          <section id="page-content" className="page-transition">
-
-            <div className="d-flex gap-2 flex-wrap mb-4">
-              {FILTROS.map(f => (
-                <button
-                  key={f.key}
-                  className={`descoberta-filter-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                  onClick={() => setFiltroAtivo(f.key)}
-                  aria-pressed={filtroAtivo === f.key}
-                >
-                  {f.label}
-                </button>
-              ))}
-            </div>
+            <FiltroPills className="mb-6" rotulo="Filtrar descobertas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
             {carregando ? (
-              <div className="d-flex flex-column gap-4">
+              <div className="descobertas-lista">
                 {[1, 2, 3].map(i => (
                   <div key={i} className="card descoberta-card">
-                    <div className="d-flex align-items-start gap-4 mb-3">
+                    <div className="flex items-start gap-6 mb-4">
                       <div className="skeleton" style={{ width: 48, height: 48, borderRadius: '50%', flexShrink: 0 }}></div>
-                      <div className="d-flex flex-column gap-2 grow">
+                      <div className="flex flex-col gap-2 grow">
                         <div className="skeleton" style={{ height: 14, width: '50%' }}></div>
                         <div className="skeleton" style={{ height: 11, width: '35%' }}></div>
                       </div>
@@ -140,35 +85,34 @@ function Descobertas() {
                 ))}
               </div>
             ) : filtradas.length === 0 ? (
-              <p className="text-muted text-center py-5">Nenhuma descoberta para este filtro.</p>
+              <p className="text-muted text-center py-12">Nenhuma descoberta para este filtro.</p>
             ) : (
-              <div className="d-flex flex-column gap-4">
+              <div className="descobertas-lista">
                 {filtradas.map(d => <CardDescoberta key={d.id} d={d} />)}
               </div>
             )}
 
-            <div className="descobertas-info mt-5">
+            <div className="descobertas-info mt-12">
               <div className="descobertas-info-icon">
-                <i className="fa-solid fa-circle-info"></i>
+                <Icone nome="fa-circle-info" />
               </div>
-              <div className="d-flex flex-column gap-2">
+              <div className="flex flex-col gap-2">
                 <h4 className="descobertas-info-titulo">Como funcionam as descobertas?</h4>
                 <p className="descobertas-info-desc">
-                  A WayCare Band — nossa pulseira inteligente — coleta seus dados de saúde em tempo real:
-                  sono, passos, hidratação e humor. Com esses dados, identificamos padrões e correlações
-                  personalizadas para você. Quanto mais você usa a WayCare Band, mais precisas ficam as descobertas!
+                  A WayCare Bottle e a dock registram cada gole automaticamente: a balança da dock pesa a
+                  garrafa e calcula quanto você bebeu ao longo do dia. Junto com suas missões e seu humor,
+                  esses dados revelam padrões e correlações personalizadas para você. Quanto mais você usa a
+                  WayCare Bottle, mais precisas ficam as descobertas!
                 </p>
                 <ul className="descobertas-info-lista">
-                  <li><i className="fa-solid fa-circle-dot"></i> Novas descobertas são geradas semanalmente</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Baseadas em pelo menos 7 dias de dados da pulseira</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Priorizamos insights com maior impacto na sua saúde</li>
+                  <li><Icone nome="fa-circle-dot" /> Novas descobertas são geradas semanalmente</li>
+                  <li><Icone nome="fa-circle-dot" /> Baseadas em pelo menos 7 dias de dados da garrafa</li>
+                  <li><Icone nome="fa-circle-dot" /> Priorizamos insights com maior impacto na sua saúde</li>
                 </ul>
               </div>
             </div>
 
           </section>
-        </main>
-      </div>
     </>
   )
 }

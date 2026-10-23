@@ -2,13 +2,6 @@
    Estilos para login.html e cadastro.html */
 
 /* Layout tela dividida */
-.auth-body {
-  margin: 0;
-  padding: 0;
-  min-height: 100vh;
-  background-color: var(--color-white);
-}
-
 .auth-layout {
   display: flex;
   min-height: 100vh;
@@ -56,18 +49,6 @@
   position: relative;
   z-index: 1;
   filter: brightness(0) invert(1);
-}
-
-.auth-logo-icon {
-  width: 44px;
-  height: 44px;
-  background-color: rgba(255, 255, 255, 0.2);
-  border-radius: var(--radius-md);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--color-white);
-  font-size: 20px;
 }
 
 .auth-logo-name {
@@ -134,38 +115,6 @@
 }
 
 /* Passos do cadastro no painel esquerdo */
-.auth-steps li {
-  opacity: 0.45;
-  transition: opacity var(--transition-normal);
-}
-
-.auth-step-text {
-  display: flex;
-  flex-direction: column;
-  gap: 2px;
-}
-
-.auth-steps li small {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-bold);
-  letter-spacing: 0.08em;
-  opacity: 0.7;
-}
-
-.auth-steps li span {
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  line-height: 1.4;
-}
-
-.auth-step-item.active {
-  opacity: 1;
-}
-
-.auth-step-item.active .auth-feature-icon {
-  background-color: rgba(255, 255, 255, 0.3);
-}
-
 /* Painel direito — Formulário */
 .auth-form-panel {
   flex: 1;
@@ -204,23 +153,6 @@
 }
 
 /* Barra de progresso (3 segmentos) */
-.auth-progress {
-  display: flex;
-  gap: var(--space-2);
-}
-
-.auth-progress-bar {
-  flex: 1;
-  height: 4px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-border);
-  transition: background-color var(--transition-normal);
-}
-
-.auth-progress-bar.active {
-  background-color: var(--color-primary);
-}
-
 /* Formulário */
 .auth-form {
   display: flex;
@@ -252,54 +184,20 @@
   padding-right: calc(var(--space-4) + 20px + var(--space-2));
 }
 
-/* Botão de mostrar e esconder senha */
-.input-toggle-password {
-  position: absolute;
-  right: var(--space-4);
-  color: var(--color-text-muted);
-  font-size: 14px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  transition: color var(--transition-fast);
+/* Campo com erro de validação */
+.input-field.input-invalido {
+  border-color: var(--color-error);
 }
 
-.input-toggle-password:hover {
-  color: var(--color-text-primary);
-}
-
-/* Label + link "Esqueci a senha" na mesma linha */
-.input-label-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+.input-erro-msg {
+  font-size: var(--font-size-xs);
+  color: var(--color-error);
+  margin: var(--space-1) 0 0;
 }
 
 /* Botão de submit */
 .auth-submit-btn {
   margin-top: var(--space-2);
-}
-
-/* Linha de botão com voltar + continuar */
-.auth-btn-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  margin-top: var(--space-2);
-}
-
-.auth-back-btn {
-  width: 48px;
-  height: 48px;
-  min-width: 48px;
-  padding: 0;
-  border-radius: var(--radius-full);
-  flex-shrink: 0;
-}
-
-.auth-submit-flex {
-  flex: 1;
 }
 
 /* Divisor "ou" */
@@ -319,23 +217,9 @@
   background-color: var(--color-border);
 }
 
-/* Link de navegação (cadastro/login) */
-.auth-footer-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-1);
-  text-align: center;
-}
-
-.auth-footer-text p {
-  color: var(--color-text-muted);
-  font-size: var(--font-size-sm);
-  margin: 0;
-}
-
+/* Links (termos, reenviar código, outro e-mail) */
 .auth-link {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
   text-decoration: none;
   transition: color var(--transition-fast);
@@ -344,13 +228,6 @@
 .auth-link:hover {
   color: var(--color-primary-dark);
   text-decoration: underline;
-}
-
-.auth-link-bold {
-  font-weight: var(--font-weight-bold);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
 }
 
 /* Termos no rodapé */
@@ -362,150 +239,37 @@
   margin: 0;
 }
 
-/* Multi-step — exibição dos passos */
-.cadastro-step {
-  display: none;
-  flex-direction: column;
-  gap: var(--space-5);
-}
-
-.cadastro-step.active {
-  display: flex;
-}
-
-/* Indicador de força da senha */
-.password-strength {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  margin-top: var(--space-2);
-}
-
-.password-strength-bars {
-  display: flex;
-  gap: var(--space-1);
-  flex: 1;
-}
-
-.strength-bar {
-  flex: 1;
-  height: 4px;
-  border-radius: var(--radius-full);
-  background-color: var(--color-border);
-  transition: background-color var(--transition-normal);
-}
-
-.strength-bar.weak   { background-color: var(--color-error); }
-.strength-bar.medium { background-color: var(--color-warning); }
-.strength-bar.strong { background-color: var(--color-primary); }
-
-.password-strength-label {
-  font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-muted);
-  min-width: 36px;
-  text-align: right;
-}
-
-/* Critérios da senha */
-.password-criteria {
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-2) var(--space-4);
-  margin-top: var(--space-2);
-}
-
-.criteria-item {
+/* Texto de apoio abaixo dos botões */
+.auth-dica {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  transition: color var(--transition-fast);
+  text-align: center;
+  margin: 0;
 }
 
-.criteria-item.valid {
-  color: var(--color-primary);
-}
-
-/* Mensagem de confirmação de senha */
-.password-match-msg {
-  font-size: var(--font-size-xs);
-  margin-top: var(--space-1);
-  display: block;
-}
-
-.match-ok    { color: var(--color-primary); }
-.match-error { color: var(--color-error); }
-
-/* Passo 3 (Resumo e LGPD) */
-.cadastro-resumo {
+/* Aviso quando o login com conta não está disponível */
+.auth-aviso {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
   background-color: var(--color-bg);
   border-radius: var(--radius-md);
-  padding: var(--space-5);
-  border: 1px solid var(--color-border);
-}
-
-.cadastro-resumo-title {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin-bottom: var(--space-4);
-}
-
-.resumo-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: var(--space-2) 0;
-  border-bottom: 1px solid var(--color-border);
-  font-size: var(--font-size-sm);
-}
-
-.resumo-row:last-child {
-  border-bottom: none;
-}
-
-.resumo-label {
-  color: var(--color-text-muted);
-}
-
-.resumo-value {
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-primary);
-}
-
-/* LGPD */
-.cadastro-lgpd {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-4);
-  background-color: var(--color-primary-light);
-  border-radius: var(--radius-md);
-  padding: var(--space-4) var(--space-5);
-  border: 1px solid rgba(28, 151, 112, 0.2);
-}
-
-.lgpd-icon {
-  color: var(--color-primary);
-  font-size: 20px;
-  flex-shrink: 0;
-  margin-top: 2px;
-}
-
-.cadastro-lgpd strong {
-  display: block;
-  font-size: var(--font-size-sm);
-  color: var(--color-primary);
-  margin-bottom: var(--space-1);
-}
-
-.cadastro-lgpd p {
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
-  line-height: var(--line-height-loose);
+  padding: var(--space-3) var(--space-4);
   margin: 0;
+}
+
+/* Campo do código de 6 dígitos: grande e espaçado */
+.input-field.auth-codigo-input {
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.4em;
+  text-align: center;
+}
+
+/* Reenviar código / usar outro e-mail */
+.auth-acoes-secundarias {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: var(--space-2) var(--space-6);
 }
 
 /* Responsividade */
@@ -524,21 +288,25 @@
     flex-direction: column;
   }
 
+  /* Painel verde compacto: só logo e título, para o formulário aparecer logo */
   .auth-hero {
     width: 100%;
     min-height: auto;
-    padding: var(--space-6);
+    padding: var(--space-5) var(--space-4);
   }
 
   .auth-hero-content {
-    padding: var(--space-6) 0;
+    padding: var(--space-4) 0 0;
   }
 
   .auth-hero-title {
-    font-size: 28px;
+    font-size: 22px;
+    margin-bottom: 0;
   }
 
-  .auth-hero-features {
+  .auth-hero-subtitle,
+  .auth-hero-features,
+  .auth-hero-circle {
     display: none;
   }
 

@@ -1,28 +1,30 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import Icone from '../components/Icone'
 import '../styles/confirmar-resgate.css'
 
 function ConfirmarResgate() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { totalHC, adicionarHC } = useApp()
+  const { totalHC, resgatarRecompensa } = useApp()
   const recompensa = location.state?.recompensa
 
   const [aceitouTermos, setAceitouTermos] = useState(false)
 
-  if (!recompensa) {
-    navigate('/recompensas')
-    return null
-  }
+  if (!recompensa) return <Navigate to="/recompensas" replace />
 
   const saldoApos = totalHC - recompensa.preco
+  // O saldo pode ter caído depois de escolher a recompensa (ou o state ser antigo)
+  const saldoInsuficiente = saldoApos < 0
+  const podeConfirmar = aceitouTermos && !saldoInsuficiente
 
   const handleConfirmar = () => {
-    if (!aceitouTermos) return
-    adicionarHC(-recompensa.preco)
-    navigate('/resgate/sucesso', { state: { recompensa } })
+    if (!podeConfirmar) return
+    const codigo = resgatarRecompensa(recompensa)
+    if (!codigo) return
+    navigate('/resgate/sucesso', { state: { recompensa, codigo }, replace: true })
   }
 
   return (
@@ -41,7 +43,7 @@ function ConfirmarResgate() {
             className="confirmar-close-btn"
             aria-label="Fechar"
           >
-            <i className="fa-solid fa-xmark"></i>
+            <Icone nome="fa-xmark" />
           </button>
         </div>
 
@@ -51,7 +53,7 @@ function ConfirmarResgate() {
           {/* Preview do item */}
           <div className="confirmar-preview">
             <div className="confirmar-preview-icon">
-              <i className={`fa-solid ${recompensa.icone}`}></i>
+              <Icone nome={recompensa.icone} />
             </div>
             <h3 className="confirmar-preview-nome">{recompensa.nome}</h3>
           </div>
@@ -63,63 +65,74 @@ function ConfirmarResgate() {
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Valor:</span>
               <div className="confirmar-detalhe-valor">
-                <i className="fa-solid fa-coins"></i>
-                <span>{recompensa.preco} HC</span>
+                <Icone nome="fa-coins" />
+                <span>{recompensa.preco.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo atual:</span>
               <div className="confirmar-detalhe-valor">
-                <i className="fa-solid fa-coins"></i>
-                <span>{totalHC} HC</span>
+                <Icone nome="fa-coins" />
+                <span>{totalHC.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo após resgate:</span>
-              <div className="confirmar-detalhe-valor confirmar-detalhe-valor--destaque">
-                <i className="fa-solid fa-coins"></i>
-                <span>{saldoApos} HC</span>
+              <div className={`confirmar-detalhe-valor confirmar-detalhe-valor--destaque${saldoInsuficiente ? ' confirmar-detalhe-valor--negativo' : ''}`}>
+                <Icone nome="fa-coins" />
+                <span>{saldoApos.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
           </div>
+
+          {saldoInsuficiente && (
+            <p className="confirmar-erro" role="alert">
+              <Icone nome="fa-circle-xmark" />
+              HC insuficiente: faltam {(-saldoApos).toLocaleString('pt-BR')} HC para este resgate.
+            </p>
+          )}
 
           <div className="confirmar-divider"></div>
 
           {/* Termos */}
           <div className="confirmar-termos-wrap">
-            <label className="confirmar-termos-label" onClick={() => setAceitouTermos(v => !v)}>
-              <div className={`confirmar-checkbox ${aceitouTermos ? 'checked' : ''}`}>
+            <label className="confirmar-termos-label">
+              <input
+                type="checkbox"
+                className="confirmar-checkbox-input"
+                checked={aceitouTermos}
+                onChange={e => setAceitouTermos(e.target.checked)}
+              />
+              <span className="confirmar-checkbox" aria-hidden="true">
                 {aceitouTermos && (
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
                     <polyline points="20 6 9 17 4 12" />
                   </svg>
                 )}
-              </div>
-              <div className="confirmar-termos-texto">
-                <span>Li e aceito os termos de resgate</span>
-                <a href="#" onClick={e => e.preventDefault()} className="confirmar-termos-link">
-                  Ver termos completos <i className="fa-solid fa-arrow-up-right-from-square"></i>
-                </a>
-              </div>
+              </span>
+              <span className="confirmar-termos-texto">Li e aceito os termos de resgate</span>
             </label>
+            <a href="/termos" target="_blank" rel="noopener" className="confirmar-termos-link">
+              Ver termos completos <Icone nome="fa-arrow-up-right-from-square" />
+            </a>
           </div>
 
           {/* Aviso */}
           <div className="confirmar-aviso">
-            <i className="fa-solid fa-triangle-exclamation"></i>
+            <Icone nome="fa-triangle-exclamation" />
             <span>Esta ação não pode ser desfeita</span>
           </div>
 
           {/* Ações */}
           <div className="confirmar-actions">
             <motion.button
-              className={`btn confirmar-btn-confirmar ${!aceitouTermos ? 'disabled' : ''}`}
+              className={`btn confirmar-btn-confirmar ${!podeConfirmar ? 'disabled' : ''}`}
               onClick={handleConfirmar}
-              disabled={!aceitouTermos}
-              whileHover={aceitouTermos ? { scale: 1.01 } : {}}
-              whileTap={aceitouTermos ? { scale: 0.98 } : {}}
+              disabled={!podeConfirmar}
+              whileHover={podeConfirmar ? { scale: 1.01 } : {}}
+              whileTap={podeConfirmar ? { scale: 0.98 } : {}}
             >
-              Confirmar Resgate
+              {saldoInsuficiente ? 'HC insuficiente' : 'Confirmar Resgate'}
             </motion.button>
             <button
               className="btn confirmar-btn-cancelar"

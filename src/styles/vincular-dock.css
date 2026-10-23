@@ -1,0 +1,168 @@
+/* WAYCARE — Conectar a dock (primeiro uso: perfil, vínculo e tara) */
+
+.vincular-pagina {
+  max-width: 720px;
+}
+
+.vincular-passos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+.vincular-passo {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-4);
+  align-items: flex-start;
+}
+
+.vincular-passo--feito {
+  opacity: 0.8;
+}
+
+.vincular-passo--atual {
+  border-color: var(--color-primary);
+}
+
+.vincular-passo-num {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: var(--font-weight-bold);
+  background-color: var(--color-bg);
+  color: var(--color-text-secondary);
+}
+
+.vincular-passo--atual .vincular-passo-num,
+.vincular-passo--feito .vincular-passo-num {
+  background-color: var(--color-primary);
+  color: var(--color-white);
+}
+
+.vincular-passo-corpo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  flex: 1;
+  min-width: 0;
+}
+
+.vincular-passo-titulo {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  margin: 0;
+}
+
+.vincular-texto,
+.vincular-instrucoes {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+.vincular-instrucoes {
+  list-style: decimal;
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.vincular-form {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.vincular-form-linha {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}
+
+.input-field.vincular-codigo {
+  flex: 1;
+  min-width: 140px;
+  font-size: var(--font-size-lg);
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+}
+
+.vincular-dica {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+.vincular-pronto,
+.vincular-carregando {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--space-4);
+}
+
+.vincular-pronto {
+  color: var(--color-primary-dark);
+}
+
+.vincular-link {
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-bold);
+}
+
+.vincular-demo {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.vincular-demo p {
+  margin: 0;
+  color: var(--color-text-secondary);
+}
+
+.vincular-demo-icone {
+  font-size: 24px;
+  color: var(--color-primary);
+}
+
+/* Aviso do primeiro uso (Dashboard e WayCare Bottle) */
+.aviso-primeiro-uso {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-2) var(--space-3);
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: var(--color-primary-light);
+  color: var(--color-primary-dark);
+  font-size: var(--font-size-sm);
+}
+
+.aviso-primeiro-uso-link {
+  margin-left: auto;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+  text-decoration: none;
+}
+
+.aviso-primeiro-uso-link:hover {
+  text-decoration: underline;
+}

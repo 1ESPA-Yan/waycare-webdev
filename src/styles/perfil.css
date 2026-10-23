@@ -16,34 +16,6 @@
   color: var(--color-text-primary);
 }
 
-/* Título da página */
-.perfil-titulo-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  background-color: #fff8ec;
-  color: var(--color-hc);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.perfil-titulo {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-  line-height: 1.2;
-}
-
-.perfil-subtitulo {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
 /* Layout de duas colunas — CSS Grid (8/4) */
 .perfil-layout {
   display: grid;
@@ -106,7 +78,7 @@
 }
 
 .perfil-edit-btn:hover {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Bio exibida abaixo do nome */
@@ -124,7 +96,7 @@
   padding: 2px var(--space-2);
   border-radius: var(--radius-sm);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   animation: perfilSalvoFade 2.5s forwards;
@@ -174,7 +146,6 @@
   color: var(--color-text-primary);
   background-color: var(--color-white);
   transition: border-color var(--transition-fast);
-  outline: none;
   font-family: inherit;
   resize: none;
 }
@@ -201,7 +172,7 @@
   gap: var(--space-2);
   padding: var(--space-2) var(--space-4);
   border-radius: var(--radius-md);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
@@ -211,7 +182,7 @@
 }
 
 .perfil-edit-btn-salvar:hover {
-  background-color: var(--color-primary-dark, #157a59);
+  background-color: var(--color-primary-darker);
 }
 
 .perfil-edit-btn-salvar:disabled {
@@ -262,7 +233,7 @@
   font-weight: var(--font-weight-bold);
 }
 
-.perfil-stat-chip--green { background-color: var(--color-primary-light); color: var(--color-primary); }
+.perfil-stat-chip--green { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .perfil-stat-chip--gray  { background-color: var(--color-bg); color: var(--color-text-secondary); }
 .perfil-stat-chip--hc    { background-color: #fff8ec; color: var(--color-hc); }
 
@@ -359,25 +330,6 @@
   display: block;
 }
 
-/* Botão ver todas as conquistas */
-.perfil-btn-conquistas {
-  display: block;
-  width: 100%;
-  text-align: center;
-  background-color: var(--color-primary-light);
-  color: var(--color-primary) !important;
-  border-radius: var(--radius-md) !important;
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  padding: var(--space-3);
-  text-decoration: none;
-  transition: background-color var(--transition-fast);
-}
-
-.perfil-btn-conquistas:hover {
-  background-color: #c5e8dc;
-}
-
 /* Atalhos da coluna direita */
 .perfil-atalho {
   display: flex;
@@ -404,7 +356,7 @@
 }
 
 .perfil-atalho-icon--gray   { background-color: var(--color-bg); color: var(--color-text-muted); }
-.perfil-atalho-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary); }
+.perfil-atalho-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .perfil-atalho-icon--yellow { background-color: #fff8ec; color: var(--color-hc); }
 
 .perfil-atalho-titulo {
@@ -431,11 +383,19 @@
   margin: 0;
 }
 
+/* É um <fieldset> (desabilita tudo no modo demonstração): sem borda nem padding padrão */
 .perfil-meta-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
-  margin-top: var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.perfil-meta-form:disabled {
+  opacity: 0.6;
 }
 
 .perfil-meta-campo {
@@ -500,7 +460,7 @@ select.perfil-edit-input {
 .perfil-meta-valor-grande {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   line-height: 1;
 }
 
@@ -524,7 +484,7 @@ select.perfil-edit-input {
   color: var(--color-text-secondary);
 }
 
-.perfil-meta-fator i {
+.perfil-meta-fator .icone {
   width: 16px;
   text-align: center;
   margin-right: var(--space-1);
@@ -542,7 +502,7 @@ select.perfil-edit-input {
   padding: var(--space-3);
   border: none;
   border-radius: var(--radius-md);
-  background-color: var(--color-primary);
+  background-color: var(--color-primary-dark);
   color: var(--color-white);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
@@ -550,7 +510,7 @@ select.perfil-edit-input {
   transition: background-color var(--transition-fast);
 }
 
-.perfil-meta-btn:hover { background-color: var(--color-primary-dark, #157a59); }
+.perfil-meta-btn:hover { background-color: var(--color-primary-darker); }
 .perfil-meta-btn:disabled { opacity: 0.55; cursor: not-allowed; }
 
 .perfil-meta-disclaimer {
@@ -563,7 +523,7 @@ select.perfil-edit-input {
   margin: var(--space-3) 0 0;
 }
 
-.perfil-meta-disclaimer i { margin-top: 2px; }
+.perfil-meta-disclaimer .icone { margin-top: 2px; }
 
 @media (max-width: 480px) {
   .perfil-meta-form { grid-template-columns: 1fr; }

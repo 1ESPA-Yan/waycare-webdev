@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
+import Topbar from '../components/Topbar'
+import Button from '../components/Button'
+import Card from '../components/Card'
+import Icone from '../components/Icone'
 import '../styles/carteira.css'
 
 function GraficoLinha({ dados }) {
@@ -43,67 +45,21 @@ function GraficoLinha({ dados }) {
 }
 
 function Carteira() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [historico, setHistorico] = useState([])
-  const [grafico, setGrafico] = useState([])
-  const [destaques, setDestaques] = useState([])
-  const { totalHC, naoLidas } = useApp()
-
-  useEffect(() => {
-    fetch('/data/carteira.json')
-      .then(res => res.json())
-      .then(data => {
-        setHistorico(data.historico)
-        setGrafico(data.grafico)
-        setDestaques(data.destaques)
-      })
-      .catch(() => {
-        import('../data/carteira.json').then(mod => {
-          setHistorico(mod.default.historico)
-          setGrafico(mod.default.grafico)
-          setDestaques(mod.default.destaques)
-        })
-      })
-  }, [])
+  const { dados } = useDados('carteira')
+  const historico = dados?.historico ?? []
+  const grafico = dados?.grafico ?? []
+  const destaques = dados?.destaques ?? []
+  const { totalHC } = useApp()
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="carteira-titulo-icon">
-                <i className="fa-solid fa-wallet"></i>
-              </div>
-              <div>
-                <h1 className="carteira-titulo">Minha Carteira</h1>
-                <p className="carteira-subtitulo">Seu extrato de Health Coins</p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <Link to="/notificacoes" className="notif-btn" aria-label="Notificações">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidas > 0 && <span className="notif-dot">{naoLidas > 9 ? '9+' : naoLidas}</span>}
-              </Link>
-            </div>
-          </header>
+          <Topbar icone="fa-wallet" titulo="Minha Carteira" subtitulo="Seu extrato de Health Coins" />
 
           {/* Card de saldo */}
           <div className="carteira-saldo-card">
             <p className="carteira-saldo-label">Seu saldo disponível</p>
             <div className="carteira-saldo-valor">
-              <i className="fa-solid fa-coins carteira-saldo-icon"></i>
+              <Icone nome="fa-coins" className="carteira-saldo-icon" />
               <span className="carteira-saldo-numero">{totalHC.toLocaleString('pt-BR')}</span>
             </div>
             <p className="carteira-saldo-subtexto">Health Coins</p>
@@ -116,37 +72,37 @@ function Carteira() {
             <div className="carteira-col-esquerda">
 
               {/* Gráfico */}
-              <div className="card carteira-card-grafico">
+              <Card className="carteira-card-grafico">
                 <div className="carteira-card-header">
-                  <i className="fa-solid fa-chart-line carteira-card-header-icon"></i>
+                  <Icone nome="fa-chart-line" className="carteira-card-header-icon" />
                   <h2 className="carteira-card-titulo">Evolução dos últimos 7 dias</h2>
                 </div>
                 <GraficoLinha dados={grafico} />
-              </div>
+              </Card>
 
               {/* Histórico */}
-              <div className="card carteira-card-historico">
+              <Card className="carteira-card-historico">
                 <div className="carteira-card-header">
-                  <i className="fa-solid fa-rectangle-list carteira-card-header-icon"></i>
+                  <Icone nome="fa-rectangle-list" className="carteira-card-header-icon" />
                   <h2 className="carteira-card-titulo">Histórico de Ganhos</h2>
                 </div>
                 <ul className="historico-lista">
                   {historico.map(item => (
                     <li key={item.id} className="historico-item">
                       <div className={`historico-icone historico-icone--${item.cor}`}>
-                        <i className={`fa-solid ${item.icone}`}></i>
+                        <Icone nome={item.icone} />
                       </div>
                       <div className="historico-info">
                         <span className="historico-nome">{item.titulo}</span>
                         <span className="historico-tempo">{item.tempo}</span>
                       </div>
                       <span className="historico-hc">
-                        <i className="fa-solid fa-coins"></i> {item.hc}
+                        <Icone nome="fa-coins" /> {item.hc}
                       </span>
                     </li>
                   ))}
                 </ul>
-              </div>
+              </Card>
 
             </div>
 
@@ -154,40 +110,38 @@ function Carteira() {
             <div className="carteira-col-direita">
 
               {/* Conquistas em destaque */}
-              <div className="card carteira-card-conquistas">
+              <Card className="carteira-card-conquistas">
                 <div className="carteira-card-header">
-                  <i className="fa-solid fa-trophy carteira-card-header-icon carteira-card-header-icon--warning"></i>
+                  <Icone nome="fa-trophy" className="carteira-card-header-icon carteira-card-header-icon--warning" />
                   <h2 className="carteira-card-titulo">Conquistas em Destaque</h2>
                 </div>
                 <div className="conquistas-lista">
                   {destaques.map(c => (
-                    <div key={c.id} className="conquista-card">
+                    <div key={c.id} className="carteira-conquista-card">
                       <div className={`conquista-icone conquista-icone--${c.cor}`}>
-                        <i className={`fa-solid ${c.icone}`}></i>
+                        <Icone nome={c.icone} />
                       </div>
-                      <p className="conquista-nome">{c.titulo}</p>
-                      <p className="conquista-tempo">{c.tempo}</p>
+                      <p className="carteira-conquista-nome">{c.titulo}</p>
+                      <p className="carteira-conquista-tempo">{c.tempo}</p>
                     </div>
                   ))}
                 </div>
-              </div>
+              </Card>
 
               {/* Promo recompensas */}
               <div className="carteira-card-promo">
                 <div className="promo-icone">
-                  <i className="fa-solid fa-gem"></i>
+                  <Icone nome="fa-gem" />
                 </div>
                 <p className="promo-texto">Troque seus coins por recompensas incríveis!</p>
-                <Link to="/recompensas" className="btn btn-primary promo-btn">
+                <Button to="/recompensas" bloco tamanho="sm">
                   Ver catálogo de recompensas
-                </Link>
+                </Button>
               </div>
 
             </div>
           </div>
 
-        </main>
-      </div>
     </>
   )
 }

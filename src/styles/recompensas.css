@@ -16,67 +16,6 @@
   color: var(--color-text-primary);
 }
 
-/* HC com destaque */
-.hc-chip--destaque {
-  font-size: var(--font-size-sm);
-  padding: var(--space-2) var(--space-4);
-  gap: var(--space-2);
-}
-
-/* Título da página */
-.recompensas-titulo-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.recompensas-titulo {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-  line-height: 1.2;
-}
-
-.recompensas-subtitulo {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
-/* Filtros de categoria */
-.recompensa-tag {
-  display: inline-flex;
-  align-items: center;
-  padding: var(--space-2) var(--space-5);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.recompensa-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.recompensa-tag.active {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border-color: var(--color-primary);
-}
-
 /* Grid de recompensas — CSS Grid nativo, 3 colunas */
 .recompensas-grid {
   display: grid;
@@ -94,6 +33,9 @@
 
 /* Cards de recompensa */
 .recompensa-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
   padding: 0;
   overflow: hidden;
   transition: all var(--transition-normal);
@@ -114,7 +56,7 @@
   font-size: 64px;
 }
 
-.recompensa-thumb--green  { background-color: #d6f0e8; color: var(--color-primary); }
+.recompensa-thumb--green  { background-color: #d6f0e8; color: var(--color-primary-dark); }
 .recompensa-thumb--blue   { background-color: #daeeff; color: #1565c0; }
 .recompensa-thumb--orange { background-color: #fff3e0; color: #e65100; }
 .recompensa-thumb--pink   { background-color: #fce4ec; color: #e91e63; }
@@ -141,6 +83,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+  flex: 1;
 }
 
 .recompensa-nome {
@@ -162,7 +105,7 @@
   align-items: center;
   gap: var(--space-2);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   padding: var(--space-2) var(--space-4);
@@ -171,20 +114,9 @@
   justify-content: center;
 }
 
-/* Botão resgatar */
+/* Botão resgatar: no fim do card, alinhado entre cards de alturas diferentes */
 .recompensa-btn {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-md) !important;
-  width: 100%;
-  font-weight: var(--font-weight-medium);
-}
-
-.recompensa-btn:hover {
-  background-color: var(--color-primary-dark);
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-sm);
+  margin-top: auto;
 }
 
 /* Filtragem — animação e estado vazio */

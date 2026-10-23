@@ -31,12 +31,14 @@
   gap: var(--space-2);
 }
 
+/* Abaixo de 1100 px (desktop estreito com a Sidebar e celular) os 4 cards de
+   resumo não cabem lado a lado: ficam em 2 colunas */
 @media (max-width: 1100px) {
   .bottle-layout { grid-template-columns: 1fr; }
+  .bottle-resumo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
-  .bottle-resumo-grid { grid-template-columns: repeat(2, 1fr); }
   .bottle-painel-grid { grid-template-columns: 1fr; }
 }
 
@@ -66,11 +68,8 @@
   align-items: flex-start;
 }
 
-.bottle-page-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
+.bottle-topbar .topbar-textos {
+  gap: var(--space-1);
 }
 
 .bottle-conectada-badge {
@@ -78,7 +77,7 @@
   align-items: center;
   gap: var(--space-1);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
   padding: 3px var(--space-3);
@@ -116,8 +115,8 @@
 }
 
 .bottle-resumo-icon--blue    { background-color: #e3f2fd; color: #1565c0; }
-.bottle-resumo-icon--green   { background-color: #e8f5f0; color: var(--color-primary); }
-.bottle-resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary); }
+.bottle-resumo-icon--green   { background-color: #e8f5f0; color: var(--color-primary-dark); }
+.bottle-resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .bottle-resumo-icon--hc      { background-color: #fff8ec; color: var(--color-hc); }
 
 .bottle-resumo-valor {
@@ -128,7 +127,7 @@
   display: block;
 }
 
-.bottle-resumo-valor--hc { color: var(--color-hc); }
+.bottle-resumo-valor--hc { color: var(--color-hc-text); }
 
 .bottle-resumo-label {
   font-size: var(--font-size-xs);
@@ -207,7 +206,7 @@
 .bottle-secao-label {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.08em;
 }
 
@@ -276,7 +275,7 @@
 .bottle-como-titulo {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-bold);
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.7);
   letter-spacing: 0.08em;
   display: block;
   margin-bottom: var(--space-2);
@@ -290,7 +289,7 @@
 }
 
 .bottle-como-desc strong {
-  color: var(--color-info);
+  color: #64b5f6;
 }
 
 /* Meta diária */
@@ -360,27 +359,7 @@
 
 .bottle-mini-label {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.4);
-}
-
-/* Histórico de leituras */
-.bottle-leitura-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-xs);
-  padding: var(--space-1) 0;
-}
-
-.bottle-leitura-hora  { color: rgba(255, 255, 255, 0.4); min-width: 36px; }
-.bottle-leitura-de    { color: rgba(255, 255, 255, 0.7); }
-.bottle-leitura-seta  { color: rgba(255, 255, 255, 0.3); font-size: 10px; }
-.bottle-leitura-para  { color: rgba(255, 255, 255, 0.7); }
-.bottle-leitura-diff  { color: var(--color-info); font-weight: var(--font-weight-bold); flex: 1; }
-.bottle-leitura-hc    {
-  color: var(--color-hc);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xs);
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* Botões de simular gole */
@@ -411,13 +390,13 @@
 
 .bottle-gole-desc {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
   font-weight: var(--font-weight-regular);
 }
 
 .bottle-simular-aviso {
   font-size: var(--font-size-xs);
-  color: rgba(255, 255, 255, 0.3);
+  color: rgba(255, 255, 255, 0.6);
   margin-top: var(--space-3);
   margin-bottom: 0;
 }
@@ -455,6 +434,7 @@
 
 .bottle-legenda-dot--primary { background-color: var(--color-info); }
 .bottle-legenda-dot--muted   { background-color: var(--color-border); }
+.bottle-legenda-dot--meta    { background-color: var(--color-primary); }
 
 /* Gráfico estático placeholder */
 .bottle-chart-placeholder {
@@ -550,7 +530,6 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin: 0;
   display: flex;
   align-items: center;
   gap: var(--space-2);
@@ -561,7 +540,7 @@
   color: var(--color-text-muted);
 }
 
-.bottle-col-titulo-icon--green  { color: var(--color-primary); }
+.bottle-col-titulo-icon--green  { color: var(--color-primary-dark); }
 .bottle-col-titulo-icon--yellow { color: var(--color-hc); }
 
 /* Linhas de informação do dispositivo */
@@ -585,7 +564,7 @@
 .bottle-info-icon--gray       { color: var(--color-text-muted); }
 .bottle-info-icon--purple     { color: #5e35b1; }
 .bottle-info-icon--green-light{ color: #66bb6a; }
-.bottle-info-icon--green      { color: var(--color-primary); }
+.bottle-info-icon--green      { color: var(--color-primary-dark); }
 
 .bottle-info-valor {
   font-size: var(--font-size-sm);
@@ -598,22 +577,6 @@
   background-color: var(--color-border);
 }
 
-/* Botão sincronizar */
-.bottle-sync-btn {
-  background-color: var(--color-bg);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md) !important;
-  width: 100%;
-  font-size: var(--font-size-sm);
-  transition: all var(--transition-fast);
-}
-
-.bottle-sync-btn:hover {
-  background-color: var(--color-border);
-  color: var(--color-text-primary);
-}
-
 /* Meta de hidratação — card de progresso */
 .bottle-meta-card {
   background-color: var(--color-primary-light);
@@ -623,24 +586,24 @@
 
 .bottle-meta-card-label {
   font-size: var(--font-size-sm);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
 }
 
 .bottle-meta-card-valor {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .bottle-meta-card-consumido {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .bottle-meta-card-pct {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
 }
 
@@ -671,7 +634,7 @@
 }
 
 .bottle-meta-opcao--ativa .bottle-meta-opcao-nome {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
 }
 
@@ -681,7 +644,7 @@
 }
 
 .bottle-meta-opcao--ativa .bottle-meta-opcao-ml {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-bold);
 }
 
@@ -699,7 +662,7 @@
 
 .bottle-dica-icon--yellow { background-color: #fff8ec; color: var(--color-hc); }
 .bottle-dica-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
-.bottle-dica-icon--green  { background-color: #e8f5f0; color: var(--color-primary); }
+.bottle-dica-icon--green  { background-color: #e8f5f0; color: var(--color-primary-dark); }
 
 .bottle-dica-texto {
   font-size: var(--font-size-sm);
@@ -716,7 +679,7 @@
 
 .bottle-live-badge--off {
   background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.5);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 /* Avisos de conexão / dispositivo */
@@ -744,7 +707,7 @@
 
 .bottle-aviso--garrafa {
   background-color: #fff8ec;
-  color: #b76e00;
+  color: var(--color-hc-text);
   border: 1px solid #ffe0a0;
 }
 
@@ -801,7 +764,7 @@
 
 .bottle-led--vermelho {
   background-color: rgba(231, 76, 60, 0.16);
-  color: #ff6b5e;
+  color: #ff8a80;
 }
 .bottle-led--vermelho .bottle-led-dot {
   background-color: #ff6b5e;
@@ -816,6 +779,13 @@
   background-color: var(--color-accent-1);
   animation: bottleLedPulse 1s ease-in-out infinite;
 }
+
+/* Dock sem dono (branco pulsando na dock) */
+.bottle-led--neutro {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+.bottle-led--neutro .bottle-led-dot { background-color: rgba(255, 255, 255, 0.8); }
 
 @keyframes bottleLedPulse {
   0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(122, 209, 128, 0.6); }
@@ -842,7 +812,7 @@
   animation: bottleCelebra 0.5s ease-out;
 }
 
-.bottle-celebracao i { color: var(--color-hc); }
+.bottle-celebracao .icone { color: var(--color-hc); }
 
 @keyframes bottleCelebra {
   0%   { opacity: 0; transform: translateY(8px) scale(0.96); }
@@ -873,6 +843,12 @@
   font-weight: var(--font-weight-medium);
 }
 
+.bottle-tara-erro {
+  font-size: var(--font-size-sm);
+  color: #ff8a80;
+  margin: var(--space-2) 0 0;
+}
+
 /* Gráfico real (SVG) */
 .bottle-grafico-svg {
   width: 100%;
@@ -899,7 +875,7 @@
   text-align: center;
 }
 
-.bottle-grafico-vazio i { font-size: 24px; opacity: 0.5; }
+.bottle-grafico-vazio .icone { font-size: 24px; opacity: 0.5; }
 
 /* Link "personalizar minha meta" */
 .bottle-meta-link {
@@ -910,7 +886,7 @@
   padding: var(--space-3) var(--space-4);
   border-radius: var(--radius-md);
   background-color: var(--color-primary-light);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   text-decoration: none;
@@ -934,9 +910,16 @@
 }
 
 @media (max-width: 768px) {
-  .bottle-topbar {
-    flex-direction: column;
+  /* cards de resumo em 2 colunas: menos espaço interno para caber em 360px */
+  .bottle-resumo-card {
+    padding: var(--space-4);
     gap: var(--space-3);
+  }
+
+  .bottle-resumo-icon {
+    width: 36px;
+    height: 36px;
+    font-size: 16px;
   }
 
   .bottle-painel {
@@ -946,4 +929,79 @@
   .bottle-gole-btn {
     flex: 1;
   }
+}
+/* Eventos de hoje (gole, reabastecimento, garrafa fora/de volta, tara) */
+.bottle-eventos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.bottle-evento {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bottle-evento:last-child { border-bottom: none; }
+
+.bottle-evento-icone {
+  color: var(--color-text-muted);
+  width: 16px;
+}
+
+.bottle-evento--gole .bottle-evento-icone { color: var(--color-info); }
+.bottle-evento--reabastecimento .bottle-evento-icone { color: var(--color-primary); }
+
+.bottle-evento-texto {
+  flex: 1;
+  color: var(--color-text-secondary);
+}
+
+.bottle-evento-ml {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.bottle-evento-hora {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  min-width: 40px;
+  text-align: right;
+}
+
+.bottle-eventos-vazio {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
+}
+
+/* Desvincular a dock (card Informações do dispositivo) */
+.bottle-desvincular-btn {
+  width: 100%;
+  background-color: var(--color-surface);
+  color: var(--color-error);
+  border: 1px solid rgba(198, 40, 40, 0.35);
+  border-radius: var(--radius-md) !important;
+  font-size: var(--font-size-sm);
+  transition: background-color var(--transition-fast);
+}
+
+.bottle-desvincular-btn:hover:not(:disabled) {
+  background-color: #fdecea;
+  color: var(--color-error);
+}
+
+.bottle-desvincular-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  text-align: center;
+  margin: var(--space-2) 0 0;
 }

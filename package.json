@@ -7,9 +7,11 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "dock": "node --env-file=.env.local scripts/simular-dock.mjs"
   },
   "dependencies": {
+    "@supabase/supabase-js": "^2.118.0",
     "lucide-react": "^1.17.0",
     "motion": "^12.40.0",
     "react": "^19.2.5",

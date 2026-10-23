@@ -118,16 +118,35 @@
   font-weight: var(--font-weight-medium);
 }
 
-.confirmar-detalhe-valor i {
+.confirmar-detalhe-valor .icone {
   color: var(--color-text-muted);
 }
 
 .confirmar-detalhe-valor--destaque {
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
 }
 
-.confirmar-detalhe-valor--destaque i {
-  color: var(--color-primary) !important;
+.confirmar-detalhe-valor--destaque .icone {
+  color: var(--color-primary-dark) !important;
+}
+
+/* Saldo insuficiente: valor e ícone em vermelho, com aviso abaixo */
+.confirmar-detalhe-valor--destaque.confirmar-detalhe-valor--negativo,
+.confirmar-detalhe-valor--destaque.confirmar-detalhe-valor--negativo .icone {
+  color: var(--color-error) !important;
+}
+
+.confirmar-erro {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: #ffebee;
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
 }
 
 /* Termos */
@@ -140,6 +159,24 @@
   align-items: flex-start;
   gap: var(--space-3);
   cursor: pointer;
+  position: relative;
+}
+
+/* Checkbox real: invisível, mas focável e lido por leitores de tela */
+.confirmar-checkbox-input {
+  position: absolute;
+  top: 2px;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.confirmar-checkbox-input:focus-visible + .confirmar-checkbox {
+  outline: 2px solid var(--color-primary-dark);
+  outline-offset: 2px;
 }
 
 .confirmar-checkbox {
@@ -156,7 +193,7 @@
   margin-top: 2px;
 }
 
-.confirmar-checkbox.checked {
+.confirmar-checkbox-input:checked + .confirmar-checkbox {
   background: var(--color-primary);
   border-color: var(--color-primary);
 }
@@ -177,11 +214,13 @@
 
 .confirmar-termos-link {
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   gap: var(--space-1);
+  /* alinhado ao texto, depois da caixinha (20px + gap) */
+  margin: 4px 0 0 calc(20px + var(--space-3));
 }
 
 .confirmar-termos-link:hover { text-decoration: underline; }
@@ -200,7 +239,7 @@
   color: #F57C00;
 }
 
-.confirmar-aviso i {
+.confirmar-aviso .icone {
   font-size: 18px;
   flex-shrink: 0;
 }
@@ -240,7 +279,7 @@
 
 .confirmar-btn-cancelar:hover {
   border-color: var(--color-primary) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
 }
 
 @media (max-width: 480px) {

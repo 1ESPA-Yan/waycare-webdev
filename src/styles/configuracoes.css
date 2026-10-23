@@ -1,13 +1,6 @@
 /* WAYCARE — Configurações CSS
    Estilos exclusivos da página de configurações */
 
-/* Subtítulo da topbar */
-.config-subtitulo {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
 /* Link de voltar */
 .config-voltar {
   display: inline-flex;
@@ -23,27 +16,6 @@
   color: var(--color-text-primary);
 }
 
-/* Título da página */
-.config-titulo-icon {
-  width: 44px;
-  height: 44px;
-  border-radius: var(--radius-md);
-  background-color: var(--color-bg);
-  color: var(--color-text-muted);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 22px;
-  flex-shrink: 0;
-}
-
-.config-titulo {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
 /* Seções com título */
 .config-section {
   padding: var(--space-6) var(--space-8);
@@ -53,7 +25,6 @@
   font-size: var(--font-size-base);
   font-weight: var(--font-weight-bold);
   color: var(--color-text-primary);
-  margin: 0;
 }
 
 /* Linhas de informação */
@@ -80,15 +51,10 @@
   color: var(--color-text-primary);
 }
 
-.config-senha {
-  letter-spacing: 0.15em;
-  font-size: var(--font-size-sm);
-}
-
 .config-row-action {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   text-decoration: none;
   white-space: nowrap;
   transition: color var(--transition-fast);
@@ -133,7 +99,7 @@
   flex-shrink: 0;
 }
 
-.config-item-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary); }
+.config-item-icon--green  { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .config-item-icon--blue   { background-color: #e3f2fd; color: #1565c0; }
 .config-item-icon--orange { background-color: #fff3e0; color: #e65100; }
 
@@ -218,7 +184,6 @@
   border-radius: var(--radius-md);
   padding: var(--space-1) var(--space-3);
   background: var(--color-white);
-  outline: none;
   width: 100%;
   max-width: 280px;
   transition: box-shadow var(--transition-fast);
@@ -239,7 +204,7 @@
 }
 
 .config-row-action--save {
-  background: var(--color-primary);
+  background: var(--color-primary-dark);
   color: var(--color-white);
   border-radius: var(--radius-md);
   padding: var(--space-1) var(--space-3);
@@ -251,7 +216,7 @@
 }
 
 .config-row-action--save:hover {
-  background: var(--color-primary-dark);
+  background: var(--color-primary-darker);
 }
 
 .config-row-action--cancel {
@@ -277,7 +242,7 @@
   align-items: center;
   gap: var(--space-1);
   font-size: var(--font-size-xs);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
   margin-left: var(--space-2);
   animation: fadeInOut 2s ease forwards;

@@ -2,39 +2,12 @@
    Estilos específicos da página de trilhas */
 
 /* Cabeçalho da página */
-.trilhas-titulo-icon {
-  width: 40px;
-  height: 40px;
-  min-width: 40px;
-  border-radius: var(--radius-md);
-  background-color: var(--color-primary-light);
-  color: var(--color-primary);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: var(--font-size-base);
-  flex-shrink: 0;
-}
-
-.trilhas-page-title {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  margin: 0;
-}
-
-.trilhas-page-subtitle {
-  font-size: var(--font-size-sm);
-  color: var(--color-text-muted);
-  margin: 0;
-}
-
 .trilhas-subtitle-icon {
   color: var(--color-warning);
 }
 
 .trilhas-subtitle-texto {
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   font-weight: var(--font-weight-medium);
 }
 
@@ -91,7 +64,7 @@
   flex-shrink: 0;
 }
 
-.resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary); }
+.resumo-icon--primary { background-color: var(--color-primary-light); color: var(--color-primary-dark); }
 .resumo-icon--success { background-color: #e8f5e9; color: var(--color-success); }
 .resumo-icon--warning { background-color: #fff3e0; color: var(--color-warning); }
 .resumo-icon--hc      { background-color: #fff8ec; color: var(--color-hc); }
@@ -111,7 +84,7 @@
 }
 
 .resumo-valor--hc { 
-  color: var(--color-hc); }
+  color: var(--color-hc-text); }
 
 /* Busca e filtros */
 .trilhas-search {
@@ -132,32 +105,6 @@
 
 .input-field.trilhas-search-input {
   padding-left: calc(var(--space-4) + 20px + var(--space-2));
-}
-
-.trilha-tag {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-1);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full);
-  font-size: var(--font-size-sm);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  background-color: var(--color-surface);
-  border: 1px solid var(--color-border);
-  cursor: pointer;
-  transition: all var(--transition-fast);
-}
-
-.trilha-tag:hover {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
-.trilha-tag.active {
-  background-color: var(--color-primary);
-  color: var(--color-white);
-  border-color: var(--color-primary);
 }
 
 /* Seções */
@@ -196,15 +143,6 @@
   border-color: var(--color-primary);
 }
 
-.trilha-card--blue {
-  background: var(--color-surface);
-  border-color: #a8d4f5;
-}
-
-.trilha-card--blue:hover {
-  border-color: #4aaee8;
-}
-
 .trilha-thumb {
   width: 52px;
   height: 52px;
@@ -215,7 +153,7 @@
   font-size: 22px;
   flex-shrink: 0;
   background-color: #e8f5f0;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 .trilha-thumb--purple { background-color: #ede7f6; color: #5e35b1; }
@@ -256,18 +194,14 @@
 .trilha-status-badge {
   font-size: var(--font-size-xs);
   font-weight: var(--font-weight-medium);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   white-space: nowrap;
-}
-
-.trilha-status-badge--blue {
-  color: #4aaee8;
 }
 
 /* Badges de Dificuldade */
 
 .badge-facil {
-  background-color: var(--color-primary-light); color: var(--color-primary);
+  background-color: var(--color-primary-light); color: var(--color-primary-dark);
 }
 
 .badge-medio {
@@ -278,101 +212,10 @@
   background-color: #ffebee; color: var(--color-error);
 }
 
-/* Cores da trilha azul */
-.trilha-pct--blue   { color: #4aaee8; }
-.trilha-fill--blue  { background-color: #4aaee8; }
-
-/* Cores da trilha roxa (Sono) */
-.trilha-pct--purple  { color: #5e35b1; }
-.trilha-fill--purple { background-color: #5e35b1; }
-
-/* Status badge roxo */
-.trilha-status-badge--purple { color: #5e35b1; }
-
-/* Botão teal (Mente Tranquila) */
-.trilha-btn-iniciar--teal {
-  color: #00897b;
-  border-color: #00897b;
-  border-radius: var(--radius-md) !important;
-}
-.trilha-btn-iniciar--teal:hover {
-  background-color: #e0f7f4;
-}
-
-/* Botão laranja (Alimentação Consciente) */
-.trilha-btn-iniciar--orange {
-  color: #e65100;
-  border-color: #e65100;
-  border-radius: var(--radius-md) !important;
-}
-.trilha-btn-iniciar--orange:hover {
-  background-color: #fff3e0;
-}
-
 /* Thumb teal */
 .trilha-thumb--teal { background-color: #e0f7f4; color: #00897b; }
 
-/* Botões de trilha */
-.trilha-btn-continuar {
-  background-color: #6c63ff;
-  color: var(--color-white);
-  border: none;
-  border-radius: var(--radius-md) !important;
-  width: 100%;
-}
-
-.trilha-btn-continuar:hover {
-  background-color: #5a52d5;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-md);
-}
-
-.trilha-btn-continuar--blue {
-  background-color: #4aaee8;
-  border-radius: var(--radius-md);
-}
-
-.trilha-btn-continuar--blue:hover {
-  background-color: #3a9ed8;
-}
-
-.trilha-btn-iniciar {
-  background-color: transparent;
-  color: var(--color-primary);
-  border: 1.5px solid var(--color-primary);
-  border-radius: var(--radius-md) !important;
-  width: 100%;
-}
-
-.trilha-btn-iniciar:hover {
-  background-color: var(--color-primary-light);
-}
-
-.trilha-btn-iniciar--checkup {
-  color: var(--color-error);
-  border-color: var(--color-error);
-  border-radius: var(--radius-md) !important;
-}
-
-.trilha-btn-iniciar--checkup:hover {
-  background-color: #ffebee;
-}
-
-.trilha-btn-bloqueada {
-  background-color: var(--color-bg);
-  color: var(--color-text-muted);
-  border: 1px solid var(--color-border);
-  width: 100%;
-  min-height: 44px;
-  border-radius: var(--radius-md);
-  cursor: not-allowed;
-}
-
-/* Card recomendada — fundo branco puro, sem gradiente */
-.trilha-card-recomendada {
-  background: var(--color-surface);
-}
-
+/* Selo "Recomendada para seu humor" */
 .trilha-recomendada-label {
   font-size: var(--font-size-xs);
   color: var(--color-text-muted);
@@ -381,18 +224,8 @@
   gap: var(--space-1);
 }
 
-.trilha-recomendada-label i {
+.trilha-recomendada-label .icone {
   color: var(--color-warning);
-}
-
-/* Card check-up */
-.trilha-card-checkup {
-  background: var(--color-surface);
-  border-color: #f5c6c6 !important;
-}
-
-.trilha-card-checkup:hover {
-  border-color: var(--color-error);
 }
 
 /* Card bloqueada */
@@ -472,11 +305,6 @@
   gap: 0 !important;
 }
 
-.trilha-card--purple-expanded       { border-color: #5e35b1 !important; }
-.trilha-card--blue-expanded         { border-color: #4aaee8 !important; }
-.trilha-card-recomendada-teal       { border-color: #00897b !important; }
-.trilha-card-recomendada-orange     { border-color: #e65100 !important; }
-
 /* Conteúdo do card quando expandido — coluna da esquerda */
 .trilha-card-conteudo--expandida {
   flex-direction: column !important;
@@ -505,7 +333,7 @@
 .trilha-card:hover .trilha-expand-icon {
   background-color: var(--color-primary-light);
   border-color: var(--color-primary);
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
 }
 
 /* Painel lateral de missões */
@@ -529,12 +357,6 @@
   margin-bottom: var(--space-3);
   margin-left: var(--space-6);
 }
-
-.trilha-painel-header--purple { background-color: #ede7f6; }
-.trilha-painel-header--blue   { background-color: #e3f2fd; }
-.trilha-painel-header--teal   { background-color: #e0f7f4; }
-.trilha-painel-header--orange { background-color: #fff3e0; }
-.trilha-painel-header--red    { background-color: #ffebee; }
 
 .trilha-painel-titulo {
   font-size: var(--font-size-sm);
@@ -658,9 +480,9 @@
   flex-shrink: 0;
 }
 
-.trilha-missao-hc--concluida  { color: var(--color-primary); }
-.trilha-missao-hc--atual      { color: var(--color-primary); }
-.trilha-missao-hc--disponivel { color: var(--color-primary); }
+.trilha-missao-hc--concluida  { color: var(--color-primary-dark); }
+.trilha-missao-hc--atual      { color: var(--color-primary-dark); }
+.trilha-missao-hc--disponivel { color: var(--color-primary-dark); }
 .trilha-missao-hc--bloqueada  { color: var(--color-text-muted); }
 
 
@@ -673,18 +495,8 @@
 /* Responsividade */
 
 @media (max-width: 768px) {
-  .trilhas-page-title {
-    font-size: var(--font-size-md);
-  }
-
   .trilha-thumb {
     font-size: 28px;
-  }
-
-  .trilha-btn-continuar,
-  .trilha-btn-iniciar,
-  .trilha-btn-bloqueada {
-    font-size: var(--font-size-sm);
   }
 
   .trilha-card-expandida {
@@ -710,11 +522,6 @@
 }
 
 @media (max-width: 480px) {
-  .trilha-tag {
-    font-size: var(--font-size-xs);
-    padding: var(--space-1) var(--space-3);
-  }
-
   .resumo-valor {
     font-size: var(--font-size-sm);
   }

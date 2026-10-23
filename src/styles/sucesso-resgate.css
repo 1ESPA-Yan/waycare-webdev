@@ -94,7 +94,7 @@
   margin-top: 2px;
 }
 
-.sucesso-passo-check i {
+.sucesso-passo-check .icone {
   font-size: 10px;
   color: var(--color-white);
 }
@@ -124,7 +124,7 @@
 .sucesso-voucher-codigo {
   font-family: 'Courier New', Courier, monospace;
   font-size: 24px;
-  color: var(--color-primary);
+  color: var(--color-primary-dark);
   letter-spacing: 0.1em;
   font-weight: var(--font-weight-bold);
   user-select: all;
@@ -136,7 +136,7 @@
   border-radius: var(--radius-full) !important;
   border: 2px solid var(--color-primary) !important;
   background: var(--color-white) !important;
-  color: var(--color-primary) !important;
+  color: var(--color-primary-dark) !important;
   font-size: var(--font-size-sm) !important;
   display: inline-flex !important;
   align-items: center;
@@ -160,27 +160,9 @@
   gap: var(--space-4);
 }
 
-.sucesso-btn-ver {
+.sucesso-btn {
   flex: 1;
-  height: 52px !important;
-  border-radius: var(--radius-full) !important;
-  font-size: var(--font-size-base) !important;
-}
-
-.sucesso-btn-inicio {
-  flex: 1;
-  height: 52px !important;
-  border-radius: var(--radius-full) !important;
-  font-size: var(--font-size-base) !important;
-  background: var(--color-white) !important;
-  border: 2px solid var(--color-border) !important;
-  color: var(--color-text-muted) !important;
-  transition: all var(--transition-fast);
-}
-
-.sucesso-btn-inicio:hover {
-  border-color: var(--color-primary) !important;
-  color: var(--color-primary) !important;
+  min-height: 52px;
 }
 
 /* Responsividade */

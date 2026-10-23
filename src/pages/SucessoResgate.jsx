@@ -1,23 +1,21 @@
 import { useState } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
+import Button from '../components/Button'
+import Icone from '../components/Icone'
 import '../styles/sucesso-resgate.css'
-
-const CODIGO_VOUCHER = 'WC-NUTRI-2024-1234'
 
 function SucessoResgate() {
   const location = useLocation()
   const navigate = useNavigate()
   const recompensa = location.state?.recompensa
+  const codigo = location.state?.codigo
   const [copiado, setCopiado] = useState(false)
 
-  if (!recompensa) {
-    navigate('/recompensas')
-    return null
-  }
+  if (!recompensa || !codigo) return <Navigate to="/recompensas" replace />
 
   const copiarCodigo = () => {
-    navigator.clipboard.writeText(CODIGO_VOUCHER).catch(() => {})
+    navigator.clipboard.writeText(codigo).catch(() => {})
     setCopiado(true)
     setTimeout(() => setCopiado(false), 2000)
   }
@@ -37,7 +35,7 @@ function SucessoResgate() {
           animate={{ scale: 1, rotate: 0 }}
           transition={{ type: 'spring', stiffness: 200, delay: 0.2 }}
         >
-          <i className="fa-solid fa-check sucesso-check-icon"></i>
+          <Icone nome="fa-check" className="sucesso-check-icon" />
         </motion.div>
 
         <motion.h1
@@ -80,7 +78,7 @@ function SucessoResgate() {
                 transition={{ delay: 0.6 + i * 0.1 }}
               >
                 <div className="sucesso-passo-check">
-                  <i className="fa-solid fa-check"></i>
+                  <Icone nome="fa-check" />
                 </div>
                 <span>{passo}</span>
               </motion.div>
@@ -97,16 +95,16 @@ function SucessoResgate() {
         >
           <h3 className="sucesso-voucher-titulo">Código do Voucher</h3>
           <div className="sucesso-voucher-codigo-wrap">
-            <span className="sucesso-voucher-codigo">{CODIGO_VOUCHER}</span>
+            <span className="sucesso-voucher-codigo">{codigo}</span>
           </div>
           <button
             onClick={copiarCodigo}
             className={`btn sucesso-btn-copiar ${copiado ? 'copiado' : ''}`}
           >
             {copiado ? (
-              <><i className="fa-solid fa-check-double"></i> Copiado!</>
+              <><Icone nome="fa-check-double" /> Copiado!</>
             ) : (
-              <><i className="fa-regular fa-copy"></i> Copiar código</>
+              <><Icone nome="fa-copy" /> Copiar código</>
             )}
           </button>
         </motion.div>
@@ -118,18 +116,12 @@ function SucessoResgate() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.2 }}
         >
-          <button
-            className="btn btn-primary sucesso-btn-ver"
-            onClick={() => navigate('/recompensas')}
-          >
+          <Button className="sucesso-btn" onClick={() => navigate('/recompensas')}>
             Ver Catálogo de Recompensas
-          </button>
-          <button
-            className="btn sucesso-btn-inicio"
-            onClick={() => navigate('/dashboard')}
-          >
+          </Button>
+          <Button variante="fantasma" className="sucesso-btn" onClick={() => navigate('/dashboard')}>
             Voltar ao Início
-          </button>
+          </Button>
         </motion.div>
       </motion.div>
     </div>

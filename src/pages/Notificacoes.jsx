@@ -1,8 +1,10 @@
-import { useState, useEffect } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect, useMemo } from 'react'
 import { AnimatePresence, motion } from 'motion/react'
-import Sidebar from '../components/Sidebar'
 import { useApp } from '../context/AppContext'
+import { useDados } from '../hooks/useDados'
+import Topbar from '../components/Topbar'
+import FiltroPills from '../components/FiltroPills'
+import Icone from '../components/Icone'
 import '../styles/notificacoes.css'
 
 const FILTROS = [
@@ -15,24 +17,19 @@ const FILTROS = [
 ]
 
 function Notificacoes() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [notificacoes, setNotificacoes] = useState([])
+  const { dados } = useDados('notificacoes')
+  // Cópia local só a partir da primeira edição (marcar como lida, remover)
+  const [editadas, setEditadas] = useState(null)
+  const notificacoes = useMemo(() => editadas ?? dados ?? [], [editadas, dados])
+  const setNotificacoes = (valor) =>
+    setEditadas(prev => (typeof valor === 'function' ? valor(prev ?? dados ?? []) : valor))
   const [filtroAtivo, setFiltroAtivo] = useState('todas')
-  const { totalHC, setNaoLidas } = useApp()
-
-  useEffect(() => {
-    fetch('/data/notificacoes.json')
-      .then(res => res.json())
-      .then(data => setNotificacoes(data))
-      .catch(() => {
-        import('../data/notificacoes.json').then(mod => setNotificacoes(mod.default))
-      })
-  }, [])
+  const { setNaoLidas } = useApp()
 
   // Sincroniza contador global sempre que a lista muda
   useEffect(() => {
     setNaoLidas(notificacoes.filter(n => !n.lida).length)
-  }, [notificacoes])
+  }, [notificacoes, setNaoLidas])
 
   const naoLidasCount = notificacoes.filter(n => !n.lida).length
 
@@ -53,80 +50,37 @@ function Notificacoes() {
 
   return (
     <>
-      <button
-        className="sidebar-toggle"
-        aria-label="Abrir menu"
-        onClick={() => setSidebarOpen(!sidebarOpen)}
-      >
-        <i className="fa-solid fa-bars"></i>
-      </button>
-
-      <div className="app-layout">
-        <Sidebar isOpen={sidebarOpen} />
-
-        <main className="main-content" id="main-content">
-
-          <header className="topbar">
-            <div className="d-flex align-items-center gap-3">
-              <div className="notif-page-titulo-icon">
-                <i className="fa-solid fa-bell"></i>
-                {naoLidasCount > 0 && (
-                  <span className="notif-page-badge">{naoLidasCount}</span>
-                )}
-              </div>
-              <div>
-                <h1 className="notif-page-titulo">Notificações</h1>
-                <p className="notif-page-subtitulo">
-                  {naoLidasCount > 0
-                    ? `${naoLidasCount} não lida${naoLidasCount > 1 ? 's' : ''}`
-                    : 'Tudo em dia!'}
-                </p>
-              </div>
-            </div>
-            <div className="topbar-actions">
-              <div className="hc-chip">
-                <i className="fa-solid fa-coins"></i>
-                {totalHC} HC
-              </div>
-              <Link to="/carteira" className="notif-btn" aria-label="Carteira">
-                <i className="fa-solid fa-wallet"></i>
-              </Link>
-            </div>
-          </header>
+          <Topbar
+            icone="fa-bell"
+            iconeBadge={naoLidasCount}
+            titulo="Notificações"
+            subtitulo={naoLidasCount > 0
+              ? `${naoLidasCount} não lida${naoLidasCount > 1 ? 's' : ''}`
+              : 'Tudo em dia!'}
+          />
 
           <section id="page-content" className="page-transition">
 
             {/* Barra de ações */}
-            <div className="d-flex align-items-center justify-content-between w-full mb-4 flex-wrap gap-3">
-              <div className="d-flex gap-2 flex-wrap">
-                {FILTROS.map(f => (
-                  <button
-                    key={f.key}
-                    className={`notif-tag${filtroAtivo === f.key ? ' active' : ''}`}
-                    onClick={() => setFiltroAtivo(f.key)}
-                    aria-pressed={filtroAtivo === f.key}
-                  >
-                    {f.label}
-                  </button>
-                ))}
-              </div>
+            <div className="flex items-center justify-between w-full mb-6 flex-wrap gap-4">
+              <FiltroPills rotulo="Filtrar notificações" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
-              <div className="d-flex gap-3 align-items-center">
+              <div className="flex gap-4 items-center">
                 {naoLidasCount > 0 && (
                   <button
-                    className="notif-page-marcar-todas d-flex align-items-center gap-2"
+                    className="notif-page-marcar-todas flex items-center gap-2"
                     onClick={marcarTodasLidas}
                   >
-                    <i className="fa-solid fa-check-double"></i>
+                    <Icone nome="fa-check-double" />
                     Marcar todas como lidas
                   </button>
                 )}
                 {notificacoes.length > 0 && (
                   <button
-                    className="notif-page-limpar d-flex align-items-center gap-2"
+                    className="notif-page-limpar flex items-center gap-2"
                     onClick={limparTodas}
                   >
-                    <i className="fa-solid fa-trash-can"></i>
+                    <Icone nome="fa-trash-can" />
                     Limpar tudo
                   </button>
                 )}
@@ -149,7 +103,7 @@ function Notificacoes() {
                     >
                       {!n.lida && <span className="notif-item-dot"></span>}
                       <div className={`notif-item-icone notif-item-icone--${n.cor}`}>
-                        <i className={`fa-solid ${n.icone}`}></i>
+                        <Icone nome={n.icone} />
                       </div>
                       <div className="notif-item-corpo">
                         <div className="notif-item-cabecalho">
@@ -165,7 +119,7 @@ function Notificacoes() {
                               aria-label="Marcar como lida"
                               onClick={() => marcarLida(n.id)}
                             >
-                              <i className="fa-solid fa-check"></i>
+                              <Icone nome="fa-check" />
                             </button>
                           )}
                           <button
@@ -173,7 +127,7 @@ function Notificacoes() {
                             aria-label="Remover"
                             onClick={() => remover(n.id)}
                           >
-                            <i className="fa-solid fa-xmark"></i>
+                            <Icone nome="fa-xmark" />
                           </button>
                         </div>
                       </div>
@@ -183,7 +137,7 @@ function Notificacoes() {
               </div>
             ) : (
               <div className="notif-empty">
-                <i className="fa-solid fa-bell-slash notif-empty-icon"></i>
+                <Icone nome="fa-bell-slash" className="notif-empty-icon" />
                 <p className="notif-empty-text">
                   {notificacoes.length === 0
                     ? 'Nenhuma notificação por aqui.'
@@ -198,8 +152,6 @@ function Notificacoes() {
             )}
 
           </section>
-        </main>
-      </div>
     </>
   )
 }
