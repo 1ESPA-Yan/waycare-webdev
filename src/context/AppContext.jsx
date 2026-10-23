@@ -35,6 +35,49 @@ function calcularNivel(xp) {
   }
 }
 
+// PROGRESSO POR CONTA — HC, XP, resgates e missões concluídas ficam em chaves
+// separadas por conta: wc_<nome>_<id do usuário> na conta real e wc_<nome>_demo
+// no modo demonstração. As HC ficam no navegador (limitação no README).
+const HC_INICIAL_CONTA = 200
+const HC_INICIAL_DEMO = 1300
+const PROGRESSO = ['hc', 'xp', 'resgates', 'missoes_concluidas']
+
+// Uma vez: o progresso das chaves antigas (sem conta, de antes da separação) vai
+// para o modo demonstração; o controle antigo da água (wc_hc_agua_<dia>) é apagado
+let progressoMigrado = false
+function migrarProgressoAntigo() {
+  if (progressoMigrado) return
+  progressoMigrado = true
+  try {
+    PROGRESSO.forEach(nome => {
+      const antigo = localStorage.getItem(`wc_${nome}`)
+      if (antigo === null) return
+      if (localStorage.getItem(`wc_${nome}_demo`) === null) localStorage.setItem(`wc_${nome}_demo`, antigo)
+      localStorage.removeItem(`wc_${nome}`)
+    })
+    Object.keys(localStorage)
+      .filter(k => /^wc_hc_agua_\d{4}-\d{2}-\d{2}$/.test(k))
+      .forEach(k => localStorage.removeItem(k))
+  } catch { /* sem localStorage: segue com os valores padrão */ }
+}
+
+// Lê o progresso de uma conta. ?? e não ||: saldo 0 continua 0 ao recarregar
+function lerProgresso(conta, hcInicial) {
+  migrarProgressoAntigo()
+  const ler = (nome, padrao) => {
+    try {
+      const valor = localStorage.getItem(`wc_${nome}_${conta}`)
+      return valor === null ? padrao : (JSON.parse(valor) ?? padrao)
+    } catch { return padrao }
+  }
+  return {
+    hc: Number(ler('hc', hcInicial)),
+    xp: Number(ler('xp', 0)),
+    resgates: ler('resgates', []),
+    missoes: ler('missoes_concluidas', { dia: '', ids: [] }),
+  }
+}
+
 export function AppProvider({ children }) {
 
   // SESSÃO — conta real (Supabase, login por código) ou modo demonstração
@@ -56,6 +99,11 @@ export function AppProvider({ children }) {
   const contaReal = Boolean(sessao)
   const logado = contaReal || modoDemo
   const userId = sessao?.user.id
+
+  // Conta dona do progresso guardado no navegador (veja PROGRESSO lá em cima)
+  const contaId = userId ?? 'demo'
+  const hcInicial = userId ? HC_INICIAL_CONTA : HC_INICIAL_DEMO
+  const chaveConta = (nome) => `wc_${nome}_${contaId}`
 
   // Nome da conta real, da tabela perfis: null enquanto carrega, '' se ainda não tem
   const [perfilNome, setPerfilNome] = useState(null)
@@ -166,26 +214,22 @@ export function AppProvider({ children }) {
     localStorage.setItem('wc_nao_lidas', v)
   }, [])
 
-  // HEALTH COINS
-  const [totalHC, setTotalHC] = useState(
-    () => Number(localStorage.getItem('wc_hc')) || 1300
-  )
+  // HEALTH COINS (conta real nova: 200; modo demonstração: 1300)
+  const [totalHC, setTotalHC] = useState(() => lerProgresso(contaId, hcInicial).hc)
 
   // XP — 1 XP por HC ganho; gastar HC não tira XP
-  const [xp, setXp] = useState(
-    () => Number(localStorage.getItem('wc_xp')) || 0
-  )
+  const [xp, setXp] = useState(() => lerProgresso(contaId, hcInicial).xp)
 
   const adicionarHC = (quantidade) => {
     setTotalHC(prev => {
       const novo = prev + quantidade
-      localStorage.setItem('wc_hc', novo)
+      localStorage.setItem(chaveConta('hc'), novo)
       return novo
     })
     if (quantidade > 0) {
       setXp(prev => {
         const novo = prev + quantidade
-        localStorage.setItem('wc_xp', novo)
+        localStorage.setItem(chaveConta('xp'), novo)
         return novo
       })
     }
@@ -194,15 +238,11 @@ export function AppProvider({ children }) {
   const { nivel, xpNoNivel, xpParaProximo, pctNivel } = calcularNivel(xp)
 
   // RESGATES — histórico com o código de voucher de cada resgate
-  const [resgates, setResgates] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('wc_resgates')) || []
-    } catch { return [] }
-  })
+  const [resgates, setResgates] = useState(() => lerProgresso(contaId, hcInicial).resgates)
 
   useEffect(() => {
-    localStorage.setItem('wc_resgates', JSON.stringify(resgates))
-  }, [resgates])
+    localStorage.setItem(`wc_resgates_${contaId}`, JSON.stringify(resgates))
+  }, [resgates, contaId])
 
   // Debita o HC, gera o código (prefixo + ano + 4 dígitos) e salva; devolve o código.
   // Sem saldo suficiente, não faz nada e devolve null.
@@ -220,15 +260,23 @@ export function AppProvider({ children }) {
   }
 
   // MISSÕES CONCLUÍDAS — ids concluídos no dia; vale só para a data salva
-  const [missoesDoDia, setMissoesDoDia] = useState(() => {
-    try {
-      return JSON.parse(localStorage.getItem('wc_missoes_concluidas')) || { dia: '', ids: [] }
-    } catch { return { dia: '', ids: [] } }
-  })
+  const [missoesDoDia, setMissoesDoDia] = useState(() => lerProgresso(contaId, hcInicial).missoes)
 
   useEffect(() => {
-    localStorage.setItem('wc_missoes_concluidas', JSON.stringify(missoesDoDia))
-  }, [missoesDoDia])
+    localStorage.setItem(`wc_missoes_concluidas_${contaId}`, JSON.stringify(missoesDoDia))
+  }, [missoesDoDia, contaId])
+
+  // Trocou de conta (entrou, saiu, ou a sessão salva terminou de carregar):
+  // relê o progresso das chaves da conta nova antes de mostrar qualquer valor
+  const [contaDoProgresso, setContaDoProgresso] = useState(contaId)
+  if (contaDoProgresso !== contaId) {
+    const progresso = lerProgresso(contaId, hcInicial)
+    setContaDoProgresso(contaId)
+    setTotalHC(progresso.hc)
+    setXp(progresso.xp)
+    setResgates(progresso.resgates)
+    setMissoesDoDia(progresso.missoes)
+  }
 
   const missaoConcluida = (id) =>
     missoesDoDia.dia === hojeISO() && missoesDoDia.ids.includes(id)
@@ -303,6 +351,7 @@ export function AppProvider({ children }) {
 
     // Sessão
     contaReal,
+    contaId,
     modoDemo,
     logado,
     carregandoSessao,

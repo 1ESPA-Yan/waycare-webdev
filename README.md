@@ -30,6 +30,7 @@
 - [Simulador da Dock](#simulador-da-dock)
 - [Páginas da Aplicação](#páginas-da-aplicação)
 - [Funções do Supabase](#funções-do-supabase)
+- [Limitações conhecidas](#limitações-conhecidas)
 - [Design System](#design-system)
 - [Integrantes](#integrantes)
 
@@ -79,7 +80,7 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 - **Meta de hidratação personalizada** — calculada no navegador por peso, gênero, atividade e temperatura da cidade (Open-Meteo), recalculada uma vez por dia
 - **Health Coins pela água real** — 1 HC a cada 25 ml registrados pela dock, e a missão de água conclui sozinha ao bater a meta
 - **Dados em JSON local** — trilhas, missões, recompensas e conquistas em `src/data`, carregados pelo hook `useDados` (cada JSON vira um arquivo próprio no build)
-- **Persistência com localStorage** — humor, Health Coins, XP, missões e resgates ficam no navegador (proposta de levar as HC para o banco em `docs/proposta-hc-supabase.md`)
+- **Persistência com localStorage** — humor no navegador; Health Coins, XP, missões e resgates também, mas separados por conta (veja [Limitações conhecidas](#limitações-conhecidas))
 - **Tailwind CSS v4** integrado ao design system próprio
 - **Responsividade completa** — Desktop, Tablet e Mobile, com barra fixa e menu lateral no celular
 - **Páginas sob demanda** — `React.lazy` + `Suspense`: o código de cada página só é baixado quando a rota abre
@@ -352,6 +353,15 @@ O cliente fica em `src/lib/supabase.js`, e o `rpc(nome, args)` dele devolve os d
 | `rpc('vincular_dock', { p_codigo })` | `VincularDock` | Vincula a dock pelo código de 6 letras |
 | `rpc('pedir_tara')` | Bottle e `VincularDock` | Pede a tara; a dock executa no próximo contato |
 | tabela `perfis` (`upsert`) + `rpc('salvar_meta', ...)` | Perfil e meta do dia | Salva peso, gênero, atividade e cidade, e a meta calculada |
+| `rpc('desvincular_dock')` | Bottle | Tira a dock da conta (o histórico fica) |
+
+---
+
+## Limitações conhecidas
+
+- **As Health Coins ficam no navegador.** O saldo de HC, o XP, os resgates e as missões concluídas são guardados no `localStorage`, não no Supabase. Cada conta tem as próprias chaves (`wc_hc_<id do usuário>`, `wc_xp_<id>`...) e o modo demonstração tem as dele (`wc_hc_demo`...), então contas diferentes no mesmo navegador não dividem o saldo. Mas a mesma conta em **outro aparelho ou navegador** começa de novo, e **limpar os dados do site** apaga o progresso. Uma conta real nova começa com 200 HC; o modo demonstração, com 1300.
+- **Os valores de HC são decididos no navegador.** As HC das missões e o preço das recompensas vêm dos JSON do site; quem souber mexer no console consegue alterar o saldo.
+- A proposta para resolver os dois pontos (tabela de HC no Supabase, com o crédito da água feito no banco) está em [`docs/proposta-hc-supabase.md`](docs/proposta-hc-supabase.md).
 
 ---
 
