@@ -31,12 +31,14 @@
   gap: var(--space-2);
 }
 
+/* Abaixo de 1100 px (desktop estreito com a Sidebar e celular) os 4 cards de
+   resumo não cabem lado a lado: ficam em 2 colunas */
 @media (max-width: 1100px) {
   .bottle-layout { grid-template-columns: 1fr; }
+  .bottle-resumo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 768px) {
-  .bottle-resumo-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .bottle-painel-grid { grid-template-columns: 1fr; }
 }
 
