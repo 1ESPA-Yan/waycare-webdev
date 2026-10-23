@@ -141,7 +141,8 @@ export function AppProvider({ children }) {
 
   // GARRAFA
   const [mlGarrafa, setMlGarrafa] = useState(
-    () => Number(localStorage.getItem('wc_ml_garrafa')) || 600
+    // ?? e não ||: a garrafa vazia (0 ml) continua vazia ao recarregar
+    () => Number(localStorage.getItem('wc_ml_garrafa') ?? 600)
   )
   const [mlConsumido, setMlConsumido] = useState(
     () => Number(localStorage.getItem('wc_ml_consumido')) || 0
@@ -247,16 +248,13 @@ export function AppProvider({ children }) {
   // HISTÓRICO DE LEITURAS DA GARRAFA
   const [leituras, setLeituras] = useState(() => {
     try {
-      return JSON.parse(localStorage.getItem('wc_leituras')) || [
-        { hora: '09:50', de: 600, para: 500, diff: 100, hc: 4 },
-        { hora: '08:45', de: 400, para: 250, diff: 150, hc: 6 },
-        { hora: '07:32', de: 600, para: 400, diff: 200, hc: 8 },
-      ]
+      // O demo começa coerente com 0 ml consumidos: sem leituras e sem HC da garrafa
+      return JSON.parse(localStorage.getItem('wc_leituras')) || []
     } catch { return [] }
   })
 
   const [hcGarrafa, setHcGarrafa] = useState(
-    () => Number(localStorage.getItem('wc_hc_garrafa')) || 18
+    () => Number(localStorage.getItem('wc_hc_garrafa') ?? 0)
   )
 
   useEffect(() => { localStorage.setItem('wc_leituras',    JSON.stringify(leituras)) }, [leituras])
