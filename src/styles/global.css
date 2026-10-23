@@ -27,7 +27,8 @@
 
   /* Feedback */
   --color-success: #1c9770;
-  --color-warning: #f5a623;
+  --color-warning: #f5a623;       /* ícones, fundos e barras */
+  --color-warning-text: #b45309;  /* texto de aviso sobre fundo claro (5,0:1) */
   --color-error: #c62828;
   --color-info: #2196f3;
   --color-info-text: #1565c0;  /* texto azul sobre fundo claro (5,8:1) */
@@ -245,7 +246,7 @@ p  { line-height: var(--line-height-base); color: var(--color-text-secondary); }
 .text-secondary { color: var(--color-text-secondary); }
 .text-muted     { color: var(--color-text-muted); }
 .text-white     { color: var(--color-white); }
-.text-warning   { color: var(--color-warning); }
+.text-warning   { color: var(--color-warning-text); }
 .text-error     { color: var(--color-error); }
 
 .font-regular { font-weight: var(--font-weight-regular); }
