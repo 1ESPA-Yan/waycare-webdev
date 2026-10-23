@@ -6,6 +6,7 @@ import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
 import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
 import { useTara } from '../hooks/useTara'
+import { ML_POR_HC } from '../hooks/useCreditoAgua'
 import { tempoDesde, horaCurta } from '../lib/tempo'
 import Topbar from '../components/Topbar'
 import Card from '../components/Card'
@@ -286,8 +287,9 @@ function WaycareBottle() {
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--hc"><Icone nome="fa-coins" /></div>
                   <div className="flex flex-col gap-1">
-                    <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{hcGarrafa} HC</span>
-                    <span className="bottle-resumo-label">HC da garrafa</span>
+                    {/* Conta real: HC da água de hoje (1 a cada 25 ml). Demo: HC dos goles simulados */}
+                    <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{usandoReal ? Math.floor(d.consumido / ML_POR_HC) : hcGarrafa} HC</span>
+                    <span className="bottle-resumo-label">{usandoReal ? 'HC da água hoje' : 'HC da garrafa'}</span>
                   </div>
                 </Card>
               </div>

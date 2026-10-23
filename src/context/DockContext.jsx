@@ -2,6 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useMemo, u
 import { useApp } from './AppContext'
 import { rpc } from '../lib/supabase'
 import { calcularMeta, temperaturaAtual } from '../lib/meta'
+import { useCreditoAgua } from '../hooks/useCreditoAgua'
 
 const DockContext = createContext()
 
@@ -64,6 +65,9 @@ export function DockProvider({ children }) {
     metaTentada.current = chave
     atualizarMetaDoDia(perfil).then(recarregar).catch(() => { /* tenta de novo amanhã ou ao recarregar o site */ })
   }, [painel, emailUsuario, recarregar])
+
+  // HC pela água real e missão de água concluída quando bate a meta
+  useCreditoAgua(painel)
 
   const carregando = contaReal && !painel && !erro
 

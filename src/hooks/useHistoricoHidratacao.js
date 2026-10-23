@@ -31,7 +31,7 @@ export function useHistoricoHidratacao() {
       .then(({ data, error }) => {
         if (!ativo || error) return
         let total = 0
-        const pontos = (data ?? []).map(ev => ({ ts: ev.ts, consumo: (total += Number(ev.ml) || 0) }))
+        const pontos = (Array.isArray(data) ? data : []).map(ev => ({ ts: ev.ts, consumo: (total += Number(ev.ml) || 0) }))
         setCurva(pontos.length ? [{ ts: inicio, consumo: 0 }, ...pontos] : [])
       })
 

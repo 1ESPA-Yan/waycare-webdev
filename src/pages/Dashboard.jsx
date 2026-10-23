@@ -45,9 +45,13 @@ function CardMissao({ missao, consumo, meta }) {
           </div>
           <span className="mission-hc"><Icone nome="fa-coins" /> +{missao.hc} HC</span>
         </div>
+        {/* Conclui sozinha quando o consumo alcança a meta (conta real) */}
         <button className="btn-bottle-auto" disabled>
-          <Icone nome="fa-droplet" />
-          Monitorado automaticamente
+          {missao.status === 'concluida' ? (
+            <><Icone nome="fa-circle-check" /> Meta batida · missão concluída</>
+          ) : (
+            <><Icone nome="fa-droplet" /> Monitorado automaticamente</>
+          )}
         </button>
       </div>
     )
