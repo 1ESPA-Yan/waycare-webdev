@@ -9,9 +9,9 @@ import RotaPrivada from './components/RotaPrivada'
 import AppLayout from './components/AppLayout'
 import CarregandoPagina from './components/CarregandoPagina'
 
-// CSS de todas as páginas no arquivo principal, nesta ordem (a mesma de antes do
-// React.lazy). Separado por página, a ordem mudaria conforme a navegação e uma
-// regra poderia passar a vencer outra.
+// CSS de todas as páginas no arquivo principal, nesta ordem: depois do global.css
+// (importado no main.jsx) e antes dos utilitários. Separado por página, a ordem
+// mudaria conforme a navegação e uma regra poderia passar a vencer outra.
 import './styles/auth.css'
 import './styles/topbar.css'
 import './styles/dashboard.css'
@@ -31,7 +31,7 @@ import './styles/confirmar-resgate.css'
 import './styles/sucesso-resgate.css'
 import './styles/notfound.css'
 import './styles/legal.css'
-import './styles/global.css'
+import './styles/utilitarios.css'
 
 // Demais páginas: o JS de cada uma é carregado só quando a rota abre
 const Cadastro = lazy(() => import('./pages/Cadastro'))

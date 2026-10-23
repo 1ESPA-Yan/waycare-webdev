@@ -230,7 +230,7 @@
 }
 
 /* Descoberta do dia */
-.descoberta-card {
+.descoberta-do-dia {
   display: flex;
   align-items: flex-start;
   gap: var(--space-4);
@@ -240,7 +240,7 @@
   padding: var(--space-5) var(--space-6);
 }
 
-.descoberta-icon {
+.descoberta-do-dia-icon {
   width: 40px;
   height: 40px;
   border-radius: var(--radius-md);
@@ -253,7 +253,7 @@
   flex-shrink: 0;
 }
 
-.descoberta-link {
+.descoberta-do-dia-link {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
   color: var(--color-primary-dark);
@@ -261,7 +261,7 @@
   transition: color var(--transition-fast);
 }
 
-.descoberta-link:hover {
+.descoberta-do-dia-link:hover {
   color: var(--color-primary-dark);
 }
 

@@ -226,13 +226,13 @@ function Dashboard() {
             </div>
 
             {/* Descoberta do dia */}
-            <div className="descoberta-card dashboard-section">
-              <div className="descoberta-icon"><Icone nome="fa-lightbulb" /></div>
+            <div className="descoberta-do-dia dashboard-section">
+              <div className="descoberta-do-dia-icon"><Icone nome="fa-lightbulb" /></div>
               <div className="flex flex-col gap-2">
                 <h3 className="font-bold">Descoberta do Dia</h3>
                 <p className="mission-title">Você dorme melhor nos dias que caminha à tarde!</p>
                 <span className="text-sm text-muted">Completou 5 caminhadas → Dormiu 7h+ em 4 noites</span>
-                <Link to="/descobertas" className="descoberta-link">Ver todas as descobertas →</Link>
+                <Link to="/descobertas" className="descoberta-do-dia-link">Ver todas as descobertas →</Link>
               </div>
             </div>
 
