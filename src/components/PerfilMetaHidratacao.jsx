@@ -13,6 +13,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { getPerfil, postPerfil, calcularMetaPreview } from '../services/waycareApi'
 import Card from './Card'
+import Icone from './Icone'
 
 const ATIVIDADES = [
   ['sedentario', 'Sedentário (pouca ou nenhuma)'],
@@ -106,7 +107,7 @@ function PerfilMetaHidratacao() {
     <Card className="perfil-meta-hidratacao">
       <div className="flex items-center gap-2 mb-1">
         <div className="perfil-stat-icon perfil-stat-icon--blue">
-          <i className="fa-solid fa-droplet"></i>
+          <Icone nome="fa-droplet" />
         </div>
         <div>
           <h3 className="perfil-secao-titulo">Meta de Hidratação</h3>
@@ -169,7 +170,7 @@ function PerfilMetaHidratacao() {
 
       {r && (
         <div className={`perfil-meta-resultado ${salvo ? 'perfil-meta-resultado--salvo' : ''}`}>
-          {r.aviso && <p className="perfil-meta-aviso"><i className="fa-solid fa-triangle-exclamation"></i> {r.aviso}</p>}
+          {r.aviso && <p className="perfil-meta-aviso"><Icone nome="fa-triangle-exclamation" /> {r.aviso}</p>}
 
           <div className="perfil-meta-valor-wrap">
             <span className="perfil-meta-valor-label">
@@ -180,18 +181,18 @@ function PerfilMetaHidratacao() {
 
           <div className="perfil-meta-breakdown">
             <div className="perfil-meta-fator">
-              <span><i className="fa-solid fa-weight-scale"></i> Base (peso/sexo)</span>
+              <span><Icone nome="fa-weight-scale" /> Base (peso/sexo)</span>
               <strong>{r.base} ml</strong>
             </div>
             <div className="perfil-meta-fator">
               <span>
-                <i className="fa-solid fa-temperature-half"></i> Temperatura
+                <Icone nome="fa-temperature-half" /> Temperatura
                 {r.temp != null ? ` · ${r.temp}°C em ${r.cidade}` : ''}
               </span>
               <strong>+{r.ajuste_temp} ml</strong>
             </div>
             <div className="perfil-meta-fator">
-              <span><i className="fa-solid fa-person-running"></i> Atividade</span>
+              <span><Icone nome="fa-person-running" /> Atividade</span>
               <strong>+{r.ajuste_atividade} ml</strong>
             </div>
           </div>
@@ -203,7 +204,7 @@ function PerfilMetaHidratacao() {
       </button>
 
       <p className="perfil-meta-disclaimer">
-        <i className="fa-solid fa-circle-info"></i>
+        <Icone nome="fa-circle-info" />
         <span>
           Estimativa baseada em peso, sexo, atividade (ACSM) e temperatura local (EFSA).
           É uma <strong>meta sugerida</strong>, não substitui orientação médica.

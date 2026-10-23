@@ -74,7 +74,7 @@
   margin-bottom: var(--space-6);
 }
 
-.legal-aviso i { margin-top: 5px; }
+.legal-aviso .icone { margin-top: 5px; }
 
 .legal-conteudo h2 {
   font-size: var(--font-size-md);

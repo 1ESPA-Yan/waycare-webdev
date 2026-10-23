@@ -1,6 +1,6 @@
 import { Link, NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
-import Icone from '../components/Icone'
+import Icone from './Icone'
 
 function Sidebar({ isOpen, inert, ref }) {
   const { consumidoHoje, metaHoje, nomeUsuario, usandoReal, statusDock, nivel, sairDaConta } = useApp()

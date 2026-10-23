@@ -4,6 +4,7 @@ import { useApp } from '../context/AppContext'
 import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
+import Icone from '../components/Icone'
 import '../styles/notificacoes.css'
 
 const FILTROS = [
@@ -70,7 +71,7 @@ function Notificacoes() {
                     className="notif-page-marcar-todas flex items-center gap-2"
                     onClick={marcarTodasLidas}
                   >
-                    <i className="fa-solid fa-check-double"></i>
+                    <Icone nome="fa-check-double" />
                     Marcar todas como lidas
                   </button>
                 )}
@@ -79,7 +80,7 @@ function Notificacoes() {
                     className="notif-page-limpar flex items-center gap-2"
                     onClick={limparTodas}
                   >
-                    <i className="fa-solid fa-trash-can"></i>
+                    <Icone nome="fa-trash-can" />
                     Limpar tudo
                   </button>
                 )}
@@ -102,7 +103,7 @@ function Notificacoes() {
                     >
                       {!n.lida && <span className="notif-item-dot"></span>}
                       <div className={`notif-item-icone notif-item-icone--${n.cor}`}>
-                        <i className={`fa-solid ${n.icone}`}></i>
+                        <Icone nome={n.icone} />
                       </div>
                       <div className="notif-item-corpo">
                         <div className="notif-item-cabecalho">
@@ -118,7 +119,7 @@ function Notificacoes() {
                               aria-label="Marcar como lida"
                               onClick={() => marcarLida(n.id)}
                             >
-                              <i className="fa-solid fa-check"></i>
+                              <Icone nome="fa-check" />
                             </button>
                           )}
                           <button
@@ -126,7 +127,7 @@ function Notificacoes() {
                             aria-label="Remover"
                             onClick={() => remover(n.id)}
                           >
-                            <i className="fa-solid fa-xmark"></i>
+                            <Icone nome="fa-xmark" />
                           </button>
                         </div>
                       </div>
@@ -136,7 +137,7 @@ function Notificacoes() {
               </div>
             ) : (
               <div className="notif-empty">
-                <i className="fa-solid fa-bell-slash notif-empty-icon"></i>
+                <Icone nome="fa-bell-slash" className="notif-empty-icon" />
                 <p className="notif-empty-text">
                   {notificacoes.length === 0
                     ? 'Nenhuma notificação por aqui.'

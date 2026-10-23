@@ -1,3 +1,5 @@
+import Icone from './Icone'
+
 // Gráfico de área do consumo ao longo do dia (dados reais do GET /history)
 // Recebe `dados` = [{ ts, consumo, pct }] e a `meta` diária em ml.
 
@@ -5,7 +7,7 @@ function GraficoHidratacao({ dados = [], meta = 2000 }) {
   if (!dados.length) {
     return (
       <div className="bottle-grafico-vazio">
-        <i className="fa-regular fa-chart-bar"></i>
+        <Icone nome="fa-chart-bar" />
         Ainda sem leituras hoje. Beba água para começar a registrar.
       </div>
     )

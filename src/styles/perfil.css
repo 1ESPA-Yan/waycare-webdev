@@ -476,7 +476,7 @@ select.perfil-edit-input {
   color: var(--color-text-secondary);
 }
 
-.perfil-meta-fator i {
+.perfil-meta-fator .icone {
   width: 16px;
   text-align: center;
   margin-right: var(--space-1);
@@ -515,7 +515,7 @@ select.perfil-edit-input {
   margin: var(--space-3) 0 0;
 }
 
-.perfil-meta-disclaimer i { margin-top: 2px; }
+.perfil-meta-disclaimer .icone { margin-top: 2px; }
 
 @media (max-width: 480px) {
   .perfil-meta-form { grid-template-columns: 1fr; }

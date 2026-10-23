@@ -3,7 +3,7 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Sidebar from './Sidebar'
 import CarregandoPagina from './CarregandoPagina'
-import Icone from '../components/Icone'
+import Icone from './Icone'
 import '../styles/topbar.css'
 
 // Mesmo ponto de quebra do CSS: abaixo dele a Sidebar vira menu deslizante

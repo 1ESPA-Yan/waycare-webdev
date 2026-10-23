@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Navigate, useLocation, useNavigate } from 'react-router-dom'
 import { motion } from 'motion/react'
 import { useApp } from '../context/AppContext'
+import Icone from '../components/Icone'
 import '../styles/confirmar-resgate.css'
 
 function ConfirmarResgate() {
@@ -38,7 +39,7 @@ function ConfirmarResgate() {
             className="confirmar-close-btn"
             aria-label="Fechar"
           >
-            <i className="fa-solid fa-xmark"></i>
+            <Icone nome="fa-xmark" />
           </button>
         </div>
 
@@ -48,7 +49,7 @@ function ConfirmarResgate() {
           {/* Preview do item */}
           <div className="confirmar-preview">
             <div className="confirmar-preview-icon">
-              <i className={`fa-solid ${recompensa.icone}`}></i>
+              <Icone nome={recompensa.icone} />
             </div>
             <h3 className="confirmar-preview-nome">{recompensa.nome}</h3>
           </div>
@@ -60,21 +61,21 @@ function ConfirmarResgate() {
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Valor:</span>
               <div className="confirmar-detalhe-valor">
-                <i className="fa-solid fa-coins"></i>
+                <Icone nome="fa-coins" />
                 <span>{recompensa.preco.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo atual:</span>
               <div className="confirmar-detalhe-valor">
-                <i className="fa-solid fa-coins"></i>
+                <Icone nome="fa-coins" />
                 <span>{totalHC.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo após resgate:</span>
               <div className="confirmar-detalhe-valor confirmar-detalhe-valor--destaque">
-                <i className="fa-solid fa-coins"></i>
+                <Icone nome="fa-coins" />
                 <span>{saldoApos.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
@@ -101,13 +102,13 @@ function ConfirmarResgate() {
               <span className="confirmar-termos-texto">Li e aceito os termos de resgate</span>
             </label>
             <a href="/termos" target="_blank" rel="noopener" className="confirmar-termos-link">
-              Ver termos completos <i className="fa-solid fa-arrow-up-right-from-square"></i>
+              Ver termos completos <Icone nome="fa-arrow-up-right-from-square" />
             </a>
           </div>
 
           {/* Aviso */}
           <div className="confirmar-aviso">
-            <i className="fa-solid fa-triangle-exclamation"></i>
+            <Icone nome="fa-triangle-exclamation" />
             <span>Esta ação não pode ser desfeita</span>
           </div>
 

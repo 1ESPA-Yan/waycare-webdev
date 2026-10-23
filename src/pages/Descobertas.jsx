@@ -4,6 +4,7 @@ import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
 import Card from '../components/Card'
 import Chip from '../components/Chip'
+import Icone from '../components/Icone'
 import '../styles/descobertas.css'
 import { useDados } from '../hooks/useDados'
 
@@ -22,7 +23,7 @@ function CardDescoberta({ d }) {
     <Card className="descoberta-card">
       <div className="flex items-start gap-6 mb-4">
         <div className={`descoberta-icon descoberta-icon--${d.cor}`}>
-          <i className={`fa-solid ${d.icone}`}></i>
+          <Icone nome={d.icone} />
         </div>
         <div className="flex flex-col gap-2">
           <h3 className="descoberta-nome">{d.nome}</h3>
@@ -34,11 +35,11 @@ function CardDescoberta({ d }) {
         </div>
       </div>
       <div className="descoberta-insight">
-        <i className="fa-solid fa-lightbulb descoberta-insight-icon"></i>
+        <Icone nome="fa-lightbulb" className="descoberta-insight-icon" />
         <span>{d.insight}</span>
       </div>
       <p className="descoberta-dado">
-        <i className="fa-solid fa-arrow-trend-up"></i>
+        <Icone nome="fa-arrow-trend-up" />
         {d.dado}
       </p>
       <div className="flex items-center gap-4 flex-wrap">
@@ -93,7 +94,7 @@ function Descobertas() {
 
             <div className="descobertas-info mt-12">
               <div className="descobertas-info-icon">
-                <i className="fa-solid fa-circle-info"></i>
+                <Icone nome="fa-circle-info" />
               </div>
               <div className="flex flex-col gap-2">
                 <h4 className="descobertas-info-titulo">Como funcionam as descobertas?</h4>
@@ -104,9 +105,9 @@ function Descobertas() {
                   WayCare Bottle, mais precisas ficam as descobertas!
                 </p>
                 <ul className="descobertas-info-lista">
-                  <li><i className="fa-solid fa-circle-dot"></i> Novas descobertas são geradas semanalmente</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Baseadas em pelo menos 7 dias de dados da garrafa</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Priorizamos insights com maior impacto na sua saúde</li>
+                  <li><Icone nome="fa-circle-dot" /> Novas descobertas são geradas semanalmente</li>
+                  <li><Icone nome="fa-circle-dot" /> Baseadas em pelo menos 7 dias de dados da garrafa</li>
+                  <li><Icone nome="fa-circle-dot" /> Priorizamos insights com maior impacto na sua saúde</li>
                 </ul>
               </div>
             </div>

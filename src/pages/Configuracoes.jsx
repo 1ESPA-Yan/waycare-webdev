@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
 import Card from '../components/Card'
+import Icone from '../components/Icone'
 import '../styles/configuracoes.css'
 
 function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
@@ -57,7 +58,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
         <span className="config-row-label">{label}</span>
         <span className="config-row-valor">
           {valor}{unidade ? ` ${unidade}` : ''}
-          {salvo && <span className="config-salvo-badge"><i className="fa-solid fa-check"></i> Salvo</span>}
+          {salvo && <span className="config-salvo-badge"><Icone nome="fa-check" /> Salvo</span>}
         </span>
       </div>
       <button className="config-row-action" onClick={() => { setRascunho(String(valor)); setEditando(true) }}>
@@ -133,7 +134,7 @@ function Configuracoes() {
             <Card className="config-item-card mb-6">
               <div className="flex items-center gap-6">
                 <div className="config-item-icon config-item-icon--green">
-                  <i className="fa-solid fa-bell"></i>
+                  <Icone nome="fa-bell" />
                 </div>
                 <div className="flex flex-col gap-1 grow">
                   <span className="config-item-titulo">Notificações</span>
@@ -147,7 +148,7 @@ function Configuracoes() {
             <Card className="config-item-card mb-6">
               <div className="flex items-center gap-6">
                 <div className="config-item-icon config-item-icon--blue">
-                  <i className="fa-solid fa-shield-halved"></i>
+                  <Icone nome="fa-shield-halved" />
                 </div>
                 <div className="flex flex-col gap-1 grow">
                   <span className="config-item-titulo">Privacidade e Dados</span>
@@ -161,7 +162,7 @@ function Configuracoes() {
             <Card className="config-item-card mb-6">
               <div className="flex items-center gap-6">
                 <div className="config-item-icon config-item-icon--orange">
-                  <i className="fa-solid fa-palette"></i>
+                  <Icone nome="fa-palette" />
                 </div>
                 <div className="flex flex-col gap-1 grow">
                   <span className="config-item-titulo">Aparência</span>
@@ -177,7 +178,7 @@ function Configuracoes() {
 
               <div className="config-perigo-item config-perigo-item--warning">
                 <div className="flex items-center gap-4 grow">
-                  <i className="fa-solid fa-arrow-right-from-bracket config-perigo-icon config-perigo-icon--warning"></i>
+                  <Icone nome="fa-arrow-right-from-bracket" className="config-perigo-icon config-perigo-icon--warning" />
                   <div className="flex flex-col gap-1">
                     <span className="config-perigo-titulo">Sair da Conta</span>
                     <span className="config-perigo-desc">Você pode voltar a qualquer momento</span>
@@ -190,7 +191,7 @@ function Configuracoes() {
 
               <div className="config-perigo-item config-perigo-item--error mt-4">
                 <div className="flex items-center gap-4 grow">
-                  <i className="fa-solid fa-shield-halved config-perigo-icon config-perigo-icon--error"></i>
+                  <Icone nome="fa-shield-halved" className="config-perigo-icon config-perigo-icon--error" />
                   <div className="flex flex-col gap-1">
                     <span className="config-perigo-titulo">Excluir Conta</span>
                     <span className="config-perigo-desc">Esta ação não pode ser desfeita</span>

@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
-import Icone from '../components/Icone'
+import Icone from './Icone'
 import '../styles/topbar.css'
 
 // Cabeçalho das páginas do app: ícone, título, subtítulo e atalhos (HC, carteira e notificações)

@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Button from '../components/Button'
+import Icone from '../components/Icone'
 import '../styles/auth.css'
 
 function Login() {
@@ -52,25 +53,25 @@ function Login() {
           <ul className="auth-hero-features">
             <li>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-route"></i>
+                <Icone nome="fa-route" />
               </div>
               <span>Trilhas personalizadas pelo seu humor</span>
             </li>
             <li>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-coins"></i>
+                <Icone nome="fa-coins" />
               </div>
               <span>Ganhe Health Coins por cada hábito</span>
             </li>
             <li>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-trophy"></i>
+                <Icone nome="fa-trophy" />
               </div>
               <span>Conquistas e recompensas exclusivas</span>
             </li>
             <li>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-chart-line"></i>
+                <Icone nome="fa-chart-line" />
               </div>
               <span>Acompanhe sua evolução em tempo real</span>
             </li>
@@ -97,7 +98,7 @@ function Login() {
             <div className="input-group">
               <label className="input-label" htmlFor="login-email">E-mail</label>
               <div className="input-icon-wrapper">
-                <i className="fa-regular fa-envelope input-icon"></i>
+                <Icone nome="fa-envelope" className="input-icon" />
                 <input
                   type="email"
                   id="login-email"
@@ -121,7 +122,7 @@ function Login() {
                 <button type="button" className="auth-link text-sm em-breve" disabled>Esqueci a senha <span className="badge-em-breve">Em breve</span></button>
               </div>
               <div className="input-icon-wrapper">
-                <i className="fa-solid fa-lock input-icon"></i>
+                <Icone nome="fa-lock" className="input-icon" />
                 <input
                   type={senhaVisivel ? 'text' : 'password'}
                   id="login-senha"
@@ -140,7 +141,7 @@ function Login() {
                   aria-label="Mostrar senha"
                   onClick={() => setSenhaVisivel(!senhaVisivel)}
                 >
-                  <i className={senhaVisivel ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'}></i>
+                  <Icone nome={senhaVisivel ? 'fa-eye-slash' : 'fa-eye'} />
                 </button>
               </div>
               {erros.senha && <p id="login-senha-erro" className="input-erro-msg">{erros.senha}</p>}
@@ -149,7 +150,7 @@ function Login() {
             {/* Botão entrar */}
             <Button type="submit" bloco tamanho="lg" className="auth-submit-btn">
               Entrar
-              <i className="fa-solid fa-arrow-right"></i>
+              <Icone nome="fa-arrow-right" />
             </Button>
 
             {/* Divisor */}
@@ -162,7 +163,7 @@ function Login() {
               <p>Ainda não tem conta?</p>
               <Link to="/cadastro" className="auth-link auth-link-bold">
                 Criar conta gratuitamente
-                <i className="fa-solid fa-arrow-right"></i>
+                <Icone nome="fa-arrow-right" />
               </Link>
             </div>
 

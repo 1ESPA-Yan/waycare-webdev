@@ -118,7 +118,7 @@
   font-weight: var(--font-weight-medium);
 }
 
-.confirmar-detalhe-valor i {
+.confirmar-detalhe-valor .icone {
   color: var(--color-text-muted);
 }
 
@@ -126,7 +126,7 @@
   color: var(--color-primary-dark) !important;
 }
 
-.confirmar-detalhe-valor--destaque i {
+.confirmar-detalhe-valor--destaque .icone {
   color: var(--color-primary-dark) !important;
 }
 
@@ -220,7 +220,7 @@
   color: #F57C00;
 }
 
-.confirmar-aviso i {
+.confirmar-aviso .icone {
   font-size: 18px;
   flex-shrink: 0;
 }

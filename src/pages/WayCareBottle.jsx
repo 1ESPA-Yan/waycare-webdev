@@ -6,6 +6,7 @@ import { useApp } from '../context/AppContext'
 import Topbar from '../components/Topbar'
 import { getHistory, postTara } from '../services/waycareApi'
 import Card from '../components/Card'
+import Icone from '../components/Icone'
 import '../styles/waycare-bottle.css'
 
 // Dados do gráfico semanal — usados só no fallback (sem conexão com a dock)
@@ -143,23 +144,23 @@ function WaycareBottle() {
             titulo="WayCare Bottle"
             aoLadoDoTitulo={usandoReal && d.online ? (
               <span className="bottle-conectada-badge">
-                <i className="fa-solid fa-wifi"></i> Conectada
+                <Icone nome="fa-wifi" /> Conectada
               </span>
             ) : (
               <span className="bottle-conectada-badge bottle-conectada-badge--off">
-                <i className="fa-solid fa-plug-circle-xmark"></i> {usandoReal ? 'Offline' : 'Demonstração'}
+                <Icone nome="fa-plug-circle-xmark" /> {usandoReal ? 'Offline' : 'Demonstração'}
               </span>
             )}
             subtitulo={
               <div className="flex items-center gap-4 flex-wrap">
                 <span className="bottle-status-info">
-                  <i className="fa-solid fa-signal"></i> {usandoReal ? 'Dock conectada' : 'Sensor IoT (demo)'}
+                  <Icone nome="fa-signal" /> {usandoReal ? 'Dock conectada' : 'Sensor IoT (demo)'}
                 </span>
                 {d.temp != null && (
-                  <span className="bottle-status-info"><i className="fa-solid fa-temperature-half"></i> {d.temp}°C</span>
+                  <span className="bottle-status-info"><Icone nome="fa-temperature-half" /> {d.temp}°C</span>
                 )}
                 {d.cidade && (
-                  <span className="bottle-status-info"><i className="fa-solid fa-location-dot"></i> {d.cidade}</span>
+                  <span className="bottle-status-info"><Icone nome="fa-location-dot" /> {d.cidade}</span>
                 )}
               </div>
             }
@@ -170,23 +171,23 @@ function WaycareBottle() {
             {/* Avisos de conexão / dispositivo */}
             {carregando && (
               <div className="bottle-aviso bottle-aviso--info mb-6">
-                <i className="fa-solid fa-circle-notch fa-spin"></i> Conectando ao dispositivo…
+                <Icone nome="fa-circle-notch" girar /> Conectando ao dispositivo…
               </div>
             )}
             {!carregando && !usandoReal && (
               <div className="bottle-aviso bottle-aviso--garrafa mb-6">
-                <i className="fa-solid fa-triangle-exclamation"></i>
+                <Icone nome="fa-triangle-exclamation" />
                 Sem conexão com a dock — exibindo dados de demonstração.
               </div>
             )}
             {usandoReal && !d.online && (
               <div className="bottle-aviso bottle-aviso--offline mb-6">
-                <i className="fa-solid fa-plug-circle-xmark"></i> Dispositivo offline — o ESP32 parou de enviar dados.
+                <Icone nome="fa-plug-circle-xmark" /> Dispositivo offline — o ESP32 parou de enviar dados.
               </div>
             )}
             {usandoReal && !d.garrafa_presente && (
               <div className="bottle-aviso bottle-aviso--garrafa mb-6">
-                <i className="fa-solid fa-bottle-water"></i> Garrafa fora da base.
+                <Icone nome="fa-bottle-water" /> Garrafa fora da base.
               </div>
             )}
 
@@ -194,7 +195,7 @@ function WaycareBottle() {
             <div className="bottle-resumo-grid mb-6">
               <div>
                 <Card className="bottle-resumo-card">
-                  <div className="bottle-resumo-icon bottle-resumo-icon--blue"><i className="fa-solid fa-droplet"></i></div>
+                  <div className="bottle-resumo-icon bottle-resumo-icon--blue"><Icone nome="fa-droplet" /></div>
                   <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor">{d.consumido} ml</span>
                     <span className="bottle-resumo-label">Consumo de hoje</span>
@@ -203,7 +204,7 @@ function WaycareBottle() {
               </div>
               <div>
                 <Card className="bottle-resumo-card">
-                  <div className="bottle-resumo-icon bottle-resumo-icon--green"><i className="fa-solid fa-fire"></i></div>
+                  <div className="bottle-resumo-icon bottle-resumo-icon--green"><Icone nome="fa-fire" /></div>
                   <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor">{d.streak != null ? `${d.streak} dia${d.streak === 1 ? '' : 's'}` : '—'}</span>
                     <span className="bottle-resumo-label">Streak (metas seguidas)</span>
@@ -212,7 +213,7 @@ function WaycareBottle() {
               </div>
               <div>
                 <Card className="bottle-resumo-card">
-                  <div className="bottle-resumo-icon bottle-resumo-icon--primary"><i className="fa-solid fa-temperature-half"></i></div>
+                  <div className="bottle-resumo-icon bottle-resumo-icon--primary"><Icone nome="fa-temperature-half" /></div>
                   <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor">{d.temp != null ? `${d.temp}°C` : '—'}</span>
                     <span className="bottle-resumo-label">{d.cidade || 'Temperatura local'}</span>
@@ -221,7 +222,7 @@ function WaycareBottle() {
               </div>
               <div>
                 <Card className="bottle-resumo-card">
-                  <div className="bottle-resumo-icon bottle-resumo-icon--hc"><i className="fa-solid fa-coins"></i></div>
+                  <div className="bottle-resumo-icon bottle-resumo-icon--hc"><Icone nome="fa-coins" /></div>
                   <div className="flex flex-col gap-1">
                     <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{hcGarrafa} HC</span>
                     <span className="bottle-resumo-label">HC da garrafa</span>
@@ -238,7 +239,7 @@ function WaycareBottle() {
 
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="bottle-painel-icon"><i className="fa-solid fa-droplet"></i></div>
+                      <div className="bottle-painel-icon"><Icone nome="fa-droplet" /></div>
                       <div>
                         <span className="bottle-painel-titulo">WayCare Bottle</span>
                         <span className="bottle-painel-subtitulo block">Suporte IoT de hidratação inteligente</span>
@@ -302,7 +303,7 @@ function WaycareBottle() {
 
                       {metaBatida && (
                         <div className="bottle-celebracao mb-6">
-                          <i className="fa-solid fa-trophy"></i> Mandou bem! Meta do dia concluída.
+                          <Icone nome="fa-trophy" /> Mandou bem! Meta do dia concluída.
                         </div>
                       )}
 
@@ -312,21 +313,21 @@ function WaycareBottle() {
                           <>
                             <div>
                               <div className="bottle-mini-stat">
-                                <i className="fa-solid fa-fire bottle-mini-icon"></i>
+                                <Icone nome="fa-fire" className="bottle-mini-icon" />
                                 <span className="bottle-mini-valor">{d.streak}</span>
                                 <span className="bottle-mini-label">Streak</span>
                               </div>
                             </div>
                             <div>
                               <div className="bottle-mini-stat">
-                                <i className="fa-solid fa-layer-group bottle-mini-icon"></i>
+                                <Icone nome="fa-layer-group" className="bottle-mini-icon" />
                                 <span className="bottle-mini-valor">{d.fatias}/4</span>
                                 <span className="bottle-mini-label">Fatias</span>
                               </div>
                             </div>
                             <div>
                               <div className="bottle-mini-stat">
-                                <i className="fa-solid fa-weight-scale bottle-mini-icon"></i>
+                                <Icone nome="fa-weight-scale" className="bottle-mini-icon" />
                                 <span className="bottle-mini-valor">{d.peso != null ? Math.round(d.peso) : '—'}</span>
                                 <span className="bottle-mini-label">Peso (g)</span>
                               </div>
@@ -336,21 +337,21 @@ function WaycareBottle() {
                           <>
                             <div>
                               <div className="bottle-mini-stat">
-                                <i className="fa-solid fa-droplet bottle-mini-icon"></i>
+                                <Icone nome="fa-droplet" className="bottle-mini-icon" />
                                 <span className="bottle-mini-valor">{leituras.length}</span>
                                 <span className="bottle-mini-label">Goles</span>
                               </div>
                             </div>
                             <div>
                               <div className="bottle-mini-stat">
-                                <i className="fa-solid fa-coins bottle-mini-icon bottle-mini-icon--hc"></i>
+                                <Icone nome="fa-coins" className="bottle-mini-icon bottle-mini-icon--hc" />
                                 <span className="bottle-mini-valor">+{hcGarrafa}</span>
                                 <span className="bottle-mini-label">HC ganhos</span>
                               </div>
                             </div>
                             <div>
                               <div className="bottle-mini-stat">
-                                <i className="fa-regular fa-clock bottle-mini-icon"></i>
+                                <Icone nome="fa-clock" className="bottle-mini-icon" />
                                 <span className="bottle-mini-valor">{leituras[0]?.hora || '--:--'}</span>
                                 <span className="bottle-mini-label">Últ. sync</span>
                               </div>
@@ -375,7 +376,7 @@ function WaycareBottle() {
                       <span className="bottle-secao-label mb-4 block">CONTROLE DO DISPOSITIVO</span>
                       <div className="flex items-center gap-4 flex-wrap">
                         <button className="btn bottle-tara-btn" onClick={acionarTara} disabled={tarando}>
-                          <i className="fa-solid fa-scale-balanced"></i>
+                          <Icone nome="fa-scale-balanced" />
                           {tarando ? 'Zerando…' : 'Tarar balança'}
                         </button>
                         {taraMsg && <span className="bottle-tara-msg">{taraMsg}</span>}
@@ -407,7 +408,7 @@ function WaycareBottle() {
                           disabled={mlGarrafa === CAPACIDADE_GARRAFA}
                           style={{ borderColor: 'rgba(122,209,128,0.3)', backgroundColor: '#1a4a2c' }}
                         >
-                          <i className="fa-solid fa-fill-drip" style={{ fontSize: '12px' }}></i>
+                          <Icone nome="fa-fill-drip" style={{ fontSize: '12px' }} />
                           Encher garrafa
                           <span className="bottle-gole-desc">+{CAPACIDADE_GARRAFA - mlGarrafa} ml</span>
                         </button>
@@ -421,7 +422,7 @@ function WaycareBottle() {
                 <Card className="bottle-historico-card mt-6">
                   <div className="flex items-center justify-between mb-6">
                     <div className="flex items-center gap-2">
-                      <i className="fa-solid fa-arrow-trend-up bottle-historico-icon"></i>
+                      <Icone nome="fa-arrow-trend-up" className="bottle-historico-icon" />
                       <h2 className="bottle-historico-titulo">{usandoReal ? 'Consumo de hoje' : 'Histórico Semanal'}</h2>
                     </div>
                     <div className="flex items-center gap-4">
@@ -467,43 +468,43 @@ function WaycareBottle() {
 
                 <Card>
                   <h2 className="bottle-col-titulo mb-6">
-                    <i className="fa-solid fa-circle-info bottle-col-titulo-icon"></i>
+                    <Icone nome="fa-circle-info" className="bottle-col-titulo-icon" />
                     Informações do Dispositivo
                   </h2>
                   <div className="flex flex-col gap-0">
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><i className="fa-solid fa-wifi bottle-info-icon--green"></i> Conexão</span>
+                      <span className="bottle-info-label"><Icone nome="fa-wifi" className="bottle-info-icon--green" /> Conexão</span>
                       <span className="bottle-info-valor">{usandoReal ? (d.online ? 'Online' : 'Offline') : 'Sem conexão'}</span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><i className="fa-solid fa-bottle-water bottle-info-icon--blue-light"></i> Garrafa na base</span>
+                      <span className="bottle-info-label"><Icone nome="fa-bottle-water" className="bottle-info-icon--blue-light" /> Garrafa na base</span>
                       <span className="bottle-info-valor">{usandoReal ? (d.garrafa_presente ? 'Sim' : 'Fora da base') : '—'}</span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><i className="fa-solid fa-temperature-half bottle-info-icon--blue-light"></i> Temperatura</span>
+                      <span className="bottle-info-label"><Icone nome="fa-temperature-half" className="bottle-info-icon--blue-light" /> Temperatura</span>
                       <span className="bottle-info-valor">{d.temp != null ? `${d.temp}°C` : '—'}</span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><i className="fa-solid fa-location-dot bottle-info-icon--purple"></i> Cidade</span>
+                      <span className="bottle-info-label"><Icone nome="fa-location-dot" className="bottle-info-icon--purple" /> Cidade</span>
                       <span className="bottle-info-valor">{d.cidade || '—'}</span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><i className="fa-solid fa-weight-scale bottle-info-icon--gray"></i> Peso na dock</span>
+                      <span className="bottle-info-label"><Icone nome="fa-weight-scale" className="bottle-info-icon--gray" /> Peso na dock</span>
                       <span className="bottle-info-valor">{d.peso != null ? `${Math.round(d.peso)} g` : '—'}</span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><i className="fa-solid fa-flask bottle-info-icon--blue-light"></i> Modelo</span>
+                      <span className="bottle-info-label"><Icone nome="fa-flask" className="bottle-info-icon--blue-light" /> Modelo</span>
                       <span className="bottle-info-valor">WayCare Bottle Pro</span>
                     </div>
                   </div>
                   {usandoReal && (
                     <button className="btn bottle-sync-btn mt-6" onClick={acionarTara} disabled={tarando}>
-                      <i className="fa-solid fa-scale-balanced"></i> {tarando ? 'Zerando…' : 'Tarar balança'}
+                      <Icone nome="fa-scale-balanced" /> {tarando ? 'Zerando…' : 'Tarar balança'}
                     </button>
                   )}
                 </Card>
@@ -511,7 +512,7 @@ function WaycareBottle() {
                 {/* Meta de Hidratação — resumo + link para personalizar */}
                 <Card>
                   <h2 className="bottle-col-titulo mb-6">
-                    <i className="fa-solid fa-bullseye bottle-col-titulo-icon bottle-col-titulo-icon--green"></i>
+                    <Icone nome="fa-bullseye" className="bottle-col-titulo-icon bottle-col-titulo-icon--green" />
                     Meta de Hidratação
                   </h2>
                   <div className="bottle-meta-card mb-6">
@@ -528,8 +529,8 @@ function WaycareBottle() {
                     </div>
                   </div>
                   <Link to="/perfil" className="bottle-meta-link">
-                    <i className="fa-solid fa-sliders"></i> Personalizar minha meta
-                    <i className="fa-solid fa-arrow-right bottle-meta-link-seta"></i>
+                    <Icone nome="fa-sliders" /> Personalizar minha meta
+                    <Icone nome="fa-arrow-right" className="bottle-meta-link-seta" />
                   </Link>
                   <p className="bottle-meta-link-desc">
                     Calculada por peso, sexo, atividade física e temperatura da sua cidade.
@@ -538,20 +539,20 @@ function WaycareBottle() {
 
                 <Card>
                   <h2 className="bottle-col-titulo mb-6">
-                    <i className="fa-solid fa-lightbulb bottle-col-titulo-icon bottle-col-titulo-icon--yellow"></i>
+                    <Icone nome="fa-lightbulb" className="bottle-col-titulo-icon bottle-col-titulo-icon--yellow" />
                     Dicas de Hidratação
                   </h2>
                   <div className="flex flex-col gap-4">
                     <div className="flex items-start gap-4">
-                      <div className="bottle-dica-icon bottle-dica-icon--yellow"><i className="fa-solid fa-bolt"></i></div>
+                      <div className="bottle-dica-icon bottle-dica-icon--yellow"><Icone nome="fa-bolt" /></div>
                       <p className="bottle-dica-texto">Beba um copo ao acordar para ativar o metabolismo</p>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="bottle-dica-icon bottle-dica-icon--blue"><i className="fa-regular fa-clock"></i></div>
+                      <div className="bottle-dica-icon bottle-dica-icon--blue"><Icone nome="fa-clock" /></div>
                       <p className="bottle-dica-texto">Configure lembretes a cada 90 minutos durante o trabalho</p>
                     </div>
                     <div className="flex items-start gap-4">
-                      <div className="bottle-dica-icon bottle-dica-icon--green"><i className="fa-solid fa-arrow-trend-up"></i></div>
+                      <div className="bottle-dica-icon bottle-dica-icon--green"><Icone nome="fa-arrow-trend-up" /></div>
                       <p className="bottle-dica-texto">Dias mais quentes elevam sua meta automaticamente</p>
                     </div>
                   </div>

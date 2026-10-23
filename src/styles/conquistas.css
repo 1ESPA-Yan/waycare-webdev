@@ -172,7 +172,7 @@
 
 /* Health Coins nas conquistas — cor verde */
 .conquista-card .mission-hc,
-.conquista-card .mission-hc .fa-coins {
+.conquista-card .mission-hc .icone {
   color: var(--color-primary-dark);
 }
 
@@ -224,7 +224,7 @@
   gap: var(--space-2);
 }
 
-.conquistas-dica-lista li i {
+.conquistas-dica-lista li .icone {
   color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   flex-shrink: 0;

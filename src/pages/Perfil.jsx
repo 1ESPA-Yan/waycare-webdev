@@ -7,6 +7,7 @@ import { useDados } from '../hooks/useDados'
 import Topbar from '../components/Topbar'
 import Button from '../components/Button'
 import Card from '../components/Card'
+import Icone from '../components/Icone'
 import '../styles/perfil.css'
 
 // "2026-10-21" → "Out 2026"
@@ -126,10 +127,10 @@ function Perfil() {
                               onClick={salvar}
                               disabled={!rascunhoNome.trim()}
                             >
-                              <i className="fa-solid fa-check"></i> Salvar
+                              <Icone nome="fa-check" /> Salvar
                             </button>
                             <button className="perfil-edit-btn-cancelar" onClick={cancelar}>
-                              <i className="fa-solid fa-xmark"></i> Cancelar
+                              <Icone nome="fa-xmark" /> Cancelar
                             </button>
                           </div>
                         </div>
@@ -143,18 +144,18 @@ function Perfil() {
                               aria-label="Editar perfil"
                               onClick={iniciarEdicao}
                             >
-                              <i className="fa-regular fa-pen-to-square"></i>
+                              <Icone nome="fa-pen-to-square" />
                             </button>
                           </div>
                           {bioUsuario && <p className="perfil-bio">{bioUsuario}</p>}
                           <div className="flex items-center gap-4 flex-wrap">
                             <span className="perfil-meta">
-                              <i className="fa-regular fa-envelope"></i>
+                              <Icone nome="fa-envelope" />
                               {emailUsuario || 'Sem email'}
                             </span>
                             {membroDesde && (
                               <span className="perfil-meta">
-                                <i className="fa-regular fa-calendar"></i>
+                                <Icone nome="fa-calendar" />
                                 Membro desde {formatarMesAno(membroDesde)}
                               </span>
                             )}
@@ -193,7 +194,7 @@ function Perfil() {
                   <div>
                     <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--blue">
-                        <i className="fa-solid fa-bullseye"></i>
+                        <Icone nome="fa-bullseye" />
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Missões Completadas</span>
@@ -204,7 +205,7 @@ function Perfil() {
                   <div>
                     <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--orange">
-                        <i className="fa-solid fa-fire"></i>
+                        <Icone nome="fa-fire" />
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Streak Atual</span>
@@ -215,7 +216,7 @@ function Perfil() {
                   <div>
                     <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--hc">
-                        <i className="fa-solid fa-coins"></i>
+                        <Icone nome="fa-coins" />
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Total de Coins Ganhos</span>
@@ -226,7 +227,7 @@ function Perfil() {
                   <div>
                     <Card className="perfil-stat-card">
                       <div className="perfil-stat-icon perfil-stat-icon--trophy">
-                        <i className="fa-solid fa-trophy"></i>
+                        <Icone nome="fa-trophy" />
                       </div>
                       <div className="flex flex-col gap-1">
                         <span className="perfil-stat-label">Conquistas</span>
@@ -245,7 +246,7 @@ function Perfil() {
                 <motion.div variants={cardVariants} className="card">
                   <div className="flex items-center gap-2 mb-6">
                     <div className="perfil-stat-icon perfil-stat-icon--trophy">
-                      <i className="fa-solid fa-trophy"></i>
+                      <Icone nome="fa-trophy" />
                     </div>
                     <h3 className="perfil-secao-titulo">Conquistas Recentes</h3>
                   </div>
@@ -254,7 +255,7 @@ function Perfil() {
                     <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--orange">
-                          <i className="fa-solid fa-fire"></i>
+                          <Icone nome="fa-fire" />
                         </div>
                         <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome">Semana Ativa</span>
@@ -266,7 +267,7 @@ function Perfil() {
                     <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--purple">
-                          <i className="fa-solid fa-moon"></i>
+                          <Icone nome="fa-moon" />
                         </div>
                         <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome">Mestre do Sono</span>
@@ -278,7 +279,7 @@ function Perfil() {
                     <div>
                       <div className="perfil-conquista-item perfil-conquista-item--done">
                         <div className="perfil-conquista-icon perfil-conquista-icon--blue">
-                          <i className="fa-solid fa-droplet"></i>
+                          <Icone nome="fa-droplet" />
                         </div>
                         <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome">Hidratação em Dia</span>
@@ -290,7 +291,7 @@ function Perfil() {
                     <div>
                       <div className="perfil-conquista-item">
                         <div className="perfil-conquista-icon perfil-conquista-icon--locked">
-                          <i className="fa-solid fa-person-running"></i>
+                          <Icone nome="fa-person-running" />
                         </div>
                         <div className="flex flex-col gap-1">
                           <span className="perfil-conquista-nome text-muted">Maratonista</span>
@@ -314,7 +315,7 @@ function Perfil() {
                 <motion.div variants={cardVariants}>
                 <Link to="/configuracoes" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--gray">
-                    <i className="fa-solid fa-gear"></i>
+                    <Icone nome="fa-gear" />
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="perfil-atalho-titulo">Configurações</span>
@@ -326,7 +327,7 @@ function Perfil() {
                 <motion.div variants={cardVariants}>
                 <Link to="/recompensas" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--green">
-                    <i className="fa-solid fa-gift"></i>
+                    <Icone nome="fa-gift" />
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="perfil-atalho-titulo">Minhas Recompensas</span>
@@ -338,7 +339,7 @@ function Perfil() {
                 <motion.div variants={cardVariants}>
                 <Link to="/descobertas" className="card perfil-atalho">
                   <div className="perfil-atalho-icon perfil-atalho-icon--yellow">
-                    <i className="fa-solid fa-lightbulb"></i>
+                    <Icone nome="fa-lightbulb" />
                   </div>
                   <div className="flex flex-col gap-1">
                     <span className="perfil-atalho-titulo">Descobertas</span>

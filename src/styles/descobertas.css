@@ -95,7 +95,7 @@
   margin-bottom: var(--space-4);
 }
 
-.descoberta-dado i {
+.descoberta-dado .icone {
   color: var(--color-primary-dark);
   font-size: 12px;
 }
@@ -156,7 +156,7 @@
   gap: var(--space-2);
 }
 
-.descobertas-info-lista li i {
+.descobertas-info-lista li .icone {
   color: var(--color-primary-dark);
   font-size: var(--font-size-xs);
   flex-shrink: 0;

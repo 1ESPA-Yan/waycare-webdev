@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import Icone from '../components/Icone'
 import '../styles/selecionarHumor.css'
 
 const HUMORES = [
@@ -63,11 +64,11 @@ function SelecionarHumor() {
         </div>
         <div className="flex items-center gap-4">
           <div className="hc-chip">
-            <i className="fa-solid fa-coins"></i>
+            <Icone nome="fa-coins" />
             {totalHC.toLocaleString('pt-BR')} HC
           </div>
           <button className="humor-btn-voltar" onClick={() => navigate('/dashboard')} aria-label="Voltar">
-            <i className="fa-solid fa-xmark"></i>
+            <Icone nome="fa-xmark" />
           </button>
         </div>
       </header>
@@ -90,7 +91,7 @@ function SelecionarHumor() {
               aria-pressed={humorSelecionado === humor.id}
             >
               <div className={`humor-icone humor-icone--${humor.cor}`}>
-                <i className={`fa-solid ${humor.icon}`}></i>
+                <Icone nome={humor.icon} />
               </div>
               <span className="humor-label">{humor.label}</span>
               <span className="humor-desc">{humor.desc}</span>

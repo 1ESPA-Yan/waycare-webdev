@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Button from '../components/Button'
+import Icone from '../components/Icone'
 import '../styles/auth.css'
 
 function Cadastro() {
@@ -96,7 +97,7 @@ function Cadastro() {
           <ul className="auth-hero-features auth-steps">
             <li className={`auth-step-item ${passo >= 1 ? 'active' : ''}`}>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-id-card"></i>
+                <Icone nome="fa-id-card" />
               </div>
               <div className="auth-step-text">
                 <small>PASSO 01</small>
@@ -105,7 +106,7 @@ function Cadastro() {
             </li>
             <li className={`auth-step-item ${passo >= 2 ? 'active' : ''}`}>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-lock"></i>
+                <Icone nome="fa-lock" />
               </div>
               <div className="auth-step-text">
                 <small>PASSO 02</small>
@@ -114,7 +115,7 @@ function Cadastro() {
             </li>
             <li className={`auth-step-item ${passo >= 3 ? 'active' : ''}`}>
               <div className="auth-feature-icon">
-                <i className="fa-solid fa-file-signature"></i>
+                <Icone nome="fa-file-signature" />
               </div>
               <div className="auth-step-text">
                 <small>PASSO 03</small>
@@ -152,7 +153,7 @@ function Cadastro() {
               <div className="input-group">
                 <label className="input-label" htmlFor="cadastro-nome">Nome completo</label>
                 <div className="input-icon-wrapper">
-                  <i className="fa-solid fa-user input-icon"></i>
+                  <Icone nome="fa-user" className="input-icon" />
                   <input
                     type="text"
                     id="cadastro-nome"
@@ -168,7 +169,7 @@ function Cadastro() {
               <div className="input-group">
                 <label className="input-label" htmlFor="cadastro-email">E-mail</label>
                 <div className="input-icon-wrapper">
-                  <i className="fa-regular fa-envelope input-icon"></i>
+                  <Icone nome="fa-envelope" className="input-icon" />
                   <input
                     type="email"
                     id="cadastro-email"
@@ -183,13 +184,13 @@ function Cadastro() {
 
               <Button bloco tamanho="lg" className="auth-submit-btn" onClick={avancar}>
                 Continuar
-                <i className="fa-solid fa-arrow-right"></i>
+                <Icone nome="fa-arrow-right" />
               </Button>
 
               <div className="auth-footer-text">
                 <p>Já tem conta?</p>
                 <Link to="/" className="auth-link auth-link-bold">
-                  Entrar <i className="fa-solid fa-arrow-right"></i>
+                  Entrar <Icone nome="fa-arrow-right" />
                 </Link>
               </div>
             </div>
@@ -201,7 +202,7 @@ function Cadastro() {
               <div className="input-group">
                 <label className="input-label" htmlFor="cadastro-senha">Senha</label>
                 <div className="input-icon-wrapper">
-                  <i className="fa-solid fa-lock input-icon"></i>
+                  <Icone nome="fa-lock" className="input-icon" />
                   <input
                     type={senhaVisivel ? 'text' : 'password'}
                     id="cadastro-senha"
@@ -216,7 +217,7 @@ function Cadastro() {
                     className="input-toggle-password"
                     onClick={() => setSenhaVisivel(!senhaVisivel)}
                   >
-                    <i className={senhaVisivel ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'}></i>
+                    <Icone nome={senhaVisivel ? 'fa-eye-slash' : 'fa-eye'} />
                   </button>
                 </div>
 
@@ -235,15 +236,15 @@ function Cadastro() {
                 {/* Critérios */}
                 <div className="password-criteria">
                   <span className={`criteria-item ${temTamanho ? 'valid' : ''}`}>
-                    <i className={temTamanho ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'}></i>
+                    <Icone nome={temTamanho ? 'fa-circle-check' : 'fa-circle-check'} />
                     {' '}Mínimo 8 caracteres
                   </span>
                   <span className={`criteria-item ${temMaiuscula ? 'valid' : ''}`}>
-                    <i className={temMaiuscula ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'}></i>
+                    <Icone nome={temMaiuscula ? 'fa-circle-check' : 'fa-circle-check'} />
                     {' '}Letra maiúscula
                   </span>
                   <span className={`criteria-item ${temNumero ? 'valid' : ''}`}>
-                    <i className={temNumero ? 'fa-solid fa-circle-check' : 'fa-regular fa-circle-check'}></i>
+                    <Icone nome={temNumero ? 'fa-circle-check' : 'fa-circle-check'} />
                     {' '}Número
                   </span>
                 </div>
@@ -253,7 +254,7 @@ function Cadastro() {
               <div className="input-group">
                 <label className="input-label" htmlFor="cadastro-confirma-senha">Confirmar senha</label>
                 <div className="input-icon-wrapper">
-                  <i className="fa-solid fa-lock input-icon"></i>
+                  <Icone nome="fa-lock" className="input-icon" />
                   <input
                     type={confirmaSenhaVisivel ? 'text' : 'password'}
                     id="cadastro-confirma-senha"
@@ -268,7 +269,7 @@ function Cadastro() {
                     className="input-toggle-password"
                     onClick={() => setConfirmaSenhaVisivel(!confirmaSenhaVisivel)}
                   >
-                    <i className={confirmaSenhaVisivel ? 'fa-regular fa-eye-slash' : 'fa-regular fa-eye'}></i>
+                    <Icone nome={confirmaSenhaVisivel ? 'fa-eye-slash' : 'fa-eye'} />
                   </button>
                 </div>
                 {confirmaSenha && (
@@ -280,18 +281,18 @@ function Cadastro() {
 
               <div className="auth-btn-row">
                 <Button variante="fantasma" className="auth-back-btn" aria-label="Voltar" onClick={() => setPasso(1)}>
-                  <i className="fa-solid fa-arrow-left"></i>
+                  <Icone nome="fa-arrow-left" />
                 </Button>
                 <Button tamanho="lg" className="auth-submit-btn auth-submit-flex" onClick={avancar}>
                   Continuar
-                  <i className="fa-solid fa-arrow-right"></i>
+                  <Icone nome="fa-arrow-right" />
                 </Button>
               </div>
 
               <div className="auth-footer-text">
                 <p>Já tem conta?</p>
                 <Link to="/" className="auth-link auth-link-bold">
-                  Entrar <i className="fa-solid fa-arrow-right"></i>
+                  Entrar <Icone nome="fa-arrow-right" />
                 </Link>
               </div>
             </div>
@@ -317,7 +318,7 @@ function Cadastro() {
               {/* LGPD */}
               <div className="cadastro-lgpd">
                 <div className="lgpd-icon">
-                  <i className="fa-solid fa-shield-halved"></i>
+                  <Icone nome="fa-shield-halved" />
                 </div>
                 <div className="lgpd-text">
                   <strong>Proteção de Dados (LGPD)</strong>
@@ -344,7 +345,7 @@ function Cadastro() {
 
               <div className="auth-btn-row">
                 <Button variante="fantasma" className="auth-back-btn" aria-label="Voltar" onClick={() => setPasso(2)}>
-                  <i className="fa-solid fa-arrow-left"></i>
+                  <Icone nome="fa-arrow-left" />
                 </Button>
                 <Button
                   tamanho="lg"
@@ -353,14 +354,14 @@ function Cadastro() {
                   onClick={criarConta}
                 >
                   Criar conta
-                  <i className="fa-solid fa-arrow-right"></i>
+                  <Icone nome="fa-arrow-right" />
                 </Button>
               </div>
 
               <div className="auth-footer-text">
                 <p>Já tem conta?</p>
                 <Link to="/" className="auth-link auth-link-bold">
-                  Entrar <i className="fa-solid fa-arrow-right"></i>
+                  Entrar <Icone nome="fa-arrow-right" />
                 </Link>
               </div>
             </div>

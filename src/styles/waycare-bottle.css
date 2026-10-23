@@ -838,7 +838,7 @@
   animation: bottleCelebra 0.5s ease-out;
 }
 
-.bottle-celebracao i { color: var(--color-hc); }
+.bottle-celebracao .icone { color: var(--color-hc); }
 
 @keyframes bottleCelebra {
   0%   { opacity: 0; transform: translateY(8px) scale(0.96); }
@@ -895,7 +895,7 @@
   text-align: center;
 }
 
-.bottle-grafico-vazio i { font-size: 24px; opacity: 0.5; }
+.bottle-grafico-vazio .icone { font-size: 24px; opacity: 0.5; }
 
 /* Link "personalizar minha meta" */
 .bottle-meta-link {

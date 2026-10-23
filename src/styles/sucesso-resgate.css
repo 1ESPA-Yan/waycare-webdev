@@ -94,7 +94,7 @@
   margin-top: 2px;
 }
 
-.sucesso-passo-check i {
+.sucesso-passo-check .icone {
   font-size: 10px;
   color: var(--color-white);
 }

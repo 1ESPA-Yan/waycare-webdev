@@ -3,6 +3,7 @@ import { motion } from 'motion/react'
 import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Card from '../components/Card'
+import Icone from '../components/Icone'
 import '../styles/conquistas.css'
 import { useDados } from '../hooks/useDados'
 
@@ -20,12 +21,12 @@ function CardConquista({ c }) {
       <div className="flex items-start gap-6">
         {c.desbloqueada ? (
           <div className={`conquista-icon conquista-icon--${c.cor}`}>
-            <i className={`fa-solid ${c.icone}`}></i>
+            <Icone nome={c.icone} />
           </div>
         ) : (
           <div className={`conquista-icon conquista-icon--${c.cor} conquista-icon--stack`}>
-            <i className={`fa-solid ${c.icone} conquista-icon-bg`}></i>
-            <i className="fa-solid fa-lock conquista-icon-lock"></i>
+            <Icone nome={c.icone} className="conquista-icon-bg" />
+            <Icone nome="fa-lock" className="conquista-icon-lock" />
           </div>
         )}
         <div className="flex flex-col gap-2 grow">
@@ -43,15 +44,15 @@ function CardConquista({ c }) {
             <div className="progress-fill conquista-fill--hc" style={{ width: `${pct}%` }}></div>
           </div>
           <div className="flex items-center justify-between">
-            <span className="mission-hc"><span className="fa-solid fa-coins"></span> {c.hc.toLocaleString('pt-BR')} HC</span>
+            <span className="mission-hc"><Icone nome="fa-coins" /> {c.hc.toLocaleString('pt-BR')} HC</span>
             {c.desbloqueada ? (
               <span className="conquista-status conquista-status--done">
-                <i className="fa-regular fa-circle-check"></i>
+                <Icone nome="fa-circle-check" />
                 {c.dataDesbloqueio}
               </span>
             ) : (
               <span className="conquista-status conquista-status--locked">
-                <i className="fa-solid fa-lock"></i>
+                <Icone nome="fa-lock" />
                 Bloqueado
               </span>
             )}
@@ -97,7 +98,7 @@ function Conquistas() {
                   </div>
                 </div>
                 <div className="conquistas-resumo-icon">
-                  <i className="fa-solid fa-trophy"></i>
+                  <Icone nome="fa-trophy" />
                 </div>
               </div>
             </Card>
@@ -160,13 +161,13 @@ function Conquistas() {
 
             {/* Dica */}
             <div className="conquistas-dica mt-12">
-              <div className="conquistas-dica-icon"><i className="fa-solid fa-lightbulb"></i></div>
+              <div className="conquistas-dica-icon"><Icone nome="fa-lightbulb" /></div>
               <div className="flex flex-col gap-2">
                 <h4 className="conquistas-dica-titulo">Como Desbloquear Conquistas</h4>
                 <ul className="conquistas-dica-lista">
-                  <li><i className="fa-solid fa-circle-dot"></i> Complete missões diárias e mantenha sua sequência</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Cada conquista desbloqueada dá Health Coins de bônus</li>
-                  <li><i className="fa-solid fa-circle-dot"></i> Algumas conquistas são ocultas — descubra fazendo ações especiais!</li>
+                  <li><Icone nome="fa-circle-dot" /> Complete missões diárias e mantenha sua sequência</li>
+                  <li><Icone nome="fa-circle-dot" /> Cada conquista desbloqueada dá Health Coins de bônus</li>
+                  <li><Icone nome="fa-circle-dot" /> Algumas conquistas são ocultas — descubra fazendo ações especiais!</li>
                 </ul>
               </div>
             </div>

@@ -6,6 +6,7 @@ import Topbar from '../components/Topbar'
 import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
 import Card from '../components/Card'
+import Icone from '../components/Icone'
 import '../styles/recompensas.css'
 
 const FILTROS = [
@@ -48,7 +49,7 @@ function Recompensas() {
             {carregando && (
               <div className="flex justify-center items-center py-12">
                 <div className="flex flex-col items-center gap-4">
-                  <i className="fa-solid fa-spinner fa-spin text-primary" style={{ fontSize: '32px' }}></i>
+                  <Icone nome="fa-spinner" className="text-primary" girar style={{ fontSize: '32px' }} />
                   <span className="text-muted">Carregando recompensas...</span>
                 </div>
               </div>
@@ -61,14 +62,14 @@ function Recompensas() {
                   <div key={r.id} className="recompensa-filter-item">
                     <Card className="recompensa-card">
                       <div className={`recompensa-thumb ${r.thumb}`}>
-                        <i className={`fa-solid ${r.icone}`}></i>
+                        <Icone nome={r.icone} />
                         {r.popular && <span className="recompensa-popular-badge">POPULAR</span>}
                       </div>
                       <div className="recompensa-info">
                         <h3 className="recompensa-nome">{r.nome}</h3>
                         <p className="recompensa-desc">{r.desc}</p>
                         <div className="recompensa-hc">
-                          <span className="fa-solid fa-coins"></span>
+                          <Icone nome="fa-coins" />
                           {r.hc.toLocaleString('pt-BR')} HC
                         </div>
                         <Button
@@ -90,7 +91,7 @@ function Recompensas() {
             {/* Estado vazio */}
             {!carregando && recompensasFiltradas.length === 0 && (
               <div className="recompensa-empty">
-                <i className="fa-solid fa-filter-circle-xmark recompensa-empty-icon"></i>
+                <Icone nome="fa-filter-circle-xmark" className="recompensa-empty-icon" />
                 <p className="recompensa-empty-text">
                   Nenhuma recompensa disponível nesta categoria.
                 </p>
