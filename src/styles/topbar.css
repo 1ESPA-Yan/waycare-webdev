@@ -69,6 +69,51 @@
   margin: 0;
 }
 
+/* Estado da dock (ao lado do chip de HC; no celular fica no widget da Sidebar) */
+.estado-dock {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: box-shadow var(--transition-fast);
+}
+
+.estado-dock:hover {
+  box-shadow: 0 0 0 2px var(--color-border);
+}
+
+.estado-dock--ok     { background-color: var(--color-primary-light); color: var(--color-primary-dark); border-color: rgba(28, 151, 112, 0.25); }
+.estado-dock--neutro { background-color: var(--color-bg); color: var(--color-text-secondary); border-color: var(--color-border); }
+.estado-dock--aviso  { background-color: #fff8ec; color: var(--color-warning-text); border-color: rgba(245, 166, 35, 0.35); }
+.estado-dock--erro   { background-color: #fdecea; color: var(--color-error); border-color: rgba(198, 40, 40, 0.25); }
+
+/* O saldo de HC não quebra em duas linhas quando o Topbar aperta */
+.topbar-actions .hc-chip {
+  white-space: nowrap;
+}
+
+/* Desktop estreito: só o ícone (o texto fica acessível, como o sr-only) */
+@media (max-width: 1100px) {
+  .estado-dock {
+    padding: var(--space-2);
+  }
+
+  .estado-dock-texto {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+}
+
 /* BARRA DO CELULAR — fica escondida no desktop */
 .barra-mobile {
   display: none;

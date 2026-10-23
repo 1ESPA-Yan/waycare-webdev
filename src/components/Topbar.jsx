@@ -1,9 +1,10 @@
 import { NavLink } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import Icone from './Icone'
+import EstadoDock from './EstadoDock'
 import '../styles/topbar.css'
 
-// Cabeçalho das páginas do app: ícone, título, subtítulo e atalhos (HC, carteira e notificações)
+// Cabeçalho das páginas do app: ícone, título, subtítulo e atalhos (estado da dock, HC, carteira e notificações)
 function Topbar({ icone, cor = 'verde', iconeBadge = 0, titulo, aoLadoDoTitulo, subtitulo, className = '' }) {
   const { totalHC, naoLidas } = useApp()
 
@@ -26,6 +27,7 @@ function Topbar({ icone, cor = 'verde', iconeBadge = 0, titulo, aoLadoDoTitulo, 
       </div>
 
       <div className="topbar-actions">
+        <EstadoDock />
         <div className="hc-chip">
           <Icone nome="fa-coins" />
           {totalHC.toLocaleString('pt-BR')} HC
