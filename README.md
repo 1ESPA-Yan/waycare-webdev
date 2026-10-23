@@ -6,8 +6,8 @@
 
 **Plataforma de Engajamento Preventivo em Saúde**
 
-[![React](https://img.shields.io/badge/React-18-61DAFB?logo=react&logoColor=white)](https://react.dev/)
-[![Vite](https://img.shields.io/badge/Vite-5-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=white)](https://react.dev/)
+[![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![License](https://img.shields.io/badge/Licença-Acadêmica-green)](/)
 
@@ -75,10 +75,13 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 - **Fallback inteligente** — quando a dock está offline, o app exibe "Demo" e continua funcionando
 - **Meta de hidratação personalizada** — calculada por peso, gênero, atividade e temperatura da cidade
 - **Context API** — estado global de coins, humor, garrafa e status da dock sincronizados em todo o app
-- **Consumo de JSON local** — dados de trilhas, missões, recompensas e conquistas via `fetch`
+- **Dados em JSON local** — trilhas, missões, recompensas e conquistas em `src/data`, carregados pelo hook `useDados` (cada JSON vira um arquivo próprio no build)
 - **Persistência com localStorage** — nome, email, humor, coins e histórico mantidos entre sessões
 - **Tailwind CSS v4** integrado ao design system próprio
-- **Responsividade completa** — Desktop, Tablet e Mobile com sidebar hamburguer
+- **Responsividade completa** — Desktop, Tablet e Mobile, com barra fixa e menu lateral no celular
+- **Páginas sob demanda** — `React.lazy` + `Suspense`: o código de cada página só é baixado quando a rota abre
+- **Componentes base** — `Button`, `Card`, `Chip`, `FiltroPills`, `Topbar` e `Icone` (ícones do lucide-react)
+- **Acessibilidade** — contraste mínimo de 4,5:1, foco visível, navegação por teclado e respeito ao movimento reduzido
 
 ---
 
@@ -86,13 +89,14 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 
 | Tecnologia | Versão | Finalidade |
 |---|---|---|
-| [React](https://react.dev/) | 18+ | Biblioteca principal de UI |
-| [Vite](https://vitejs.dev/) | 5+ | Build tool e dev server |
-| [React Router DOM](https://reactrouter.com/) | 6+ | Roteamento SPA |
-| [Tailwind CSS](https://tailwindcss.com/) | 4+ | Classes utilitárias (`@tailwindcss/vite`) |
+| [React](https://react.dev/) | 19 | Biblioteca principal de UI |
+| [Vite](https://vitejs.dev/) | 8 | Build tool e dev server |
+| [React Router](https://reactrouter.com/) | 7 | Roteamento SPA |
+| [Tailwind CSS](https://tailwindcss.com/) | 4 | Classes utilitárias (`@tailwindcss/vite`) |
+| [Motion](https://motion.dev/) | 12 | Animações (`motion/react`) |
 | [Lucide React](https://lucide.dev/) | 1.17 | Ícones |
 | Context API | — | Gerenciamento de estado global |
-| Fetch API | — | Consumo de JSON local e backend IoT |
+| Fetch API | — | Comunicação com o backend IoT |
 | localStorage | — | Persistência no navegador |
 
 ---
@@ -126,28 +130,29 @@ O hook `useWayCareDock` faz polling automático do endpoint `/status` a cada 3 s
 ```
 waycare-react/
 ├── public/
-│   ├── images/
-│   │   └── LogoWayCare.png
-│   └── data/                          # JSONs acessíveis via fetch (simula API)
-│       ├── trilhas.json
-│       ├── missoes.json
-│       ├── missoes-dashboard.json
-│       ├── recompensas.json
-│       ├── conquistas.json
-│       ├── descobertas.json
-│       ├── notificacoes.json
-│       └── carteira.json
+│   ├── images/                        # Logo (original, 64 px e 192 px)
+│   ├── favicon-32x32.png
+│   ├── apple-touch-icon.png
+│   └── robots.txt
 ├── src/
 │   ├── components/
+│   │   ├── AppLayout.jsx               # Sidebar, barra do celular e <Outlet /> das páginas
+│   │   ├── RotaPrivada.jsx             # Exige login nas rotas do app
+│   │   ├── Topbar.jsx                  # Cabeçalho das páginas (título, HC, carteira, sino)
+│   │   ├── Sidebar.jsx                 # Navegação com status da dock
+│   │   ├── Button.jsx · Card.jsx · Chip.jsx · FiltroPills.jsx   # Componentes base
+│   │   ├── Icone.jsx                   # Ícones do lucide-react a partir de nomes "fa-*"
+│   │   ├── CarregandoPagina.jsx        # Skeleton enquanto uma página carrega
+│   │   ├── DocumentoLegal.jsx          # Layout de Termos e Privacidade
 │   │   ├── GarrafaAnimada.jsx          # SVG animado com nível de água dinâmico
 │   │   ├── GraficoHidratacao.jsx       # Gráfico de área do consumo diário
-│   │   ├── PerfilMetaHidratacao.jsx    # Setar meta de hidratação
-│   │   └── Sidebar.jsx                 # Navegação com status real da dock
+│   │   └── PerfilMetaHidratacao.jsx    # Formulário da meta de hidratação
 │   ├── context/
-│   │   └── AppContext.jsx              # Estado global (HC, humor, garrafa, dock)
-│   ├── data/                           # Fallback local dos JSONs (usado via import())
+│   │   └── AppContext.jsx              # Estado global (usuário, HC, XP, humor, garrafa, dock)
+│   ├── data/                           # JSONs das telas (carregados com useDados)
 │   │   └── *.json
 │   ├── hooks/
+│   │   ├── useDados.js                 # Carrega um JSON de src/data sob demanda
 │   │   └── useWayCareDock.js           # Polling do status da dock a cada 3s
 │   ├── pages/
 │   │   ├── Login.jsx
@@ -165,16 +170,18 @@ waycare-react/
 │   │   ├── SucessoResgate.jsx
 │   │   ├── Perfil.jsx
 │   │   ├── Configuracoes.jsx
-│   │   ├── WaycareBottle.jsx
+│   │   ├── WayCareBottle.jsx
 │   │   ├── Carteira.jsx
 │   │   ├── Notificacoes.jsx
-│   │   └── NotFound.jsx
+│   │   ├── Termos.jsx
+│   │   ├── Privacidade.jsx
+│   │   └── Notfound.jsx
 │   ├── services/
 │   │   └── waycareApi.js               # Camada de acesso ao backend IoT
 │   ├── styles/
 │   │   ├── global.css                  # Design System + @import "tailwindcss"
 │   │   └── *.css                       # Estilos por página
-│   ├── App.jsx                         # Roteamento principal
+│   ├── App.jsx                         # Rotas (páginas com React.lazy) e CSS das páginas
 │   └── main.jsx                        # Ponto de entrada
 ├── .env                                # Variáveis de ambiente (não versionado)
 ├── .env.example                        # Modelo das variáveis necessárias
@@ -190,14 +197,14 @@ waycare-react/
 
 Antes de começar, certifique-se de ter instalado:
 
-- **[Node.js](https://nodejs.org/)** versão **18 ou superior**
-- **[npm](https://www.npmjs.com/)** versão **9 ou superior** *(já incluído com o Node.js)*
+- **[Node.js](https://nodejs.org/)** versão **20.19 ou superior** (ou 22.12+)
+- **[npm](https://www.npmjs.com/)** versão **10 ou superior** *(já incluído com o Node.js)*
 
 Para verificar se já estão instalados:
 
 ```bash
-node --version   # deve exibir v18.x.x ou superior
-npm --version    # deve exibir 9.x.x ou superior
+node --version   # deve exibir v20.19.x ou superior
+npm --version    # deve exibir 10.x.x ou superior
 ```
 
 ---
@@ -234,7 +241,7 @@ npm run dev
 O terminal exibirá algo como:
 
 ```
-  VITE v5.x.x  ready in Xms
+  VITE v8.x.x  ready in Xms
 
   ➜  Local:   http://localhost:5173/
   ➜  Network: use --host to expose
@@ -265,22 +272,24 @@ npm run preview
 |---|---|---|
 | `/` | `Login` | Tela de entrada |
 | `/cadastro` | `Cadastro` | Criação de conta em 3 etapas |
-| `/onboarding` | `Onboarding` | Boas-vindas e aceite de termos |
+| `/onboarding` | `Onboarding` | Tela de abertura após o cadastro |
 | `/dashboard` | `Dashboard` | Página inicial — missões e trilha do dia |
 | `/humor` | `SelecionarHumor` | Seleção do humor e recomendação de trilha |
 | `/trilhas` | `Trilhas` | Trilhas de bem-estar com painel de missões |
 | `/missao/:id` | `DetalhesMissao` | Detalhes, dicas e início de missão |
-| `/missao/:id/completa` | `MissaoCompleta` | Tela de conclusão com HC ganhos |
+| `/missao/completa` | `MissaoCompleta` | Tela de conclusão com HC ganhos |
 | `/conquistas` | `Conquistas` | Badges desbloqueados e em progresso |
 | `/descobertas` | `Descobertas` | Insights personalizados |
 | `/recompensas` | `Recompensas` | Catálogo de recompensas por categoria |
-| `/recompensas/:id/confirmar` | `ConfirmarResgate` | Confirmação antes do resgate |
-| `/recompensas/:id/sucesso` | `SucessoResgate` | Feedback pós-resgate |
+| `/resgate/confirmar` | `ConfirmarResgate` | Confirmação antes do resgate |
+| `/resgate/sucesso` | `SucessoResgate` | Código do voucher e próximos passos |
 | `/perfil` | `Perfil` | Estatísticas e meta de hidratação |
 | `/configuracoes` | `Configuracoes` | Preferências e gerenciamento de conta |
 | `/waycare-bottle` | `WaycareBottle` | Monitoramento IoT de hidratação |
 | `/carteira` | `Carteira` | Saldo e histórico de Health Coins |
 | `/notificacoes` | `Notificacoes` | Central de notificações |
+| `/termos` | `Termos` | Termos de Uso |
+| `/privacidade` | `Privacidade` | Política de Privacidade |
 | `*` | `NotFound` | Página 404 personalizada |
 
 ---
@@ -308,15 +317,19 @@ O projeto utiliza um Design System próprio definido em `src/styles/global.css`,
 
 | Variável CSS | Valor | Uso |
 |---|---|---|
-| `--color-primary` | `#1c9770` | Verde principal — botões, destaques, ativo |
-| `--color-primary-dark` | `#157a59` | Hover dos elementos primários |
+| `--color-primary` | `#1c9770` | Verde principal — fundos, barras de progresso e ícones |
+| `--color-primary-dark` | `#157a59` | Texto verde e botões com texto branco (5,3:1) |
+| `--color-primary-darker` | `#0f6347` | Hover dos botões verdes |
 | `--color-primary-light` | `#e8f5f1` | Fundos suaves, badges primários |
-| `--color-hc` | `#f5a623` | Dourado — Health Coins |
+| `--color-hc` | `#f5a623` | Dourado — ícones e fundos de Health Coins |
+| `--color-hc-text` | `#9a5b00` | Textos de Health Coins (5,4:1) |
+| `--color-warning` | `#f5a623` | Ícones, fundos e barras de aviso |
+| `--color-warning-text` | `#b45309` | Texto de aviso (5,0:1) |
+| `--color-error` | `#c62828` | Erros e alertas críticos (5,6:1) |
+| `--color-text-muted` | `#6b6b6b` | Textos secundários (5,3:1) |
 | `--color-bg` | `#f5f5f5` | Fundo geral da aplicação |
 | `--color-surface` | `#ffffff` | Fundo dos cards |
 | `--color-border` | `#e0e0e0` | Bordas e divisores |
-| `--color-error` | `#e53935` | Erros e alertas críticos |
-| `--color-warning` | `#f5a623` | Avisos e estados em andamento |
 
 ### Tailwind e especificidade
 
