@@ -32,6 +32,7 @@ import './styles/confirmar-resgate.css'
 import './styles/sucesso-resgate.css'
 import './styles/notfound.css'
 import './styles/legal.css'
+import './styles/vincular-dock.css'
 import './styles/utilitarios.css'
 
 // Demais páginas: o JS de cada uma é carregado só quando a rota abre
@@ -43,6 +44,7 @@ const Descobertas = lazy(() => import('./pages/Descobertas'))
 const Recompensas = lazy(() => import('./pages/Recompensas'))
 const Perfil = lazy(() => import('./pages/Perfil'))
 const Configuracoes = lazy(() => import('./pages/Configuracoes'))
+const VincularDock = lazy(() => import('./pages/VincularDock'))
 const WaycareBottle = lazy(() => import('./pages/WayCareBottle'))
 const Carteira = lazy(() => import('./pages/Carteira'))
 const Notificacoes = lazy(() => import('./pages/Notificacoes'))
@@ -82,6 +84,7 @@ function App() {
                   <Route path="/perfil" element={<Perfil />} />
                   <Route path="/configuracoes" element={<Configuracoes />} />
                   <Route path="/waycare-bottle" element={<WaycareBottle />} />
+                  <Route path="/dock/vincular" element={<VincularDock />} />
                   <Route path="/carteira" element={<Carteira />} />
                   <Route path="/notificacoes" element={<Notificacoes />} />
                 </Route>

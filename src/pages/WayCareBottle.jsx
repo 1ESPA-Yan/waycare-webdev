@@ -8,6 +8,7 @@ import Topbar from '../components/Topbar'
 import { getHistory, postTara } from '../services/waycareApi'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
+import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
 import '../styles/waycare-bottle.css'
 
 // Dados do gráfico semanal — usados só no fallback (sem conexão com a dock)
@@ -169,6 +170,9 @@ function WaycareBottle() {
           />
 
           <section id="page-content" className="page-transition">
+
+            {/* Passo pendente do primeiro uso (perfil, vínculo ou tara) */}
+            <AvisoPrimeiroUso className="mb-6" />
 
             {/* Avisos de conexão / dispositivo */}
             {carregando && (

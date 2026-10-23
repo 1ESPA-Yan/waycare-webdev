@@ -9,6 +9,7 @@ import FiltroPills from '../components/FiltroPills'
 import Button from '../components/Button'
 import Chip from '../components/Chip'
 import Icone from '../components/Icone'
+import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
 import '../styles/dashboard.css'
 
 // consumo e meta vêm do useHidratacao (dock real ou demonstração)
@@ -141,6 +142,9 @@ function Dashboard() {
           />
 
           <section id="page-content" className="page-transition @container">
+
+            {/* Passo pendente do primeiro uso (perfil, vínculo ou tara) */}
+            <AvisoPrimeiroUso className="dashboard-section" />
 
             {/* Trilha de hoje — baseada no humor selecionado */}
             <div className="trilha-card dashboard-section">

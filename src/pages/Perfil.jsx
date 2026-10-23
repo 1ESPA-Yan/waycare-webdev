@@ -1,5 +1,5 @@
-import { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useState, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import { motion } from 'motion/react'
 import PerfilMetaHidratacao from '../components/PerfilMetaHidratacao'
 import { useApp } from '../context/AppContext'
@@ -59,6 +59,14 @@ function Perfil() {
     setSalvo(true)
     setTimeout(() => setSalvo(false), 2500)
   }
+
+  // Vindo do primeiro uso (/perfil#meta-hidratacao): rola até o formulário de meta
+  const { hash } = useLocation()
+  useEffect(() => {
+    if (hash !== '#meta-hidratacao') return
+    const id = setTimeout(() => document.getElementById('meta-hidratacao')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300)
+    return () => clearTimeout(id)
+  }, [hash])
 
   const letraAvatar = nomeUsuario?.[0]?.toUpperCase() || 'U'
 
@@ -234,7 +242,7 @@ function Perfil() {
                 </motion.div>
 
                 {/* Meta de hidratação personalizada (conectada ao backend) */}
-                <motion.div variants={cardVariants}>
+                <motion.div variants={cardVariants} id="meta-hidratacao" className="scroll-mt-6">
                   <PerfilMetaHidratacao />
                 </motion.div>
 
