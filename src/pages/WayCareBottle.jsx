@@ -5,6 +5,7 @@ import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
 import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
+import { useTara } from '../hooks/useTara'
 import { tempoDesde, horaCurta } from '../lib/tempo'
 import Topbar from '../components/Topbar'
 import Card from '../components/Card'
@@ -92,6 +93,7 @@ function WaycareBottle() {
   const hidratacao = useHidratacao()
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
+  const tara = useTara()
 
   // Gráficos da conta real: curva do dia (goles) e últimos 7 dias (historico)
   const { curva, semana } = useHistoricoHidratacao()
@@ -435,12 +437,13 @@ function WaycareBottle() {
                     <div>
                       <span className="bottle-secao-label mb-4 block">CONTROLE DO DISPOSITIVO</span>
                       <div className="flex items-center gap-4 flex-wrap">
-                        {/* O pedido de tara pelo Supabase entra na tarefa 42 */}
-                        <button className="btn bottle-tara-btn em-breve" disabled>
+                        <button className="btn bottle-tara-btn" onClick={tara.pedir} disabled={tara.enviando || tara.pendente}>
                           <Icone nome="fa-scale-balanced" />
-                          Zerar balança <span className="badge-em-breve">Em breve</span>
+                          {tara.enviando ? 'Enviando…' : tara.pendente ? 'Aguardando a dock…' : 'Zerar balança'}
                         </button>
+                        {tara.mensagem && <span className="bottle-tara-msg" role="status">{tara.mensagem}</span>}
                       </div>
+                      {tara.erro && <p className="bottle-tara-erro" role="alert">{tara.erro}</p>}
                       <p className="bottle-simular-aviso">
                         Com a garrafa vazia na dock, zera a balança. Os goles e reabastecimentos são
                         calculados a partir desse ponto.

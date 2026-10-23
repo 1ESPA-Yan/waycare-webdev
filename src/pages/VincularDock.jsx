@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
+import { useTara } from '../hooks/useTara'
 import { rpc } from '../lib/supabase'
 import Topbar from '../components/Topbar'
 import Card from '../components/Card'
@@ -31,6 +32,7 @@ function Passo({ numero, titulo, feito, atual, children }) {
 function VincularDock() {
   const { sairDaConta } = useApp()
   const { modo, perfil, dock, meta, carregando, recarregar } = useHidratacao()
+  const tara = useTara()
   const [codigo, setCodigo] = useState('')
   const [ocupado, setOcupado] = useState(false)
   const [erro, setErro] = useState('')
@@ -157,9 +159,12 @@ function VincularDock() {
                       Coloque a garrafa <strong>vazia</strong> na dock e zere a balança. Enquanto isso não for feito,
                       a luz da dock fica ciano pulsando e os goles não são contados.
                     </p>
-                    <button type="button" className="btn btn-secondary btn-sm em-breve" disabled>
-                      <Icone nome="fa-scale-balanced" /> Zerar balança <span className="badge-em-breve">Em breve</span>
-                    </button>
+                    <Button tamanho="sm" onClick={tara.pedir} disabled={!tara.disponivel || tara.enviando || tara.pendente}>
+                      <Icone nome="fa-scale-balanced" />
+                      {tara.enviando ? 'Enviando…' : tara.pendente ? 'Aguardando a dock…' : 'Zerar balança'}
+                    </Button>
+                    {tara.mensagem && <p className="vincular-texto" role="status">{tara.mensagem}</p>}
+                    {tara.erro && <p className="input-erro-msg" role="alert">{tara.erro}</p>}
                   </>
                 )}
               </Passo>

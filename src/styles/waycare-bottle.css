@@ -835,16 +835,16 @@
 .bottle-tara-btn:hover { background-color: #1565c0; color: var(--color-white); }
 .bottle-tara-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-/* "Em breve" no painel escuro: fundo apagado e texto claro (o padrão global é cinza sobre branco) */
-.bottle-tara-btn.em-breve:disabled {
-  background-color: rgba(255, 255, 255, 0.08);
-  color: rgba(255, 255, 255, 0.75);
-}
-
 .bottle-tara-msg {
   font-size: var(--font-size-sm);
   color: var(--color-accent-1);
   font-weight: var(--font-weight-medium);
+}
+
+.bottle-tara-erro {
+  font-size: var(--font-size-sm);
+  color: #ff8a80;
+  margin: var(--space-2) 0 0;
 }
 
 /* Gráfico real (SVG) */
