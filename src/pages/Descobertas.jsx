@@ -43,7 +43,7 @@ function CardDescoberta({ d }) {
         {d.dado}
       </p>
       <div className="flex items-center gap-4 flex-wrap">
-        <Button variante="secundario" tamanho="sm" className="descoberta-acao">Criar missão baseada nisto</Button>
+        <Button variante="fantasma" tamanho="sm" className="descoberta-acao em-breve" disabled>Criar missão baseada nisto <span className="badge-em-breve">Em breve</span></Button>
         <Button variante="fantasma" tamanho="sm" className="descoberta-acao em-breve" disabled>Ver histórico completo <span className="badge-em-breve">Em breve</span></Button>
       </div>
     </Card>
