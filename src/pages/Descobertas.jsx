@@ -64,12 +64,12 @@ function Descobertas() {
     <>
           <Topbar icone="fa-lightbulb" cor="dourado" titulo="Descobertas" subtitulo="Insights personalizados sobre seus hábitos de saúde" />
 
-          <section id="page-content" className="page-transition">
+          <section id="page-content" className="page-transition @container">
 
             <FiltroPills className="mb-6" rotulo="Filtrar descobertas" opcoes={FILTROS} ativo={filtroAtivo} aoMudar={setFiltroAtivo} />
 
             {carregando ? (
-              <div className="flex flex-col gap-6">
+              <div className="descobertas-lista">
                 {[1, 2, 3].map(i => (
                   <div key={i} className="card descoberta-card">
                     <div className="flex items-start gap-6 mb-4">
@@ -87,7 +87,7 @@ function Descobertas() {
             ) : filtradas.length === 0 ? (
               <p className="text-muted text-center py-12">Nenhuma descoberta para este filtro.</p>
             ) : (
-              <div className="flex flex-col gap-6">
+              <div className="descobertas-lista">
                 {filtradas.map(d => <CardDescoberta key={d.id} d={d} />)}
               </div>
             )}

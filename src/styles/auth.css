@@ -550,21 +550,25 @@
     flex-direction: column;
   }
 
+  /* Painel verde compacto: só logo e título, para o formulário aparecer logo */
   .auth-hero {
     width: 100%;
     min-height: auto;
-    padding: var(--space-6);
+    padding: var(--space-5) var(--space-4);
   }
 
   .auth-hero-content {
-    padding: var(--space-6) 0;
+    padding: var(--space-4) 0 0;
   }
 
   .auth-hero-title {
-    font-size: 28px;
+    font-size: 22px;
+    margin-bottom: 0;
   }
 
-  .auth-hero-features {
+  .auth-hero-subtitle,
+  .auth-hero-features,
+  .auth-hero-circle {
     display: none;
   }
 

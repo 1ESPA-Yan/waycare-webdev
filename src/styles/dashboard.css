@@ -361,11 +361,18 @@
   cursor: default;
 }
 
-/* Grid de missões — CSS Grid nativo */
+/* Grid de missões: 1 coluna; 2 colunas quando o conteúdo tem 600px ou mais
+   (medido no container #page-content, que desconta a sidebar) */
 .missions-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr;
   gap: var(--space-4);
+}
+
+@container (min-width: 600px) {
+  .missions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 /* Cards da mesma linha com a mesma altura; o botão fica no fim do card */
@@ -381,10 +388,6 @@
 
 /* Responsividade */
 @media (max-width: 768px) {
-  .missions-grid {
-    grid-template-columns: 1fr;
-  }
-
   .trilha-card-title {
     font-size: var(--font-size-sm);
   }

@@ -162,6 +162,20 @@
   flex-shrink: 0;
 }
 
+/* Lista de descobertas: 1 coluna; 2 colunas quando o conteúdo tem 900px ou mais
+   (medido no container #page-content, que desconta a sidebar) */
+.descobertas-lista {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+
+@container (min-width: 900px) {
+  .descobertas-lista {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 /* Responsividade */
 @media (max-width: 768px) {
   .descoberta-icon {

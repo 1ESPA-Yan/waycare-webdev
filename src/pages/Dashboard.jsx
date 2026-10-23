@@ -137,11 +137,11 @@ function Dashboard() {
             }
           />
 
-          <section id="page-content" className="page-transition">
+          <section id="page-content" className="page-transition @container">
 
             {/* Trilha de hoje — baseada no humor selecionado */}
             <div className="trilha-card dashboard-section">
-              <div className="flex items-start justify-between gap-4 mb-4">
+              <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="trilha-hoje-icon" style={{ color: humorAtual.badgeColor, backgroundColor: humorAtual.badgeBg }}>
                     <Icone nome={humorAtual.icon} />
