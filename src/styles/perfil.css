@@ -383,11 +383,19 @@
   margin: 0;
 }
 
+/* É um <fieldset> (desabilita tudo no modo demonstração): sem borda nem padding padrão */
 .perfil-meta-form {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-3);
-  margin-top: var(--space-4);
+  margin: var(--space-4) 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+
+.perfil-meta-form:disabled {
+  opacity: 0.6;
 }
 
 .perfil-meta-campo {

@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useApp } from '../context/AppContext'
+import { useHidratacao } from '../hooks/useHidratacao'
 import Topbar from '../components/Topbar'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
@@ -80,6 +81,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 
 function Configuracoes() {
   const { nomeUsuario, emailUsuario, contaReal, salvarNome, metaDiaria, setMetaDiaria, sairDaConta } = useApp()
+  const { meta } = useHidratacao()
 
   return (
     <>
@@ -112,13 +114,24 @@ function Configuracoes() {
             <Card className="config-section mb-6">
               <h2 className="config-section-titulo mb-6">Saúde & Metas</h2>
 
-              <CampoEditavel
-                label="Meta diária de hidratação"
-                valor={metaDiaria}
-                tipo="number"
-                unidade="ml"
-                onSalvar={v => setMetaDiaria(Number(v))}
-              />
+              {/* Conta real: a meta é calculada pelo perfil e recalculada todo dia (só leitura aqui) */}
+              {contaReal ? (
+                <div className="config-row">
+                  <div className="config-row-info">
+                    <span className="config-row-label">Meta diária de hidratação</span>
+                    <span className="config-row-valor">{meta} ml (calculada pelo seu perfil)</span>
+                  </div>
+                  <Link to="/perfil#meta-hidratacao" className="config-row-action">Alterar no Perfil</Link>
+                </div>
+              ) : (
+                <CampoEditavel
+                  label="Meta diária de hidratação"
+                  valor={metaDiaria}
+                  tipo="number"
+                  unidade="ml"
+                  onSalvar={v => setMetaDiaria(Number(v))}
+                />
+              )}
 
               <div className="config-divider"></div>
 
