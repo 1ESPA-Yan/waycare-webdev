@@ -151,7 +151,7 @@ function Dashboard() {
             <AvisoPrimeiroUso className="dashboard-section" />
 
             {/* Trilha de hoje — baseada no humor selecionado */}
-            <div className="trilha-card dashboard-section">
+            <div className="trilha-hoje-card dashboard-section">
               <div className="flex flex-wrap items-start justify-between gap-x-4 gap-y-2 mb-4">
                 <div className="flex items-center gap-2">
                   <div className="trilha-hoje-icon" style={{ color: humorAtual.badgeColor, backgroundColor: humorAtual.badgeBg }}>

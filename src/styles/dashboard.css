@@ -47,7 +47,7 @@
 /* Widget WayCare Bottle — estilos movidos para global.css */
 
 /* Trilha de hoje — gradiente verde no card principal */
-.trilha-card {
+.trilha-hoje-card {
   background: linear-gradient(135deg, var(--color-primary-light) 0%, #b8e4d4 100%);
   border: 1px solid rgba(28, 151, 112, 0.2);
   border-radius: var(--radius-lg);
