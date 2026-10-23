@@ -360,26 +360,6 @@
   color: rgba(255, 255, 255, 0.7);
 }
 
-/* Histórico de leituras */
-.bottle-leitura-row {
-  display: flex;
-  align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-xs);
-  padding: var(--space-1) 0;
-}
-
-.bottle-leitura-hora  { color: rgba(255, 255, 255, 0.4); min-width: 36px; }
-.bottle-leitura-de    { color: rgba(255, 255, 255, 0.7); }
-.bottle-leitura-seta  { color: rgba(255, 255, 255, 0.3); font-size: 10px; }
-.bottle-leitura-para  { color: rgba(255, 255, 255, 0.7); }
-.bottle-leitura-diff  { color: var(--color-info); font-weight: var(--font-weight-bold); flex: 1; }
-.bottle-leitura-hc    {
-  color: var(--color-hc-text);
-  font-weight: var(--font-weight-bold);
-  font-size: var(--font-size-xs);
-}
-
 /* Botões de simular gole */
 .bottle-gole-btn {
   display: flex;
@@ -594,22 +574,6 @@
   background-color: var(--color-border);
 }
 
-/* Botão sincronizar */
-.bottle-sync-btn {
-  background-color: var(--color-bg);
-  color: var(--color-text-secondary);
-  border: 1px solid var(--color-border);
-  border-radius: var(--radius-md) !important;
-  width: 100%;
-  font-size: var(--font-size-sm);
-  transition: all var(--transition-fast);
-}
-
-.bottle-sync-btn:hover {
-  background-color: var(--color-border);
-  color: var(--color-text-primary);
-}
-
 /* Meta de hidratação — card de progresso */
 .bottle-meta-card {
   background-color: var(--color-primary-light);
@@ -813,6 +777,13 @@
   animation: bottleLedPulse 1s ease-in-out infinite;
 }
 
+/* Dock sem dono (branco pulsando na dock) */
+.bottle-led--neutro {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: rgba(255, 255, 255, 0.8);
+}
+.bottle-led--neutro .bottle-led-dot { background-color: rgba(255, 255, 255, 0.8); }
+
 @keyframes bottleLedPulse {
   0%, 100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(122, 209, 128, 0.6); }
   50%      { transform: scale(1.25); box-shadow: 0 0 0 6px rgba(122, 209, 128, 0); }
@@ -862,6 +833,12 @@
 
 .bottle-tara-btn:hover { background-color: #1565c0; color: var(--color-white); }
 .bottle-tara-btn:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* "Em breve" no painel escuro: fundo apagado e texto claro (o padrão global é cinza sobre branco) */
+.bottle-tara-btn.em-breve:disabled {
+  background-color: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.75);
+}
 
 .bottle-tara-msg {
   font-size: var(--font-size-sm);
@@ -949,4 +926,56 @@
   .bottle-gole-btn {
     flex: 1;
   }
+}
+/* Eventos de hoje (gole, reabastecimento, garrafa fora/de volta, tara) */
+.bottle-eventos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  max-height: 320px;
+  overflow-y: auto;
+}
+
+.bottle-evento {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+  font-size: var(--font-size-sm);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.bottle-evento:last-child { border-bottom: none; }
+
+.bottle-evento-icone {
+  color: var(--color-text-muted);
+  width: 16px;
+}
+
+.bottle-evento--gole .bottle-evento-icone { color: var(--color-info); }
+.bottle-evento--reabastecimento .bottle-evento-icone { color: var(--color-primary); }
+
+.bottle-evento-texto {
+  flex: 1;
+  color: var(--color-text-secondary);
+}
+
+.bottle-evento-ml {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+}
+
+.bottle-evento-hora {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  min-width: 40px;
+  text-align: right;
+}
+
+.bottle-eventos-vazio {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  margin: 0;
 }

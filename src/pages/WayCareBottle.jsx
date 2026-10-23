@@ -3,13 +3,31 @@ import { Link } from 'react-router-dom'
 import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
-import { useWayCareDock } from '../hooks/useWayCareDock'
+import { useHidratacao } from '../hooks/useHidratacao'
+import { tempoDesde, horaCurta } from '../lib/tempo'
 import Topbar from '../components/Topbar'
-import { getHistory, postTara } from '../services/waycareApi'
+import { getHistory } from '../services/waycareApi'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
 import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
 import '../styles/waycare-bottle.css'
+
+// Eventos do dia (painel do Supabase): ícone e texto de cada tipo
+const EVENTOS = {
+  gole: { icone: 'fa-droplet', texto: 'Gole' },
+  reabastecimento: { icone: 'fa-fill-drip', texto: 'Garrafa reabastecida' },
+  garrafa_fora: { icone: 'fa-bottle-water', texto: 'Garrafa fora da dock' },
+  garrafa_volta: { icone: 'fa-bottle-water', texto: 'Garrafa de volta' },
+  tara: { icone: 'fa-scale-balanced', texto: 'Balança zerada' },
+}
+
+// Qualidade do Wi-Fi pelo RSSI (mesmas faixas do PWA da dock)
+function sinalWifi(rssi) {
+  if (rssi == null) return ''
+  if (rssi > -60) return 'sinal bom'
+  if (rssi > -72) return 'sinal médio'
+  return 'sinal fraco'
+}
 
 // Dados do gráfico semanal — usados só no fallback (sem conexão com a dock)
 const dadosSemana = [
@@ -38,9 +56,10 @@ function WaycareBottle() {
     encherGarrafa,
   } = useApp()
 
-  // Polling da VM antiga, só nesta tela até ela passar para o Supabase (tarefa 40)
-  const { status, erro: statusErro, carregando } = useWayCareDock(3000)
-  const usandoReal = !carregando && !statusErro && !!status
+  // Conta real: painel do Supabase. Demonstração: valores simulados do AppContext
+  const hidratacao = useHidratacao()
+  const { modo, dock, perfil, eventos, carregando } = hidratacao
+  const usandoReal = modo !== 'demo'
 
   // Histórico real para o gráfico (atualiza a cada 60s)
   const [history, setHistory] = useState([])
@@ -57,23 +76,6 @@ function WaycareBottle() {
     return () => { ativo = false; clearInterval(id) }
   }, [])
 
-  // Tara (zera a balança no dispositivo)
-  const [tarando, setTarando] = useState(false)
-  const [taraMsg, setTaraMsg] = useState('')
-  async function acionarTara() {
-    setTarando(true)
-    setTaraMsg('')
-    try {
-      await postTara()
-      setTaraMsg('Balança zerada ✓')
-    } catch {
-      setTaraMsg('Erro ao zerar. Verifique a conexão.')
-    } finally {
-      setTarando(false)
-      setTimeout(() => setTaraMsg(''), 3000)
-    }
-  }
-
   // Ponto LIVE piscando
   useEffect(() => {
     const intervalo = setInterval(() => setLiveVisivel(v => !v), 800)
@@ -83,17 +85,18 @@ function WaycareBottle() {
   // ----- View model: dados reais OU simulação (fallback) --------------------
   const d = usandoReal
     ? {
-        consumido: Math.round(status.consumo_dia ?? 0),
-        meta: Math.round(status.meta ?? 0) || 2000,
-        pct: Math.round(status.pct ?? 0),
-        fatias: status.fatias ?? Math.min(4, Math.floor((status.pct ?? 0) / 25)),
-        estado_led: status.estado_led || 'verde',
-        streak: status.streak ?? 0,
-        peso: status.peso,
-        garrafa_presente: status.garrafa_presente !== false,
-        online: status.online !== false,
-        temp: status.temp ?? null,
-        cidade: status.cidade ?? null,
+        consumido: Math.round(hidratacao.consumo),
+        meta: hidratacao.meta,
+        pct: Math.round(hidratacao.pct),
+        fatias: hidratacao.fatias,
+        estado_led: dock?.led || 'sem_dono',
+        streak: hidratacao.streak,
+        goles: hidratacao.goles,
+        peso: dock?.peso_atual ?? null,
+        garrafa_presente: dock ? !dock.garrafa_fora : true,
+        online: Boolean(dock?.online),
+        temp: perfil?.temp_c != null ? Math.round(perfil.temp_c) : null,
+        cidade: perfil?.cidade ?? null,
       }
     : {
         consumido: mlConsumido,
@@ -130,6 +133,7 @@ function WaycareBottle() {
     : 'var(--color-hc)'
 
   const ledTexto = {
+    sem_dono: 'Dock sem dono: vincule pelo código',
     verde: 'Tudo certo — siga bebendo',
     vermelho: 'Faz um tempo que você não bebe',
     verde_pulsando: '🎉 Meta do dia batida!',
@@ -138,26 +142,31 @@ function WaycareBottle() {
     ? 'bottle-led--vermelho'
     : d.estado_led === 'verde_pulsando'
     ? 'bottle-led--pulsando'
+    : d.estado_led === 'sem_dono'
+    ? 'bottle-led--neutro'
     : 'bottle-led--verde'
+
+  // Bateria fraca só importa fora do USB
+  const bateriaFraca = dock && !dock.usb && dock.bateria_pct != null && dock.bateria_pct <= 15
 
   return (
     <>
           <Topbar
             className="bottle-topbar"
             titulo="WayCare Bottle"
-            aoLadoDoTitulo={usandoReal && d.online ? (
+            aoLadoDoTitulo={d.online ? (
               <span className="bottle-conectada-badge">
                 <Icone nome="fa-wifi" /> Conectada
               </span>
             ) : (
               <span className="bottle-conectada-badge bottle-conectada-badge--off">
-                <Icone nome="fa-plug-circle-xmark" /> {usandoReal ? 'Offline' : 'Demonstração'}
+                <Icone nome="fa-plug-circle-xmark" /> {!usandoReal ? 'Demonstração' : dock ? 'Offline' : 'Sem dock'}
               </span>
             )}
             subtitulo={
               <div className="flex items-center gap-4 flex-wrap">
                 <span className="bottle-status-info">
-                  <Icone nome="fa-signal" /> {usandoReal ? 'Dock conectada' : 'Sensor IoT (demo)'}
+                  <Icone nome="fa-signal" /> {!usandoReal ? 'Sensor IoT (demo)' : dock ? `Dock ${dock.apelido || dock.id}` : 'Nenhuma dock vinculada'}
                 </span>
                 {d.temp != null && (
                   <span className="bottle-status-info"><Icone nome="fa-temperature-half" /> {d.temp}°C</span>
@@ -177,23 +186,36 @@ function WaycareBottle() {
             {/* Avisos de conexão / dispositivo */}
             {carregando && (
               <div className="bottle-aviso bottle-aviso--info mb-6">
-                <Icone nome="fa-circle-notch" girar /> Conectando ao dispositivo…
+                <Icone nome="fa-circle-notch" girar /> Carregando os dados da sua dock…
               </div>
             )}
-            {!carregando && !usandoReal && (
+            {!usandoReal && (
+              <div className="bottle-aviso bottle-aviso--info mb-6">
+                <Icone nome="fa-compass" />
+                Modo demonstração: os goles são simulados com os botões do painel.
+              </div>
+            )}
+            {/* Sem perfil, o AvisoPrimeiroUso fala do perfil; aqui a tara não fica escondida */}
+            {dock && !dock.tarada && !perfil?.peso_kg && (
               <div className="bottle-aviso bottle-aviso--garrafa mb-6">
-                <Icone nome="fa-triangle-exclamation" />
-                Sem conexão com a dock — exibindo dados de demonstração.
+                <Icone nome="fa-scale-balanced" /> Balança não zerada: os goles só contam depois da tara com a garrafa vazia.
               </div>
             )}
-            {usandoReal && !d.online && (
+            {dock && !dock.online && (
               <div className="bottle-aviso bottle-aviso--offline mb-6">
-                <Icone nome="fa-plug-circle-xmark" /> Dispositivo offline — o ESP32 parou de enviar dados.
+                <Icone nome="fa-plug-circle-xmark" />
+                Dock offline{dock.ultimo_contato ? ` (último contato ${tempoDesde(dock.ultimo_contato)})` : ''}. O que ela medir
+                nesse tempo sobe quando voltar a ter Wi-Fi.
               </div>
             )}
-            {usandoReal && !d.garrafa_presente && (
+            {bateriaFraca && (
               <div className="bottle-aviso bottle-aviso--garrafa mb-6">
-                <Icone nome="fa-bottle-water" /> Garrafa fora da base.
+                <Icone nome="fa-triangle-exclamation" /> Bateria fraca ({dock.bateria_pct}%). Coloque a dock para carregar.
+              </div>
+            )}
+            {dock && !d.garrafa_presente && (
+              <div className="bottle-aviso bottle-aviso--garrafa mb-6">
+                <Icone nome="fa-bottle-water" /> Garrafa fora da dock.
               </div>
             )}
 
@@ -252,7 +274,7 @@ function WaycareBottle() {
                       </div>
                     </div>
                     <div className="flex items-center gap-2">
-                      {usandoReal && d.online ? (
+                      {d.online ? (
                         <span className="bottle-live-badge">
                           <span className="bottle-live-dot" style={{ opacity: liveVisivel ? 1 : 0, transition: 'opacity 0.2s ease' }}></span>
                           LIVE
@@ -326,9 +348,9 @@ function WaycareBottle() {
                             </div>
                             <div>
                               <div className="bottle-mini-stat">
-                                <Icone nome="fa-layer-group" className="bottle-mini-icon" />
-                                <span className="bottle-mini-valor">{d.fatias}/4</span>
-                                <span className="bottle-mini-label">Fatias</span>
+                                <Icone nome="fa-droplet" className="bottle-mini-icon" />
+                                <span className="bottle-mini-valor">{d.goles}</span>
+                                <span className="bottle-mini-label">Goles</span>
                               </div>
                             </div>
                             <div>
@@ -376,20 +398,20 @@ function WaycareBottle() {
                     </div>
                   </div>
 
-                  {/* Ação do dispositivo: Tara (real) ou simular gole (fallback) */}
-                  {usandoReal ? (
+                  {/* Ação do dispositivo: tara (conta real com dock) ou simular gole (demonstração) */}
+                  {usandoReal ? dock && (
                     <div>
                       <span className="bottle-secao-label mb-4 block">CONTROLE DO DISPOSITIVO</span>
                       <div className="flex items-center gap-4 flex-wrap">
-                        <button className="btn bottle-tara-btn" onClick={acionarTara} disabled={tarando}>
+                        {/* O pedido de tara pelo Supabase entra na tarefa 42 */}
+                        <button className="btn bottle-tara-btn em-breve" disabled>
                           <Icone nome="fa-scale-balanced" />
-                          {tarando ? 'Zerando…' : 'Tarar balança'}
+                          Zerar balança <span className="badge-em-breve">Em breve</span>
                         </button>
-                        {taraMsg && <span className="bottle-tara-msg">{taraMsg}</span>}
                       </div>
                       <p className="bottle-simular-aviso">
-                        Zera a balança no dispositivo via MQTT. Use após reabastecer a garrafa —
-                        o salto de peso pós-tara não é contado como consumo.
+                        Com a garrafa vazia na dock, zera a balança. Os goles e reabastecimentos são
+                        calculados a partir desse ponto.
                       </p>
                     </div>
                   ) : (
@@ -480,22 +502,30 @@ function WaycareBottle() {
                   <div className="flex flex-col gap-0">
                     <div className="bottle-info-row">
                       <span className="bottle-info-label"><Icone nome="fa-wifi" className="bottle-info-icon--green" /> Conexão</span>
-                      <span className="bottle-info-valor">{usandoReal ? (d.online ? 'Online' : 'Offline') : 'Sem conexão'}</span>
+                      <span className="bottle-info-valor">
+                        {!dock ? (usandoReal ? 'Sem dock vinculada' : 'Demonstração')
+                          : dock.online ? 'Conectada'
+                          : `Offline${dock.ultimo_contato ? `, última vez ${tempoDesde(dock.ultimo_contato)}` : ''}`}
+                      </span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
                       <span className="bottle-info-label"><Icone nome="fa-bottle-water" className="bottle-info-icon--blue-light" /> Garrafa na base</span>
-                      <span className="bottle-info-valor">{usandoReal ? (d.garrafa_presente ? 'Sim' : 'Fora da base') : '—'}</span>
+                      <span className="bottle-info-valor">{dock ? (d.garrafa_presente ? 'Sim' : 'Fora da dock') : '—'}</span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><Icone nome="fa-temperature-half" className="bottle-info-icon--blue-light" /> Temperatura</span>
-                      <span className="bottle-info-valor">{d.temp != null ? `${d.temp}°C` : '—'}</span>
+                      <span className="bottle-info-label"><Icone nome="fa-bolt" className="bottle-info-icon--purple" /> Bateria</span>
+                      <span className="bottle-info-valor">
+                        {!dock ? '—' : dock.usb ? 'No USB' : dock.bateria_pct != null ? `${dock.bateria_pct}%` : '—'}
+                      </span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><Icone nome="fa-location-dot" className="bottle-info-icon--purple" /> Cidade</span>
-                      <span className="bottle-info-valor">{d.cidade || '—'}</span>
+                      <span className="bottle-info-label"><Icone nome="fa-signal" className="bottle-info-icon--green" /> Wi-Fi</span>
+                      <span className="bottle-info-valor">
+                        {dock?.rede ? `${dock.rede}${dock.rssi != null ? `, ${sinalWifi(dock.rssi)}` : ''}` : '—'}
+                      </span>
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
@@ -504,14 +534,35 @@ function WaycareBottle() {
                     </div>
                     <div className="bottle-info-divider"></div>
                     <div className="bottle-info-row">
-                      <span className="bottle-info-label"><Icone nome="fa-flask" className="bottle-info-icon--blue-light" /> Modelo</span>
-                      <span className="bottle-info-valor">WayCare Bottle Pro</span>
+                      <span className="bottle-info-label"><Icone nome="fa-flask" className="bottle-info-icon--blue-light" /> Firmware</span>
+                      <span className="bottle-info-valor">{dock?.fw || '—'}</span>
                     </div>
                   </div>
-                  {usandoReal && (
-                    <button className="btn bottle-sync-btn mt-6" onClick={acionarTara} disabled={tarando}>
-                      <Icone nome="fa-scale-balanced" /> {tarando ? 'Zerando…' : 'Tarar balança'}
-                    </button>
+                </Card>
+
+                {/* Eventos do dia: painel do Supabase (real) ou leituras simuladas (demo) */}
+                <Card>
+                  <h2 className="bottle-col-titulo mb-6">
+                    <Icone nome="fa-clock" className="bottle-col-titulo-icon" />
+                    Eventos de hoje
+                  </h2>
+                  {eventos.length === 0 ? (
+                    <p className="bottle-eventos-vazio">Nenhum evento hoje ainda. Os goles aparecem aqui assim que a dock registrar.</p>
+                  ) : (
+                    <ul className="bottle-eventos">
+                      {eventos.map((ev, i) => {
+                        const tipo = EVENTOS[ev.tipo] ?? { icone: 'fa-circle-info', texto: ev.tipo }
+                        return (
+                          <li key={`${ev.ts ?? ev.hora}-${i}`} className={`bottle-evento bottle-evento--${ev.tipo}`}>
+                            <Icone nome={tipo.icone} className="bottle-evento-icone" />
+                            <span className="bottle-evento-texto">{tipo.texto}</span>
+                            {ev.tipo === 'gole' && ev.ml > 0 && <span className="bottle-evento-ml">{ev.ml} ml</span>}
+                            {ev.tipo === 'reabastecimento' && ev.ml > 0 && <span className="bottle-evento-ml">+{ev.ml} ml</span>}
+                            <span className="bottle-evento-hora">{ev.ts ? horaCurta(ev.ts) : ev.hora}</span>
+                          </li>
+                        )
+                      })}
+                    </ul>
                   )}
                 </Card>
 
