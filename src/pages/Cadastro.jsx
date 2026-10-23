@@ -18,6 +18,7 @@ function Cadastro() {
   const [senha, setSenha] = useState('')
   const [confirmaSenha, setConfirmaSenha] = useState('')
   const [aceitouTermos, setAceitouTermos] = useState(false)
+  const [erros, setErros] = useState({})
 
   // Controla visibilidade das senhas
   const [senhaVisivel, setSenhaVisivel] = useState(false)
@@ -41,29 +42,27 @@ function Cadastro() {
   // Verifica se as senhas coincidem
   const senhasCoincidem = confirmaSenha && senha === confirmaSenha
 
-  // Avança para o passo seguinte com validação
+  // Avança para o passo seguinte com validação (erros aparecem embaixo de cada campo)
   const avancar = () => {
+    const novosErros = {}
     if (passo === 1) {
-      if (!nome.trim()) {
-        alert('Por favor, preencha seu nome.')
-        return
-      }
-      if (!email.trim()) {
-        alert('Por favor, preencha seu e-mail.')
-        return
-      }
+      if (!nome.trim()) novosErros.nome = 'Preencha seu nome.'
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) novosErros.email = 'Informe um e-mail válido.'
     }
     if (passo === 2) {
-      if (senha.length < 8) {
-        alert('A senha deve ter no mínimo 8 caracteres.')
-        return
-      }
-      if (senha !== confirmaSenha) {
-        alert('As senhas não coincidem.')
-        return
-      }
+      if (senha.length < 8) novosErros.senha = 'A senha deve ter no mínimo 8 caracteres.'
+      if (!confirmaSenha) novosErros.confirmaSenha = 'Repita a senha.'
+      else if (senha !== confirmaSenha) novosErros.confirmaSenha = 'As senhas não coincidem.'
     }
+    setErros(novosErros)
+    if (Object.keys(novosErros).length) return
     setPasso(passo + 1)
+  }
+
+  // Atualiza um campo e apaga o erro dele
+  const alterar = (setValor, campo) => (e) => {
+    setValor(e.target.value)
+    if (erros[campo]) setErros(prev => ({ ...prev, [campo]: undefined }))
   }
 
   // Salva usuário no contexto e localStorage e redireciona
@@ -157,13 +156,16 @@ function Cadastro() {
                   <input
                     type="text"
                     id="cadastro-nome"
-                    className="input-field input-with-icon"
+                    className={`input-field input-with-icon ${erros.nome ? 'input-invalido' : ''}`}
+                    aria-invalid={!!erros.nome}
+                    aria-describedby={erros.nome ? 'cadastro-nome-erro' : undefined}
                     placeholder="Seu nome completo"
                     autoComplete="name"
                     value={nome}
-                    onChange={(e) => setNome(e.target.value)}
+                    onChange={alterar(setNome, 'nome')}
                   />
                 </div>
+                {erros.nome && <p id="cadastro-nome-erro" className="input-erro-msg">{erros.nome}</p>}
               </div>
 
               <div className="input-group">
@@ -173,13 +175,16 @@ function Cadastro() {
                   <input
                     type="email"
                     id="cadastro-email"
-                    className="input-field input-with-icon"
+                    className={`input-field input-with-icon ${erros.email ? 'input-invalido' : ''}`}
+                    aria-invalid={!!erros.email}
+                    aria-describedby={erros.email ? 'cadastro-email-erro' : undefined}
                     placeholder="seu@email.com.br"
                     autoComplete="email"
                     value={email}
-                    onChange={(e) => setEmail(e.target.value)}
+                    onChange={alterar(setEmail, 'email')}
                   />
                 </div>
+                {erros.email && <p id="cadastro-email-erro" className="input-erro-msg">{erros.email}</p>}
               </div>
 
               <Button bloco tamanho="lg" className="auth-submit-btn" onClick={avancar}>
@@ -206,11 +211,13 @@ function Cadastro() {
                   <input
                     type={senhaVisivel ? 'text' : 'password'}
                     id="cadastro-senha"
-                    className="input-field input-with-icon input-with-icon-right"
+                    className={`input-field input-with-icon input-with-icon-right ${erros.senha ? 'input-invalido' : ''}`}
+                    aria-invalid={!!erros.senha}
+                    aria-describedby={erros.senha ? 'cadastro-senha-erro' : undefined}
                     placeholder="Mínimo 8 caracteres"
                     autoComplete="new-password"
                     value={senha}
-                    onChange={(e) => setSenha(e.target.value)}
+                    onChange={alterar(setSenha, 'senha')}
                   />
                   <button
                     type="button"
@@ -220,6 +227,7 @@ function Cadastro() {
                     <Icone nome={senhaVisivel ? 'fa-eye-slash' : 'fa-eye'} />
                   </button>
                 </div>
+                {erros.senha && <p id="cadastro-senha-erro" className="input-erro-msg">{erros.senha}</p>}
 
                 {/* Indicador de força da senha */}
                 <div className="password-strength">
@@ -258,11 +266,13 @@ function Cadastro() {
                   <input
                     type={confirmaSenhaVisivel ? 'text' : 'password'}
                     id="cadastro-confirma-senha"
-                    className="input-field input-with-icon input-with-icon-right"
+                    className={`input-field input-with-icon input-with-icon-right ${erros.confirmaSenha ? 'input-invalido' : ''}`}
+                    aria-invalid={!!erros.confirmaSenha}
+                    aria-describedby={confirmaSenha ? 'cadastro-confirma-senha-match' : erros.confirmaSenha ? 'cadastro-confirma-senha-erro' : undefined}
                     placeholder="Repita a senha"
                     autoComplete="new-password"
                     value={confirmaSenha}
-                    onChange={(e) => setConfirmaSenha(e.target.value)}
+                    onChange={alterar(setConfirmaSenha, 'confirmaSenha')}
                   />
                   <button
                     type="button"
@@ -272,8 +282,10 @@ function Cadastro() {
                     <Icone nome={confirmaSenhaVisivel ? 'fa-eye-slash' : 'fa-eye'} />
                   </button>
                 </div>
+                {/* Campo vazio: erro do "Continuar". Preenchido: a mensagem ao vivo abaixo já diz se coincidem */}
+                {erros.confirmaSenha && !confirmaSenha && <p id="cadastro-confirma-senha-erro" className="input-erro-msg">{erros.confirmaSenha}</p>}
                 {confirmaSenha && (
-                  <span className={`password-match-msg ${senhasCoincidem ? 'match-ok' : 'match-error'}`}>
+                  <span id="cadastro-confirma-senha-match" className={`password-match-msg ${senhasCoincidem ? 'match-ok' : 'match-error'}`}>
                     {senhasCoincidem ? '✓ Senhas coincidem' : '✗ Senhas não coincidem'}
                   </span>
                 )}
