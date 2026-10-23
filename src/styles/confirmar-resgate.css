@@ -130,6 +130,25 @@
   color: var(--color-primary-dark) !important;
 }
 
+/* Saldo insuficiente: valor e ícone em vermelho, com aviso abaixo */
+.confirmar-detalhe-valor--destaque.confirmar-detalhe-valor--negativo,
+.confirmar-detalhe-valor--destaque.confirmar-detalhe-valor--negativo .icone {
+  color: var(--color-error) !important;
+}
+
+.confirmar-erro {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin: var(--space-3) 0 0;
+  padding: var(--space-3) var(--space-4);
+  border-radius: var(--radius-md);
+  background-color: #ffebee;
+  color: var(--color-error);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-medium);
+}
+
 /* Termos */
 .confirmar-termos-wrap {
   margin-bottom: var(--space-5);

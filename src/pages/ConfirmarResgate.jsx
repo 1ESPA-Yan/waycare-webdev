@@ -16,10 +16,14 @@ function ConfirmarResgate() {
   if (!recompensa) return <Navigate to="/recompensas" replace />
 
   const saldoApos = totalHC - recompensa.preco
+  // O saldo pode ter caído depois de escolher a recompensa (ou o state ser antigo)
+  const saldoInsuficiente = saldoApos < 0
+  const podeConfirmar = aceitouTermos && !saldoInsuficiente
 
   const handleConfirmar = () => {
-    if (!aceitouTermos) return
+    if (!podeConfirmar) return
     const codigo = resgatarRecompensa(recompensa)
+    if (!codigo) return
     navigate('/resgate/sucesso', { state: { recompensa, codigo }, replace: true })
   }
 
@@ -74,12 +78,19 @@ function ConfirmarResgate() {
             </div>
             <div className="confirmar-detalhe-row">
               <span className="confirmar-detalhe-label">Saldo após resgate:</span>
-              <div className="confirmar-detalhe-valor confirmar-detalhe-valor--destaque">
+              <div className={`confirmar-detalhe-valor confirmar-detalhe-valor--destaque${saldoInsuficiente ? ' confirmar-detalhe-valor--negativo' : ''}`}>
                 <Icone nome="fa-coins" />
                 <span>{saldoApos.toLocaleString('pt-BR')} HC</span>
               </div>
             </div>
           </div>
+
+          {saldoInsuficiente && (
+            <p className="confirmar-erro" role="alert">
+              <Icone nome="fa-circle-xmark" />
+              HC insuficiente: faltam {(-saldoApos).toLocaleString('pt-BR')} HC para este resgate.
+            </p>
+          )}
 
           <div className="confirmar-divider"></div>
 
@@ -115,13 +126,13 @@ function ConfirmarResgate() {
           {/* Ações */}
           <div className="confirmar-actions">
             <motion.button
-              className={`btn confirmar-btn-confirmar ${!aceitouTermos ? 'disabled' : ''}`}
+              className={`btn confirmar-btn-confirmar ${!podeConfirmar ? 'disabled' : ''}`}
               onClick={handleConfirmar}
-              disabled={!aceitouTermos}
-              whileHover={aceitouTermos ? { scale: 1.01 } : {}}
-              whileTap={aceitouTermos ? { scale: 0.98 } : {}}
+              disabled={!podeConfirmar}
+              whileHover={podeConfirmar ? { scale: 1.01 } : {}}
+              whileTap={podeConfirmar ? { scale: 0.98 } : {}}
             >
-              Confirmar Resgate
+              {saldoInsuficiente ? 'HC insuficiente' : 'Confirmar Resgate'}
             </motion.button>
             <button
               className="btn confirmar-btn-cancelar"

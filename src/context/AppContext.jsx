@@ -171,8 +171,10 @@ export function AppProvider({ children }) {
     localStorage.setItem('wc_resgates', JSON.stringify(resgates))
   }, [resgates])
 
-  // Debita o HC, gera o código (prefixo + ano + 4 dígitos) e salva; devolve o código
+  // Debita o HC, gera o código (prefixo + ano + 4 dígitos) e salva; devolve o código.
+  // Sem saldo suficiente, não faz nada e devolve null.
   const resgatarRecompensa = (recompensa) => {
+    if (totalHC < recompensa.preco) return null
     const prefixo = PREFIXOS_VOUCHER[recompensa.id] || 'RESG'
     const digitos = String(Math.floor(Math.random() * 10000)).padStart(4, '0')
     const codigo = `WC-${prefixo}-${new Date().getFullYear()}-${digitos}`
