@@ -1,5 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback } from 'react'
 import { useWayCareDock } from '../hooks/useWayCareDock'
+import { supabase, configurado } from '../lib/supabase'
 
 const AppContext = createContext()
 
@@ -37,13 +38,49 @@ function calcularNivel(xp) {
 
 export function AppProvider({ children }) {
 
-  // USUÁRIO — lê do localStorage ao iniciar
-  const [nomeUsuario, setNomeUsuario] = useState(
-    localStorage.getItem('wc_nome') || 'Usuário'
-  )
-  const [emailUsuario, setEmailUsuario] = useState(
-    localStorage.getItem('wc_email') || ''
-  )
+  // SESSÃO — conta real (Supabase, login por código) ou modo demonstração
+  const [sessao, setSessao] = useState(null)
+  // Com o Supabase configurado, espera a sessão salva ser lida antes de decidir as rotas
+  const [carregandoSessao, setCarregandoSessao] = useState(configurado)
+  const [modoDemo, setModoDemo] = useState(() => localStorage.getItem('wc_demo') === '1')
+
+  useEffect(() => {
+    if (!supabase) return
+    supabase.auth.getSession().then(({ data }) => {
+      setSessao(data.session)
+      setCarregandoSessao(false)
+    })
+    const { data } = supabase.auth.onAuthStateChange((_evento, novaSessao) => setSessao(novaSessao))
+    return () => data.subscription.unsubscribe()
+  }, [])
+
+  const contaReal = Boolean(sessao)
+  const logado = contaReal || modoDemo
+  const userId = sessao?.user.id
+
+  // Nome da conta real, da tabela perfis: null enquanto carrega, '' se ainda não tem
+  const [perfilNome, setPerfilNome] = useState(null)
+  useEffect(() => {
+    if (!userId) return
+    let ativo = true
+    supabase.from('perfis').select('nome').eq('user_id', userId).maybeSingle()
+      .then(({ data }) => { if (ativo) setPerfilNome(data?.nome ?? '') })
+    return () => { ativo = false }
+  }, [userId])
+
+  // Nome do modo demonstração (fica só no navegador)
+  const [nomeDemo, setNomeDemo] = useState(() => localStorage.getItem('wc_nome') || 'Visitante')
+
+  // Nome exibido: primeiro nome do perfil; senão o começo do e-mail com inicial maiúscula
+  const nomeDoEmail = (email = '') => {
+    const base = email.split('@')[0].split(/[._-]/)[0]
+    return base ? base.charAt(0).toUpperCase() + base.slice(1) : 'Usuário'
+  }
+  const nomeUsuario = contaReal
+    ? (perfilNome?.trim().split(' ')[0] || nomeDoEmail(sessao.user.email))
+    : nomeDemo
+  const emailUsuario = sessao?.user.email ?? ''
+  const membroDesde = sessao?.user.created_at?.slice(0, 10) ?? ''
 
   const [bioUsuario, setBioUsuarioState] = useState(
     localStorage.getItem('wc_bio') || ''
@@ -54,39 +91,35 @@ export function AppProvider({ children }) {
     localStorage.setItem('wc_bio', bio)
   }
 
-  // Salva nome e email no estado e no localStorage
-  const salvarUsuario = (nome, email = '') => {
-    const primeiroNome = nome.trim().split(' ')[0]
-    setNomeUsuario(primeiroNome)
-    setEmailUsuario(email)
-    localStorage.setItem('wc_nome', primeiroNome)
-    if (email) localStorage.setItem('wc_email', email)
-    localStorage.setItem('wc_logado', '1')
-    setLogado(true)
-    // Guarda a data do primeiro cadastro/login; não sobrescreve depois
-    if (!localStorage.getItem('wc_membro_desde')) {
-      const hoje = hojeISO()
-      localStorage.setItem('wc_membro_desde', hoje)
-      setMembroDesde(hoje)
+  // Salva o nome: na conta real vai para perfis (Supabase); no demo, para o navegador
+  const salvarNome = async (nome) => {
+    const limpo = nome.trim()
+    if (!limpo) return
+    if (contaReal) {
+      const { error } = await supabase.from('perfis').upsert({ user_id: userId, nome: limpo })
+      if (error) throw new Error('Não foi possível salvar o nome. Tente de novo.', { cause: error })
+      setPerfilNome(limpo)
+    } else {
+      setNomeDemo(limpo)
+      localStorage.setItem('wc_nome', limpo)
     }
   }
 
-  const [membroDesde, setMembroDesde] = useState(
-    () => localStorage.getItem('wc_membro_desde') || ''
-  )
+  const entrarDemo = () => {
+    localStorage.setItem('wc_demo', '1')
+    setModoDemo(true)
+  }
 
-  // SESSÃO — marcada no login/cadastro; as rotas do app exigem sessão
-  const [logado, setLogado] = useState(
-    () => localStorage.getItem('wc_logado') === '1'
-  )
-
-  // Logout: apaga só os dados do usuário; progresso (HC, XP, missões...) continua salvo
-  const sairDaConta = () => {
-    ['wc_logado', 'wc_nome', 'wc_email', 'wc_bio'].forEach(chave => localStorage.removeItem(chave))
-    setLogado(false)
-    setNomeUsuario('Usuário')
-    setEmailUsuario('')
+  // Sair: encerra a sessão do Supabase e o modo demonstração. O progresso
+  // (HC, XP, missões...) continua salvo neste navegador.
+  const sairDaConta = async () => {
+    ;['wc_demo', 'wc_nome', 'wc_bio', 'wc_logado', 'wc_email', 'wc_membro_desde'].forEach(chave => localStorage.removeItem(chave))
+    setModoDemo(false)
+    setNomeDemo('Visitante')
     setBioUsuarioState('')
+    setPerfilNome(null)
+    setSessao(null)
+    if (supabase) await supabase.auth.signOut()
   }
 
   // HUMOR
@@ -276,9 +309,16 @@ export function AppProvider({ children }) {
     emailUsuario,
     bioUsuario,
     setBioUsuario,
-    salvarUsuario,
+    salvarNome,
     membroDesde,
+
+    // Sessão
+    contaReal,
+    modoDemo,
     logado,
+    carregandoSessao,
+    perfilNome,
+    entrarDemo,
     sairDaConta,
 
     // Garrafa

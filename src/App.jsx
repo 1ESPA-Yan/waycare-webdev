@@ -1,5 +1,5 @@
 import { lazy, Suspense } from 'react'
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { MotionConfig } from 'motion/react'
 import { AppProvider } from './context/AppContext'
 
@@ -34,7 +34,6 @@ import './styles/legal.css'
 import './styles/utilitarios.css'
 
 // Demais páginas: o JS de cada uma é carregado só quando a rota abre
-const Cadastro = lazy(() => import('./pages/Cadastro'))
 const Onboarding = lazy(() => import('./pages/Onboarding'))
 const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Trilhas = lazy(() => import('./pages/Trilhas'))
@@ -64,7 +63,8 @@ function App() {
             <Routes>
               {/* Auth */}
               <Route path="/" element={<Login />} />
-              <Route path="/cadastro" element={<Cadastro />} />
+              {/* Entrar e criar conta agora são a mesma tela (login por código) */}
+              <Route path="/cadastro" element={<Navigate to="/" replace />} />
               <Route path="/termos" element={<Termos />} />
               <Route path="/privacidade" element={<Privacidade />} />
 

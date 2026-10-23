@@ -10,11 +10,19 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
   const [editando, setEditando] = useState(false)
   const [rascunho, setRascunho] = useState(String(valor))
   const [salvo, setSalvo] = useState(false)
+  const [erro, setErro] = useState('')
 
-  const handleSalvar = () => {
+  // onSalvar pode ser assíncrono (ex.: nome salvo no Supabase) e falhar
+  const handleSalvar = async () => {
     const v = tipo === 'number' ? Number(rascunho) : rascunho.trim()
     if (!v) return
-    onSalvar(v)
+    try {
+      await onSalvar(v)
+    } catch (falha) {
+      setErro(falha.message)
+      return
+    }
+    setErro('')
     setEditando(false)
     setSalvo(true)
     setTimeout(() => setSalvo(false), 2000)
@@ -22,6 +30,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 
   const handleCancelar = () => {
     setRascunho(String(valor))
+    setErro('')
     setEditando(false)
   }
 
@@ -43,6 +52,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
             />
             {unidade && <span className="config-edit-unidade">{unidade}</span>}
           </div>
+          {erro && <p className="input-erro-msg" role="alert">{erro}</p>}
         </div>
         <div className="flex gap-2">
           <button className="config-row-action config-row-action--save" onClick={handleSalvar}>Salvar</button>
@@ -69,7 +79,7 @@ function CampoEditavel({ label, valor, tipo = 'text', unidade, onSalvar }) {
 }
 
 function Configuracoes() {
-  const { nomeUsuario, emailUsuario, salvarUsuario, metaDiaria, setMetaDiaria, sairDaConta } = useApp()
+  const { nomeUsuario, emailUsuario, contaReal, salvarNome, metaDiaria, setMetaDiaria, sairDaConta } = useApp()
 
   return (
     <>
@@ -84,26 +94,17 @@ function Configuracoes() {
               <CampoEditavel
                 label="Nome"
                 valor={nomeUsuario}
-                onSalvar={nome => salvarUsuario(nome, emailUsuario)}
+                onSalvar={salvarNome}
               />
 
-              <div className="config-divider"></div>
-
-              <CampoEditavel
-                label="E-mail"
-                valor={emailUsuario}
-                tipo="email"
-                onSalvar={email => salvarUsuario(nomeUsuario, email)}
-              />
-
+              {/* E-mail é a identidade da conta (login por código): só leitura. Sem senha. */}
               <div className="config-divider"></div>
 
               <div className="config-row">
                 <div className="config-row-info">
-                  <span className="config-row-label">Senha</span>
-                  <span className="config-row-valor config-senha">••••••••</span>
+                  <span className="config-row-label">E-mail</span>
+                  <span className="config-row-valor">{contaReal ? emailUsuario : 'Modo demonstração (sem conta)'}</span>
                 </div>
-                <button className="config-row-action">Alterar</button>
               </div>
             </Card>
 

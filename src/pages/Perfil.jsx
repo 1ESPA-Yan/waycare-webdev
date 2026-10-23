@@ -28,26 +28,32 @@ function Perfil() {
   const [editando, setEditando] = useState(false)
   const [salvo, setSalvo] = useState(false)
   const [rascunhoNome, setRascunhoNome] = useState('')
-  const [rascunhoEmail, setRascunhoEmail] = useState('')
   const [rascunhoBio, setRascunhoBio] = useState('')
+  const [erroSalvar, setErroSalvar] = useState('')
 
-  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarUsuario, membroDesde, nivel, xp, xpParaProximo, pctNivel } = useApp()
+  const { totalHC, nomeUsuario, emailUsuario, bioUsuario, setBioUsuario, salvarNome, membroDesde, nivel, xp, xpParaProximo, pctNivel } = useApp()
 
   const { dados: conquistas } = useDados('conquistas')
   const totalConquistas = conquistas?.filter(c => c.desbloqueada).length ?? 0
 
   const iniciarEdicao = () => {
     setRascunhoNome(nomeUsuario)
-    setRascunhoEmail(emailUsuario)
     setRascunhoBio(bioUsuario || '')
+    setErroSalvar('')
     setEditando(true)
   }
 
   const cancelar = () => setEditando(false)
 
-  const salvar = () => {
+  // O e-mail é a identidade da conta (login por código) e não é editável aqui
+  const salvar = async () => {
     if (!rascunhoNome.trim()) return
-    salvarUsuario(rascunhoNome.trim(), rascunhoEmail.trim())
+    try {
+      await salvarNome(rascunhoNome)
+    } catch (falha) {
+      setErroSalvar(falha.message)
+      return
+    }
     setBioUsuario(rascunhoBio.trim())
     setEditando(false)
     setSalvo(true)
@@ -96,17 +102,7 @@ function Perfil() {
                               maxLength={40}
                             />
                           </div>
-                          <div className="perfil-edit-field">
-                            <label className="perfil-edit-label">E-mail</label>
-                            <input
-                              className="perfil-edit-input"
-                              type="email"
-                              value={rascunhoEmail}
-                              onChange={e => setRascunhoEmail(e.target.value)}
-                              onKeyDown={e => { if (e.key === 'Enter') salvar(); if (e.key === 'Escape') cancelar() }}
-                              placeholder="seu@email.com"
-                            />
-                          </div>
+                          {erroSalvar && <p className="input-erro-msg" role="alert">{erroSalvar}</p>}
                           <div className="perfil-edit-field">
                             <label className="perfil-edit-label">
                               Bio

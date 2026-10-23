@@ -51,11 +51,6 @@
   color: var(--color-text-primary);
 }
 
-.config-senha {
-  letter-spacing: 0.15em;
-  font-size: var(--font-size-sm);
-}
-
 .config-row-action {
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-medium);
