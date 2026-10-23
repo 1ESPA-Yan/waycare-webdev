@@ -90,7 +90,7 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 | [Vite](https://vitejs.dev/) | 5+ | Build tool e dev server |
 | [React Router DOM](https://reactrouter.com/) | 6+ | Roteamento SPA |
 | [Tailwind CSS](https://tailwindcss.com/) | 4+ | Classes utilitárias (`@tailwindcss/vite`) |
-| [Font Awesome](https://fontawesome.com/) | 6.5.0 | Ícones |
+| [Lucide React](https://lucide.dev/) | 1.17 | Ícones |
 | Context API | — | Gerenciamento de estado global |
 | Fetch API | — | Consumo de JSON local e backend IoT |
 | localStorage | — | Persistência no navegador |
