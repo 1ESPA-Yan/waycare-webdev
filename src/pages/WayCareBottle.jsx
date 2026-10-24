@@ -762,7 +762,7 @@ function WaycareBottle() {
                 <Card>
                   <details className="bottle-dobra">
                     <summary>
-                      <span className="bottle-col-titulo inline-flex">
+                      <span className="bottle-col-titulo">
                         <Icone nome="fa-lightbulb" className="bottle-col-titulo-icon bottle-col-titulo-icon--yellow" />
                         O que cada cor da luz quer dizer
                       </span>
@@ -783,7 +783,7 @@ function WaycareBottle() {
                   <Card>
                     <details className="bottle-dobra">
                       <summary>
-                        <span className="bottle-col-titulo inline-flex">
+                        <span className="bottle-col-titulo">
                           <Icone nome="fa-gear" className="bottle-col-titulo-icon" />
                           Avançado
                         </span>

@@ -1067,11 +1067,32 @@
 
 /* Seções que abrem e fecham (dia a dia, legenda do LED, avançado) */
 .bottle-dobra > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  list-style: none;
   cursor: pointer;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-bold);
   color: var(--color-primary-dark);
 }
+
+.bottle-dobra > summary::-webkit-details-marker { display: none; }
+
+/* Seta à direita que gira quando abre */
+.bottle-dobra > summary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: rotate(45deg);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.bottle-dobra[open] > summary::after { transform: rotate(-135deg); }
 
 .bottle-dias {
   list-style: none;
