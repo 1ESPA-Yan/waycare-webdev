@@ -14,6 +14,8 @@ import Card from '../components/Card'
 import Icone from '../components/Icone'
 import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
 import AjusteConsumo from '../components/AjusteConsumo'
+import CartaoInsight from '../components/CartaoInsight'
+import { useInsights } from '../hooks/useInsights'
 import FiltroPills from '../components/FiltroPills'
 import '../styles/waycare-bottle.css'
 
@@ -111,6 +113,10 @@ function WaycareBottle() {
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
   const tara = useTara()
+
+  // Destaque: o insight de hoje mais útil (os de atenção primeiro)
+  const { res: insights } = useInsights()
+  const destaque = insights ? [...insights.hoje].sort((a, b) => (b.tom === 'atencao') - (a.tom === 'atencao'))[0] : null
 
   // Desvincular: a dock deixa de contar para esta conta; o histórico fica no banco
   const [desvinculando, setDesvinculando] = useState(false)
@@ -609,6 +615,19 @@ function WaycareBottle() {
 
               {/* Coluna direita */}
               <div className="flex flex-col gap-6">
+
+                {destaque && (
+                  <Card className="insights-destaque">
+                    <h2 className="bottle-col-titulo mb-4">
+                      <Icone nome="fa-chart-line" className="bottle-col-titulo-icon bottle-col-titulo-icon--green" />
+                      Insight de hoje
+                    </h2>
+                    <CartaoInsight insight={destaque} as="div" />
+                    <Link to="/insights" className="insights-destaque-link">
+                      Ver todos os insights <Icone nome="fa-arrow-right" />
+                    </Link>
+                  </Card>
+                )}
 
                 {/* Ajuste manual: água fora da garrafa ou correção do total (só conta real) */}
                 {usandoReal && <AjusteConsumo consumo={d.consumido} recarregar={hidratacao.recarregar} />}

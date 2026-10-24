@@ -19,6 +19,7 @@ import './styles/dashboard.css'
 import './styles/trilhas.css'
 import './styles/conquistas.css'
 import './styles/descobertas.css'
+import './styles/insights.css'
 import './styles/recompensas.css'
 import './styles/perfil.css'
 import './styles/configuracoes.css'
@@ -41,6 +42,7 @@ const Dashboard = lazy(() => import('./pages/Dashboard'))
 const Trilhas = lazy(() => import('./pages/Trilhas'))
 const Conquistas = lazy(() => import('./pages/Conquistas'))
 const Descobertas = lazy(() => import('./pages/Descobertas'))
+const Insights = lazy(() => import('./pages/Insights'))
 const Recompensas = lazy(() => import('./pages/Recompensas'))
 const Perfil = lazy(() => import('./pages/Perfil'))
 const Configuracoes = lazy(() => import('./pages/Configuracoes'))
@@ -80,6 +82,7 @@ function App() {
                   <Route path="/trilhas" element={<Trilhas />} />
                   <Route path="/conquistas" element={<Conquistas />} />
                   <Route path="/descobertas" element={<Descobertas />} />
+                  <Route path="/insights" element={<Insights />} />
                   <Route path="/recompensas" element={<Recompensas />} />
                   <Route path="/perfil" element={<Perfil />} />
                   <Route path="/configuracoes" element={<Configuracoes />} />
