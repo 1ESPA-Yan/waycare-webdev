@@ -20,6 +20,7 @@ function Sidebar({ isOpen, inert, ref }) {
         <NavLink to="/trilhas" className="nav-item"><Icone nome="fa-route" className="nav-icon" />Trilhas</NavLink>
         <NavLink to="/conquistas" className="nav-item"><Icone nome="fa-trophy" className="nav-icon" />Conquistas</NavLink>
         <NavLink to="/descobertas" className="nav-item"><Icone nome="fa-lightbulb" className="nav-icon" />Descobertas</NavLink>
+        <NavLink to="/insights" className="nav-item"><Icone nome="fa-chart-line" className="nav-icon" />Insights</NavLink>
         <NavLink to="/recompensas" className="nav-item"><Icone nome="fa-gifts" className="nav-icon" />Recompensas</NavLink>
         <NavLink to="/perfil" className="nav-item"><Icone nome="fa-user" className="nav-icon" />Perfil</NavLink>
         <NavLink to="/configuracoes" className="nav-item"><Icone nome="fa-gear" className="nav-icon" />Configurações</NavLink>

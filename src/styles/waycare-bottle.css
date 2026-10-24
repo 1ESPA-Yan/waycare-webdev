@@ -1005,3 +1005,178 @@
   text-align: center;
   margin: var(--space-2) 0 0;
 }
+
+/* Eventos lançados à mão (somar) e ajustes (tirar do total) */
+.bottle-evento--manual .bottle-evento-icone { color: var(--color-info); }
+.bottle-evento--ajuste .bottle-evento-icone { color: var(--color-error); }
+
+/* Ajuste manual do consumo */
+.bottle-ajuste-modos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.bottle-ajuste-modo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.bottle-ajuste-modo.ativo {
+  background-color: var(--color-surface);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-bold);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.bottle-ajuste-modo:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.bottle-ajuste-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: var(--space-3) 0;
+}
+
+.bottle-ajuste-ok {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 0;
+}
+
+/* Histórico de 7, 14 ou 30 dias */
+.bottle-historico-resumo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Seções que abrem e fecham (dia a dia, legenda do LED, avançado) */
+.bottle-dobra > summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-2);
+  list-style: none;
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+}
+
+.bottle-dobra > summary::-webkit-details-marker { display: none; }
+
+/* Seta à direita que gira quando abre */
+.bottle-dobra > summary::after {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-right: 2px solid var(--color-text-muted);
+  border-bottom: 2px solid var(--color-text-muted);
+  transform: rotate(45deg);
+  transition: transform var(--transition-fast);
+  flex-shrink: 0;
+}
+
+.bottle-dobra[open] > summary::after { transform: rotate(-135deg); }
+
+.bottle-dias {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bottle-dia {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.bottle-dia-data {
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+.bottle-dia-barra { display: block; margin: 0; }
+.bottle-dia .progress-fill { display: block; background-color: var(--color-info); }
+.bottle-dia--bateu .progress-fill { background-color: var(--color-primary); }
+
+.bottle-dia-valor {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-align: right;
+}
+
+.bottle-dia-valor small {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
+
+/* Cards da dock (redes Wi-Fi, cores da luz, avançado) */
+.bottle-dock-texto {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-4);
+}
+
+.bottle-dock-nota {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: var(--space-4) 0 0;
+}
+
+/* Legenda das cores da luz */
+.bottle-cores-led {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bottle-cores-led li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.bottle-cores-led strong {
+  display: block;
+  color: var(--color-text-primary);
+}
+
+.bottle-cor-led {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.bottle-info-extra {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}

@@ -65,9 +65,10 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 | 🎯 Detalhes da Missão | Página dedicada com descrição completa e dicas práticas |
 | 🏆 Conquistas | Progresso visual de badges desbloqueados e bloqueados |
 | 💡 Descobertas | Insights personalizados gerados pelos hábitos do usuário |
+| 📈 Insights | Índice de hidratação do dia, frases de hoje, da semana e do mês a partir do consumo real, e cartões "O que a ciência diz" com as fontes |
 | 🎁 Recompensas | Catálogo com filtros e fluxo completo de resgate com confirmação |
 | 👤 Perfil | Estatísticas, conquistas recentes e meta de hidratação personalizada |
-| 💧 WayCare Bottle | Dados reais da dock: consumo, LED, bateria, Wi-Fi, eventos do dia, gráficos e tara pelo site |
+| 💧 WayCare Bottle | Dados reais da dock: consumo, LED, bateria, Wi-Fi, eventos do dia, histórico de 7/14/30 dias, ajuste manual do consumo, tara, nova rede Wi-Fi, legenda das cores da luz e resetar registro pelo site |
 | 🔌 Conectar a dock | Primeiro uso em três passos: completar o perfil, vincular a dock pelo código e zerar a balança |
 | 💰 Carteira | Saldo de Health Coins, histórico e gráfico semanal |
 | 🔔 Notificações | Central de notificações com contador de não lidas |
@@ -78,7 +79,7 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 - **Dois modos num hook só** — `useHidratacao()` entrega consumo, meta, dock e eventos tanto da conta real quanto do modo demonstração, com `modo` = `demo`, `sem-perfil`, `sem-dock`, `dock-online` ou `dock-offline`
 - **Dock offline não perde dados** — as leituras ficam guardadas na dock e sobem quando ela volta a ter Wi-Fi
 - **Meta de hidratação personalizada** — calculada no navegador por peso, gênero, atividade e temperatura da cidade (Open-Meteo), recalculada uma vez por dia
-- **Health Coins pela água real** — 1 HC a cada 25 ml registrados pela dock, e a missão de água conclui sozinha ao bater a meta
+- **Health Coins pela água real** — 1 HC a cada 25 ml medidos pela dock (goles), e a missão de água conclui sozinha quando a água da dock bate a meta. O que é lançado à mão conta para a meta do dia, mas não gera HC, e tirar do total não mexe nas HC já creditadas
 - **Dados em JSON local** — trilhas, missões, recompensas e conquistas em `src/data`, carregados pelo hook `useDados` (cada JSON vira um arquivo próprio no build)
 - **Persistência com localStorage** — humor no navegador; Health Coins, XP, missões e resgates também, mas separados por conta (veja [Limitações conhecidas](#limitações-conhecidas))
 - **Tailwind CSS v4** integrado ao design system próprio
@@ -144,6 +145,8 @@ waycare-react/
 │   │   ├── AvisoPrimeiroUso.jsx        # Aviso do passo pendente (perfil, vínculo ou tara)
 │   │   ├── Sidebar.jsx                 # Navegação com o consumo do dia e o status da dock
 │   │   ├── Button.jsx · Card.jsx · Chip.jsx · FiltroPills.jsx   # Componentes base
+│   │   ├── AjusteConsumo.jsx           # Somar água bebida fora da garrafa ou tirar do total
+│   │   ├── CartaoInsight.jsx           # Uma frase de insight (Insights e destaque na Bottle)
 │   │   ├── Icone.jsx                   # Ícones do lucide-react a partir de nomes "fa-*"
 │   │   ├── CarregandoPagina.jsx        # Skeleton enquanto uma página carrega
 │   │   ├── DocumentoLegal.jsx          # Layout de Termos e Privacidade
@@ -158,12 +161,15 @@ waycare-react/
 │   ├── hooks/
 │   │   ├── useDados.js                 # Carrega um JSON de src/data sob demanda
 │   │   ├── useHidratacao.js            # Dados de hidratação da conta real ou do modo demonstração
-│   │   ├── useHistoricoHidratacao.js   # Goles do dia e últimos 7 dias para os gráficos
+│   │   ├── useHistoricoHidratacao.js   # Curva do dia (goles e ajustes) e histórico de 7/14/30 dias
+│   │   ├── useInsights.js              # insights_dados() + frases de lib/insights.js
 │   │   ├── useTara.js                  # Pedido de tara pelo site
+│   │   ├── usePortal.js                # Pedido para a dock abrir o portal de Wi-Fi
 │   │   └── useCreditoAgua.js           # Health Coins pela água real e missão de água
 │   ├── lib/
 │   │   ├── supabase.js                 # Cliente do Supabase e rpc() com mensagens em português
 │   │   ├── meta.js                     # Cálculo da meta (cópia do PWA da dock) e Open-Meteo
+│   │   ├── insights.js                 # Frases e cartões de ciência dos insights (cópia do PWA da dock)
 │   │   └── tempo.js                    # "há 5 min" e horas no fuso de São Paulo
 │   ├── pages/
 │   │   ├── Login.jsx                   # Entrar ou criar conta por código; modo demonstração
@@ -175,6 +181,7 @@ waycare-react/
 │   │   ├── MissaoCompleta.jsx
 │   │   ├── Conquistas.jsx
 │   │   ├── Descobertas.jsx
+│   │   ├── Insights.jsx                # Índice do dia, frases e o que a ciência diz
 │   │   ├── Recompensas.jsx
 │   │   ├── ConfirmarResgate.jsx
 │   │   ├── SucessoResgate.jsx
@@ -325,12 +332,13 @@ Também há `tirar`, `devolver [ml]`, `status` e `esquecer`. Goles enviados ante
 | `/missao/completa` | `MissaoCompleta` | Tela de conclusão com HC ganhos |
 | `/conquistas` | `Conquistas` | Badges desbloqueados e em progresso |
 | `/descobertas` | `Descobertas` | Insights personalizados |
+| `/insights` | `Insights` | Índice do dia, frases de hoje/semana/mês e o que a ciência diz |
 | `/recompensas` | `Recompensas` | Catálogo de recompensas por categoria |
 | `/resgate/confirmar` | `ConfirmarResgate` | Confirmação antes do resgate |
 | `/resgate/sucesso` | `SucessoResgate` | Código do voucher e próximos passos |
 | `/perfil` | `Perfil` | Estatísticas e meta de hidratação |
 | `/configuracoes` | `Configuracoes` | Preferências e gerenciamento de conta |
-| `/waycare-bottle` | `WaycareBottle` | Dados da dock, eventos do dia, gráficos e tara |
+| `/waycare-bottle` | `WaycareBottle` | Dados da dock, eventos do dia, gráficos, ajuste manual e controles da dock |
 | `/dock/vincular` | `VincularDock` | Primeiro uso: perfil, vínculo da dock e tara |
 | `/carteira` | `Carteira` | Saldo e histórico de Health Coins |
 | `/notificacoes` | `Notificacoes` | Central de notificações |
@@ -348,10 +356,14 @@ O cliente fica em `src/lib/supabase.js`, e o `rpc(nome, args)` dele devolve os d
 |---|---|---|
 | `auth.signInWithOtp` / `auth.verifyOtp` | `Login` | Envia e confere o código de 6 dígitos do e-mail |
 | `rpc('painel')` | `DockContext` (a cada 10 s) | Consumo, meta e goles de hoje, sequência de dias, perfil, estado da dock e eventos do dia |
-| `rpc('historico', { p_dias: 7 })` | Gráfico semanal da Bottle | Consumo e meta por dia, com `bateu` |
-| tabela `eventos` (`tipo = 'gole'`) | Gráfico do dia da Bottle | Goles desde a meia-noite em São Paulo |
+| `rpc('historico', { p_dias })` | Histórico da Bottle (7, 14 ou 30 dias) | Consumo e meta por dia, com `bateu` |
+| tabela `eventos` (`gole`, `manual`, `ajuste`) | Gráfico do dia da Bottle | Goles e ajustes desde a meia-noite em São Paulo |
+| `rpc('ajustar_consumo', { p_ml })` | Bottle (Ajustar consumo) | Positivo soma (evento `manual`, até 3.000 ml); negativo tira (evento `ajuste`, nunca mais que o consumido hoje) |
+| `rpc('insights_dados', { p_dias: 35 })` | `Insights` e destaque na Bottle | Dias e goles dos últimos 35 dias; as frases são geradas em `lib/insights.js` |
 | `rpc('vincular_dock', { p_codigo })` | `VincularDock` | Vincula a dock pelo código de 6 letras |
 | `rpc('pedir_tara')` | Bottle e `VincularDock` | Pede a tara; a dock executa no próximo contato |
+| `rpc('pedir_portal')` | Bottle (Redes Wi-Fi) | Pede para a dock abrir o portal de Wi-Fi no próximo contato |
+| `rpc('resetar_dock')` | Bottle (Avançado) | Libera a dock para se registrar de novo depois de apagar a flash |
 | tabela `perfis` (`upsert`) + `rpc('salvar_meta', ...)` | Perfil e meta do dia | Salva peso, gênero, atividade e cidade, e a meta calculada |
 | `rpc('desvincular_dock')` | Bottle | Tira a dock da conta (o histórico fica) |
 

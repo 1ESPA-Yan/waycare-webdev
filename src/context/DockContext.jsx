@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { useApp } from './AppContext'
-import { rpc } from '../lib/supabase'
+import { supabase, rpc } from '../lib/supabase'
 import { calcularMeta, temperaturaAtual } from '../lib/meta'
 import { useCreditoAgua } from '../hooks/useCreditoAgua'
 
@@ -66,14 +66,40 @@ export function DockProvider({ children }) {
     atualizarMetaDoDia(perfil).then(recarregar).catch(() => { /* tenta de novo amanhã ou ao recarregar o site */ })
   }, [painel, emailUsuario, recarregar])
 
-  // HC pela água real e missão de água concluída quando bate a meta
-  useCreditoAgua(painel)
+  // Água medida pela dock hoje: soma dos goles (sem os lançamentos manuais e os
+  // ajustes). É a base das HC da água. Relê quando o consumo de hoje muda.
+  // Guarda de qual conta e dia é a soma, para não usar a de outra conta ou de ontem.
+  const [aguaDock, setAguaDock] = useState({ chave: '', ml: 0 })
+  const dia = painel?.hoje?.dia
+  const consumo = painel?.hoje?.consumo_ml
+  const chaveAgua = `${emailUsuario}|${dia}`
+  useEffect(() => {
+    if (!contaReal || !dia) return
+    let ativo = true
+    supabase
+      .from('eventos')
+      .select('ml')
+      .eq('tipo', 'gole')
+      // Início do dia em São Paulo (sem horário de verão desde 2019: UTC-3)
+      .gte('ts', `${dia}T00:00:00-03:00`)
+      .then(({ data, error }) => {
+        if (!ativo || error) return
+        const ml = (Array.isArray(data) ? data : []).reduce((soma, ev) => soma + (Number(ev.ml) || 0), 0)
+        setAguaDock({ chave: chaveAgua, ml })
+      })
+    return () => { ativo = false }
+  }, [contaReal, dia, consumo, chaveAgua])
+  // null enquanto a soma desta conta e deste dia não chegou
+  const mlDock = aguaDock.chave === chaveAgua ? Math.round(aguaDock.ml) : null
+
+  // HC pela água da dock e missão de água concluída quando ela bate a meta
+  useCreditoAgua(painel, mlDock)
 
   const carregando = contaReal && !painel && !erro
 
   const value = useMemo(
-    () => ({ painel, erro, carregando, recarregar }),
-    [painel, erro, carregando, recarregar]
+    () => ({ painel, erro, carregando, recarregar, mlDock }),
+    [painel, erro, carregando, recarregar, mlDock]
   )
 
   return <DockContext.Provider value={value}>{children}</DockContext.Provider>

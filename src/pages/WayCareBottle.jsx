@@ -4,8 +4,10 @@ import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
+import { useDock } from '../context/DockContext'
 import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
 import { useTara } from '../hooks/useTara'
+import { usePortal } from '../hooks/usePortal'
 import { ML_POR_HC } from '../hooks/useCreditoAgua'
 import { tempoDesde, horaCurta } from '../lib/tempo'
 import { rpc } from '../lib/supabase'
@@ -13,6 +15,10 @@ import Topbar from '../components/Topbar'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
 import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
+import AjusteConsumo from '../components/AjusteConsumo'
+import CartaoInsight from '../components/CartaoInsight'
+import { useInsights } from '../hooks/useInsights'
+import FiltroPills from '../components/FiltroPills'
 import '../styles/waycare-bottle.css'
 
 // Eventos do dia (painel do Supabase): ícone e texto de cada tipo
@@ -22,7 +28,22 @@ const EVENTOS = {
   garrafa_fora: { icone: 'fa-bottle-water', texto: 'Garrafa fora da dock' },
   garrafa_volta: { icone: 'fa-bottle-water', texto: 'Garrafa de volta' },
   tara: { icone: 'fa-scale-balanced', texto: 'Balança zerada' },
+  manual: { icone: 'fa-plus', texto: 'Lançado à mão' },
+  ajuste: { icone: 'fa-minus', texto: 'Tirado do total' },
 }
+
+// O que cada cor da luz da dock quer dizer (mesma legenda do PWA da dock)
+const CORES_LED = [
+  ['#3b4048', 'Apagada', 'Tudo certo (pisca verde quando registra um peso)'],
+  ['#21b04b', 'Verde pulsando', 'Meta do dia batida'],
+  ['#d93b30', 'Vermelho', 'Já bebeu hoje, mas está há mais de 1 hora sem beber'],
+  ['#2f6bff', 'Azul pulsando', 'Portal de Wi-Fi aberto'],
+  ['#f0a020', 'Âmbar piscando', 'Sem Wi-Fi (continua medindo e guarda)'],
+  ['#f06a1a', 'Laranja piscando', 'Bateria fraca'],
+  ['#18b7b7', 'Ciano pulsando', 'Falta zerar a balança'],
+  ['#ececec', 'Branco pulsando', 'Dock sem dono no app'],
+  ['#d23bd2', 'Magenta piscando', 'Problema de hardware ou registro: veja o Serial'],
+]
 
 // Qualidade do Wi-Fi pelo RSSI (mesmas faixas do PWA da dock)
 function sinalWifi(rssi) {
@@ -43,29 +64,40 @@ const dadosSemana = [
   { dia: 'Hoje', ml: 450, hoje: true },
 ]
 
-// "2026-10-21" -> "Ter" (o último dia do histórico vira "Hoje")
-function rotuloDia(dia, ehHoje) {
+// Períodos do histórico (rpc historico)
+const PERIODOS = [
+  { key: 7, label: '7 dias' },
+  { key: 14, label: '14 dias' },
+  { key: 30, label: '30 dias' },
+]
+
+// "2026-10-21" -> "Ter" em 7 dias, "21" em 14/30 (o último dia do histórico vira "Hoje")
+function rotuloDia(dia, ehHoje, curto) {
   if (ehHoje) return 'Hoje'
+  if (curto) return String(Number(dia.slice(8)))
   const nome = new Date(`${dia}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')
   return nome.charAt(0).toUpperCase() + nome.slice(1)
 }
 
-// Barras dos últimos 7 dias. dias = [{ rotulo, ml, meta, bateu, hoje }]
+// Barras do período. dias = [{ rotulo, ml, meta, bateu, hoje }]
 // Dia com a meta batida fica verde; hoje (sem meta batida) fica azul.
+// Com mais de 7 barras, some o valor em cima e o rótulo aparece a cada 5 dias (30 dias).
 function GraficoSemana({ dias }) {
+  const muitos = dias.length > 7
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '144px' }}>
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: muitos ? '3px' : '8px', height: '144px' }}>
       {dias.map((dia, i) => {
+        const mostrarRotulo = dias.length <= 14 || dia.hoje || (dias.length - 1 - i) % 5 === 0
         const altura = dia.ml > 0 ? Math.min(Math.max((dia.ml / dia.meta) * 120, 4), 120) : 4
         const cor = dia.bateu ? 'var(--color-primary)' : dia.hoje ? 'var(--color-info)' : dia.ml > 0 ? '#4aaee8aa' : 'var(--color-border)'
         return (
           <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}
                title={`${dia.rotulo}: ${dia.ml} de ${dia.meta} ml${dia.bateu ? ' (meta batida)' : ''}`}>
-            {dia.ml > 0 && (
+            {dia.ml > 0 && !muitos && (
               <span style={{ fontSize: '10px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)' }}>{dia.ml}</span>
             )}
             <div style={{ width: '100%', height: `${altura}px`, backgroundColor: cor, borderRadius: '4px 4px 0 0', transition: 'height 0.4s ease', marginTop: 'auto' }}></div>
-            <span style={{ fontSize: '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400' }}>
+            <span style={{ fontSize: muitos ? '10px' : '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400', visibility: mostrarRotulo ? 'visible' : 'hidden', whiteSpace: 'nowrap' }}>
               {dia.rotulo}
             </span>
           </div>
@@ -93,9 +125,15 @@ function WaycareBottle() {
 
   // Conta real: painel do Supabase. Demonstração: valores simulados do AppContext
   const hidratacao = useHidratacao()
+  const { mlDock } = useDock()
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
   const tara = useTara()
+  const portal = usePortal()
+
+  // Destaque: o insight de hoje mais útil (os de atenção primeiro)
+  const { res: insights } = useInsights()
+  const destaque = insights ? [...insights.hoje].sort((a, b) => (b.tom === 'atencao') - (a.tom === 'atencao'))[0] : null
 
   // Desvincular: a dock deixa de contar para esta conta; o histórico fica no banco
   const [desvinculando, setDesvinculando] = useState(false)
@@ -114,11 +152,30 @@ function WaycareBottle() {
     }
   }
 
-  // Gráficos da conta real: curva do dia (goles) e últimos 7 dias (historico)
-  const { curva, semana } = useHistoricoHidratacao()
+  // Resetar registro: libera a dock para se registrar de novo (depois de apagar a flash)
+  const [resetando, setResetando] = useState(false)
+  const [resetMsg, setResetMsg] = useState(null)   // { tipo: 'ok' | 'erro', texto }
+  async function resetarRegistro() {
+    if (!window.confirm('Liberar a dock para se registrar de novo?')) return
+    setResetando(true)
+    setResetMsg(null)
+    try {
+      await rpc('resetar_dock')
+      await hidratacao.recarregar()
+      setResetMsg({ tipo: 'ok', texto: 'Pronto. Ligue a dock: ela se registra de novo no próximo contato.' })
+    } catch (falha) {
+      setResetMsg({ tipo: 'erro', texto: falha.message })
+    } finally {
+      setResetando(false)
+    }
+  }
+
+  // Gráficos da conta real: curva do dia (goles e ajustes) e histórico de 7, 14 ou 30 dias
+  const [periodo, setPeriodo] = useState(7)
+  const { curva, semana } = useHistoricoHidratacao(periodo)
   const diasSemana = usandoReal
     ? semana.map((dia, i) => ({
-        rotulo: rotuloDia(dia.dia, i === semana.length - 1),
+        rotulo: rotuloDia(dia.dia, i === semana.length - 1, semana.length > 7),
         ml: dia.consumo_ml,
         meta: dia.meta_ml,
         bateu: dia.bateu,
@@ -128,6 +185,13 @@ function WaycareBottle() {
         const ml = dia.hoje ? mlConsumido : dia.ml
         return { rotulo: dia.dia, ml, meta: metaDiaria, bateu: ml >= metaDiaria, hoje: !!dia.hoje }
       })
+
+  // Resumo do período: dias com a meta batida e média nos dias com registro
+  const diasBatidos = diasSemana.filter(dia => dia.bateu).length
+  const diasComRegistro = diasSemana.filter(dia => dia.ml > 0)
+  const mediaPeriodo = diasComRegistro.length
+    ? Math.round(diasComRegistro.reduce((soma, dia) => soma + dia.ml, 0) / diasComRegistro.length)
+    : 0
 
   // Ponto LIVE piscando
   useEffect(() => {
@@ -254,10 +318,15 @@ function WaycareBottle() {
                 <Icone nome="fa-scale-balanced" /> Balança não zerada: os goles só contam depois da tara com a garrafa vazia.
               </div>
             )}
-            {dock && !dock.online && (
+            {dock && !dock.ultimo_contato && (
+              <div className="bottle-aviso bottle-aviso--info mb-6">
+                <Icone nome="fa-wifi" /> A dock ainda não se conectou à internet.
+              </div>
+            )}
+            {dock && !dock.online && dock.ultimo_contato && (
               <div className="bottle-aviso bottle-aviso--offline mb-6">
                 <Icone nome="fa-plug-circle-xmark" />
-                Dock offline{dock.ultimo_contato ? ` (último contato ${tempoDesde(dock.ultimo_contato)})` : ''}. O que ela medir
+                Dock offline (último contato {tempoDesde(dock.ultimo_contato)}). O que ela medir
                 nesse tempo sobe quando voltar a ter Wi-Fi.
               </div>
             )}
@@ -305,8 +374,8 @@ function WaycareBottle() {
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--hc"><Icone nome="fa-coins" /></div>
                   <div className="flex flex-col gap-1">
-                    {/* Conta real: HC da água de hoje (1 a cada 25 ml). Demo: HC dos goles simulados */}
-                    <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{usandoReal ? Math.floor(d.consumido / ML_POR_HC) : hcGarrafa} HC</span>
+                    {/* Conta real: HC da água medida pela dock hoje (1 a cada 25 ml; lançamento manual não conta). Demo: HC dos goles simulados */}
+                    <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{usandoReal ? Math.floor((mlDock ?? 0) / ML_POR_HC) : hcGarrafa} HC</span>
                     <span className="bottle-resumo-label">{usandoReal ? 'HC da água hoje' : 'HC da garrafa'}</span>
                   </div>
                 </Card>
@@ -524,13 +593,24 @@ function WaycareBottle() {
                   </Card>
                 )}
 
-                {/* Histórico semanal: rpc historico (real) ou valores fixos (demo) */}
+                {/* Histórico: rpc historico de 7, 14 ou 30 dias (real) ou valores fixos da semana (demo) */}
                 <Card className="bottle-historico-card mt-6">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
                     <div className="flex items-center gap-2">
                       <Icone nome="fa-chart-bar" className="bottle-historico-icon" />
-                      <h2 className="bottle-historico-titulo">Histórico Semanal</h2>
+                      <h2 className="bottle-historico-titulo">{usandoReal ? 'Histórico' : 'Histórico Semanal'}</h2>
                     </div>
+                    {usandoReal && (
+                      <FiltroPills opcoes={PERIODOS} ativo={periodo} aoMudar={setPeriodo} rotulo="Período do histórico" />
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+                    {diasSemana.length > 0 && (
+                      <p className="bottle-historico-resumo">
+                        Meta batida em <strong>{diasBatidos} de {diasSemana.length}</strong> dias.
+                        {mediaPeriodo > 0 && <> Média nos dias com registro: <strong>{mediaPeriodo.toLocaleString('pt-BR')} ml</strong>.</>}
+                      </p>
+                    )}
                     <div className="flex items-center gap-4">
                       <span className="bottle-legenda">
                         <span className="bottle-legenda-dot bottle-legenda-dot--meta"></span>
@@ -550,11 +630,47 @@ function WaycareBottle() {
                       Carregando o histórico…
                     </div>
                   )}
+                  {usandoReal && semana.length > 0 && (
+                    <details className="bottle-dobra mt-6">
+                      <summary>Ver dia a dia</summary>
+                      <ul className="bottle-dias">
+                        {[...semana].reverse().map(dia => (
+                          <li key={dia.dia} className={dia.bateu ? 'bottle-dia bottle-dia--bateu' : 'bottle-dia'}>
+                            <span className="bottle-dia-data">
+                              {new Date(`${dia.dia}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })}
+                            </span>
+                            <span className="progress-bar bottle-dia-barra">
+                              <span className="progress-fill" style={{ width: `${Math.min(100, (dia.consumo_ml / dia.meta_ml) * 100)}%` }}></span>
+                            </span>
+                            <span className="bottle-dia-valor">
+                              {dia.consumo_ml.toLocaleString('pt-BR')}<small> / {dia.meta_ml.toLocaleString('pt-BR')} ml</small>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
+                  )}
                 </Card>
               </div>
 
               {/* Coluna direita */}
               <div className="flex flex-col gap-6">
+
+                {destaque && (
+                  <Card className="insights-destaque">
+                    <h2 className="bottle-col-titulo mb-4">
+                      <Icone nome="fa-chart-line" className="bottle-col-titulo-icon bottle-col-titulo-icon--green" />
+                      Insight de hoje
+                    </h2>
+                    <CartaoInsight insight={destaque} as="div" />
+                    <Link to="/insights" className="insights-destaque-link">
+                      Ver todos os insights <Icone nome="fa-arrow-right" />
+                    </Link>
+                  </Card>
+                )}
+
+                {/* Ajuste manual: água fora da garrafa ou correção do total (só conta real) */}
+                {usandoReal && <AjusteConsumo consumo={d.consumido} recarregar={hidratacao.recarregar} />}
 
                 <Card>
                   <h2 className="bottle-col-titulo mb-6">
@@ -567,7 +683,8 @@ function WaycareBottle() {
                       <span className="bottle-info-valor">
                         {!dock ? (usandoReal ? 'Sem dock vinculada' : 'Demonstração')
                           : dock.online ? 'Conectada'
-                          : `Offline${dock.ultimo_contato ? `, última vez ${tempoDesde(dock.ultimo_contato)}` : ''}`}
+                          : dock.ultimo_contato ? `Offline, última vez ${tempoDesde(dock.ultimo_contato)}`
+                          : 'Nunca conectou'}
                       </span>
                     </div>
                     <div className="bottle-info-divider"></div>
@@ -580,6 +697,9 @@ function WaycareBottle() {
                       <span className="bottle-info-label"><Icone nome="fa-bolt" className="bottle-info-icon--purple" /> Bateria</span>
                       <span className="bottle-info-valor">
                         {!dock ? '—' : dock.usb ? 'No USB' : dock.bateria_pct != null ? `${dock.bateria_pct}%` : '—'}
+                        {dock && !dock.usb && dock.bateria_v != null && (
+                          <span className="bottle-info-extra"> ({Number(dock.bateria_v).toFixed(2).replace('.', ',')} V)</span>
+                        )}
                       </span>
                     </div>
                     <div className="bottle-info-divider"></div>
@@ -611,6 +731,81 @@ function WaycareBottle() {
                   )}
                 </Card>
 
+                {/* Redes Wi-Fi: pede para a dock abrir o portal e cadastrar mais uma rede */}
+                {usandoReal && dock && (
+                  <Card>
+                    <h2 className="bottle-col-titulo mb-4">
+                      <Icone nome="fa-wifi" className="bottle-col-titulo-icon" />
+                      Redes Wi-Fi
+                    </h2>
+                    <p className="bottle-dock-texto">A dock guarda até 5 redes e escolhe sozinha. Pra cadastrar mais uma, abra o portal dela:</p>
+                    {portal.pendente ? (
+                      <div className="bottle-aviso bottle-aviso--info" role="status">
+                        <Icone nome="fa-circle-notch" girar />
+                        <span>Esperando a dock. Quando a luz ficar azul, conecte o celular na rede <strong>{portal.nomeRede}</strong>.</span>
+                      </div>
+                    ) : (
+                      <button className="btn btn-secondary btn-block" onClick={portal.pedir} disabled={portal.enviando}>
+                        <Icone nome="fa-wifi" /> {portal.enviando ? 'Enviando…' : 'Adicionar rede Wi-Fi'}
+                      </button>
+                    )}
+                    {portal.aberto && (
+                      <p className="bottle-ajuste-ok mt-3" role="status">Portal aberto. Conecte o celular na rede {portal.nomeRede}.</p>
+                    )}
+                    {portal.erro && <p className="input-erro-msg mt-3" role="alert">{portal.erro}</p>}
+                    <p className="bottle-dock-nota">
+                      Sem nenhuma rede conhecida por perto, o portal abre sozinho quando a dock liga. Num lugar novo, o jeito mais fácil é
+                      rotear a internet do celular com o nome e a senha de uma rede já cadastrada.
+                    </p>
+                  </Card>
+                )}
+
+                {/* Legenda das cores da luz da dock */}
+                <Card>
+                  <details className="bottle-dobra">
+                    <summary>
+                      <span className="bottle-col-titulo">
+                        <Icone nome="fa-lightbulb" className="bottle-col-titulo-icon bottle-col-titulo-icon--yellow" />
+                        O que cada cor da luz quer dizer
+                      </span>
+                    </summary>
+                    <ul className="bottle-cores-led">
+                      {CORES_LED.map(([cor, nome, descricao]) => (
+                        <li key={nome}>
+                          <span className="bottle-cor-led" style={{ backgroundColor: cor }} aria-hidden="true"></span>
+                          <span><strong>{nome}</strong> {descricao}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </Card>
+
+                {/* Avançado: resetar o registro da dock */}
+                {usandoReal && dock && (
+                  <Card>
+                    <details className="bottle-dobra">
+                      <summary>
+                        <span className="bottle-col-titulo">
+                          <Icone nome="fa-gear" className="bottle-col-titulo-icon" />
+                          Avançado
+                        </span>
+                      </summary>
+                      <p className="bottle-dock-texto mt-4">
+                        <strong>Resetar registro:</strong> use só se você regravou a dock apagando a flash (Erase All Flash). Ela volta com um
+                        segredo novo, e o servidor passa a aceitar.
+                      </p>
+                      <button className="btn btn-secondary btn-block" onClick={resetarRegistro} disabled={resetando}>
+                        <Icone nome="fa-rotate" /> {resetando ? 'Resetando…' : 'Resetar registro'}
+                      </button>
+                      {resetMsg && (
+                        <p className={resetMsg.tipo === 'erro' ? 'input-erro-msg mt-3' : 'bottle-ajuste-ok mt-3'} role={resetMsg.tipo === 'erro' ? 'alert' : 'status'}>
+                          {resetMsg.texto}
+                        </p>
+                      )}
+                    </details>
+                  </Card>
+                )}
+
                 {/* Eventos do dia: painel do Supabase (real) ou leituras simuladas (demo) */}
                 <Card>
                   <h2 className="bottle-col-titulo mb-6">
@@ -627,7 +822,8 @@ function WaycareBottle() {
                           <li key={`${ev.ts ?? ev.hora}-${i}`} className={`bottle-evento bottle-evento--${ev.tipo}`}>
                             <Icone nome={tipo.icone} className="bottle-evento-icone" />
                             <span className="bottle-evento-texto">{tipo.texto}</span>
-                            {ev.tipo === 'gole' && ev.ml > 0 && <span className="bottle-evento-ml">{ev.ml} ml</span>}
+                            {(ev.tipo === 'gole' || ev.tipo === 'manual') && ev.ml > 0 && <span className="bottle-evento-ml">{ev.ml} ml</span>}
+                            {ev.tipo === 'ajuste' && ev.ml < 0 && <span className="bottle-evento-ml">−{-ev.ml} ml</span>}
                             {ev.tipo === 'reabastecimento' && ev.ml > 0 && <span className="bottle-evento-ml">+{ev.ml} ml</span>}
                             <span className="bottle-evento-hora">{ev.ts ? horaCurta(ev.ts) : ev.hora}</span>
                           </li>
