@@ -6,6 +6,7 @@ import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
 import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
 import { useTara } from '../hooks/useTara'
+import { usePortal } from '../hooks/usePortal'
 import { ML_POR_HC } from '../hooks/useCreditoAgua'
 import { tempoDesde, horaCurta } from '../lib/tempo'
 import { rpc } from '../lib/supabase'
@@ -113,6 +114,7 @@ function WaycareBottle() {
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
   const tara = useTara()
+  const portal = usePortal()
 
   // Destaque: o insight de hoje mais útil (os de atenção primeiro)
   const { res: insights } = useInsights()
@@ -686,6 +688,35 @@ function WaycareBottle() {
                     </>
                   )}
                 </Card>
+
+                {/* Redes Wi-Fi: pede para a dock abrir o portal e cadastrar mais uma rede */}
+                {usandoReal && dock && (
+                  <Card>
+                    <h2 className="bottle-col-titulo mb-4">
+                      <Icone nome="fa-wifi" className="bottle-col-titulo-icon" />
+                      Redes Wi-Fi
+                    </h2>
+                    <p className="bottle-dock-texto">A dock guarda até 5 redes e escolhe sozinha. Pra cadastrar mais uma, abra o portal dela:</p>
+                    {portal.pendente ? (
+                      <div className="bottle-aviso bottle-aviso--info" role="status">
+                        <Icone nome="fa-circle-notch" girar />
+                        <span>Esperando a dock. Quando a luz ficar azul, conecte o celular na rede <strong>{portal.nomeRede}</strong>.</span>
+                      </div>
+                    ) : (
+                      <button className="btn btn-secondary btn-block" onClick={portal.pedir} disabled={portal.enviando}>
+                        <Icone nome="fa-wifi" /> {portal.enviando ? 'Enviando…' : 'Adicionar rede Wi-Fi'}
+                      </button>
+                    )}
+                    {portal.aberto && (
+                      <p className="bottle-ajuste-ok mt-3" role="status">Portal aberto. Conecte o celular na rede {portal.nomeRede}.</p>
+                    )}
+                    {portal.erro && <p className="input-erro-msg mt-3" role="alert">{portal.erro}</p>}
+                    <p className="bottle-dock-nota">
+                      Sem nenhuma rede conhecida por perto, o portal abre sozinho quando a dock liga. Num lugar novo, o jeito mais fácil é
+                      rotear a internet do celular com o nome e a senha de uma rede já cadastrada.
+                    </p>
+                  </Card>
+                )}
 
                 {/* Eventos do dia: painel do Supabase (real) ou leituras simuladas (demo) */}
                 <Card>

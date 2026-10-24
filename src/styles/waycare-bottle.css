@@ -1109,3 +1109,16 @@
   font-weight: var(--font-weight-regular);
   color: var(--color-text-muted);
 }
+
+/* Cards da dock (redes Wi-Fi, cores da luz, avançado) */
+.bottle-dock-texto {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--space-4);
+}
+
+.bottle-dock-nota {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: var(--space-4) 0 0;
+}
