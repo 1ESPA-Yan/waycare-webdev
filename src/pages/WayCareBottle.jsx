@@ -31,6 +31,19 @@ const EVENTOS = {
   ajuste: { icone: 'fa-minus', texto: 'Tirado do total' },
 }
 
+// O que cada cor da luz da dock quer dizer (mesma legenda do PWA da dock)
+const CORES_LED = [
+  ['#3b4048', 'Apagada', 'Tudo certo (pisca verde quando registra um peso)'],
+  ['#21b04b', 'Verde pulsando', 'Meta do dia batida'],
+  ['#d93b30', 'Vermelho', 'Já bebeu hoje, mas está há mais de 1 hora sem beber'],
+  ['#2f6bff', 'Azul pulsando', 'Portal de Wi-Fi aberto'],
+  ['#f0a020', 'Âmbar piscando', 'Sem Wi-Fi (continua medindo e guarda)'],
+  ['#f06a1a', 'Laranja piscando', 'Bateria fraca'],
+  ['#18b7b7', 'Ciano pulsando', 'Falta zerar a balança'],
+  ['#ececec', 'Branco pulsando', 'Dock sem dono no app'],
+  ['#d23bd2', 'Magenta piscando', 'Problema de hardware ou registro: veja o Serial'],
+]
+
 // Qualidade do Wi-Fi pelo RSSI (mesmas faixas do PWA da dock)
 function sinalWifi(rssi) {
   if (rssi == null) return ''
@@ -717,6 +730,26 @@ function WaycareBottle() {
                     </p>
                   </Card>
                 )}
+
+                {/* Legenda das cores da luz da dock */}
+                <Card>
+                  <details className="bottle-dobra">
+                    <summary>
+                      <span className="bottle-col-titulo inline-flex">
+                        <Icone nome="fa-lightbulb" className="bottle-col-titulo-icon bottle-col-titulo-icon--yellow" />
+                        O que cada cor da luz quer dizer
+                      </span>
+                    </summary>
+                    <ul className="bottle-cores-led">
+                      {CORES_LED.map(([cor, nome, descricao]) => (
+                        <li key={nome}>
+                          <span className="bottle-cor-led" style={{ backgroundColor: cor }} aria-hidden="true"></span>
+                          <span><strong>{nome}</strong> {descricao}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </details>
+                </Card>
 
                 {/* Eventos do dia: painel do Supabase (real) ou leituras simuladas (demo) */}
                 <Card>

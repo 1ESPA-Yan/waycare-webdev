@@ -1122,3 +1122,35 @@
   color: var(--color-text-muted);
   margin: var(--space-4) 0 0;
 }
+
+/* Legenda das cores da luz */
+.bottle-cores-led {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.bottle-cores-led li {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+.bottle-cores-led strong {
+  display: block;
+  color: var(--color-text-primary);
+}
+
+.bottle-cor-led {
+  width: 14px;
+  height: 14px;
+  margin-top: 3px;
+  border-radius: var(--radius-full);
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
