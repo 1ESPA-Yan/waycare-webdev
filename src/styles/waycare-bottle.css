@@ -1057,3 +1057,55 @@
   font-weight: var(--font-weight-medium);
   margin-bottom: 0;
 }
+
+/* Histórico de 7, 14 ou 30 dias */
+.bottle-historico-resumo {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Seções que abrem e fecham (dia a dia, legenda do LED, avançado) */
+.bottle-dobra > summary {
+  cursor: pointer;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-primary-dark);
+}
+
+.bottle-dias {
+  list-style: none;
+  padding: 0;
+  margin: var(--space-4) 0 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.bottle-dia {
+  display: grid;
+  grid-template-columns: 96px 1fr auto;
+  align-items: center;
+  gap: var(--space-3);
+  font-size: var(--font-size-sm);
+}
+
+.bottle-dia-data {
+  color: var(--color-text-muted);
+  text-transform: capitalize;
+}
+
+.bottle-dia-barra { display: block; margin: 0; }
+.bottle-dia .progress-fill { display: block; background-color: var(--color-info); }
+.bottle-dia--bateu .progress-fill { background-color: var(--color-primary); }
+
+.bottle-dia-valor {
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  text-align: right;
+}
+
+.bottle-dia-valor small {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}

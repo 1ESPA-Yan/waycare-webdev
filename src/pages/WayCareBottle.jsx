@@ -14,6 +14,7 @@ import Card from '../components/Card'
 import Icone from '../components/Icone'
 import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
 import AjusteConsumo from '../components/AjusteConsumo'
+import FiltroPills from '../components/FiltroPills'
 import '../styles/waycare-bottle.css'
 
 // Eventos do dia (painel do Supabase): ícone e texto de cada tipo
@@ -46,29 +47,40 @@ const dadosSemana = [
   { dia: 'Hoje', ml: 450, hoje: true },
 ]
 
-// "2026-10-21" -> "Ter" (o último dia do histórico vira "Hoje")
-function rotuloDia(dia, ehHoje) {
+// Períodos do histórico (rpc historico)
+const PERIODOS = [
+  { key: 7, label: '7 dias' },
+  { key: 14, label: '14 dias' },
+  { key: 30, label: '30 dias' },
+]
+
+// "2026-10-21" -> "Ter" em 7 dias, "21" em 14/30 (o último dia do histórico vira "Hoje")
+function rotuloDia(dia, ehHoje, curto) {
   if (ehHoje) return 'Hoje'
+  if (curto) return String(Number(dia.slice(8)))
   const nome = new Date(`${dia}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'short' }).replace('.', '')
   return nome.charAt(0).toUpperCase() + nome.slice(1)
 }
 
-// Barras dos últimos 7 dias. dias = [{ rotulo, ml, meta, bateu, hoje }]
+// Barras do período. dias = [{ rotulo, ml, meta, bateu, hoje }]
 // Dia com a meta batida fica verde; hoje (sem meta batida) fica azul.
+// Com mais de 7 barras, some o valor em cima e o rótulo aparece a cada 5 dias (30 dias).
 function GraficoSemana({ dias }) {
+  const muitos = dias.length > 7
   return (
-    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '144px' }}>
+    <div style={{ display: 'flex', alignItems: 'flex-end', gap: muitos ? '3px' : '8px', height: '144px' }}>
       {dias.map((dia, i) => {
+        const mostrarRotulo = dias.length <= 14 || dia.hoje || (dias.length - 1 - i) % 5 === 0
         const altura = dia.ml > 0 ? Math.min(Math.max((dia.ml / dia.meta) * 120, 4), 120) : 4
         const cor = dia.bateu ? 'var(--color-primary)' : dia.hoje ? 'var(--color-info)' : dia.ml > 0 ? '#4aaee8aa' : 'var(--color-border)'
         return (
           <div key={i} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '6px' }}
                title={`${dia.rotulo}: ${dia.ml} de ${dia.meta} ml${dia.bateu ? ' (meta batida)' : ''}`}>
-            {dia.ml > 0 && (
+            {dia.ml > 0 && !muitos && (
               <span style={{ fontSize: '10px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)' }}>{dia.ml}</span>
             )}
             <div style={{ width: '100%', height: `${altura}px`, backgroundColor: cor, borderRadius: '4px 4px 0 0', transition: 'height 0.4s ease', marginTop: 'auto' }}></div>
-            <span style={{ fontSize: '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400' }}>
+            <span style={{ fontSize: muitos ? '10px' : '11px', color: dia.hoje ? 'var(--color-info-text)' : 'var(--color-text-muted)', fontWeight: dia.hoje ? '700' : '400', visibility: mostrarRotulo ? 'visible' : 'hidden', whiteSpace: 'nowrap' }}>
               {dia.rotulo}
             </span>
           </div>
@@ -117,11 +129,12 @@ function WaycareBottle() {
     }
   }
 
-  // Gráficos da conta real: curva do dia (goles) e últimos 7 dias (historico)
-  const { curva, semana } = useHistoricoHidratacao()
+  // Gráficos da conta real: curva do dia (goles e ajustes) e histórico de 7, 14 ou 30 dias
+  const [periodo, setPeriodo] = useState(7)
+  const { curva, semana } = useHistoricoHidratacao(periodo)
   const diasSemana = usandoReal
     ? semana.map((dia, i) => ({
-        rotulo: rotuloDia(dia.dia, i === semana.length - 1),
+        rotulo: rotuloDia(dia.dia, i === semana.length - 1, semana.length > 7),
         ml: dia.consumo_ml,
         meta: dia.meta_ml,
         bateu: dia.bateu,
@@ -131,6 +144,13 @@ function WaycareBottle() {
         const ml = dia.hoje ? mlConsumido : dia.ml
         return { rotulo: dia.dia, ml, meta: metaDiaria, bateu: ml >= metaDiaria, hoje: !!dia.hoje }
       })
+
+  // Resumo do período: dias com a meta batida e média nos dias com registro
+  const diasBatidos = diasSemana.filter(dia => dia.bateu).length
+  const diasComRegistro = diasSemana.filter(dia => dia.ml > 0)
+  const mediaPeriodo = diasComRegistro.length
+    ? Math.round(diasComRegistro.reduce((soma, dia) => soma + dia.ml, 0) / diasComRegistro.length)
+    : 0
 
   // Ponto LIVE piscando
   useEffect(() => {
@@ -527,13 +547,24 @@ function WaycareBottle() {
                   </Card>
                 )}
 
-                {/* Histórico semanal: rpc historico (real) ou valores fixos (demo) */}
+                {/* Histórico: rpc historico de 7, 14 ou 30 dias (real) ou valores fixos da semana (demo) */}
                 <Card className="bottle-historico-card mt-6">
-                  <div className="flex items-center justify-between mb-6">
+                  <div className="flex items-center justify-between flex-wrap gap-4 mb-4">
                     <div className="flex items-center gap-2">
                       <Icone nome="fa-chart-bar" className="bottle-historico-icon" />
-                      <h2 className="bottle-historico-titulo">Histórico Semanal</h2>
+                      <h2 className="bottle-historico-titulo">{usandoReal ? 'Histórico' : 'Histórico Semanal'}</h2>
                     </div>
+                    {usandoReal && (
+                      <FiltroPills opcoes={PERIODOS} ativo={periodo} aoMudar={setPeriodo} rotulo="Período do histórico" />
+                    )}
+                  </div>
+                  <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
+                    {diasSemana.length > 0 && (
+                      <p className="bottle-historico-resumo">
+                        Meta batida em <strong>{diasBatidos} de {diasSemana.length}</strong> dias.
+                        {mediaPeriodo > 0 && <> Média nos dias com registro: <strong>{mediaPeriodo.toLocaleString('pt-BR')} ml</strong>.</>}
+                      </p>
+                    )}
                     <div className="flex items-center gap-4">
                       <span className="bottle-legenda">
                         <span className="bottle-legenda-dot bottle-legenda-dot--meta"></span>
@@ -552,6 +583,26 @@ function WaycareBottle() {
                       <Icone nome="fa-chart-bar" />
                       Carregando o histórico…
                     </div>
+                  )}
+                  {usandoReal && semana.length > 0 && (
+                    <details className="bottle-dobra mt-6">
+                      <summary>Ver dia a dia</summary>
+                      <ul className="bottle-dias">
+                        {[...semana].reverse().map(dia => (
+                          <li key={dia.dia} className={dia.bateu ? 'bottle-dia bottle-dia--bateu' : 'bottle-dia'}>
+                            <span className="bottle-dia-data">
+                              {new Date(`${dia.dia}T12:00:00`).toLocaleDateString('pt-BR', { weekday: 'short', day: '2-digit', month: '2-digit' })}
+                            </span>
+                            <span className="progress-bar bottle-dia-barra">
+                              <span className="progress-fill" style={{ width: `${Math.min(100, (dia.consumo_ml / dia.meta_ml) * 100)}%` }}></span>
+                            </span>
+                            <span className="bottle-dia-valor">
+                              {dia.consumo_ml.toLocaleString('pt-BR')}<small> / {dia.meta_ml.toLocaleString('pt-BR')} ml</small>
+                            </span>
+                          </li>
+                        ))}
+                      </ul>
+                    </details>
                   )}
                 </Card>
               </div>

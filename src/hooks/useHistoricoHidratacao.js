@@ -6,10 +6,10 @@ import { supabase, rpc } from '../lib/supabase'
 // Dados dos gráficos da Bottle na conta real:
 //   curva  [{ ts, consumo }]  consumo acumulado do dia: goles e lançamentos manuais
 //          somam, ajustes ("tirar do total", ml negativo) subtraem
-//   semana [{ dia, consumo_ml, meta_ml, bateu }]  últimos 7 dias (rpc historico)
+//   semana [{ dia, consumo_ml, meta_ml, bateu }]  últimos `dias` dias (rpc historico: 7, 14 ou 30)
 // A tabela `eventos` é lida direto porque o painel() traz só os últimos 30 eventos.
 // Recarrega quando o painel muda de dia ou o consumo de hoje muda.
-export function useHistoricoHidratacao() {
+export function useHistoricoHidratacao(dias = 7) {
   const { contaReal } = useApp()
   const { painel } = useDock()
   const dia = painel?.hoje?.dia
@@ -36,12 +36,18 @@ export function useHistoricoHidratacao() {
         setCurva(pontos.length ? [{ ts: inicio, consumo: 0 }, ...pontos] : [])
       })
 
-    rpc('historico', { p_dias: 7 })
-      .then(dados => { if (ativo) setSemana(Array.isArray(dados) ? dados : []) })
-      .catch(() => { /* mantém o último histórico */ })
-
     return () => { ativo = false }
   }, [contaReal, dia, consumo])
+
+  // Histórico separado da curva: trocar o período não relê os eventos do dia
+  useEffect(() => {
+    if (!contaReal || !dia) return
+    let ativo = true
+    rpc('historico', { p_dias: dias })
+      .then(dados => { if (ativo) setSemana(Array.isArray(dados) ? dados : []) })
+      .catch(() => { /* mantém o último histórico */ })
+    return () => { ativo = false }
+  }, [contaReal, dia, consumo, dias])
 
   return { curva, semana }
 }
