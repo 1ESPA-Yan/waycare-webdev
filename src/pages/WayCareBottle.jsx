@@ -150,6 +150,24 @@ function WaycareBottle() {
     }
   }
 
+  // Resetar registro: libera a dock para se registrar de novo (depois de apagar a flash)
+  const [resetando, setResetando] = useState(false)
+  const [resetMsg, setResetMsg] = useState(null)   // { tipo: 'ok' | 'erro', texto }
+  async function resetarRegistro() {
+    if (!window.confirm('Liberar a dock para se registrar de novo?')) return
+    setResetando(true)
+    setResetMsg(null)
+    try {
+      await rpc('resetar_dock')
+      await hidratacao.recarregar()
+      setResetMsg({ tipo: 'ok', texto: 'Pronto. Ligue a dock: ela se registra de novo no próximo contato.' })
+    } catch (falha) {
+      setResetMsg({ tipo: 'erro', texto: falha.message })
+    } finally {
+      setResetando(false)
+    }
+  }
+
   // Gráficos da conta real: curva do dia (goles e ajustes) e histórico de 7, 14 ou 30 dias
   const [periodo, setPeriodo] = useState(7)
   const { curva, semana } = useHistoricoHidratacao(periodo)
@@ -750,6 +768,32 @@ function WaycareBottle() {
                     </ul>
                   </details>
                 </Card>
+
+                {/* Avançado: resetar o registro da dock */}
+                {usandoReal && dock && (
+                  <Card>
+                    <details className="bottle-dobra">
+                      <summary>
+                        <span className="bottle-col-titulo inline-flex">
+                          <Icone nome="fa-gear" className="bottle-col-titulo-icon" />
+                          Avançado
+                        </span>
+                      </summary>
+                      <p className="bottle-dock-texto mt-4">
+                        <strong>Resetar registro:</strong> use só se você regravou a dock apagando a flash (Erase All Flash). Ela volta com um
+                        segredo novo, e o servidor passa a aceitar.
+                      </p>
+                      <button className="btn btn-secondary btn-block" onClick={resetarRegistro} disabled={resetando}>
+                        <Icone nome="fa-rotate" /> {resetando ? 'Resetando…' : 'Resetar registro'}
+                      </button>
+                      {resetMsg && (
+                        <p className={resetMsg.tipo === 'erro' ? 'input-erro-msg mt-3' : 'bottle-ajuste-ok mt-3'} role={resetMsg.tipo === 'erro' ? 'alert' : 'status'}>
+                          {resetMsg.texto}
+                        </p>
+                      )}
+                    </details>
+                  </Card>
+                )}
 
                 {/* Eventos do dia: painel do Supabase (real) ou leituras simuladas (demo) */}
                 <Card>
