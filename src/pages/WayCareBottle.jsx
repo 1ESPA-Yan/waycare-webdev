@@ -13,6 +13,7 @@ import Topbar from '../components/Topbar'
 import Card from '../components/Card'
 import Icone from '../components/Icone'
 import AvisoPrimeiroUso from '../components/AvisoPrimeiroUso'
+import AjusteConsumo from '../components/AjusteConsumo'
 import '../styles/waycare-bottle.css'
 
 // Eventos do dia (painel do Supabase): ícone e texto de cada tipo
@@ -22,6 +23,8 @@ const EVENTOS = {
   garrafa_fora: { icone: 'fa-bottle-water', texto: 'Garrafa fora da dock' },
   garrafa_volta: { icone: 'fa-bottle-water', texto: 'Garrafa de volta' },
   tara: { icone: 'fa-scale-balanced', texto: 'Balança zerada' },
+  manual: { icone: 'fa-plus', texto: 'Lançado à mão' },
+  ajuste: { icone: 'fa-minus', texto: 'Tirado do total' },
 }
 
 // Qualidade do Wi-Fi pelo RSSI (mesmas faixas do PWA da dock)
@@ -556,6 +559,9 @@ function WaycareBottle() {
               {/* Coluna direita */}
               <div className="flex flex-col gap-6">
 
+                {/* Ajuste manual: água fora da garrafa ou correção do total (só conta real) */}
+                {usandoReal && <AjusteConsumo consumo={d.consumido} recarregar={hidratacao.recarregar} />}
+
                 <Card>
                   <h2 className="bottle-col-titulo mb-6">
                     <Icone nome="fa-circle-info" className="bottle-col-titulo-icon" />
@@ -627,7 +633,8 @@ function WaycareBottle() {
                           <li key={`${ev.ts ?? ev.hora}-${i}`} className={`bottle-evento bottle-evento--${ev.tipo}`}>
                             <Icone nome={tipo.icone} className="bottle-evento-icone" />
                             <span className="bottle-evento-texto">{tipo.texto}</span>
-                            {ev.tipo === 'gole' && ev.ml > 0 && <span className="bottle-evento-ml">{ev.ml} ml</span>}
+                            {(ev.tipo === 'gole' || ev.tipo === 'manual') && ev.ml > 0 && <span className="bottle-evento-ml">{ev.ml} ml</span>}
+                            {ev.tipo === 'ajuste' && ev.ml < 0 && <span className="bottle-evento-ml">−{-ev.ml} ml</span>}
                             {ev.tipo === 'reabastecimento' && ev.ml > 0 && <span className="bottle-evento-ml">+{ev.ml} ml</span>}
                             <span className="bottle-evento-hora">{ev.ts ? horaCurta(ev.ts) : ev.hora}</span>
                           </li>

@@ -1005,3 +1005,55 @@
   text-align: center;
   margin: var(--space-2) 0 0;
 }
+
+/* Eventos lançados à mão (somar) e ajustes (tirar do total) */
+.bottle-evento--manual .bottle-evento-icone { color: var(--color-info); }
+.bottle-evento--ajuste .bottle-evento-icone { color: var(--color-error); }
+
+/* Ajuste manual do consumo */
+.bottle-ajuste-modos {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+  padding: var(--space-1);
+  background-color: var(--color-bg);
+  border-radius: var(--radius-md);
+}
+
+.bottle-ajuste-modo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-1);
+  padding: var(--space-2);
+  border: none;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+}
+
+.bottle-ajuste-modo.ativo {
+  background-color: var(--color-surface);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-bold);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.bottle-ajuste-modo:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.bottle-ajuste-desc {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  margin: var(--space-3) 0;
+}
+
+.bottle-ajuste-ok {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary-dark);
+  font-weight: var(--font-weight-medium);
+  margin-bottom: 0;
+}

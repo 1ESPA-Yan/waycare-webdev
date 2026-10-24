@@ -4,15 +4,16 @@ import { useDock } from '../context/DockContext'
 import { supabase, rpc } from '../lib/supabase'
 
 // Dados dos gráficos da Bottle na conta real:
-//   curva  [{ ts, consumo }]  consumo acumulado do dia, a partir dos goles
+//   curva  [{ ts, consumo }]  consumo acumulado do dia: goles e lançamentos manuais
+//          somam, ajustes ("tirar do total", ml negativo) subtraem
 //   semana [{ dia, consumo_ml, meta_ml, bateu }]  últimos 7 dias (rpc historico)
 // A tabela `eventos` é lida direto porque o painel() traz só os últimos 30 eventos.
-// Recarrega quando o painel muda de dia ou registra um gole novo.
+// Recarrega quando o painel muda de dia ou o consumo de hoje muda.
 export function useHistoricoHidratacao() {
   const { contaReal } = useApp()
   const { painel } = useDock()
   const dia = painel?.hoje?.dia
-  const goles = painel?.hoje?.goles
+  const consumo = painel?.hoje?.consumo_ml
   const [curva, setCurva] = useState([])
   const [semana, setSemana] = useState([])
 
@@ -25,7 +26,7 @@ export function useHistoricoHidratacao() {
     supabase
       .from('eventos')
       .select('ts, ml')
-      .eq('tipo', 'gole')
+      .in('tipo', ['gole', 'manual', 'ajuste'])
       .gte('ts', inicio)
       .order('ts')
       .then(({ data, error }) => {
@@ -40,7 +41,7 @@ export function useHistoricoHidratacao() {
       .catch(() => { /* mantém o último histórico */ })
 
     return () => { ativo = false }
-  }, [contaReal, dia, goles])
+  }, [contaReal, dia, consumo])
 
   return { curva, semana }
 }
