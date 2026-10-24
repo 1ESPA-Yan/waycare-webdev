@@ -4,6 +4,7 @@ import GarrafaAnimada from '../components/GarrafaAnimada'
 import GraficoHidratacao from '../components/GraficoHidratacao'
 import { useApp } from '../context/AppContext'
 import { useHidratacao } from '../hooks/useHidratacao'
+import { useDock } from '../context/DockContext'
 import { useHistoricoHidratacao } from '../hooks/useHistoricoHidratacao'
 import { useTara } from '../hooks/useTara'
 import { usePortal } from '../hooks/usePortal'
@@ -124,6 +125,7 @@ function WaycareBottle() {
 
   // Conta real: painel do Supabase. Demonstração: valores simulados do AppContext
   const hidratacao = useHidratacao()
+  const { mlDock } = useDock()
   const { modo, dock, perfil, eventos, carregando } = hidratacao
   const usandoReal = modo !== 'demo'
   const tara = useTara()
@@ -372,8 +374,8 @@ function WaycareBottle() {
                 <Card className="bottle-resumo-card">
                   <div className="bottle-resumo-icon bottle-resumo-icon--hc"><Icone nome="fa-coins" /></div>
                   <div className="flex flex-col gap-1">
-                    {/* Conta real: HC da água de hoje (1 a cada 25 ml). Demo: HC dos goles simulados */}
-                    <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{usandoReal ? Math.floor(d.consumido / ML_POR_HC) : hcGarrafa} HC</span>
+                    {/* Conta real: HC da água medida pela dock hoje (1 a cada 25 ml; lançamento manual não conta). Demo: HC dos goles simulados */}
+                    <span className="bottle-resumo-valor bottle-resumo-valor--hc">+{usandoReal ? Math.floor((mlDock ?? 0) / ML_POR_HC) : hcGarrafa} HC</span>
                     <span className="bottle-resumo-label">{usandoReal ? 'HC da água hoje' : 'HC da garrafa'}</span>
                   </div>
                 </Card>

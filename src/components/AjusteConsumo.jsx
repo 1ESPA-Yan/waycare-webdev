@@ -63,7 +63,7 @@ function AjusteConsumo({ consumo, recarregar }) {
       <p className="bottle-ajuste-desc">
         {tirar
           ? 'Use se a dock contou algo que você não bebeu (garrafa sem tampa, água derramada).'
-          : 'Água ou outro líquido que você bebeu sem passar pela garrafa.'}
+          : 'Água ou outro líquido que você bebeu sem passar pela garrafa. Conta para a meta, mas não gera Health Coins: só a água medida pela dock gera.'}
       </p>
 
       <form onSubmit={enviar} className="flex flex-col gap-3">

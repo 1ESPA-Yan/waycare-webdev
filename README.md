@@ -79,7 +79,7 @@ O projeto integra-se com a **WayCare Dock** — um dispositivo IoT baseado em ES
 - **Dois modos num hook só** — `useHidratacao()` entrega consumo, meta, dock e eventos tanto da conta real quanto do modo demonstração, com `modo` = `demo`, `sem-perfil`, `sem-dock`, `dock-online` ou `dock-offline`
 - **Dock offline não perde dados** — as leituras ficam guardadas na dock e sobem quando ela volta a ter Wi-Fi
 - **Meta de hidratação personalizada** — calculada no navegador por peso, gênero, atividade e temperatura da cidade (Open-Meteo), recalculada uma vez por dia
-- **Health Coins pela água real** — 1 HC a cada 25 ml registrados pela dock, e a missão de água conclui sozinha ao bater a meta
+- **Health Coins pela água real** — 1 HC a cada 25 ml medidos pela dock (goles), e a missão de água conclui sozinha quando a água da dock bate a meta. O que é lançado à mão conta para a meta do dia, mas não gera HC, e tirar do total não mexe nas HC já creditadas
 - **Dados em JSON local** — trilhas, missões, recompensas e conquistas em `src/data`, carregados pelo hook `useDados` (cada JSON vira um arquivo próprio no build)
 - **Persistência com localStorage** — humor no navegador; Health Coins, XP, missões e resgates também, mas separados por conta (veja [Limitações conhecidas](#limitações-conhecidas))
 - **Tailwind CSS v4** integrado ao design system próprio
