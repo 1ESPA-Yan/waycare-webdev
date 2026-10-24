@@ -316,10 +316,15 @@ function WaycareBottle() {
                 <Icone nome="fa-scale-balanced" /> Balança não zerada: os goles só contam depois da tara com a garrafa vazia.
               </div>
             )}
-            {dock && !dock.online && (
+            {dock && !dock.ultimo_contato && (
+              <div className="bottle-aviso bottle-aviso--info mb-6">
+                <Icone nome="fa-wifi" /> A dock ainda não se conectou à internet.
+              </div>
+            )}
+            {dock && !dock.online && dock.ultimo_contato && (
               <div className="bottle-aviso bottle-aviso--offline mb-6">
                 <Icone nome="fa-plug-circle-xmark" />
-                Dock offline{dock.ultimo_contato ? ` (último contato ${tempoDesde(dock.ultimo_contato)})` : ''}. O que ela medir
+                Dock offline (último contato {tempoDesde(dock.ultimo_contato)}). O que ela medir
                 nesse tempo sobe quando voltar a ter Wi-Fi.
               </div>
             )}
@@ -676,7 +681,8 @@ function WaycareBottle() {
                       <span className="bottle-info-valor">
                         {!dock ? (usandoReal ? 'Sem dock vinculada' : 'Demonstração')
                           : dock.online ? 'Conectada'
-                          : `Offline${dock.ultimo_contato ? `, última vez ${tempoDesde(dock.ultimo_contato)}` : ''}`}
+                          : dock.ultimo_contato ? `Offline, última vez ${tempoDesde(dock.ultimo_contato)}`
+                          : 'Nunca conectou'}
                       </span>
                     </div>
                     <div className="bottle-info-divider"></div>
@@ -689,6 +695,9 @@ function WaycareBottle() {
                       <span className="bottle-info-label"><Icone nome="fa-bolt" className="bottle-info-icon--purple" /> Bateria</span>
                       <span className="bottle-info-valor">
                         {!dock ? '—' : dock.usb ? 'No USB' : dock.bateria_pct != null ? `${dock.bateria_pct}%` : '—'}
+                        {dock && !dock.usb && dock.bateria_v != null && (
+                          <span className="bottle-info-extra"> ({Number(dock.bateria_v).toFixed(2).replace('.', ',')} V)</span>
+                        )}
                       </span>
                     </div>
                     <div className="bottle-info-divider"></div>

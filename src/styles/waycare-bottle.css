@@ -1154,3 +1154,8 @@
   border: 1px solid rgba(0, 0, 0, 0.15);
   flex-shrink: 0;
 }
+
+.bottle-info-extra {
+  font-weight: var(--font-weight-regular);
+  color: var(--color-text-muted);
+}
